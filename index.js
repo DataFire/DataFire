@@ -18,5 +18,8 @@ let cmd = args._[0];
 
 if (cmd === 'integrate' || cmd === 'list' || cmd === 'describe') {
   require('./integrations')[cmd](args);
+} else if (cmd === 'run') {
+  require(process.cwd() + '/' + args.flow).execute((err) => {
+    if (err) throw err;
+  });
 }
-
