@@ -12,6 +12,17 @@ const MAX_DESCRIPTION_LENGTH = 100;
 
 let integrations = module.exports = {};
 
+
+let strcmp = (str1, str2) => {
+  if (str1 < str2) return -1;
+  if (str1 > str2) return 1;
+  return 0;
+}
+let sortOperations = (op1, op2) => {
+  if (op1.path !== op2.path) return strcmp(op1.path, op2.path);
+  return strcmp(op1.method, op2.method);
+}
+
 integrations.integrate = (args, cb) => {
   cb = cb || ((err) => {if (err) throw err});
 
@@ -78,6 +89,8 @@ integrations.describe = (args) => {
       logDescription(spec.info.description);
       console.log('\n');
     }
+    let opDescriptions = [];
+    didLog = false;
     Object.keys(spec.paths).forEach(path => {
       Object.keys(spec.paths[path]).forEach(method => {
         let op = spec.paths[path][method];
@@ -86,12 +99,33 @@ integrations.describe = (args) => {
           if (args.operation !== op.operationId && !args.operation.match(fakeOpId)) {
             return;
           }
+          integrations.describeOperation(method, path, op, args.operation ? true : false);
+          didLog = true;
+        } else {
+          opDescriptions.push({
+            method: method,
+            path: path,
+            operation: op,
+          })
         }
-        integrations.describeOperation(method, path, op, args.operation ? true : false);
-        console.log();
       });
     });
+    if (args.operation) {
+      if (!didLog) throw new Error("Operation " + args.operation + " not found");
+    } else {
+      opDescriptions.sort(sortOperations);
+      opDescriptions.forEach(desc => {
+        console.log(chalkOperation(desc) + '\n');
+      })
+    }
   });
+}
+
+let chalkOperation = (op) => {
+  let str = chalkMethod(op.method) + '\t' + op.path;
+  if (op.operation.operationId) str += '\n' + chalk.magenta(op.operation.operationId);
+  if (op.operation.description) str += '\n' + chalk.gray(op.operation.description);
+  return str;
 }
 
 let chalkMethod = (method) => {
@@ -112,14 +146,7 @@ let chalkType = (type) => {
 }
 
 integrations.describeOperation = (method, path, op, verbose) => {
-  console.log(chalkMethod(method) + '\t' + path);
-  if (op.operationId) console.log(op.operationId);
-  if (!verbose) {
-    logDescription(op.description);
-    return;
-  }
-  console.log(chalk.gray(op.description));
-  console.log()
+  console.log(chalkOperation({method, path, operation: op}) + '\n');
   let paramDescriptions = op.parameters.map(p => {
     let ret = {parameter: p.name};
     ret.type = chalkType(p.in === 'body' ? 'object': p.type);
