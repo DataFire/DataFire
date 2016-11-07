@@ -6,7 +6,6 @@ datafire.Integration = require('./lib/integration');
 datafire.Flow = require('./lib/flow');
 
 let args = require('yargs')
-           .command('integrate')
            .alias('i', 'integration')
            .alias('n', 'name')
            .alias('u', 'url')
