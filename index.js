@@ -18,7 +18,14 @@ let cmd = args._[0];
 if (cmd === 'integrate' || cmd === 'list' || cmd === 'describe') {
   require('./integrations')[cmd](args);
 } else if (cmd === 'run') {
-  require(process.cwd() + '/' + args.flow).execute((err) => {
+  let flow = require(process.cwd() + '/' + args.flow);
+  if (args.options) {
+    for (let key in args.options) {
+      flow.options[key] = args.options[key];
+    }
+  }
+  console.log('opts', flow.options);
+  flow.execute((err) => {
     if (err) throw err;
   });
 }
