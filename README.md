@@ -3,31 +3,98 @@
 Version 2.0 will be an open-source integration framework built on top of [Serverless](/serverless/serverless).
 Users will be able to run Dataflows on their own AWS account, or on DataFire.
 
-## Project Structure
-```
-./serverless.yml
-
-./dataflows/
-    gmailToGitHub.js
-    mailchimpCleanup.js
-
-./integrations/
-    gmail.openapi.yml
-    github.openapi.yml
-    mailchimp.openapi.yml
-
-./credentials/
-    gmail.json
-    github.json
-    mailchimp.json
-```
-
-## Add an integration
-Integrations can be added by name (using APIs.guru) or by Open API URL:
+## Installation
+You'll need to install DataFire both globally and as a project dependency.
 ```bash
-datafire integrate gmail
-datafire integrate https://api.foobar.com/openapi.json
+npm install -g bobby-brennan/datafire
+npm install --save bobby-brennan/datafire
 ```
+
+## Quick Start
+This quick tutorial will fetch issues from a repository on GitHub, and copy them to
+a local file.
+
+First, let's add the GitHub integration:
+```bash
+datafire integrate --name github
+```
+
+Now we need to create a Flow. Edit `./copyIssues.js`:
+```js
+const fs = require('fs');
+const datafire = require('datafire');
+
+let github = new datafire.Integration('github');
+
+let flow = module.exports = new datafire.Flow('copyIssues', 'Copies issues from GitHub to a local file');
+
+flow.setDefaults({
+  username: 'bobby-brennan',
+  repo: 'rss-parser',
+});
+flow.step('issues',
+          github.get('/repos/{owner}/{repo}/issues'),
+          {owner: flow.options.username, repo: flow.options.repo})
+    .step('write_file',
+          (data) => {
+            fs.writeFileSync('./issues.json', JSON.stringify(data, null, 2));
+          })
+
+```
+
+Now let's run it:
+```bash
+datafire run -f ./copyIssues.js
+```
+
+You should see `issues.json` in your current directory.
+
+## Serverless Execution
+To run a flow on a regular schedule, you can use [crontab](https://en.wikipedia.org/wiki/Cron),
+but DataFire also offers native support for execution on AWS Lambda,
+via the [Serverless](https://github.com/serverless/serverless) framework. You can then
+run your flow on a schedule or in response to a webhook.
+
+Just set your handler in `serverless.yml` to `yourFlow.handler`:
+
+```yml
+service: copyIssues
+
+provider:
+  name: aws
+  runtime: nodejs4.3
+
+functions:
+  copyIssues:
+    handler: copyIssues.handler
+    events:
+      - schedule: rate(1 hour)
+      - http: POST /copyIssues
+```
+
+## Add an Integration
+Integrations can be added by name (using [APIs.guru](http://apis.guru)) or by
+the URL of an Open API (Swagger) specification:
+```bash
+datafire integrate --name gmail
+datafire integrate --url https://api.foobar.com/openapi.json
+```
+This will copy the API specification into the `./integrations` directory in your current folder.
+
+To see a list of available integrations, run:
+```bash
+datafire list --all
+```
+
+To see the integrations you have installed, run:
+```bash
+datafire list
+```
+
+### Specification Formats
+If your API is in a different specification format, such as
+**RAML** or **API Blueprint**, you can use [lucybot/api-spec-converter](https://github.com/lucybot/api-spec-converter)
+to convert it to Open API 2.0
 
 ## Deploy an integration
 Using AWS, `datafire deploy` is an alias for `serverless deploy`.
@@ -37,6 +104,35 @@ Users can also set their DataFire API key to deploy to DataFire:
 export DATAFIRE_API_KEY=asdf
 datafire deploy -v
 ```
+
+## Exploring Integrations
+Once an integration is installed, you can use DataFire to view
+the available operations and their parameters:
+```bash
+$ datafire integrate --name instagram
+$ datafire describe --name instagram
+
+GET     /media/search
+Search for media in a given area. The default time span is set to 5 days. The time span must not exceed 7 days.
+Defaults time stamps cover the last 5 days. Can return mix of `image` and `video` types.
+
+
+GET     /media/shortcode/{shortcode}
+This endpoint returns the same response as `GET /media/{media-id}`.
+
+A media object's shortcode can be found in its shortlink URL. An example shortlink is
+`http://instagram.com/p/D/`, its corresponding shortcode is `D`.
+
+
+GET     /media/{media-id}
+Get information about a media object. The returned type key will allow you to differentiate between image and
+video media.
+
+...
+
+
+```
+
 
 #### Running via DataFire
 Deploying via DataFire allows you to monitor and control your Dataflows inside the
