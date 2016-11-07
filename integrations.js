@@ -150,6 +150,7 @@ integrations.describeOperation = (method, path, op, verbose) => {
   let paramDescriptions = op.parameters.map(p => {
     let ret = {parameter: p.name};
     ret.type = chalkType(p.in === 'body' ? 'object': p.type);
+    ret.required = p.required ? chalk.red('yes') : '';
     if (p.description) {
       ret.description = chalk.gray(p.description);
     }
