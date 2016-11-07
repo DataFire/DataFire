@@ -35,7 +35,7 @@ flow.setDefaults({
 });
 flow.step('issues',
           github.get('/repos/{owner}/{repo}/issues'),
-          {owner: flow.options.username, repo: flow.options.repo})
+          () => ({owner: flow.options.username, repo: flow.options.repo}))
     .step('write_file',
           (data) => {
             fs.writeFileSync('./issues.json', JSON.stringify(data, null, 2));
