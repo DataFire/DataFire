@@ -26,7 +26,7 @@ let sortOperations = (op1, op2) => {
 integrations.integrate = (args, cb) => {
   cb = cb || ((err) => {if (err) throw err});
   if (args.url) {
-    integrateURL(args.name, args.url, cb);
+    integrateURL(args.as || args.name, args.url, cb);
   } else {
     request.get(APIS_GURU_URL, {json: true}, (err, resp, body) => {
       if (err) return cb(err);
@@ -37,7 +37,7 @@ integrations.integrate = (args, cb) => {
       if (validKeys.length > 1 && !exactMatch) cb(new Error("Ambiguous API name: " + args.name + "\n\nPlease choose one of:\n" + validKeys.join('\n')));
       let info = body[exactMatch || validKeys[0]];
       let url = info.versions[info.preferred].swaggerUrl;
-      integrateURL(args.name, url, cb);
+      integrateURL(args.as || args.name, url, cb);
     })
   }
 }
