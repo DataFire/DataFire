@@ -5,6 +5,8 @@ let datafire = require('./index');
 const APIS_GURU_URL = "https://api.apis.guru/v2/list.json";
 const FILE_SUFFIX = '.openapi.json';
 
+const MAX_DESCRIPTION_LENGTH = 100;
+
 let integrations = module.exports = {};
 
 integrations.integrate = (args, cb) => {
@@ -54,13 +56,30 @@ integrations.list = (args, cb) => {
   }
 }
 
+let logMax = (str) => {
+  if (!str) return;
+  if (str.length > MAX_DESCRIPTION_LENGTH) {
+    str = str.substring(0, MAX_DESCRIPTION_LENGTH) + '...';
+  }
+  console.log(str);
+}
+
 integrations.describe = (args) => {
   let integration = new datafire.Integration(args.name);
   integration.initialize(err => {
     let spec = integration.spec;
+    let url = spec.schemes[0] + '://' + spec.host + spec.basePath;
+    console.log('\n');
+    console.log(url);
+    logMax(spec.info.description);
+    console.log('\n');
     Object.keys(spec.paths).forEach(path => {
       Object.keys(spec.paths[path]).forEach(method => {
+        let op = spec.paths[path][method];
+        if (op.operationId) console.log(op.operationId);
         console.log(method.toUpperCase() + '\t' + path);
+        logMax(op.description);
+        console.log();
       });
     });
   });
