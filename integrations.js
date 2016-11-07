@@ -29,6 +29,7 @@ integrations.integrate = (args, cb) => {
     if (args.url) {
       integrateURL(args.as || args.name, args.url, cb);
     } else {
+      if (args.name === 'hacker_news') return integrations.integrateFile(args.name, __dirname + '/integration_files/hacker_news.openapi.json');
       request.get(APIS_GURU_URL, {json: true}, (err, resp, body) => {
         if (err) return cb(err);
         let keys = Object.keys(body);
@@ -42,6 +43,14 @@ integrations.integrate = (args, cb) => {
       })
     }
   })
+}
+
+integrations.integrateFile = (name, filename, cb) => {
+  fs.readFile(filename, 'utf8', (err, data) => {
+    if (err) return cb(err);
+    let outFilename = datafire.integrationsDirectory + '/' + name + FILE_SUFFIX;
+    fs.writeFile(outFilename, data, cb);
+  });
 }
 
 let integrateURL = (name, url, cb) => {
