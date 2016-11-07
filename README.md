@@ -29,13 +29,9 @@ let github = new datafire.Integration('github');
 let flow = module.exports =
       new datafire.Flow('copyIssues', 'Copies issues from GitHub to a local file');
 
-flow.setDefaults({
-  username: 'torvalds',
-  repo: 'linux',
-});
 flow.step('issues',
           github.get('/repos/{owner}/{repo}/issues'),
-          () => ({owner: flow.options.username, repo: flow.options.repo}))
+          {owner: 'torvalds', repo: 'linux'});
     .step('write_file',
           (data) => {
             fs.writeFileSync('./issues.json', JSON.stringify(data, null, 2));
@@ -49,11 +45,6 @@ datafire run -f ./copyIssues.js
 ```
 
 You should see `issues.json` in your current directory.
-
-You can also set options via the command line:
-```bash
-datafire run -f ./copyIssues.js --options.username="expressjs" --options.repo="express"
-```
 
 ## Serverless Execution
 To run a flow on a regular schedule, you can use [crontab](https://en.wikipedia.org/wiki/Cron),
@@ -169,6 +160,22 @@ flow.step('messages', gmail.get('/messages'), {limit: 10})
         assignee: 'bobby-brennan',
       })
 });
+```
+
+### Using options
+You pass options to your flow via the command line:
+```js
+flow.setDefaults({
+  username: 'torvalds',
+  repo: 'linux',
+})
+flow.step('issues',
+          github.get('/repos/{owner}/{repo}/issues'),
+          () => ({repo: flow.options.repo, username: flow.options.username}))
+```
+
+```bash
+datafire run -f ./copyIssues.js --options.username="expressjs" --options.repo="express"
 ```
 
 #### Custom data sources
