@@ -53,3 +53,15 @@ integrations.list = (args, cb) => {
     })
   }
 }
+
+integrations.describe = (args) => {
+  let integration = new datafire.Integration(args.name);
+  integration.initialize(err => {
+    let spec = integration.spec;
+    Object.keys(spec.paths).forEach(path => {
+      Object.keys(spec.paths[path]).forEach(method => {
+        console.log(method.toUpperCase() + '\t' + path);
+      });
+    });
+  });
+}
