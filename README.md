@@ -34,7 +34,7 @@ flow.step('issues',
           {owner: 'torvalds', repo: 'linux'});
     .step('write_file',
           (data) => {
-            fs.writeFileSync('./issues.json', JSON.stringify(data, null, 2));
+            fs.writeFileSync('./issues.json', JSON.stringify(data.issues, null, 2));
           })
 
 ```
@@ -43,8 +43,17 @@ Now let's run it:
 ```bash
 datafire run -f ./copyIssues.js
 ```
-
 You should see `issues.json` in your current directory.
+
+## Writing Flows
+Flows are a series of asynchronous steps. Each step will generally make one or more calls
+to a given API endpoint, and store the resulting data in the `data` object. However,
+you can add steps that execute any asynchronous function.
+
+Flows use a waterfall design pattern - each step has access to the data returned in all
+previous steps, and can use this data to construct its request.
+
+See [Flows.md](./Flows.md) for the full documentation on building flow steps, handling errors, etc.
 
 ## Serverless Execution
 To run a flow on a regular schedule, you can use [crontab](https://en.wikipedia.org/wiki/Cron),
@@ -92,15 +101,6 @@ datafire list
 If your API is in a different specification format, such as
 **RAML** or **API Blueprint**, you can use [lucybot/api-spec-converter](https://github.com/lucybot/api-spec-converter)
 to convert it to Open API 2.0
-
-## Deploy an integration
-Using AWS, `datafire deploy` is an alias for `serverless deploy`.
-
-Users can also set their DataFire API key to deploy to DataFire:
-```bash
-export DATAFIRE_API_KEY=asdf
-datafire deploy -v
-```
 
 ## Exploring Integrations
 Once an integration is installed, you can use DataFire to view
