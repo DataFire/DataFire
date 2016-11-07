@@ -14,6 +14,10 @@ let args = require('yargs')
            .argv;
 
 let cmd = args._[0];
+if (args._[1]) {
+  args.name = args.name || args._[1];
+  args.integration = args.integration || args._[1];
+}
 
 if (cmd === 'integrate' || cmd === 'list' || cmd === 'describe') {
   require('./integrations')[cmd](args);
