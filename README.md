@@ -109,56 +109,40 @@ datafire deploy -v
 Once an integration is installed, you can use DataFire to view
 the available operations and their parameters:
 ```bash
-$ datafire integrate --name instagram
-$ datafire describe --name instagram
+$ datafire integrate -n googleapis.com:youtube --as youtube
+$ datafire describe --i youtube
 
-GET     /media/search
-Search for media in a given area. The default time span is set to 5 days. The time span must not exceed 7 days.
-Defaults time stamps cover the last 5 days. Can return mix of `image` and `video` types.
+GET     /activities
+youtube.activities.list
+Returns a list of channel activity events that match the request criteria. For example, you can retrieve events associated with a particular channel, events associated with the user's subscriptions and Google+ friends, or the YouTube home page feed, which is customized for each user.
 
-
-GET     /media/shortcode/{shortcode}
-This endpoint returns the same response as `GET /media/{media-id}`.
-
-A media object's shortcode can be found in its shortlink URL. An example shortlink is
-`http://instagram.com/p/D/`, its corresponding shortcode is `D`.
-
-
-GET     /media/{media-id}
-Get information about a media object. The returned type key will allow you to differentiate between image and
-video media.
+POST    /activities
+youtube.activities.insert
+Posts a bulletin for a specific channel. (The user submitting the request must be authorized to act on the channel's behalf.)
 
 ...
-
-
 ```
 
+To learn more about an operation, you can either specify its id or method and path:
+```bash
+$ datafire describe --i youtube -o youtube.activities.list
 
-#### Running via DataFire
-Deploying via DataFire allows you to monitor and control your Dataflows inside the
-DataFire GUI.
+GET     /activities
+youtube.activities.list
+Returns a list of channel activity events that match the request criteria. For example, you can retrieve events associated with a particular channel, events associated with the user's subscriptions and Google+ friends, or the YouTube home page feed, which is customized for each user.
 
-Deploying will:
-* Build your serverless artifact
-* Upload artifact to DataFire
-* DataFire will prefix your service name with your username
-* DataFire will supplement `./credentials` with whatever is attached to your account
-* DataFire will `serverless deploy` to the DataFire AWS account
-
-## serverless.yml
-serverless.yml follows the [standard format](https://serverless.com/framework/docs/providers/aws/guide/functions/),
-and the `datafire.Dataflow` object exposes a serverless handler. In the example below `dataflows/gmailToGitHub.js` should
-set `module.exports = new datafire.Dataflow()`
-```yml
-service: myService
-
-provider:
-  name: aws
-  runtime: nodejs4.3
-
-functions:
-  gmailToGitHub:
-    handler: dataflows/gmailToGitHub.handler
+PARAMETER       TYPE    REQUIRED DEFAULT DESCRIPTION                                                                     
+part            string  yes              The part parameter specifies a comma-separated list of one or more activity     
+                                         resource properties that the API response will include.  If the parameter       
+                                         identifies a property that contains child properties, the child properties will 
+                                         be included in the response. For example, in an activity resource, the snippet  
+                                         property contains other properties that identify the type of activity, a display
+                                         title for the activity, and so forth. If you set part=snippet, the API response 
+                                         will also contain all of those nested properties.                               
+channelId       string                   The channelId parameter specifies a unique YouTube channel ID. The API will then
+                                         return a list of that channel's activities.                                     
+home            boolean                  Set this parameter's value to true to retrieve the activity feed that displays  
+                                         on the YouTube home page for the currently authenticated user.
 ```
 
 ## Dataflow code
@@ -170,8 +154,8 @@ let gmail = new datafire.Integration('gmail');
 let github = new datafire.Integration('github');
 
 let flow = module.exports = new datafire.Dataflow();
-flow.addStep('messages', gmail.get('/messages'), {limit: 10})
-    .addStep('add_issues', github.post('/issues'), (data) => {
+flow.step('messages', gmail.get('/messages'), {limit: 10})
+    .step('add_issues', github.post('/issues'), (data) => {
       if (!data.messages.length) return flow.fail("No messages found");
       return data.messages.map(message => {
         title: message.subject,
@@ -183,14 +167,14 @@ flow.addStep('messages', gmail.get('/messages'), {limit: 10})
 
 #### Custom data sources
 ```js
-flow.addStep('widgets', (data) => {
+flow.step('widgets', (data) => {
   return JSON.parse(fs.readFileSync('./widgets.json', 'utf8'))
 })
 ```
 
 #### Async flow steps
 ```js
-flow.addAsyncStep('widgets', (data, callback) => {
+flow.asyncStep('widgets', (data, callback) => {
   fs.readFile('./widgets.json', 'utf8', (err, content) => {
     if (err) return flow.fail(err);
     callback(content);
@@ -219,12 +203,12 @@ flow.repeatStep('issues_page', github.get('/issues'), (data) => {
 #### Handle errors explicitly
 
 ```js
-flow.addStep('messages', gmail.get('/messages'), {limit: 10})
+flow.step('messages', gmail.get('/messages'), {limit: 10})
     .catch((err, data) => {
        if (err.status === 401) data.messages = [];
        else flow.fail(err);
     })
-    .addStep('add_issues', github.post('/issues'), (data) => {
+    .step('add_issues', github.post('/issues'), (data) => {
       if (!messages.length) return flow.succeed();
       return data.messages.map(message => {
         title: message.subject,
@@ -374,8 +358,8 @@ You can keep multiple accounts inside `./credentials/{service}.json`:
 ```
 
 ```js
-flow.addStep('messages', gmail.as('bobby').get('/messages'))
-    .addStep('copy_messages', gmail.as('andrew').post('/drafts'), (data) => {
+flow.step('messages', gmail.as('bobby').get('/messages'))
+    .step('copy_messages', gmail.as('andrew').post('/drafts'), (data) => {
       return data.messages.map(message => {
         to: message.to,
         subject: message.subject,
