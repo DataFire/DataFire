@@ -5,7 +5,7 @@ Users will be able to run Dataflows on their own AWS account, or on DataFire.
 
 ## Installation
 You'll need to install DataFire both globally and as a project dependency.
-```bash
+```
 npm install -g bobby-brennan/datafire
 npm install --save bobby-brennan/datafire
 ```
@@ -15,7 +15,7 @@ This quick tutorial will fetch issues from a repository on GitHub, and copy them
 a local file.
 
 First, let's add the GitHub integration:
-```bash
+```
 datafire integrate --name github
 ```
 
@@ -40,7 +40,7 @@ flow.step('issues',
 ```
 
 Now let's run it:
-```bash
+```
 datafire run -f ./copyIssues.js
 ```
 You should see `issues.json` in your current directory.
@@ -81,19 +81,19 @@ functions:
 ## Add an Integration
 Integrations can be added by name (using [APIs.guru](http://apis.guru)) or by
 the URL of an Open API (Swagger) specification:
-```bash
+```
 datafire integrate --name gmail
 datafire integrate --url https://api.foobar.com/openapi.json
 ```
 This will copy the API specification into the `./integrations` directory in your current folder.
 
 To see a list of available integrations, run:
-```bash
+```
 datafire list --all
 ```
 
 To see the integrations you have installed, run:
-```bash
+```
 datafire list
 ```
 
@@ -105,7 +105,7 @@ to convert it to Open API 2.0
 ## Exploring Integrations
 Once an integration is installed, you can use DataFire to view
 the available operations and their parameters:
-```bash
+```
 $ datafire integrate -n googleapis.com:youtube --as youtube
 $ datafire describe --i youtube
 
@@ -121,7 +121,7 @@ Posts a bulletin for a specific channel. (The user submitting the request must b
 ```
 
 To learn more about an operation, you can either specify its id or method and path:
-```bash
+```
 $ datafire describe --i youtube -o youtube.activities.list
 
 GET     /activities
@@ -174,7 +174,7 @@ flow.step('issues',
           () => ({repo: flow.options.repo, username: flow.options.username}))
 ```
 
-```bash
+```
 datafire run -f ./copyIssues.js --options.username="expressjs" --options.repo="express"
 ```
 
@@ -243,7 +243,7 @@ functions:
 ```
 
 ## Exploring Integrations
-```bash
+```
 $ datafire list
 gmail
 github
@@ -330,7 +330,7 @@ For running on AWS, `./credentials/{integration}.json` should contain
 * client_id
 * client_secret
 
-```bash
+```
 $ datafire authenticate github
 Enter your client_id:
 > asdfasfds
@@ -346,7 +346,7 @@ Enter a refresh_token (optional):
 For running on DataFire, you can either specify credentials as above or
 utilize DataFire's client:
 
-```bash
+```
 $ datafire authenticate github --remote
 Which scopes (separate with commas)?
 user:email
