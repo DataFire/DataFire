@@ -79,7 +79,7 @@ let logDescription = (str) => {
 }
 
 integrations.describe = (args) => {
-  let integration = new datafire.Integration(args.name);
+  let integration = new datafire.Integration(args.name || args.integration);
   integration.initialize(err => {
     let spec = integration.spec;
     console.log('\n');
@@ -95,7 +95,7 @@ integrations.describe = (args) => {
       Object.keys(spec.paths[path]).forEach(method => {
         let op = spec.paths[path][method];
         if (args.operation) {
-          let fakeOpId = new RegExp(method + '\\s+' + path, 'i');
+          let fakeOpId = new RegExp('^\s*' + method + '\\s+' + path + '\s*$', 'i');
           if (args.operation !== op.operationId && !args.operation.match(fakeOpId)) {
             return;
           }
@@ -151,6 +151,7 @@ integrations.describeOperation = (method, path, op, verbose) => {
     let ret = {parameter: p.name};
     ret.type = chalkType(p.in === 'body' ? 'object': p.type);
     ret.required = p.required ? chalk.red('yes') : '';
+    ret.default = p.default;
     if (p.description) {
       ret.description = chalk.gray(p.description);
     }
