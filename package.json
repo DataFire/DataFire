@@ -1,0 +1,22 @@
+{
+  "name": "datafire",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "datafire": "bin/datafire"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bobby-brennan/datafire-v2.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bobby-brennan/datafire-v2/issues"
+  },
+  "homepage": "https://github.com/bobby-brennan/datafire-v2#readme"
+}
