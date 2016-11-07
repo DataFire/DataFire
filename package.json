@@ -22,6 +22,7 @@
   "dependencies": {
     "btoa": "^1.1.2",
     "request": "^2.78.0",
-    "swagger-parser": "^3.4.1"
+    "swagger-parser": "^3.4.1",
+    "yargs": "^6.3.0"
   }
 }
