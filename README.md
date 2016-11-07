@@ -103,6 +103,7 @@ If your API is in a different specification format, such as
 to convert it to Open API 2.0
 
 ## Exploring Integrations
+![Exploing Integrations](./docs/flow.gif)
 Once an integration is installed, you can use DataFire to view
 the available operations and their parameters:
 ```
