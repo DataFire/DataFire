@@ -49,7 +49,9 @@ let integrateURL = (name, url, cb) => {
     if (err) throw err;
     if (!body.host) throw new Error("Invalid swagger:" + JSON.stringify(body, null, 2))
     name = name || body.host;
-    fs.writeFile(datafire.integrationsDirectory + '/' + name + FILE_SUFFIX, JSON.stringify(body, null, 2), cb);
+    let filename = datafire.integrationsDirectory + '/' + name + FILE_SUFFIX;
+    console.log('Creating integration ' + filename.replace(process.cwd(), '.'));
+    fs.writeFile(filename, JSON.stringify(body, null, 2), cb);
   })
 }
 
