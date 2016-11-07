@@ -150,6 +150,18 @@ let chalkType = (type) => {
   return type;
 }
 
+let chalkCode = (code) => {
+  if (code.startsWith('2')) return chalk.green(code);
+  if (code.startsWith('3')) return chalk.yellow(code);
+  if (code.startsWith('4')) return chalk.orange(code);
+  if (code.startsWith('5')) return chalk.red(code);
+}
+
+let padString = (str, len) => {
+  while (str.length < len) str += ' ';
+  return str;
+}
+
 integrations.describeOperation = (method, path, op, verbose) => {
   console.log(chalkOperation({method, path, operation: op}) + '\n');
   let paramDescriptions = op.parameters.map(p => {
@@ -163,10 +175,37 @@ integrations.describeOperation = (method, path, op, verbose) => {
     return ret;
   })
   console.log(columnify(paramDescriptions, {
+    columnSplitter: '  ',
     config: {
       description: {
         maxWidth: 80
       }
     }
   }));
+  let bestCode = null;
+  for (let code in op.responses) {
+    if (code.startsWith('2') && (!bestCode || code < bestCode)) {
+      bestCode = code;
+    }
+  }
+  let logSchema = (schema, indent) => {
+    indent = indent || '';
+    if (schema.properties) {
+      for (let propName in schema.properties) {
+        let prop = schema.properties[propName];
+        let toLog = indent + padString(propName + ': ', 14) + chalkType(prop.type);
+        if (prop.items && ! prop.items.properties) {
+          toLog += '[' + chalkType(prop.items.type) + ']'
+        }
+        console.log(toLog);
+        if (prop.properties) {
+          logSchema(prop, indent + '  ')
+        } else if (prop.items && prop.items.properties) {
+          logSchema(schema.properties[prop].items, indent + '  ')
+        }
+      }
+    }
+  }
+  console.log('\nRESPONSE')
+  logSchema(op.responses[bestCode].schema);
 }
