@@ -4,11 +4,11 @@
 Below is an example of DataFlow code:
 
 ```js
-let datafire = require('datafire');
-let gmail = new datafire.Integration('gmail');
-let github = new datafire.Integration('github');
+const datafire = require('datafire');
+const gmail = new datafire.Integration('gmail');
+const github = new datafire.Integration('github');
 
-let flow = module.exports = new datafire.Dataflow();
+const flow = module.exports = new datafire.Dataflow();
 flow.step('messages', gmail.get('/messages'), {limit: 10})
     .step('add_issues', github.post('/issues'), (data) => {
       if (!data.messages.length) return flow.fail("No messages found");
