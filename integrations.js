@@ -104,6 +104,7 @@ integrations.describe = (args) => {
             return;
           }
           integrations.describeOperation(method, path, op, args.operation ? true : false);
+          console.log();
           didLog = true;
         } else {
           opDescriptions.push({
