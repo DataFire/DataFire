@@ -26,11 +26,12 @@ const datafire = require('datafire');
 
 let github = new datafire.Integration('github');
 
-let flow = module.exports = new datafire.Flow('copyIssues', 'Copies issues from GitHub to a local file');
+let flow = module.exports =
+      new datafire.Flow('copyIssues', 'Copies issues from GitHub to a local file');
 
 flow.setDefaults({
-  username: 'bobby-brennan',
-  repo: 'rss-parser',
+  username: 'torvalds',
+  repo: 'linux',
 });
 flow.step('issues',
           github.get('/repos/{owner}/{repo}/issues'),
@@ -48,6 +49,11 @@ datafire run -f ./copyIssues.js
 ```
 
 You should see `issues.json` in your current directory.
+
+You can also set options via the command line:
+```bash
+datafire run -f ./copyIssues.js --options.username="expressjs" --options.repo="express"
+```
 
 ## Serverless Execution
 To run a flow on a regular schedule, you can use [crontab](https://en.wikipedia.org/wiki/Cron),
