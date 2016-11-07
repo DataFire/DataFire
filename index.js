@@ -8,7 +8,8 @@ let args = require('yargs')
 
 let cmd = args._[0];
 
-if (cmd === 'integrate') {
-  require('./integrate')(args._[1]);
+if (cmd === 'integrate' || cmd === 'list' || cmd === 'describe') {
+  require('./integrations')[cmd](args);
 }
+
 
