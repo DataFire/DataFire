@@ -25,21 +25,23 @@ let sortOperations = (op1, op2) => {
 
 integrations.integrate = (args, cb) => {
   cb = cb || ((err) => {if (err) throw err});
-  if (args.url) {
-    integrateURL(args.as || args.name, args.url, cb);
-  } else {
-    request.get(APIS_GURU_URL, {json: true}, (err, resp, body) => {
-      if (err) return cb(err);
-      let keys = Object.keys(body);
-      let validKeys = keys.filter(k => k.indexOf(args.name) !== -1);
-      if (validKeys.length === 0) cb(new Error("API " + args.name + " not found"));
-      let exactMatch = validKeys.filter(f => f === args.name)[0];
-      if (validKeys.length > 1 && !exactMatch) cb(new Error("Ambiguous API name: " + args.name + "\n\nPlease choose one of:\n" + validKeys.join('\n')));
-      let info = body[exactMatch || validKeys[0]];
-      let url = info.versions[info.preferred].swaggerUrl;
-      integrateURL(args.as || args.name, url, cb);
-    })
-  }
+  fs.mkdir('./integrations', (err) => {
+    if (args.url) {
+      integrateURL(args.as || args.name, args.url, cb);
+    } else {
+      request.get(APIS_GURU_URL, {json: true}, (err, resp, body) => {
+        if (err) return cb(err);
+        let keys = Object.keys(body);
+        let validKeys = keys.filter(k => k.indexOf(args.name) !== -1);
+        if (validKeys.length === 0) cb(new Error("API " + args.name + " not found"));
+        let exactMatch = validKeys.filter(f => f === args.name)[0];
+        if (validKeys.length > 1 && !exactMatch) cb(new Error("Ambiguous API name: " + args.name + "\n\nPlease choose one of:\n" + validKeys.join('\n')));
+        let info = body[exactMatch || validKeys[0]];
+        let url = info.versions[info.preferred].swaggerUrl;
+        integrateURL(args.as || args.name, url, cb);
+      })
+    }
+  })
 }
 
 let integrateURL = (name, url, cb) => {
