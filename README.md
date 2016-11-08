@@ -5,9 +5,8 @@ DataFire is an open-source integration framework. It is built on top of
 [Serverless framework](https://github.com/serverless/serverless) for running flows
 on AWS.
 
-DataFire natively supports over 250 public APIs via
-[APIs.guru](https://github.com/APIs-guru/openapi-directory)
-including:
+DataFire natively supports over
+[250 public APIs](https://github.com/APIs-guru/openapi-directory) including:
 * Slack
 * GitHub
 * Twilio
