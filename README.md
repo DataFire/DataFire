@@ -42,7 +42,9 @@ datafire describe gmail -o "GET /{userId}/messages"    # Alternative operation n
 datafire authenticate gmail   # Store credentials for later use
 
 # Make a test call to the API
-datafire call gmail -o gmail.users.messages.list --as account_alias  
+datafire call github -o "GET /users"
+datafire call gmail -o gmail.users.messages.list --as account_alias  # Use stored credentials
+datafire call hacker_news -o getStories --params.storyType job
 
 # Run a dataflow script (see below)
 datafire run ./getMessages.js  
