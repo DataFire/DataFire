@@ -45,9 +45,11 @@ const flow = module.exports =
 flow.step('stories',
           hn.get('/{storyType}stories.json'),
           {storyType: 'top'})
+
     .step('story',
           hn.get('/item/{itemID}.json'),
           (data) => ({itemID: data.stories[0]}))
+
     .step('write_file',
           (data) => {
             fs.writeFileSync('./story.json', JSON.stringify(data.story, null, 2));
