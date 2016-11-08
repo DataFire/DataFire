@@ -1,7 +1,6 @@
 let fs = require('fs');
 let request = require('request');
 let chalk = require('chalk');
-let columnify = require('columnify');
 
 let logger = require('./lib/logger');
 let datafire = require('./index');
@@ -65,21 +64,26 @@ let integrateURL = (name, url, cb) => {
   })
 }
 
-integrations.list = (args, cb) => {
-  cb = cb || ((err, data) => {
-    if (err) throw err;
-    logger.log(data.join("\n"));
-  })
+integrations.list = (args) => {
   if (args.all) {
     request.get(APIS_GURU_URL, {json: true}, (err, resp, body) => {
-      if (err) return cb(err);
+      if (err) throw err;
       let keys = Object.keys(body);
-      cb(null, keys);
+      keys.forEach(k => {
+        let api = body[k];
+        api = api.versions[api.preferred];
+        logger.log(chalk.magenta(k));
+        logDescription(api.info.description);
+        logger.log();
+      });
     });
   } else {
     fs.readdir(datafire.integrationsDirectory, (err, files) => {
       if (err) return cb(err);
-      cb(null, files.map(f => f.substring(0, f.length - FILE_SUFFIX.length)))
+      files.forEach(f => {
+        let name = f.substring(0, f.length - FILE_SUFFIX.length);
+        logger.log(chalk.magenta(name));
+      })
     })
   }
 }
@@ -89,7 +93,7 @@ let logDescription = (str) => {
   if (str.length > MAX_DESCRIPTION_LENGTH) {
     str = str.substring(0, MAX_DESCRIPTION_LENGTH) + '...';
   }
-  logger.log(chalk.gray(str));
+  logger.log(chalk.gray(str.trim()));
 }
 
 integrations.describe = (args) => {
