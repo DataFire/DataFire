@@ -18,22 +18,54 @@ DataFire natively supports over
 * YouTube
 
 ## Installation
-You'll need to install DataFire both globally and as a project dependency.
+Install DataFire both globally and as a project dependency.
 ```
 npm install -g bobby-brennan/datafire
 npm install --save bobby-brennan/datafire
 ```
 
-## Quickstart
+## Exploring Integrations
+![Exploing Integrations](./docs/explore.gif)
+
+## Commands
+```
+datafire list -a   # View all available integrations
+datafire list      # View installed integrations
+
+datafire integrate gmail   # Add integrations by name (or a substring)
+
+datafire describe gmail                                # Show info and operations
+datafire describe gmail -o gmail.users.messages.list   # Show operation details
+datafire describe gmail -o "GET /{userId}/messages"    # Alternative operation name
+
+# Auth details are stored in ./credentials/
+# Be sure to add 'credentials/' to your .gitignore
+datafire authenticate gmail   
+
+# Make a test call to the API
+datafire call gmail -o gmail.users.messages.list --as account_alias  
+
+# Run a dataflow script (see below)
+datafire run ./getMessages.js  
+```
+
+## Writing Flows
+> See [Flows.md](./Flows.md) for the full documentation
+
+### Quickstart
+> You can view this flow in the [examples directory](./examples/quickstart).
+
 This quick tutorial will fetch stories from Hacker News, get the details
 for the top story, then store the results to a local file.
 
-First, let's add the Hacker News integration:
+First, let's create a new folder and add the Hacker News integration:
 ```
+mkdir hacker_news_flow
+cd hacker_news_flow
 datafire integrate hacker_news
 ```
 
-Now we need to create a Flow. Edit `./getTopStory.js`:
+Now we can create a Flow. Edit `./getTopStory.js`:
 ```js
 const datafire = require('datafire');
 const fs = require('fs');
@@ -64,37 +96,6 @@ Now let's run it:
 datafire run -f ./getTopStory.js
 ```
 You should see `story.json` in your current directory.
-
-## Exploring Integrations
-![Exploing Integrations](./docs/explore.gif)
-
-You can view a list of all available integrations by running
-```
-datafire list -a
-```
-
-Add any integration by specifying its name (or a substring):
-```
-datafire integrate gmail
-```
-
-To see the integrations you have installed, run:
-```
-datafire list
-```
-
-Once an integration is installed, you can use DataFire to view
-the available operations and their parameters:
-```
-datafire integrate gmail
-datafire describe gmail
-```
-
-To learn more about an operation, you can either specify its id or its method and path:
-```
-$ datafire describe gmail --operation gmail.users.messages.list
-```
-
 ## Add a Custom Integration
 Integrations can be added by the URL of an Open API (Swagger) specification:
 ```
@@ -106,16 +107,6 @@ This will copy the API specification into the `./integrations` directory in your
 If your API is in a different specification format, such as
 **RAML** or **API Blueprint**, you can use [lucybot/api-spec-converter](https://github.com/lucybot/api-spec-converter)
 to convert it to Open API 2.0
-
-## Writing Flows
-Flows are a series of asynchronous steps. Each step will generally make one or more calls
-to a given API endpoint, and store the resulting data in the `data` object. However,
-you can add steps that execute any arbitrary code.
-
-Flows use a waterfall design pattern - each step has access to the data returned in all
-previous steps, and can use this data to construct its request.
-
-See [Flows.md](./Flows.md) for the full documentation on building flow steps, handling errors, etc.
 
 ## Serverless Execution
 To run a flow on a regular schedule, you can use [crontab](https://en.wikipedia.org/wiki/Cron),
