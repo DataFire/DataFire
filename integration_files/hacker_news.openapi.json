@@ -23,7 +23,6 @@
             "name": "storyType",
             "description": "The type of stories to retrieve\n",
             "type": "string",
-            "default": "show",
             "enum": [
               "top",
               "new",
@@ -65,7 +64,6 @@
           {
             "in": "path",
             "name": "itemID",
-            "default": 8863,
             "description": "The ID of the item to retrieve",
             "required": true,
             "type": "integer"
@@ -111,7 +109,6 @@
           {
             "in": "path",
             "name": "username",
-            "default": "norvig",
             "description": "The unique username for this user",
             "required": true,
             "type": "string"
