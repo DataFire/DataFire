@@ -3,6 +3,7 @@ const logger = require('../lib/logger');
 
 module.exports = (args) => {
   let integration = new datafire.Integration(args.integration);
+  if (args.as) integration.as(args.as);
   integration.initialize(err => {
     if (err) throw err;
     let op = integration.resolveOperation(args.operation);
