@@ -7,7 +7,7 @@ on AWS Lambda.
 
 DataFire natively supports over
 [250 public APIs](https://github.com/APIs-guru/openapi-directory) including:
-* Slack
+Slack &bull; GitHub
 * GitHub
 * Twilio
 * Trello
