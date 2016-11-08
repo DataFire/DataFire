@@ -27,7 +27,7 @@ npm install --save bobby-brennan/datafire
 ## Exploring Integrations
 ![Exploing Integrations](./docs/explore.gif)
 
-#### Commands
+## Commands
 ```
 datafire list -a   # View all available integrations
 datafire list      # View installed integrations
@@ -37,28 +37,16 @@ datafire integrate gmail   # Add integrations by name (or a substring)
 datafire describe gmail                                # Show info and operations
 datafire describe gmail -o gmail.users.messages.list   # Show operation details
 datafire describe gmail -o "GET /{userId}/messages"    # Alternative operation name
-```
 
-Add any integration by specifying its name (or a substring):
-```
-datafire integrate gmail
-```
+# Auth details are stored in ./credentials/
+# Be sure to add 'credentials/' to your .gitignore
+datafire authenticate gmail   
 
-To see the integrations you have installed, run:
-```
-datafire list
-```
+# Make a test call to the API
+datafire call gmail -o gmail.users.messages.list --as account_alias  
 
-Once an integration is installed, you can use DataFire to view
-the available operations and their parameters:
-```
-datafire integrate gmail
-datafire describe gmail
-```
-
-To learn more about an operation, you can either specify its id or its method and path:
-```
-$ datafire describe gmail --operation gmail.users.messages.list
+# Run a dataflow script (see below)
+datafire run ./getMessages.js  
 ```
 
 ## Writing Flows
