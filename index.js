@@ -28,7 +28,6 @@ if (cmd === 'integrate' || cmd === 'list' || cmd === 'describe') {
       flow.options[key] = args.options[key];
     }
   }
-  console.log('opts', flow.options);
   flow.execute((err) => {
     if (err) throw err;
   });
