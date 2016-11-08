@@ -31,4 +31,11 @@ if (cmd === 'integrate' || cmd === 'list' || cmd === 'describe') {
   flow.execute((err) => {
     if (err) throw err;
   });
+} else if (cmd === 'call') {
+  let integration = new datafire.Integration(args.integration);
+  let op = integration.resolveOperation(args.operation);
+  op.request({}, (err, data) => {
+    if (err) throw err;
+    console.log(data);
+  });
 }

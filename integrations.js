@@ -95,6 +95,7 @@ let logDescription = (str) => {
 integrations.describe = (args) => {
   let integration = new datafire.Integration(args.name || args.integration);
   integration.initialize(err => {
+    if (err) throw err;
     let spec = integration.spec;
     logger.log('\n');
     if (!args.operation) {
@@ -102,43 +103,35 @@ integrations.describe = (args) => {
       logger.log(chalk.blue(url));
       logDescription(spec.info.description);
       logger.log('\n');
-    }
-    let opDescriptions = [];
-    didLog = false;
-    Object.keys(spec.paths).forEach(path => {
-      Object.keys(spec.paths[path]).forEach(method => {
-        let op = spec.paths[path][method];
-        if (args.operation) {
-          let fakeOpId = new RegExp('^\s*' + method + '\\s+' + path + '\s*$', 'i');
-          if (args.operation !== op.operationId && !args.operation.match(fakeOpId)) {
-            return;
-          }
-          integrations.describeOperation(method, path, op, args.operation ? true : false);
-          logger.log();
-          didLog = true;
-        } else {
-          opDescriptions.push({
-            method: method,
-            path: path,
-            operation: op,
-          })
-        }
-      });
-    });
-    if (args.operation) {
-      if (!didLog) throw new Error("Operation " + args.operation + " not found");
+      integrations.describeOperations(spec);
     } else {
-      opDescriptions.sort(sortOperations);
-      opDescriptions.forEach(desc => {
-        logger.log(logger.chalkOperation(desc) + '\n');
-      })
+      let operation = integration.resolveOperation(args.operation);
+      integrations.describeOperation(operation.method, operation.path, operation.resolve());
     }
   });
 }
 
+integrations.describeOperations = (spec) => {
+  let opDescriptions = [];
+  Object.keys(spec.paths).forEach(path => {
+    Object.keys(spec.paths[path]).forEach(method => {
+      let op = spec.paths[path][method];
+      opDescriptions.push({
+        method: method,
+        path: path,
+        operation: op,
+      })
+    });
+  });
+  opDescriptions.sort(sortOperations);
+  opDescriptions.forEach(desc => {
+    logger.log(logger.chalkOperation(desc.method, desc.path, desc.operation.operationId, desc.operation.description) + '\n');
+  })
+}
 
-integrations.describeOperation = (method, path, op, verbose) => {
-  logger.log(logger.chalkOperation({method, path, operation: op}) + '\n');
+
+integrations.describeOperation = (method, path, op) => {
+  logger.log(logger.chalkOperation(method, path, op.operationId, op.description) + '\n');
   logger.logParameters(op.parameters);
   let bestCode = null;
   for (let code in op.responses) {
