@@ -94,33 +94,13 @@ functions:
       - http: POST /copyIssues
 ```
 
-## Add an Integration
-Integrations can be added by name (using [APIs.guru](http://apis.guru)) or by
-the URL of an Open API (Swagger) specification:
-```
-datafire integrate --name gmail
-datafire integrate --url https://api.foobar.com/openapi.json
-```
-This will copy the API specification into the `./integrations` directory in your current folder.
-
-To see a list of available integrations, run:
-```
-datafire list --all
-```
-
-To see the integrations you have installed, run:
-```
-datafire list
-```
-
-### Specification Formats
-If your API is in a different specification format, such as
-**RAML** or **API Blueprint**, you can use [lucybot/api-spec-converter](https://github.com/lucybot/api-spec-converter)
-to convert it to Open API 2.0
-
 ## Exploring Integrations
 ![Exploing Integrations](./docs/flow.gif)
 
+You can view a list of all available integrations by running
+```
+datafire list -a
+```
 
 Once an integration is installed, you can use DataFire to view
 the available operations and their parameters:
@@ -161,3 +141,26 @@ home            boolean                  Set this parameter's value to true to r
                                          on the YouTube home page for the currently authenticated user.
 ```
 
+## Add an Integration
+Integrations can be added by name (using [APIs.guru](http://apis.guru)) or by
+the URL of an Open API (Swagger) specification:
+```
+datafire integrate --name gmail
+datafire integrate --url https://api.foobar.com/openapi.json
+```
+This will copy the API specification into the `./integrations` directory in your current folder.
+
+To see a list of available integrations, run:
+```
+datafire list --all
+```
+
+To see the integrations you have installed, run:
+```
+datafire list
+```
+
+### Specification Formats
+If your API is in a different specification format, such as
+**RAML** or **API Blueprint**, you can use [lucybot/api-spec-converter](https://github.com/lucybot/api-spec-converter)
+to convert it to Open API 2.0
