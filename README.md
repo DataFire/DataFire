@@ -104,36 +104,34 @@ You can view a list of all available integrations by running
 datafire list -a
 ```
 
-Once an integration is installed, you can use DataFire to view
-the available operations and their parameters:
+Add any integration by specifying its name (or a substring):
 ```
-datafire integrate -n googleapis.com:youtube --as youtube
-datafire describe --i youtube
-```
-
-To learn more about an operation, you can either specify its id or method and path:
-```
-$ datafire describe --i youtube -o youtube.activities.list
-```
-
-## Add an Integration
-Integrations can be added by name (using [APIs.guru](http://apis.guru)) or by
-the URL of an Open API (Swagger) specification:
-```
-datafire integrate --name gmail
-datafire integrate --url https://api.foobar.com/openapi.json
-```
-This will copy the API specification into the `./integrations` directory in your current folder.
-
-To see a list of available integrations, run:
-```
-datafire list --all
+datafire integrate gmail
 ```
 
 To see the integrations you have installed, run:
 ```
 datafire list
 ```
+
+Once an integration is installed, you can use DataFire to view
+the available operations and their parameters:
+```
+datafire integrate gmail
+datafire describe gmail
+```
+
+To learn more about an operation, you can either specify its id or its method and path:
+```
+$ datafire describe gmail --operation gmail.users.messages.list
+```
+
+## Add a Custom Integration
+Integrations can be added by the URL of an Open API (Swagger) specification:
+```
+datafire integrate --url https://api.foobar.com/openapi.json
+```
+This will copy the API specification into the `./integrations` directory in your current folder.
 
 ### Specification Formats
 If your API is in a different specification format, such as
