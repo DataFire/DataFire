@@ -129,7 +129,7 @@ $ datafire describe gmail --operation gmail.users.messages.list
 ## Add a Custom Integration
 Integrations can be added by the URL of an Open API (Swagger) specification:
 ```
-datafire integrate --url https://api.foobar.com/openapi.json
+datafire integrate --url https://api.foobar.com/openapi.json --as foobar
 ```
 This will copy the API specification into the `./integrations` directory in your current folder.
 
