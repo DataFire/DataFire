@@ -7,8 +7,11 @@ module.exports = (args) => {
     if (err) throw err;
     let op = integration.resolveOperation(args.operation);
     op.request(args.params || {}, (err, data) => {
-      if (err) throw err;
-      logger.log();
+      if (err) {
+        logger.logError("Request failed: " + err.statusCode);
+      } else {
+        logger.logSuccess("Success");
+      }
       logger.logJSON(data);
       logger.log();
     });
