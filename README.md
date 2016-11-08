@@ -50,7 +50,7 @@ datafire run ./getMessages.js
 ```
 
 ## Writing Flows
-> See [Flows.md](./Flows.md) for the full documentation
+> See [Flows.md](./docs/Flows.md) for the full documentation
 
 ### Quickstart
 > You can view this flow in the [examples directory](./examples/quickstart).
