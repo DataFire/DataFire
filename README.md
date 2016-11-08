@@ -52,7 +52,7 @@ datafire run ./getMessages.js
 ## Writing Flows
 > See [Flows.md](./Flows.md) for the full documentation
 
-#### Quickstart
+### Quickstart
 > You can view this flow in the [examples directory](./examples/quickstart).
 
 This quick tutorial will fetch stories from Hacker News, get the details
