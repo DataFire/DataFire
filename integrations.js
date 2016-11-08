@@ -64,6 +64,11 @@ let integrateURL = (name, url, cb) => {
   })
 }
 
+let stripHtml = function(str) {
+  str = str || '';
+  return str.replace(/<(?:.|\n)*?>/gm, '');
+}
+
 integrations.list = (args) => {
   if (args.all) {
     request.get(APIS_GURU_URL, {json: true}, (err, resp, body) => {
@@ -73,7 +78,7 @@ integrations.list = (args) => {
         let api = body[k];
         api = api.versions[api.preferred];
         logger.log(chalk.magenta(k));
-        logDescription(api.info.description);
+        logDescription(stripHtml(api.info.description));
         logger.log();
       });
     });
