@@ -1,4 +1,4 @@
-# Dataflow code
+# Flows
 Below is an example of DataFlow code:
 
 ```js

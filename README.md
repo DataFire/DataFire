@@ -3,7 +3,7 @@
 DataFire is an open-source integration framework. It is built on top of
 [Open API](https://github.com/OAI/OpenAPI-Specification) and integrates with the
 [Serverless framework](https://github.com/serverless/serverless) for running flows
-on AWS.
+on AWS Lambda.
 
 DataFire natively supports over
 [250 public APIs](https://github.com/APIs-guru/openapi-directory) including:
@@ -33,7 +33,7 @@ First, let's add the Hacker News integration:
 datafire integrate hacker_news
 ```
 
-Now we need to create a Flow. Edit `./copyIssues.js`:
+Now we need to create a Flow. Edit `./getTopStory.js`:
 ```js
 const datafire = require('datafire');
 const fs = require('fs');
@@ -45,26 +45,30 @@ const flow = module.exports =
 flow.step('stories',
           hn.get('/{storyType}stories.json'),
           {storyType: 'top'})
-    .step('story',
+
+    .step('story_details',
           hn.get('/item/{itemID}.json'),
-          (data) => ({itemID: data.stories[0]}))
+          data => {
+            return {itemID: data.stories[0]}
+          })
+
     .step('write_file',
-          (data) => {
-            fs.writeFileSync('./story.json', JSON.stringify(data.story, null, 2));
+          data => {
+            fs.writeFileSync('./story.json', JSON.stringify(data.story_details, null, 2));
           })
 
 ```
 
 Now let's run it:
 ```
-datafire run -f ./copyIssues.js
+datafire run -f ./getTopStory.js
 ```
-You should see `issues.json` in your current directory.
+You should see `story.json` in your current directory.
 
 ## Writing Flows
 Flows are a series of asynchronous steps. Each step will generally make one or more calls
 to a given API endpoint, and store the resulting data in the `data` object. However,
-you can add steps that execute any asynchronous function.
+you can add steps that execute any arbitrary code.
 
 Flows use a waterfall design pattern - each step has access to the data returned in all
 previous steps, and can use this data to construct its request.
@@ -102,63 +106,34 @@ You can view a list of all available integrations by running
 datafire list -a
 ```
 
-Once an integration is installed, you can use DataFire to view
-the available operations and their parameters:
+Add any integration by specifying its name (or a substring):
 ```
-$ datafire integrate -n googleapis.com:youtube --as youtube
-$ datafire describe --i youtube
-
-GET     /activities
-youtube.activities.list
-Returns a list of channel activity events that match the request criteria. For example, you can retrieve events associated with a particular channel, events associated with the user's subscriptions and Google+ friends, or the YouTube home page feed, which is customized for each user.
-
-POST    /activities
-youtube.activities.insert
-Posts a bulletin for a specific channel. (The user submitting the request must be authorized to act on the channel's behalf.)
-
-...
-```
-
-To learn more about an operation, you can either specify its id or method and path:
-```
-$ datafire describe --i youtube -o youtube.activities.list
-
-GET     /activities
-youtube.activities.list
-Returns a list of channel activity events that match the request criteria. For example, you can retrieve events associated with a particular channel, events associated with the user's subscriptions and Google+ friends, or the YouTube home page feed, which is customized for each user.
-
-PARAMETER       TYPE    REQUIRED DEFAULT DESCRIPTION                                                                     
-part            string  yes              The part parameter specifies a comma-separated list of one or more activity     
-                                         resource properties that the API response will include.  If the parameter       
-                                         identifies a property that contains child properties, the child properties will 
-                                         be included in the response. For example, in an activity resource, the snippet  
-                                         property contains other properties that identify the type of activity, a display
-                                         title for the activity, and so forth. If you set part=snippet, the API response 
-                                         will also contain all of those nested properties.                               
-channelId       string                   The channelId parameter specifies a unique YouTube channel ID. The API will then
-                                         return a list of that channel's activities.                                     
-home            boolean                  Set this parameter's value to true to retrieve the activity feed that displays  
-                                         on the YouTube home page for the currently authenticated user.
-```
-
-## Add an Integration
-Integrations can be added by name (using [APIs.guru](http://apis.guru)) or by
-the URL of an Open API (Swagger) specification:
-```
-datafire integrate --name gmail
-datafire integrate --url https://api.foobar.com/openapi.json
-```
-This will copy the API specification into the `./integrations` directory in your current folder.
-
-To see a list of available integrations, run:
-```
-datafire list --all
+datafire integrate gmail
 ```
 
 To see the integrations you have installed, run:
 ```
 datafire list
 ```
+
+Once an integration is installed, you can use DataFire to view
+the available operations and their parameters:
+```
+datafire integrate gmail
+datafire describe gmail
+```
+
+To learn more about an operation, you can either specify its id or its method and path:
+```
+$ datafire describe gmail --operation gmail.users.messages.list
+```
+
+## Add a Custom Integration
+Integrations can be added by the URL of an Open API (Swagger) specification:
+```
+datafire integrate --url https://api.foobar.com/openapi.json --as foobar
+```
+This will copy the API specification into the `./integrations` directory in your current folder.
 
 ### Specification Formats
 If your API is in a different specification format, such as
