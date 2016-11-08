@@ -8,8 +8,6 @@ let datafire = require('./index');
 const APIS_GURU_URL = "https://api.apis.guru/v2/list.json";
 const FILE_SUFFIX = '.openapi.json';
 
-const MAX_DESCRIPTION_LENGTH = 100;
-
 let integrations = module.exports = {};
 
 
@@ -64,11 +62,6 @@ let integrateURL = (name, url, cb) => {
   })
 }
 
-let stripHtml = function(str) {
-  str = str || '';
-  return str.replace(/<(?:.|\n)*?>/gm, '');
-}
-
 integrations.list = (args) => {
   if (args.all) {
     request.get(APIS_GURU_URL, {json: true}, (err, resp, body) => {
@@ -78,7 +71,7 @@ integrations.list = (args) => {
         let api = body[k];
         api = api.versions[api.preferred];
         logger.log(chalk.magenta(k));
-        logDescription(stripHtml(api.info.description));
+        logger.logDescription(api.info.description);
         logger.log();
       });
     });
@@ -93,25 +86,18 @@ integrations.list = (args) => {
   }
 }
 
-let logDescription = (str) => {
-  if (!str) return;
-  if (str.length > MAX_DESCRIPTION_LENGTH) {
-    str = str.substring(0, MAX_DESCRIPTION_LENGTH) + '...';
-  }
-  logger.log(chalk.gray(str.trim()));
-}
-
 integrations.describe = (args) => {
   let integration = new datafire.Integration(args.name || args.integration);
   integration.initialize(err => {
     if (err) throw err;
     let spec = integration.spec;
-    logger.log('\n');
+    logger.log();
     if (!args.operation) {
       let url = spec.schemes[0] + '://' + spec.host + spec.basePath;
+      logger.log(chalk.blue(spec.info.title));
       logger.log(chalk.blue(url));
-      logDescription(spec.info.description);
-      logger.log('\n');
+      logger.logDescription(spec.info.description);
+      logger.log();
       integrations.describeOperations(spec);
     } else {
       let operation = integration.resolveOperation(args.operation);
@@ -134,13 +120,15 @@ integrations.describeOperations = (spec) => {
   });
   opDescriptions.sort(sortOperations);
   opDescriptions.forEach(desc => {
-    logger.log(logger.chalkOperation(desc.method, desc.path, desc.operation.operationId, desc.operation.description) + '\n');
+    logger.logOperation(desc.method, desc.path, desc.operation);
+    logger.log();
   })
 }
 
 
 integrations.describeOperation = (method, path, op) => {
-  logger.log(logger.chalkOperation(method, path, op.operationId, op.description) + '\n');
+  logger.logOperation(method, path, op);
+  logger.log();
   logger.logParameters(op.parameters);
   let bestCode = null;
   for (let code in op.responses) {
