@@ -31,7 +31,7 @@ a local file.
 
 First, let's add the GitHub integration:
 ```
-datafire integrate --name github
+datafire integrate github
 ```
 
 Now we need to create a Flow. Edit `./copyIssues.js`:
