@@ -43,8 +43,10 @@ datafire authenticate gmail   # Store credentials for later use
 
 # Make a test call to the API
 datafire call github -o "GET /users"
-datafire call gmail -o gmail.users.messages.list --as account_alias  # Use stored credentials with --as
-datafire call hacker_news -o getStories --params.storyType job       # Pass parameters with --params.foo
+# Use stored credentials with --as
+datafire call github -o "GET /user" --as account_alias
+# Pass parameters with --params.foo
+datafire call github -i "GET /users/{username}" --params.username torvalds
 
 # Run a dataflow script (see below)
 datafire run ./getMessages.js  
