@@ -1,6 +1,4 @@
-# Flows
-
-## Dataflow code
+# Dataflow code
 Below is an example of DataFlow code:
 
 ```js
@@ -20,10 +18,10 @@ flow.step('messages', gmail.get('/messages'), {limit: 10})
 });
 ```
 
-## API
+# API
 
-### Flow
-#### `constructor(name, description)`
+## Flow
+### `constructor(name, description)`
 Creates a new flow
 
 Example:
@@ -31,7 +29,7 @@ Example:
 let flow = new datafire.Flow('copyStuff', "Copies stuff from here to there");
 ```
 
-#### `step(name, operation, request)`
+### `step(name, operation, request)`
 Adds a new step to the flow.
 * `name` - a name for this step. If `operation` is from a DataFire integration,
 the response will be available in `data[name]`.
@@ -73,7 +71,7 @@ flow.step('user',
           });
 ```
 
-## Using options
+# Exposing options
 You can parameterize your flow with options:
 ```js
 flow.setDefaults({
@@ -93,13 +91,6 @@ datafire run -f ./copyIssues.js --options.username="expressjs" --options.repo="e
 Or via an HTTP request (if you're using Serverless):
 ```
 curl http://something.execute-api.us-east-1.amazonaws.com/dev/copyIssues?username="expresjs"&repo="expres"
-```
-
-#### Custom data sources
-```js
-flow.step('widgets', (data) => {
-  return JSON.parse(fs.readFileSync('./widgets.json', 'utf8'))
-})
 ```
 
 #### Async flow steps
