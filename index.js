@@ -22,12 +22,5 @@ if (args._[1]) {
   args.integration = args.integration || args._[1];
 }
 
-if (cmd === 'integrate' || cmd === 'list' || cmd === 'describe') {
-  require('./commands/integrate')[cmd](args);
-} else if (cmd === 'run') {
-  require('./commands/run')(args);
-} else if (cmd === 'call') {
-  require('./commands/call')(args);
-} else if (cmd === 'authorize') {
-  require('./commands/autorize')(args);
-}
+require('./commands/' + cmd)(args);
+
