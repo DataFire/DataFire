@@ -25,8 +25,8 @@ npm install --save bobby-brennan/datafire
 ```
 
 ## Quickstart
-This quick tutorial will fetch issues from a repository on GitHub, and copy them to
-a local file.
+This quick tutorial will fetch stories from Hacker News, get the details
+for the top story, then store the results to a local file.
 
 First, let's add the Hacker News integration:
 ```
