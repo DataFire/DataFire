@@ -65,39 +65,6 @@ datafire run -f ./getTopStory.js
 ```
 You should see `story.json` in your current directory.
 
-## Writing Flows
-Flows are a series of asynchronous steps. Each step will generally make one or more calls
-to a given API endpoint, and store the resulting data in the `data` object. However,
-you can add steps that execute any arbitrary code.
-
-Flows use a waterfall design pattern - each step has access to the data returned in all
-previous steps, and can use this data to construct its request.
-
-See [Flows.md](./Flows.md) for the full documentation on building flow steps, handling errors, etc.
-
-## Serverless Execution
-To run a flow on a regular schedule, you can use [crontab](https://en.wikipedia.org/wiki/Cron),
-but DataFire also offers native support for execution on AWS Lambda,
-via the [Serverless](https://github.com/serverless/serverless) framework. You can then
-run your flow on a schedule or in response to a webhook.
-
-Just set your handler in `serverless.yml` to `yourFlow.handler`:
-
-```yml
-service: copyIssues
-
-provider:
-  name: aws
-  runtime: nodejs4.3
-
-functions:
-  copyIssues:
-    handler: copyIssues.handler
-    events:
-      - schedule: rate(1 hour)
-      - http: POST /copyIssues
-```
-
 ## Exploring Integrations
 ![Exploing Integrations](./docs/explore.gif)
 
@@ -139,3 +106,36 @@ This will copy the API specification into the `./integrations` directory in your
 If your API is in a different specification format, such as
 **RAML** or **API Blueprint**, you can use [lucybot/api-spec-converter](https://github.com/lucybot/api-spec-converter)
 to convert it to Open API 2.0
+
+## Writing Flows
+Flows are a series of asynchronous steps. Each step will generally make one or more calls
+to a given API endpoint, and store the resulting data in the `data` object. However,
+you can add steps that execute any arbitrary code.
+
+Flows use a waterfall design pattern - each step has access to the data returned in all
+previous steps, and can use this data to construct its request.
+
+See [Flows.md](./Flows.md) for the full documentation on building flow steps, handling errors, etc.
+
+## Serverless Execution
+To run a flow on a regular schedule, you can use [crontab](https://en.wikipedia.org/wiki/Cron),
+but DataFire also offers native support for execution on AWS Lambda,
+via the [Serverless](https://github.com/serverless/serverless) framework. You can then
+run your flow on a schedule or in response to a webhook.
+
+Just set your handler in `serverless.yml` to `yourFlow.handler`:
+
+```yml
+service: copyIssues
+
+provider:
+  name: aws
+  runtime: nodejs4.3
+
+functions:
+  copyIssues:
+    handler: copyIssues.handler
+    events:
+      - schedule: rate(1 hour)
+      - http: POST /copyIssues
+```
