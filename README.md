@@ -24,12 +24,46 @@ npm install -g bobby-brennan/datafire
 npm install --save bobby-brennan/datafire
 ```
 
-## Quickstart
+## Exploring Integrations
+![Exploing Integrations](./docs/explore.gif)
+
+You can view a list of all available integrations by running
+```
+datafire list -a
+```
+
+Add any integration by specifying its name (or a substring):
+```
+datafire integrate gmail
+```
+
+To see the integrations you have installed, run:
+```
+datafire list
+```
+
+Once an integration is installed, you can use DataFire to view
+the available operations and their parameters:
+```
+datafire integrate gmail
+datafire describe gmail
+```
+
+To learn more about an operation, you can either specify its id or its method and path:
+```
+$ datafire describe gmail --operation gmail.users.messages.list
+```
+
+## Writing Flows
+You can see sample flows in the [examples directory](./examples)
+
 This quick tutorial will fetch stories from Hacker News, get the details
 for the top story, then store the results to a local file.
 
-First, let's add the Hacker News integration:
+First, let's create a new folder and add the Hacker News integration:
 ```
+mkdir hacker_news_flow
+cd hacker_news_flow
 datafire integrate hacker_news
 ```
 
@@ -64,37 +98,6 @@ Now let's run it:
 datafire run -f ./getTopStory.js
 ```
 You should see `story.json` in your current directory.
-
-## Exploring Integrations
-![Exploing Integrations](./docs/explore.gif)
-
-You can view a list of all available integrations by running
-```
-datafire list -a
-```
-
-Add any integration by specifying its name (or a substring):
-```
-datafire integrate gmail
-```
-
-To see the integrations you have installed, run:
-```
-datafire list
-```
-
-Once an integration is installed, you can use DataFire to view
-the available operations and their parameters:
-```
-datafire integrate gmail
-datafire describe gmail
-```
-
-To learn more about an operation, you can either specify its id or its method and path:
-```
-$ datafire describe gmail --operation gmail.users.messages.list
-```
-
 ## Add a Custom Integration
 Integrations can be added by the URL of an Open API (Swagger) specification:
 ```
