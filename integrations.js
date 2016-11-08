@@ -137,55 +137,15 @@ integrations.describe = (args) => {
 }
 
 
-let padString = (str, len) => {
-  while (str.length < len) str += ' ';
-  return str;
-}
-
 integrations.describeOperation = (method, path, op, verbose) => {
   logger.log(logger.chalkOperation({method, path, operation: op}) + '\n');
-  let paramDescriptions = op.parameters.map(p => {
-    let ret = {parameter: p.name};
-    ret.type = logger.chalkType(p.in === 'body' ? 'object': p.type);
-    ret.required = p.required ? chalk.red('yes') : '';
-    ret.default = p.default;
-    if (p.description) {
-      ret.description = chalk.gray(p.description);
-    }
-    return ret;
-  })
-  logger.log(columnify(paramDescriptions, {
-    columnSplitter: '  ',
-    config: {
-      description: {
-        maxWidth: 80
-      }
-    }
-  }));
+  logger.logParameters(op.parameters);
   let bestCode = null;
   for (let code in op.responses) {
     if (code.startsWith('2') && (!bestCode || code < bestCode)) {
       bestCode = code;
     }
   }
-  let logSchema = (schema, indent) => {
-    indent = indent || '';
-    if (schema.properties) {
-      for (let propName in schema.properties) {
-        let prop = schema.properties[propName];
-        let toLog = indent + padString(propName + ': ', 14) + logger.chalkType(prop.type);
-        if (prop.items && ! prop.items.properties) {
-          toLog += '[' + logger.chalkType(prop.items.type) + ']'
-        }
-        logger.log(toLog);
-        if (prop.properties) {
-          logSchema(prop, indent + '  ')
-        } else if (prop.items && prop.items.properties) {
-          logSchema(schema.properties[prop].items, indent + '  ')
-        }
-      }
-    }
-  }
   logger.log('\nRESPONSE')
-  logSchema(op.responses[bestCode].schema);
+  logger.logSchema(op.responses[bestCode].schema);
 }
