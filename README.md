@@ -99,7 +99,7 @@ functions:
 ```
 
 ## Exploring Integrations
-![Exploing Integrations](./docs/flow.gif)
+![Exploing Integrations](./docs/explore.gif)
 
 You can view a list of all available integrations by running
 ```
