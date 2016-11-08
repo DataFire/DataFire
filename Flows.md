@@ -20,8 +20,61 @@ flow.step('messages', gmail.get('/messages'), {limit: 10})
 });
 ```
 
-### Using options
-You pass options to your flow via the command line:
+## API
+
+### Flow
+#### `constructor(name, description)`
+Creates a new flow
+
+Example:
+```js
+let flow = new datafire.Flow('copyStuff', "Copies stuff from here to there");
+```
+
+#### `step(name, operation, request)`
+Adds a new step to the flow.
+* `name` - a name for this step. If `operation` is from a DataFire integration,
+the response will be available in `data[name]`.
+* `operation` - either a function or a datafire `Operation`
+* `request` - either a literal object with the parameters to pass to `operation`, or
+a function that returns that literal object
+
+The following two flows are equivalent. The first uses an object literal for `request`,
+while the second wraps it inside a function.
+```js
+let github = new datafire.Integration('github');
+let flow = new datafire.Flow('copyStuff', "Copies stuff from here to there");
+flow.step('user',
+          github.get('/users/{username}'),
+          {username: 'torvalds'})
+```
+
+```js
+let github = new datafire.Integration('github');
+let flow = new datafire.Flow('copyStuff', "Copies stuff from here to there");
+flow.step('user',
+          github.get('/users/{username}'),
+          function(data) {
+            return {username: 'torvalds'}
+          })
+```
+
+You can also chain calls to `step()`. Each step has access to the responses
+from all the previous steps.
+
+```
+flow.step('user',
+          github.get('/users/{username}'),
+          {username: 'torvalds'})
+    .step('repos',
+          github.get('/repos/{owner}/{repo},
+          function(data) {
+            return {owner: data.user.login, repo: 'foobar'}
+          });
+```
+
+## Using options
+You can parameterize your flow with options:
 ```js
 flow.setDefaults({
   username: 'torvalds',
@@ -32,8 +85,14 @@ flow.step('issues',
           () => ({repo: flow.options.repo, username: flow.options.username}))
 ```
 
+You can then pass options via the command line:
 ```
 datafire run -f ./copyIssues.js --options.username="expressjs" --options.repo="express"
+```
+
+Or via an HTTP request (if you're using Serverless):
+```
+curl http://something.execute-api.us-east-1.amazonaws.com/dev/copyIssues?username="expresjs"&repo="expres"
 ```
 
 #### Custom data sources
