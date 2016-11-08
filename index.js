@@ -1,3 +1,5 @@
+let logger = require('./lib/logger');
+
 let datafire = module.exports = {};
 datafire.credentialsDirectory = process.cwd() + '/credentials';
 datafire.integrationsDirectory = process.cwd() + '/integrations';
@@ -11,6 +13,7 @@ let args = require('yargs')
            .alias('u', 'url')
            .alias('o', 'operation')
            .alias('a', 'all')
+           .alias('p', 'params')
            .argv;
 
 let cmd = args._[0];
@@ -34,8 +37,10 @@ if (cmd === 'integrate' || cmd === 'list' || cmd === 'describe') {
 } else if (cmd === 'call') {
   let integration = new datafire.Integration(args.integration);
   let op = integration.resolveOperation(args.operation);
-  op.request({}, (err, data) => {
+  op.request(args.params || {}, (err, data) => {
     if (err) throw err;
-    console.log(data);
+    logger.log();
+    logger.logJSON(data);
+    logger.log();
   });
 }
