@@ -3,6 +3,7 @@ let request = require('request');
 let chalk = require('chalk');
 let columnify = require('columnify');
 
+let logger = require('./lib/logger');
 let datafire = require('./index');
 
 const APIS_GURU_URL = "https://api.apis.guru/v2/list.json";
@@ -59,7 +60,7 @@ let integrateURL = (name, url, cb) => {
     if (!body.host) throw new Error("Invalid swagger:" + JSON.stringify(body, null, 2))
     name = name || body.host;
     let filename = datafire.integrationsDirectory + '/' + name + FILE_SUFFIX;
-    console.log('Creating integration ' + filename.replace(process.cwd(), '.'));
+    logger.log('Creating integration ' + filename.replace(process.cwd(), '.'));
     fs.writeFile(filename, JSON.stringify(body, null, 2), cb);
   })
 }
@@ -67,7 +68,7 @@ let integrateURL = (name, url, cb) => {
 integrations.list = (args, cb) => {
   cb = cb || ((err, data) => {
     if (err) throw err;
-    console.log(data.join("\n"));
+    logger.log(data.join("\n"));
   })
   if (args.all) {
     request.get(APIS_GURU_URL, {json: true}, (err, resp, body) => {
@@ -88,19 +89,19 @@ let logDescription = (str) => {
   if (str.length > MAX_DESCRIPTION_LENGTH) {
     str = str.substring(0, MAX_DESCRIPTION_LENGTH) + '...';
   }
-  console.log(chalk.gray(str));
+  logger.log(chalk.gray(str));
 }
 
 integrations.describe = (args) => {
   let integration = new datafire.Integration(args.name || args.integration);
   integration.initialize(err => {
     let spec = integration.spec;
-    console.log('\n');
+    logger.log('\n');
     if (!args.operation) {
       let url = spec.schemes[0] + '://' + spec.host + spec.basePath;
-      console.log(chalk.blue(url));
+      logger.log(chalk.blue(url));
       logDescription(spec.info.description);
-      console.log('\n');
+      logger.log('\n');
     }
     let opDescriptions = [];
     didLog = false;
@@ -113,7 +114,7 @@ integrations.describe = (args) => {
             return;
           }
           integrations.describeOperation(method, path, op, args.operation ? true : false);
-          console.log();
+          logger.log();
           didLog = true;
         } else {
           opDescriptions.push({
@@ -129,42 +130,12 @@ integrations.describe = (args) => {
     } else {
       opDescriptions.sort(sortOperations);
       opDescriptions.forEach(desc => {
-        console.log(chalkOperation(desc) + '\n');
+        logger.log(logger.chalkOperation(desc) + '\n');
       })
     }
   });
 }
 
-let chalkOperation = (op) => {
-  let str = chalkMethod(op.method) + '\t' + op.path;
-  if (op.operation.operationId) str += '\n' + chalk.magenta(op.operation.operationId);
-  if (op.operation.description) str += '\n' + chalk.gray(op.operation.description);
-  return str;
-}
-
-let chalkMethod = (method) => {
-  method = method.toUpperCase();
-  if (method === 'GET') return chalk.green(method);
-  if (method === 'PUT' || method === 'POST' || method === 'PATCH') return chalk.yellow(method);
-  if (method === 'DELETE') return chalk.red(method);
-  return method;
-}
-
-let chalkType = (type) => {
-  type = type || 'string';
-  if (type === 'string') return chalk.green(type);
-  if (type === 'integer' || type === 'number') return chalk.blue(type);
-  if (type === 'boolean') return chalk.yellow(type);
-  if (type === 'array' || type === 'object') return chalk.magenta(type);
-  return type;
-}
-
-let chalkCode = (code) => {
-  if (code.startsWith('2')) return chalk.green(code);
-  if (code.startsWith('3')) return chalk.yellow(code);
-  if (code.startsWith('4')) return chalk.orange(code);
-  if (code.startsWith('5')) return chalk.red(code);
-}
 
 let padString = (str, len) => {
   while (str.length < len) str += ' ';
@@ -172,10 +143,10 @@ let padString = (str, len) => {
 }
 
 integrations.describeOperation = (method, path, op, verbose) => {
-  console.log(chalkOperation({method, path, operation: op}) + '\n');
+  logger.log(logger.chalkOperation({method, path, operation: op}) + '\n');
   let paramDescriptions = op.parameters.map(p => {
     let ret = {parameter: p.name};
-    ret.type = chalkType(p.in === 'body' ? 'object': p.type);
+    ret.type = logger.chalkType(p.in === 'body' ? 'object': p.type);
     ret.required = p.required ? chalk.red('yes') : '';
     ret.default = p.default;
     if (p.description) {
@@ -183,7 +154,7 @@ integrations.describeOperation = (method, path, op, verbose) => {
     }
     return ret;
   })
-  console.log(columnify(paramDescriptions, {
+  logger.log(columnify(paramDescriptions, {
     columnSplitter: '  ',
     config: {
       description: {
@@ -202,11 +173,11 @@ integrations.describeOperation = (method, path, op, verbose) => {
     if (schema.properties) {
       for (let propName in schema.properties) {
         let prop = schema.properties[propName];
-        let toLog = indent + padString(propName + ': ', 14) + chalkType(prop.type);
+        let toLog = indent + padString(propName + ': ', 14) + logger.chalkType(prop.type);
         if (prop.items && ! prop.items.properties) {
-          toLog += '[' + chalkType(prop.items.type) + ']'
+          toLog += '[' + logger.chalkType(prop.items.type) + ']'
         }
-        console.log(toLog);
+        logger.log(toLog);
         if (prop.properties) {
           logSchema(prop, indent + '  ')
         } else if (prop.items && prop.items.properties) {
@@ -215,6 +186,6 @@ integrations.describeOperation = (method, path, op, verbose) => {
       }
     }
   }
-  console.log('\nRESPONSE')
+  logger.log('\nRESPONSE')
   logSchema(op.responses[bestCode].schema);
 }
