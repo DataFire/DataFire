@@ -42,9 +42,9 @@ module.exports = (args) => {
         def: secDefs[name],
       }
     });
-    if (secOptions.length === 1) return authenticate(args.integration, secOptions[0].def);
+    if (secOptions.length === 1) return authenticate(args.integration, secOptions[0]);
     let question = {name: 'def', message: "This API has multiple authentication flows. Which do you want to use?", type: 'list'};
-    question.choices = secOptions.map(o => ({name: o.def.type + ' (' + o.name + ')', value: o.def}))
+    question.choices = secOptions.map(o => ({name: o.def.type + ' (' + o.name + ')', value: o}))
     inquirer.prompt([question]).then(answer => {
       authenticate(args.integration, answer.def);
     })
@@ -52,11 +52,12 @@ module.exports = (args) => {
 }
 
 let authenticate = (integration, secDef) => {
-  let questions = QUESTION_SETS[secDef.type];
+  let questions = QUESTION_SETS[secDef.def.type];
   inquirer.prompt(questions).then(answers => {
     for (let k in answers) {
       if (!answers[k]) delete answers[k];
     }
+    answers.securityDefinition = secDef.name;
     saveCredentials(integration, answers);
   })
 }
@@ -65,8 +66,7 @@ let saveCredentials = (integration, creds) => {
   let credFile = datafire.credentialsDirectory + '/' + integration + '.json';
   let oldCreds = fs.existsSync(credFile) ? require(credFile) : {};
   inquirer.prompt(QUESTION_SETS.alias).then(answers => {
-    let alias = answers.alias;
-    oldCreds[alias] = creds;
+    oldCreds[answers.alias] = creds;
     console.log('Saving credentials to ' + credFile.replace(process.cwd(), '.'));
     fs.writeFileSync(credFile, JSON.stringify(oldCreds, null, 2));
   });
