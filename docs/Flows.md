@@ -86,6 +86,23 @@ flow.step('user',
 Catches all HTTP errors (e.g. 404 or 500), as well as calls to `flow.fail()`.
 Use this to react to errors e.g. by sending an e-mail.
 
+```js
+flow.step('messages', gmail.get('/messages'), {limit: 10})
+    .catch((err, data) => {
+       if (err.statusCode === 401) data.messages = [];
+       else flow.fail(err);
+    })
+    .step('add_issues', github.post('/issues'), (data) => {
+      if (!messages.length) return flow.succeed();
+      return data.messages.map(message => {
+        title: message.subject,
+        body: message.body,
+        assignee: 'bobby-brennan',
+      })
+    });
+```
+
+
 ### `Flow.fail(message)`
 Can be called inside of a step to exit early. No subsequent steps will be called,
 unless a `catch` is supplied.
@@ -143,22 +160,4 @@ flow.repeatStep('issues_page', github.get('/issues'), (data) => {
     return {page: data.page++}
   }
 })
-```
-
-#### Handle errors explicitly
-
-```js
-flow.step('messages', gmail.get('/messages'), {limit: 10})
-    .catch((err, data) => {
-       if (err.status === 401) data.messages = [];
-       else flow.fail(err);
-    })
-    .step('add_issues', github.post('/issues'), (data) => {
-      if (!messages.length) return flow.succeed();
-      return data.messages.map(message => {
-        title: message.subject,
-        body: message.body,
-        assignee: 'bobby-brennan',
-      })
-    });
 ```

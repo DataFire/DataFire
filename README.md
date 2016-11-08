@@ -18,7 +18,8 @@ DataFire natively supports over
 * YouTube
 
 ## Installation
-Install DataFire both globally and as a project dependency.
+> Be sure to install DataFire both globally and as a project dependency.
+
 ```
 npm install -g bobby-brennan/datafire
 npm install --save bobby-brennan/datafire
