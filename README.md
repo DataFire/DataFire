@@ -39,9 +39,7 @@ datafire describe gmail                                # Show info and operation
 datafire describe gmail -o gmail.users.messages.list   # Show operation details
 datafire describe gmail -o "GET /{userId}/messages"    # Alternative operation name
 
-# Auth details are stored in ./credentials/
-# Be sure to add 'credentials/' to your .gitignore
-datafire authenticate gmail   
+datafire authenticate gmail   # Store credentials for later use
 
 # Make a test call to the API
 datafire call gmail -o gmail.users.messages.list --as account_alias  
