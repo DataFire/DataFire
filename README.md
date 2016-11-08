@@ -46,7 +46,8 @@ const flow = module.exports =
 
 flow.step('issues',
           github.get('/repos/{owner}/{repo}/issues'),
-          {owner: 'torvalds', repo: 'linux'});
+          {owner: 'torvalds', repo: 'linux'})
+
     .step('write_file',
           (data) => {
             fs.writeFileSync('./issues.json', JSON.stringify(data.issues, null, 2));
