@@ -23,7 +23,7 @@ if (args._[1]) {
 }
 
 if (cmd === 'integrate' || cmd === 'list' || cmd === 'describe') {
-  require('./integrations')[cmd](args);
+  require('./manage_integrations')[cmd](args);
 } else if (cmd === 'run') {
   let flow = require(process.cwd() + '/' + args.flow);
   if (args.options) {
