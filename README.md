@@ -7,15 +7,9 @@ on AWS Lambda.
 
 DataFire natively supports over
 [250 public APIs](https://github.com/APIs-guru/openapi-directory) including:
-Slack &bull; GitHub
-* GitHub
-* Twilio
-* Trello
-* Spotify
-* Instagram
-* Gmail
-* Google Analytics
-* YouTube
+
+Slack &bull; GitHub &bull; Twilio &bull; Trello &bull; Spotify
+Instagram &bull; Gmail &bull; Google Analytics &bull; YouTube
 
 ## Installation
 > Be sure to install DataFire both globally and as a project dependency.
