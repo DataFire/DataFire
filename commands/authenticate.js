@@ -67,7 +67,7 @@ let saveCredentials = (integration, creds) => {
   inquirer.prompt(QUESTION_SETS.alias).then(answers => {
     let alias = answers.alias;
     oldCreds[alias] = creds;
-    console.log('saving to ' + credFile.replace(process.cwd(), '.'));
+    console.log('Saving credentials to ' + credFile.replace(process.cwd(), '.'));
     fs.writeFileSync(credFile, JSON.stringify(oldCreds, null, 2));
   });
 }
