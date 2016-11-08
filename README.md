@@ -18,7 +18,7 @@ DataFire natively supports over
 * YouTube
 
 ## Installation
-You'll need to install DataFire both globally and as a project dependency.
+Install DataFire both globally and as a project dependency.
 ```
 npm install -g bobby-brennan/datafire
 npm install --save bobby-brennan/datafire
@@ -50,7 +50,7 @@ datafire run ./getMessages.js
 ```
 
 ## Writing Flows
-You can see sample flows in the [examples directory](./examples)
+> You can view this flow in the [examples directory](./examples/quickstart).
 
 This quick tutorial will fetch stories from Hacker News, get the details
 for the top story, then store the results to a local file.
@@ -62,7 +62,7 @@ cd hacker_news_flow
 datafire integrate hacker_news
 ```
 
-Now we need to create a Flow. Edit `./getTopStory.js`:
+Now we can create a Flow. Edit `./getTopStory.js`:
 ```js
 const datafire = require('datafire');
 const fs = require('fs');
