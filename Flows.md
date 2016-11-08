@@ -21,7 +21,7 @@ flow.step('messages', gmail.get('/messages'), {limit: 10})
 # API
 
 ## Flow
-### `constructor(name, description)`
+### `Flow.constructor(name, description)`
 Creates a new flow
 
 Example:
@@ -29,7 +29,7 @@ Example:
 let flow = new datafire.Flow('copyStuff', "Copies stuff from here to there");
 ```
 
-### `step(name, operation, request)`
+### `Flow.step(name, operation, request)`
 Adds a new step to the flow.
 * `name` - a name for this step. If `operation` is from a DataFire integration,
 the response will be available in `data[name]`.
@@ -70,6 +70,16 @@ flow.step('user',
             return {owner: data.user.login, repo: 'foobar'}
           });
 ```
+
+### `Flow.stepAsync(name, operation, request)`
+
+### `Flow.stepRepeat(name, operation, request)`
+
+### `Flow.catch(callback)`
+
+### `Flow.fail(message)`
+
+### `Flow.succeed(message)`
 
 # Exposing options
 You can parameterize your flow with options:
