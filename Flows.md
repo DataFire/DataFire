@@ -72,7 +72,7 @@ flow.step('user',
           github.get('/users/{username}'),
           {username: 'torvalds'})
     .step('repos',
-          github.get('/repos/{owner}/{repo},
+          github.get('/repos/{owner}/{repo}'),
           function(data) {
             return {owner: data.user.login, repo: 'foobar'}
           });
@@ -83,10 +83,15 @@ flow.step('user',
 ### `Flow.stepRepeat(name, operation, request)`
 
 ### `Flow.catch(callback)`
+Catches all HTTP errors (e.g. 404 or 500), as well as calls to `flow.fail()`.
+Use this to react to errors e.g. by sending an e-mail.
 
 ### `Flow.fail(message)`
+Can be called inside of a step to exit early. No subsequent steps will be called,
+unless a `catch` is supplied.
 
 ### `Flow.succeed(message)`
+Can be called inside of a step to exit early. No subsequent steps will be called.
 
 # Exposing options
 You can parameterize your flow with options:
@@ -109,6 +114,8 @@ Or via an HTTP request (if you're using Serverless):
 ```
 curl http://something.execute-api.us-east-1.amazonaws.com/dev/copyIssues?username="expresjs"&repo="expres"
 ```
+
+# Miscellaneous
 
 #### Async flow steps
 ```js
