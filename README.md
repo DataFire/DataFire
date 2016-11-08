@@ -19,6 +19,7 @@ DataFire natively supports over
 
 ## Installation
 > Install DataFire both globally and as a project dependency.
+
 ```
 npm install -g bobby-brennan/datafire
 npm install --save bobby-brennan/datafire
