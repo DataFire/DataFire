@@ -107,40 +107,13 @@ datafire list -a
 Once an integration is installed, you can use DataFire to view
 the available operations and their parameters:
 ```
-$ datafire integrate -n googleapis.com:youtube --as youtube
-$ datafire describe --i youtube
-
-GET     /activities
-youtube.activities.list
-Returns a list of channel activity events that match the request criteria. For example, you can retrieve events associated with a particular channel, events associated with the user's subscriptions and Google+ friends, or the YouTube home page feed, which is customized for each user.
-
-POST    /activities
-youtube.activities.insert
-Posts a bulletin for a specific channel. (The user submitting the request must be authorized to act on the channel's behalf.)
-
-...
+datafire integrate -n googleapis.com:youtube --as youtube
+datafire describe --i youtube
 ```
 
 To learn more about an operation, you can either specify its id or method and path:
 ```
 $ datafire describe --i youtube -o youtube.activities.list
-
-GET     /activities
-youtube.activities.list
-Returns a list of channel activity events that match the request criteria. For example, you can retrieve events associated with a particular channel, events associated with the user's subscriptions and Google+ friends, or the YouTube home page feed, which is customized for each user.
-
-PARAMETER       TYPE    REQUIRED DEFAULT DESCRIPTION                                                                     
-part            string  yes              The part parameter specifies a comma-separated list of one or more activity     
-                                         resource properties that the API response will include.  If the parameter       
-                                         identifies a property that contains child properties, the child properties will 
-                                         be included in the response. For example, in an activity resource, the snippet  
-                                         property contains other properties that identify the type of activity, a display
-                                         title for the activity, and so forth. If you set part=snippet, the API response 
-                                         will also contain all of those nested properties.                               
-channelId       string                   The channelId parameter specifies a unique YouTube channel ID. The API will then
-                                         return a list of that channel's activities.                                     
-home            boolean                  Set this parameter's value to true to retrieve the activity feed that displays  
-                                         on the YouTube home page for the currently authenticated user.
 ```
 
 ## Add an Integration
