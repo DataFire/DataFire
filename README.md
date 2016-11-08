@@ -27,9 +27,16 @@ npm install --save bobby-brennan/datafire
 ## Exploring Integrations
 ![Exploing Integrations](./docs/explore.gif)
 
-You can view a list of all available integrations by running
+#### Commands
 ```
-datafire list -a
+datafire list -a   # View all available integrations
+datafire list      # View installed integrations
+
+datafire integrate gmail   # Add integrations by name (or a substring)
+
+datafire describe gmail                                # Show info and operations
+datafire describe gmail -o gmail.users.messages.list   # Show operation details
+datafire describe gmail -o "GET /{userId}/messages"    # Alternative operation name
 ```
 
 Add any integration by specifying its name (or a substring):
