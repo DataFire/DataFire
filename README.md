@@ -33,7 +33,7 @@ First, let's add the Hacker News integration:
 datafire integrate hacker_news
 ```
 
-Now we need to create a Flow. Edit `./copyIssues.js`:
+Now we need to create a Flow. Edit `./getTopStory.js`:
 ```js
 const datafire = require('datafire');
 const fs = require('fs');
@@ -57,9 +57,9 @@ flow.step('stories',
 
 Now let's run it:
 ```
-datafire run -f ./copyIssues.js
+datafire run -f ./getTopStory.js
 ```
-You should see `issues.json` in your current directory.
+You should see `story.json` in your current directory.
 
 ## Writing Flows
 Flows are a series of asynchronous steps. Each step will generally make one or more calls
