@@ -14,12 +14,15 @@ let args = require('yargs')
            .alias('o', 'operation')
            .alias('a', 'all')
            .alias('p', 'params')
+           .alias('f', 'flow')
            .argv;
 
 let cmd = args._[0];
-if (args._[1]) {
-  args.name = args.name || args._[1];
-  args.integration = args.integration || args._[1];
+let object = args._[1];
+if (object) {
+  args.name = args.name || object;
+  args.integration = args.integration || object;
+  args.flow = args.flow || object;
 }
 
 require('./commands/' + cmd)(args);

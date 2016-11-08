@@ -7,13 +7,15 @@ let datafire = require('../index');
 
 const FILE_SUFFIX = '.openapi.json';
 const APIS_GURU_URL = "https://api.apis.guru/v2/list.json";
+const LOCAL_SPECS_DIR = __dirname + '/../integration_files';
+const LOCAL_SPECS = fs.readdirSync(LOCAL_SPECS_DIR).map(f => f.substring(0, f.length - FILE_SUFFIX.length));
 
 module.exports = (args) => {
   fs.mkdir('./integrations', (err) => {
     if (args.url) {
       integrateURL(args.as || args.name, args.url);
     } else {
-      if (args.name === 'hacker_news') return integrateFile(args.name, __dirname + '/integration_files/hacker_news.openapi.json');
+      if (LOCAL_SPECS.indexOf(args.name) !== -1) return integrateFile(args.name);
       request.get(APIS_GURU_URL, {json: true}, (err, resp, body) => {
         if (err) throw err;
         let keys = Object.keys(body);
@@ -29,24 +31,23 @@ module.exports = (args) => {
   })
 }
 
-let integrateFile = (name, filename) => {
+let integrateFile = (name) => {
+  let filename = LOCAL_SPECS_DIR + '/' + name + FILE_SUFFIX;
   fs.readFile(filename, 'utf8', (err, data) => {
-    if (err) return cb(err);
+    if (err) throw err;
     let outFilename = datafire.integrationsDirectory + '/' + name + FILE_SUFFIX;
-    fs.writeFile(outFilename, data, (err) => {
-      if (err) throw err;
-    });
+    fs.writeFileSync(outFilename, data);
   });
 }
 
-let integrateURL = (name, url, cb) => {
+let integrateURL = (name, url) => {
   request.get(url, {json: true}, (err, resp, body) => {
     if (err) throw err;
     if (!body.host) throw new Error("Invalid swagger:" + JSON.stringify(body, null, 2))
     name = name || body.host;
     let filename = datafire.integrationsDirectory + '/' + name + FILE_SUFFIX;
     logger.log('Creating integration ' + filename.replace(process.cwd(), '.'));
-    fs.writeFile(filename, JSON.stringify(body, null, 2), cb);
+    fs.writeFileSync(filename, JSON.stringify(body, null, 2));
   })
 }
 
