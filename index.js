@@ -15,6 +15,7 @@ let args = require('yargs')
            .alias('a', 'all')
            .alias('p', 'params')
            .alias('f', 'flow')
+           .alias('v', 'verbose')
            .argv;
 
 let cmd = args._[0];
@@ -25,5 +26,14 @@ if (object) {
   args.flow = args.flow || object;
 }
 
-require('./commands/' + cmd)(args);
+try {
+  require('./commands/' + cmd)(args);
+} catch (e) {
+  logger.logError(e.toString());
+  if (args.verbose) {
+    throw e;
+  } else {
+    process.exit(1);
+  }
+}
 
