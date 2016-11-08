@@ -36,8 +36,8 @@ datafire integrate github
 
 Now we need to create a Flow. Edit `./copyIssues.js`:
 ```js
-const fs = require('fs');
 const datafire = require('datafire');
+const fs = require('fs');
 
 const github = new datafire.Integration('github');
 
