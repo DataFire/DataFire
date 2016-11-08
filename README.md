@@ -28,28 +28,29 @@ npm install --save bobby-brennan/datafire
 This quick tutorial will fetch issues from a repository on GitHub, and copy them to
 a local file.
 
-First, let's add the GitHub integration:
+First, let's add the Hacker News integration:
 ```
-datafire integrate github
+datafire integrate hacker_news
 ```
 
 Now we need to create a Flow. Edit `./copyIssues.js`:
 ```js
 const datafire = require('datafire');
 const fs = require('fs');
-
-const github = new datafire.Integration('github');
+const hn = new datafire.Integration('hacker_news');
 
 const flow = module.exports =
-      new datafire.Flow('copyIssues', 'Copies issues from GitHub to a local file');
+      new datafire.Flow('copyStory', 'Copies the top HN story to a local file');
 
-flow.step('issues',
-          github.get('/repos/{owner}/{repo}/issues'),
-          {owner: 'torvalds', repo: 'linux'})
-
+flow.step('stories',
+          hn.get('/{storyType}stories.json'),
+          {storyType: 'top'})
+    .step('story',
+          hn.get('/item/{itemID}.json'),
+          (data) => ({itemID: data.stories[0]}))
     .step('write_file',
           (data) => {
-            fs.writeFileSync('./issues.json', JSON.stringify(data.issues, null, 2));
+            fs.writeFileSync('./story.json', JSON.stringify(data.story, null, 2));
           })
 
 ```
