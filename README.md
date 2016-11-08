@@ -31,13 +31,13 @@ a local file.
 
 First, let's add the GitHub integration:
 ```
-datafire integrate --name github
+datafire integrate github
 ```
 
 Now we need to create a Flow. Edit `./copyIssues.js`:
 ```js
-const fs = require('fs');
 const datafire = require('datafire');
+const fs = require('fs');
 
 const github = new datafire.Integration('github');
 
@@ -46,7 +46,8 @@ const flow = module.exports =
 
 flow.step('issues',
           github.get('/repos/{owner}/{repo}/issues'),
-          {owner: 'torvalds', repo: 'linux'});
+          {owner: 'torvalds', repo: 'linux'})
+
     .step('write_file',
           (data) => {
             fs.writeFileSync('./issues.json', JSON.stringify(data.issues, null, 2));
