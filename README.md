@@ -1,7 +1,22 @@
 # DataFire
 
-Version 2.0 will be an open-source integration framework built on top of [Serverless](/serverless/serverless).
-Users will be able to run Dataflows on their own AWS account, or on DataFire.
+DataFire is an open-source integration framework. It is built on top of
+[Open API](https://github.com/OAI/OpenAPI-Specification) and integrates with the
+[Serverless framework](https://github.com/serverless/serverless) for running flows
+on AWS.
+
+DataFire natively supports over 250 public APIs via
+[APIs.guru](https://github.com/APIs-guru/openapi-directory)
+including:
+* Slack
+* GitHub
+* Twilio
+* Trello
+* Spotify
+* Instagram
+* Gmail
+* Google Analytics
+* YouTube
 
 ## Installation
 You'll need to install DataFire both globally and as a project dependency.
@@ -10,7 +25,7 @@ npm install -g bobby-brennan/datafire
 npm install --save bobby-brennan/datafire
 ```
 
-## Quick Start
+## Quickstart
 This quick tutorial will fetch issues from a repository on GitHub, and copy them to
 a local file.
 
