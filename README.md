@@ -66,7 +66,7 @@ You should see `story.json` in your current directory.
 ## Writing Flows
 Flows are a series of asynchronous steps. Each step will generally make one or more calls
 to a given API endpoint, and store the resulting data in the `data` object. However,
-you can add steps that execute any asynchronous function.
+you can add steps that execute any arbitrary code.
 
 Flows use a waterfall design pattern - each step has access to the data returned in all
 previous steps, and can use this data to construct its request.
