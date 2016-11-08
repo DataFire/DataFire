@@ -2,14 +2,13 @@ let fs = require('fs');
 let request = require('request');
 let chalk = require('chalk');
 
-let logger = require('./lib/logger');
-let datafire = require('./index');
+let logger = require('../lib/logger');
+let datafire = require('../index');
 
 const APIS_GURU_URL = "https://api.apis.guru/v2/list.json";
 const FILE_SUFFIX = '.openapi.json';
 
 let integrations = module.exports = {};
-
 
 let strcmp = (str1, str2) => {
   if (str1 < str2) return -1;

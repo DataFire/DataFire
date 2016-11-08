@@ -23,24 +23,11 @@ if (args._[1]) {
 }
 
 if (cmd === 'integrate' || cmd === 'list' || cmd === 'describe') {
-  require('./manage_integrations')[cmd](args);
+  require('./commands/integrate')[cmd](args);
 } else if (cmd === 'run') {
-  let flow = require(process.cwd() + '/' + args.flow);
-  if (args.options) {
-    for (let key in args.options) {
-      flow.options[key] = args.options[key];
-    }
-  }
-  flow.execute((err) => {
-    if (err) throw err;
-  });
+  require('./commands/run')(args);
 } else if (cmd === 'call') {
-  let integration = new datafire.Integration(args.integration);
-  let op = integration.resolveOperation(args.operation);
-  op.request(args.params || {}, (err, data) => {
-    if (err) throw err;
-    logger.log();
-    logger.logJSON(data);
-    logger.log();
-  });
+  require('./commands/call')(args);
+} else if (cmd === 'authorize') {
+  require('./commands/autorize')(args);
 }
