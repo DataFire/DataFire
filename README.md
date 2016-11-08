@@ -46,13 +46,13 @@ flow.step('stories',
           hn.get('/{storyType}stories.json'),
           {storyType: 'top'})
 
-    .step('story',
+    .step('story_details',
           hn.get('/item/{itemID}.json'),
           (data) => ({itemID: data.stories[0]}))
 
     .step('write_file',
           (data) => {
-            fs.writeFileSync('./story.json', JSON.stringify(data.story, null, 2));
+            fs.writeFileSync('./story.json', JSON.stringify(data.story_details, null, 2));
           })
 
 ```
