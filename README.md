@@ -50,9 +50,10 @@ datafire run ./getMessages.js
 ```
 
 ## Writing Flows
-> You can view this flow in the [examples directory](./examples/quickstart).
-
 > See [Flows.md](./Flows.md) for the full documentation
+
+#### Quickstart
+> You can view this flow in the [examples directory](./examples/quickstart).
 
 This quick tutorial will fetch stories from Hacker News, get the details
 for the top story, then store the results to a local file.
