@@ -1,4 +1,7 @@
 node_modules/
+
 integrations/
 !test/integrations/
+
 credentials/
+!test/credentials/
