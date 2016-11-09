@@ -163,6 +163,22 @@ describe('Flows', () => {
     executeSuccess(done);
   })
 
+  it('should exit early on flow.fail()', done => {
+    flow.step('exit_early',
+              (data) => {
+                flow.fail("exit early")
+              })
+        .step('shouldnt_reach_this',
+              (data) => {
+                throw new Error("didnt exit early")
+              })
+    flow.execute(e => {
+      expect(e).to.not.be.undefined;
+      expect(e.message).to.equal("exit early");
+      done();
+    })
+  })
+
   it('should fail on flow.fail()', done => {
     flow.step('fail',
               (data) => {
