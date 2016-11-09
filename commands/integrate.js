@@ -13,19 +13,21 @@ const LOCAL_SPECS = fs.readdirSync(LOCAL_SPECS_DIR).map(f => f.substring(0, f.le
 module.exports = (args) => {
   fs.mkdir('./integrations', (err) => {
     if (args.url) {
-      integrateURL(args.as || args.name, args.url);
+      integrateURL(args.as || args.integration, args.url);
     } else {
-      if (LOCAL_SPECS.indexOf(args.name) !== -1) return integrateFile(args.name);
+      if (LOCAL_SPECS.indexOf(args.integration) !== -1) return integrateFile(args.integration);
       request.get(APIS_GURU_URL, {json: true}, (err, resp, body) => {
         if (err) throw err;
         let keys = Object.keys(body);
-        let validKeys = keys.filter(k => k.indexOf(args.name) !== -1);
-        if (validKeys.length === 0) throw new Error("API " + args.name + " not found");
-        let exactMatch = validKeys.filter(f => f === args.name)[0];
-        if (validKeys.length > 1 && !exactMatch) throw new Error("Ambiguous API name: " + args.name + "\n\nPlease choose one of:\n" + validKeys.join('\n'));
+        let validKeys = keys.filter(k => k.indexOf(args.integration) !== -1);
+        if (validKeys.length === 0) throw new Error("API " + args.integration + " not found");
+        let exactMatch = validKeys.filter(f => f === args.integration)[0];
+        if (validKeys.length > 1 && !exactMatch) {
+          throw new Error("Ambiguous API name: " + args.integration + "\n\nPlease choose one of:\n" + validKeys.join('\n'));
+        }
         let info = body[exactMatch || validKeys[0]];
         let url = info.versions[info.preferred].swaggerUrl;
-        integrateURL(args.as || args.name, url);
+        integrateURL(args.as || args.integration, url);
       })
     }
   })
