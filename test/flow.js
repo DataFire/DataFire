@@ -29,7 +29,7 @@ describe('Flows', () => {
 
   beforeEach(() => {
     flow = new datafire.Flow('test', 'test_flow');
-    integration = new datafire.Integration('test');
+    integration = datafire.Integration.new('test');
   });
 
   it('should run', (done) => {

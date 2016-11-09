@@ -28,7 +28,7 @@ module.exports = (args) => {
     fs.mkdirSync(datafire.credentialsDirectory);
   } catch (e) {}
 
-  let integration = new datafire.Integration(args.integration);
+  let integration = datafire.Integration.new(args.integration);
   integration.initialize(err => {
     if (err) throw err;
     let secDefs = integration.spec.securityDefinitions;
