@@ -42,7 +42,7 @@ datafire call github -o "GET /users"
 # Use stored credentials with --as
 datafire call github -o "GET /user" --as account_alias
 # Pass parameters with --params.foo
-datafire call github -i "GET /users/{username}" --params.username torvalds
+datafire call github -i "GET /users/{username}" --params.username karpathy
 
 # Run a dataflow script (see below)
 datafire run ./getMessages.js  
