@@ -14,7 +14,8 @@
       "type": "apiKey",
       "in": "query",
       "name": "api_secret"
-    }
+    },
+    "basic": {"type": "basic"}
   },
   "paths": {
     "/succeed": {

@@ -84,5 +84,19 @@ describe('Flows', () => {
         })
     flow.execute();
   })
+
+  it('should succeed with basic auth', done => {
+    integration.as('user1_basic');
+    flow.step('success', integration.get('/secret'));
+    flow.catch((err, data) => {
+      throw err;
+    });
+    flow.step('result',
+        (data) => {
+          expect(data.success).to.equal("OK");
+          done();
+        })
+    flow.execute();
+  })
 })
 
