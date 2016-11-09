@@ -5,6 +5,7 @@ logger.silent = true;
 
 let datafire = require('../index');
 datafire.integrationsDirectory = __dirname + '/integrations';
+datafire.credentialsDirectory = __dirname + '/credentials';
 
 describe('Flows', () => {
   let flow = integration = null;
@@ -42,5 +43,18 @@ describe('Flows', () => {
         })
     flow.execute();
   })
+
+  it('should throw error for non existant user', () => {
+    expect(() => {
+      integration.as('someone');
+    }).to.throw();
+  })
+
+  it('should not throw error for existing user', () => {
+    expect(() => {
+      integration.as('user1');
+    }).to.not.throw();
+  })
+
 })
 
