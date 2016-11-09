@@ -133,5 +133,22 @@ describe('Flows', () => {
               })
     flow.execute();
   })
+
+  it('should throw uncaught errors', done => {
+    flow.step('fail', integration.get('/secret'));
+    flow.execute(e => {
+      expect(e).to.not.be.undefined;
+      expect(e).to.not.be.null;
+      done();
+    })
+  })
+
+  it('should not throw caught errors', done => {
+    flow.step('fail', integration.get('/secret')).catch(e => {});
+    flow.execute(e => {
+      expect(e).to.be.undefined;
+      done();
+    })
+  })
 })
 
