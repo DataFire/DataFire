@@ -7,16 +7,18 @@ let datafire = require('../index');
 datafire.integrationsDirectory = __dirname + '/integrations';
 
 describe('Flows', () => {
+  before(done => {
+    require('./util/server').listen(3333, done);
+  })
+
   it('should run', (done) => {
     let flow = new datafire.Flow('test', 'test_flow');
-    let hn = new datafire.Integration('hacker_news');
-    flow.step('user',
-              hn.getUser(),
-              {username: 'sama'})
+    let integ = new datafire.Integration('test');
+    flow.step('succeed', integ.get('/succeed'));
     flow.step('result',
               (data) => {
-                expect(data.user).to.not.be.null;
-                expect(data.user.id).to.equal('sama');
+                expect(data.succeed).to.not.be.null;
+                expect(data.succeed).to.equal('OK');
                 done();
               })
     flow.execute();
