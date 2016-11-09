@@ -5,17 +5,17 @@ let chalk = require('chalk');
 let logger = require('../lib/logger');
 let datafire = require('../index');
 
-const FILE_SUFFIX = '.openapi.json';
+const OPENAPI_SUFFIX = '.openapi.json';
 const APIS_GURU_URL = "https://api.apis.guru/v2/list.json";
 const LOCAL_SPECS_DIR = __dirname + '/../integration_files';
-const LOCAL_SPECS = fs.readdirSync(LOCAL_SPECS_DIR).map(f => f.substring(0, f.length - FILE_SUFFIX.length));
+const LOCAL_SPECS = fs.readdirSync(LOCAL_SPECS_DIR);
 
 module.exports = (args) => {
   fs.mkdir('./integrations', (err) => {
     if (args.url) {
       integrateURL(args.as || args.integration, args.url);
     } else {
-      if (LOCAL_SPECS.indexOf(args.integration) !== -1) return integrateFile(args.integration);
+      if (getLocalSpec(args.integration)) return integrateFile(args.integration);
       request.get(APIS_GURU_URL, {json: true}, (err, resp, body) => {
         if (err) throw err;
         let keys = Object.keys(body);
@@ -33,11 +33,17 @@ module.exports = (args) => {
   })
 }
 
+let getLocalSpec = (name) => {
+  return LOCAL_SPECS.filter(fname => fname.startsWith(name + '.'))[0];
+}
+
 let integrateFile = (name) => {
-  let filename = LOCAL_SPECS_DIR + '/' + name + FILE_SUFFIX;
-  fs.readFile(filename, 'utf8', (err, data) => {
+  let filename = getLocalSpec(name);
+  if (!filename) throw new Error("Integration " + name + " not found");
+  fs.readFile(LOCAL_SPECS_DIR + '/' + filename, 'utf8', (err, data) => {
     if (err) throw err;
-    let outFilename = datafire.integrationsDirectory + '/' + name + FILE_SUFFIX;
+    let outFilename = datafire.integrationsDirectory + '/' + filename;
+    logger.log('Creating integration ' + outFilename.replace(process.cwd(), '.'));
     fs.writeFileSync(outFilename, data);
   });
 }
@@ -47,7 +53,7 @@ let integrateURL = (name, url) => {
     if (err) throw err;
     if (!body.host) throw new Error("Invalid swagger:" + JSON.stringify(body, null, 2))
     name = name || body.host;
-    let filename = datafire.integrationsDirectory + '/' + name + FILE_SUFFIX;
+    let filename = datafire.integrationsDirectory + '/' + name + OPENAPI_SUFFIX;
     logger.log('Creating integration ' + filename.replace(process.cwd(), '.'));
     fs.writeFileSync(filename, JSON.stringify(body, null, 2));
   })

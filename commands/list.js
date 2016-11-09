@@ -4,10 +4,12 @@ const chalk = require('chalk');
 const datafire = require('../index');
 const logger = require('../lib/logger');
 
-const FILE_SUFFIX = '.openapi.json';
 const APIS_GURU_URL = "https://api.apis.guru/v2/list.json";
 const LOCAL_SPECS_DIR = __dirname + '/../integration_files';
-const LOCAL_SPECS = fs.readdirSync(LOCAL_SPECS_DIR).map(f => f.substring(0, f.length - FILE_SUFFIX.length));
+
+let getNameFromFilename = f => f.substring(0, f.indexOf('.'));
+
+const LOCAL_SPECS = fs.readdirSync(LOCAL_SPECS_DIR).map(getNameFromFilename);
 
 module.exports = (args) => {
   if (args.all) {
@@ -27,8 +29,7 @@ module.exports = (args) => {
   } else {
     fs.readdir(datafire.integrationsDirectory, (err, files) => {
       if (err) return cb(err);
-      files.forEach(f => {
-        let name = f.substring(0, f.length - FILE_SUFFIX.length);
+      files.map(getNameFromFilename).forEach(name => {
         logger.log(chalk.magenta(name));
       })
     })
