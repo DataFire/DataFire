@@ -1,6 +1,6 @@
 # DataFire
 
-DataFire is an open-source integration framework. It is built on top of
+DataFire is an **open source** integration framework. It is built on top of
 [Open API](https://github.com/OAI/OpenAPI-Specification) and integrates with the
 [Serverless framework](https://github.com/serverless/serverless) for running flows
 on AWS Lambda.
@@ -23,6 +23,8 @@ npm install --save bobby-brennan/datafire
 ![Exploing Integrations](./docs/explore.gif)
 
 ## Commands
+> Run `datafire --help` or `datafire <command> --help` for more info
+
 ```bash
 datafire list -a   # View all available integrations
 datafire list      # View installed integrations
