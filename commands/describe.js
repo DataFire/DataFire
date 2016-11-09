@@ -17,7 +17,7 @@ module.exports = (args) => {
       describeOperations(spec);
     } else {
       let operation = integration.resolveOperation(args.operation);
-      describeOperation(operation.method, operation.path, operation.resolve());
+      describeOperation(operation.method, operation.path, operation.details);
     }
   });
 }

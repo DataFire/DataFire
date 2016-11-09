@@ -7,7 +7,7 @@ module.exports = (args) => {
   integration.initialize(err => {
     if (err) throw err;
     let op = integration.resolveOperation(args.operation);
-    op.request(args.params || {}, (err, data) => {
+    op.call(args.params || {}, (err, data) => {
       if (err) {
         logger.logError("Request failed: " + err.statusCode);
       } else {
