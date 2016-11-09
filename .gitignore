@@ -1,3 +1,4 @@
 node_modules/
 integrations/
+!test/integrations/
 credentials/
