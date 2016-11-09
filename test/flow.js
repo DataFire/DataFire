@@ -30,7 +30,7 @@ describe('Flows', () => {
   beforeEach(() => {
     flow = new datafire.Flow('test', 'test_flow');
     integration = new datafire.Integration('test');
-  })
+  });
 
   it('should run', (done) => {
     flow.step('succeed', integration.get('/succeed'));
@@ -40,7 +40,7 @@ describe('Flows', () => {
                 expect(data.succeed).to.equal('OK');
               })
     executeSuccess(done);
-  })
+  });
 
   it('should not use auth by default', (done) => {
     flow.step('fail', integration.get('/secret'))
@@ -53,19 +53,19 @@ describe('Flows', () => {
           expect(data.error).to.equal(true);
         })
     executeSuccess(done);
-  })
+  });
 
   it('should throw error for non existant user', () => {
     expect(() => {
       integration.as('someone');
     }).to.throw();
-  })
+  });
 
   it('should not throw error for existing user', () => {
     expect(() => {
       integration.as('user1');
     }).to.not.throw();
-  })
+  });
 
   it('should fail for bad user', (done) => {
     integration.as('nonuser');
@@ -79,7 +79,7 @@ describe('Flows', () => {
           expect(data.error).to.equal(true);
         })
     executeSuccess(done);
-  })
+  });
 
   it('should succeed for good user', (done) => {
     integration.as('user1');
@@ -92,7 +92,7 @@ describe('Flows', () => {
           expect(data.success).to.equal("OK");
         })
     executeSuccess(done);
-  })
+  });
 
   it('should succeed with basic auth', done => {
     integration.as('user1_basic');
@@ -105,7 +105,7 @@ describe('Flows', () => {
           expect(data.success).to.equal("OK");
         })
     executeSuccess(done);
-  })
+  });
 
   it('should catch errors appropriately', done => {
     flow.step('success', integration.get('/succeed'))
@@ -139,17 +139,17 @@ describe('Flows', () => {
                 expect(data.err3).to.equal('local');
               })
     executeSuccess(done);
-  })
+  });
 
   it('should throw uncaught errors', done => {
     flow.step('fail', integration.get('/secret'));
     executeFailure(done);
-  })
+  });
 
   it('should not throw caught errors', done => {
     flow.step('fail', integration.get('/secret')).catch(e => {});
     executeSuccess(done);
-  })
+  });
 
   it('should exit early on flow.succeed()', done => {
     flow.step('exit_early',
@@ -161,7 +161,7 @@ describe('Flows', () => {
                 throw new Error("didnt exit early")
               })
     executeSuccess(done);
-  })
+  });
 
   it('should exit early on flow.fail()', done => {
     flow.step('exit_early',
@@ -177,7 +177,7 @@ describe('Flows', () => {
       expect(e.message).to.equal("exit early");
       done();
     })
-  })
+  });
 
   it('should fail on flow.fail()', done => {
     flow.step('fail',
@@ -185,7 +185,7 @@ describe('Flows', () => {
                 flow.fail();
               })
     executeFailure(done);
-  })
+  });
 
   it('should not allow catching flow.fail()', done => {
     flow.step('fail',
@@ -194,6 +194,6 @@ describe('Flows', () => {
               })
         .catch(e => {})
     executeFailure(done);
-  })
-})
+  });
+});
 
