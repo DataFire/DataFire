@@ -23,6 +23,8 @@ npm install --save bobby-brennan/datafire
 ![Exploing Integrations](./docs/explore.gif)
 
 ## Commands
+> Run `datafire --help` or `datafire <command> --help` for more info
+
 ```bash
 datafire list -a   # View all available integrations
 datafire list      # View installed integrations
