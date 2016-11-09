@@ -5,17 +5,17 @@ const datafire = require('../index');
 const logger = require('../lib/logger');
 
 const APIS_GURU_URL = "https://api.apis.guru/v2/list.json";
-const LOCAL_SPECS_DIR = __dirname + '/../integration_files';
+const NATIVE_INTEGRATIONS_DIR = __dirname + '/../native_integrations';
 
 let getNameFromFilename = f => f.substring(0, f.indexOf('.'));
 
-const LOCAL_SPECS = fs.readdirSync(LOCAL_SPECS_DIR).map(getNameFromFilename);
+const NATIVE_INTEGRATIONS = fs.readdirSync(NATIVE_INTEGRATIONS_DIR).map(getNameFromFilename);
 
 module.exports = (args) => {
   if (args.all) {
     request.get(APIS_GURU_URL, {json: true}, (err, resp, body) => {
       if (err) throw err;
-      let keys = Object.keys(body).concat(LOCAL_SPECS).sort();
+      let keys = Object.keys(body).concat(NATIVE_INTEGRATIONS).sort();
       keys.forEach(k => {
         logger.log(chalk.magenta(k));
         let api = body[k];

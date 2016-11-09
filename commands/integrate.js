@@ -7,8 +7,8 @@ let datafire = require('../index');
 
 const OPENAPI_SUFFIX = '.openapi.json';
 const APIS_GURU_URL = "https://api.apis.guru/v2/list.json";
-const LOCAL_SPECS_DIR = __dirname + '/../integration_files';
-const LOCAL_SPECS = fs.readdirSync(LOCAL_SPECS_DIR);
+const NATIVE_INTEGRATIONS_DIR = __dirname + '/../native_integrations';
+const NATIVE_INTEGRATIONS = fs.readdirSync(NATIVE_INTEGRATIONS_DIR);
 
 module.exports = (args) => {
   fs.mkdir('./integrations', (err) => {
@@ -34,13 +34,13 @@ module.exports = (args) => {
 }
 
 let getLocalSpec = (name) => {
-  return LOCAL_SPECS.filter(fname => fname.startsWith(name + '.'))[0];
+  return NATIVE_INTEGRATIONS.filter(fname => fname.startsWith(name + '.'))[0];
 }
 
 let integrateFile = (name) => {
   let filename = getLocalSpec(name);
   if (!filename) throw new Error("Integration " + name + " not found");
-  fs.readFile(LOCAL_SPECS_DIR + '/' + filename, 'utf8', (err, data) => {
+  fs.readFile(NATIVE_INTEGRATIONS_DIR + '/' + filename, 'utf8', (err, data) => {
     if (err) throw err;
     let outFilename = datafire.integrationsDirectory + '/' + filename;
     logger.log('Creating integration ' + outFilename.replace(process.cwd(), '.'));
