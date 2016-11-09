@@ -20,6 +20,7 @@
   "paths": {
     "/succeed": {
       "get": {
+        "operationId": "getSucceed",
         "responses": {
           "200": {
             "description": "OK"

@@ -42,6 +42,16 @@ describe('Flows', () => {
     executeSuccess(done);
   });
 
+  it('should should allow call by operationId', (done) => {
+    flow.step('succeed', integration.getSucceed());
+    flow.step('result',
+              (data) => {
+                expect(data.succeed).to.not.be.null;
+                expect(data.succeed).to.equal('OK');
+              })
+    executeSuccess(done);
+  });
+
   it('should not use auth by default', (done) => {
     flow.step('fail', integration.get('/secret'))
     flow.catch((err, data) => {
