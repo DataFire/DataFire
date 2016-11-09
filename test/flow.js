@@ -98,5 +98,40 @@ describe('Flows', () => {
         })
     flow.execute();
   })
+
+  it('should catch errors appropriately', done => {
+    flow.step('success', integration.get('/succeed'))
+        .catch(err => {throw err})
+        .step('fail', integration.get('/secret'))
+        .catch(err => {
+          expect(err.statusCode).to.equal(401);
+          flow.data.err1 = true;
+        })
+        .step('success', integration.get('/succeed'))
+        .catch(err => {throw err})
+        .step('success', integration.get('/succeed'))
+        .catch(err => {throw err})
+        .step('fail', integration.get('/secret'))
+        .catch(err => {
+          expect(err.statusCode).to.equal(401);
+          flow.data.err2 = true;
+        })
+        .step('local_fail',
+              (data) => {
+                throw new Error("local");
+              })
+        .catch(err => {
+          expect(err.message).to.equal('local');
+          flow.data.err3 = err.message;
+        })
+        .step('result',
+              (data) => {
+                expect(data.err1).to.equal(true);
+                expect(data.err2).to.equal(true);
+                expect(data.err3).to.equal('local');
+                done();
+              })
+    flow.execute();
+  })
 })
 
