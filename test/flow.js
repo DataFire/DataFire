@@ -56,5 +56,33 @@ describe('Flows', () => {
     }).to.not.throw();
   })
 
+  it('should fail for bad user', (done) => {
+    integration.as('nonuser');
+    flow.step('fail', integration.get('/secret'));
+    flow.catch((err, data) => {
+      expect(err.statusCode).to.equal(401);
+      data.error = true;
+    });
+    flow.step('result',
+        (data) => {
+          expect(data.error).to.equal(true);
+          done();
+        })
+    flow.execute();
+  })
+
+  it('should succeed for good user', (done) => {
+    integration.as('user1');
+    flow.step('success', integration.get('/secret'));
+    flow.catch((err, data) => {
+      throw err;
+    });
+    flow.step('result',
+        (data) => {
+          expect(data.success).to.equal("OK");
+          done();
+        })
+    flow.execute();
+  })
 })
 

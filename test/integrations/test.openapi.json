@@ -9,6 +9,13 @@
   "schemes": [
     "http"
   ],
+  "securityDefinitions": {
+    "apiKey": {
+      "type": "apiKey",
+      "in": "query",
+      "name": "api_secret"
+    }
+  },
   "paths": {
     "/succeed": {
       "get": {
