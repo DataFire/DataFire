@@ -17,7 +17,7 @@ let COMMANDS = [{
     description: "Show all available integrations",
   }]
 }, {
-  name: 'integrate [integration]',
+  name: 'integrate <integration>',
   description: "Add an integration to the current project",
   runner: require('./commands/integrate'),
   options: [{
@@ -26,16 +26,16 @@ let COMMANDS = [{
     description: "The URL of an Open API JSON specification",
   }]
 }, {
-  name: 'authenticate [integration]',
+  name: 'authenticate <integration>',
   runner: require('./commands/authenticate'),
 }, {
-  name: 'run [flow]',
+  name: 'run <flow>',
   runner: require('./commands/run'),
 }, {
-  name: 'call [integration]',
+  name: 'call <integration>',
   runner: require('./commands/call'),
 }, {
-  name: 'describe [integration]',
+  name: 'describe <integration>',
   runner: require('./commands/describe'),
 }]
 
