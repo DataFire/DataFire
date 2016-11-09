@@ -150,5 +150,34 @@ describe('Flows', () => {
     flow.step('fail', integration.get('/secret')).catch(e => {});
     executeSuccess(done);
   })
+
+  it('should exit early on flow.succeed()', done => {
+    flow.step('exit_early',
+              (data) => {
+                flow.succeed()
+              })
+        .step('shouldnt_reach_this',
+              (data) => {
+                throw new Error("didnt exit early")
+              })
+    executeSuccess(done);
+  })
+
+  it('should fail on flow.fail()', done => {
+    flow.step('fail',
+              (data) => {
+                flow.fail();
+              })
+    executeFailure(done);
+  })
+
+  it('should not allow catching flow.fail()', done => {
+    flow.step('fail',
+              (data) => {
+                flow.fail();
+              })
+        .catch(e => {})
+    executeFailure(done);
+  })
 })
 

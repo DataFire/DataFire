@@ -104,8 +104,7 @@ flow.step('messages', gmail.get('/messages'), {limit: 10})
 
 
 ### `Flow.fail(message)`
-Can be called inside of a step to exit early. No subsequent steps will be called,
-unless a `catch` is supplied.
+Can be called inside of a step to exit early. No subsequent steps will be called.
 
 ### `Flow.succeed(message)`
 Can be called inside of a step to exit early. No subsequent steps will be called.
