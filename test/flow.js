@@ -1,5 +1,8 @@
 let expect = require('chai').expect
 
+let logger = require('../lib/logger');
+logger.silent = true;
+
 let datafire = require('../index');
 datafire.integrationsDirectory = __dirname + '/integrations';
 
