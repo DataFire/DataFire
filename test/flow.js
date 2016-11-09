@@ -10,6 +10,19 @@ datafire.credentialsDirectory = __dirname + '/credentials';
 describe('Flows', () => {
   let flow = integration = null;
 
+  let executeSuccess = (done) => {
+    flow.execute(e => {
+      expect(e).to.be.undefined;
+      done();
+    })
+  }
+  let executeFailure = (done) => {
+    flow.execute(e => {
+      expect(e).to.not.be.undefined;
+      done();
+    })
+  }
+
   before(done => {
     require('./util/server').listen(3333, done);
   });
@@ -25,9 +38,8 @@ describe('Flows', () => {
               (data) => {
                 expect(data.succeed).to.not.be.null;
                 expect(data.succeed).to.equal('OK');
-                done();
               })
-    flow.execute();
+    executeSuccess(done);
   })
 
   it('should not use auth by default', (done) => {
@@ -39,9 +51,8 @@ describe('Flows', () => {
     flow.step('result',
         (data) => {
           expect(data.error).to.equal(true);
-          done();
         })
-    flow.execute();
+    executeSuccess(done);
   })
 
   it('should throw error for non existant user', () => {
@@ -66,9 +77,8 @@ describe('Flows', () => {
     flow.step('result',
         (data) => {
           expect(data.error).to.equal(true);
-          done();
         })
-    flow.execute();
+    executeSuccess(done);
   })
 
   it('should succeed for good user', (done) => {
@@ -80,9 +90,8 @@ describe('Flows', () => {
     flow.step('result',
         (data) => {
           expect(data.success).to.equal("OK");
-          done();
         })
-    flow.execute();
+    executeSuccess(done);
   })
 
   it('should succeed with basic auth', done => {
@@ -94,9 +103,8 @@ describe('Flows', () => {
     flow.step('result',
         (data) => {
           expect(data.success).to.equal("OK");
-          done();
         })
-    flow.execute();
+    executeSuccess(done);
   })
 
   it('should catch errors appropriately', done => {
@@ -129,26 +137,18 @@ describe('Flows', () => {
                 expect(data.err1).to.equal(true);
                 expect(data.err2).to.equal(true);
                 expect(data.err3).to.equal('local');
-                done();
               })
-    flow.execute();
+    executeSuccess(done);
   })
 
   it('should throw uncaught errors', done => {
     flow.step('fail', integration.get('/secret'));
-    flow.execute(e => {
-      expect(e).to.not.be.undefined;
-      expect(e).to.not.be.null;
-      done();
-    })
+    executeFailure(done);
   })
 
   it('should not throw caught errors', done => {
     flow.step('fail', integration.get('/secret')).catch(e => {});
-    flow.execute(e => {
-      expect(e).to.be.undefined;
-      done();
-    })
+    executeSuccess(done);
   })
 })
 
