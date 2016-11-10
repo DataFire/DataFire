@@ -61,4 +61,35 @@ describe('MongoDB Integration', () => {
               })
     executeSuccess(flow, done);
   })
+
+  it('should update Lucy', done => {
+    let flow = new datafire.Flow('test_flow');
+    flow.step('update', mongo.update('Pet'), {query: {name: "Lucy"}, update: {$set: {age: 2}}});
+    flow.step('update_result',
+              data => {
+                expect(data.update.n).to.equal(1);
+              });
+    flow.step('lucy', mongo.findOne('Pet'), {query: {name: "Lucy"}});
+    flow.step('find_result',
+              data => {
+                expect(data.lucy.name).to.equal("Lucy");
+                expect(data.lucy.age).to.equal(2);
+              })
+    executeSuccess(flow, done);
+  })
+
+  it('should remove Grumpy', done => {
+    let flow = new datafire.Flow('test_flow');
+    flow.step('remove', mongo.remove('Pet'), {query: {name: "Grumpy"}})
+    flow.step('remove_result',
+              data => {
+                expect(data.remove.n).to.equal(1);
+              })
+    flow.step('find_grumpy', mongo.find('Pet'), {query: {name: "Grumpy"}})
+    flow.step('find_result',
+              data => {
+                expect(data.find_grumpy.length).to.equal(0);
+              })
+    executeSuccess(flow, done);
+  })
 })

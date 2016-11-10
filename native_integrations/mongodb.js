@@ -11,6 +11,13 @@ let PROJECTION_PARAM = {
   description: 'A MongoDB projection',
   type: 'object',
 }
+let RESULT_RESPONSE = {
+  schema: {
+    properties: {
+      n: {type: 'integer'},
+    }
+  }
+}
 
 let SPEC = {
   info: {
@@ -35,14 +42,7 @@ let SPEC = {
         type: 'array',
         description: 'An array of documents to insert',
       }],
-      response: {
-        schema: {
-          properties: {
-            ok: {type: 'integer'},
-            n: {type: 'integer'},
-          }
-        }
-      }
+      response: RESULT_RESPONSE,
     },
     find: {
       description: "Retrieve an array of documents",
@@ -70,6 +70,23 @@ let SPEC = {
           type: 'object'
         }
       }
+    },
+    update: {
+      description: "Update a document",
+      parameters: [
+        QUERY_PARAM,
+        {
+          name: 'update',
+          type: 'object',
+          description: 'A MongoDB update object',
+        }
+      ],
+      response: RESULT_RESPONSE,
+    },
+    remove: {
+      description: "Remove a document from the collection",
+      parameters: [QUERY_PARAM],
+      response: RESULT_RESPONSE,
     }
   }
 }
@@ -140,12 +157,15 @@ class MongoDBIntegration extends datafire.Integration {
 
   update(collection) {
     return new MongoDBOperation('update', collection, this, (collection, args, cb) => {
-      collection.update(args.document, args.update, mongoResultCallback(cb));
+      collection.update(args.query, args.update, (err, data) => {
+        if (err) return cb(err);
+        cb(null, {n: data.n});
+      });
     });
   }
 
   remove(collection) {
-    return new MongoDBOperation('delete', collection, this, (collection, args, cb) => {
+    return new MongoDBOperation('remove', collection, this, (collection, args, cb) => {
       collection.remove(args.query, mongoResultCallback(cb));
     });
   }
