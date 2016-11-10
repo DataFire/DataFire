@@ -12,13 +12,13 @@ describe('Flows', () => {
 
   let executeSuccess = (done) => {
     flow.execute(e => {
-      expect(e).to.be.undefined;
+      expect(e).to.be.null;
       done();
     })
   }
   let executeFailure = (done) => {
     flow.execute(e => {
-      expect(e).to.not.be.undefined;
+      expect(e).to.not.be.null;
       done();
     })
   }
