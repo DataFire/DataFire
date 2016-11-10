@@ -18,19 +18,26 @@ module.exports = (args) => {
       }
       logger.logDescription(spec.info.description);
       logger.log();
-      for (let opName in integration.operations) {
-        logger.logOperation(integration.operations[opName], true);
+      for (let opName in integration.spec.operations) {
+        let op = integration.spec.operations[opName];
+        logger.logOperation(opName, op);
         logger.log();
       }
     } else {
-      let operation = integration.resolveOperation(args.operation);
-      logger.logOperation(operation, true);
+      let operation = integration.getOperationDetails(args.operation);
+      let opName = '';
+      for (let opId in integration.spec.operations) {
+        if (integration.spec.operations[opId] === operation) {
+          opName = opId;
+        }
+      }
+      logger.logOperation(opName, operation);
       logger.log();
-      logger.logParameters(operation.info.parameters);
+      logger.logParameters(operation.parameters);
       logger.log();
-      if (operation.info.response) {
+      if (operation.response && operation.response.schema) {
         logger.log('\nRESPONSE')
-        logger.logSchema(operation.info.response.schema);
+        logger.logSchema(operation.response.schema);
       }
       logger.log();
     }

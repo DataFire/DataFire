@@ -6,7 +6,9 @@ module.exports = (args) => {
   if (args.as) integration.as(args.as);
   integration.initialize(err => {
     if (err) throw err;
-    let op = integration.resolveOperation(args.operation);
+    let opId = integration.resolveOperationId(args.operation)
+    if (!opId) throw new Error("Couldn't find operation " + args.operation)
+    let op = integration[opId]();
     op.call(args.params || {}, (err, data) => {
       if (err) {
         logger.logError("Request failed: " + err.statusCode);
