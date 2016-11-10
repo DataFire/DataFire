@@ -1,4 +1,5 @@
-let expect = require('chai').expect
+let chai = require('chai');
+let expect = chai.expect
 
 let logger = require('../lib/logger');
 logger.silent = true;
@@ -18,6 +19,7 @@ describe('Flows', () => {
   }
   let executeFailure = (done) => {
     flow.execute(e => {
+      if (e instanceof chai.AssertionError) throw e;
       expect(e).to.not.be.null;
       done();
     })
@@ -33,22 +35,24 @@ describe('Flows', () => {
   });
 
   it('should run', (done) => {
-    flow.step('succeed', integration.get('/succeed'));
-    flow.step('result',
-              (data) => {
-                expect(data.succeed).to.not.be.null;
-                expect(data.succeed).to.equal('OK');
-              })
+    flow.step('succeed', {
+      operation: integration.get('/succeed'),
+      finish: data => {
+        expect(data.succeed).to.not.be.null;
+        expect(data.succeed).to.equal('OK');
+      }
+    });
     executeSuccess(done);
   });
 
   it('should should allow call by operationId', (done) => {
-    flow.step('succeed', integration.getSucceed());
-    flow.step('result',
-              (data) => {
-                expect(data.succeed).to.not.be.null;
-                expect(data.succeed).to.equal('OK');
-              })
+    flow.step('succeed',{
+      operation: integration.getSucceed(),
+      finish: data => {
+        expect(data.succeed).to.not.be.null;
+        expect(data.succeed).to.equal('OK');
+      }
+    });
     executeSuccess(done);
   });
 
