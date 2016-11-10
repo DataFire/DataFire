@@ -11,6 +11,8 @@ DataFire natively supports over
 &bull; Slack &bull; GitHub &bull; Twilio &bull; Trello &bull; Spotify &bull;
 Instagram &bull; Gmail &bull; Google Analytics &bull; YouTube &bull;
 
+as well as support for common databases and [custom integrations](docs/Integrations.md).
+
 ## Installation
 > Be sure to install DataFire both globally and as a project dependency.
 
@@ -44,7 +46,7 @@ datafire call github -o "GET /user" --as account_alias
 # Pass parameters with --params.foo
 datafire call github -i "GET /users/{username}" --params.username karpathy
 
-# Run a dataflow script (see below)
+# Run a flow
 datafire run ./getMessages.js  
 ```
 
@@ -97,17 +99,6 @@ Now let's run it:
 datafire run -f ./getTopStory.js
 ```
 You should see `story.json` in your current directory.
-## Add a Custom Integration
-Integrations can be added by the URL of an Open API (Swagger) specification:
-```
-datafire integrate --url https://api.foobar.com/openapi.json --as foobar
-```
-This will copy the API specification into the `./integrations` directory in your current folder.
-
-### Specification Formats
-If your API is in a different specification format, such as
-**RAML** or **API Blueprint**, you can use [lucybot/api-spec-converter](https://github.com/lucybot/api-spec-converter)
-to convert it to Open API 2.0
 
 ## Serverless Execution
 To run a flow on a regular schedule, you can use [crontab](https://en.wikipedia.org/wiki/Cron),
