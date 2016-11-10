@@ -15,12 +15,14 @@ let spec = {
 }
 
 class MongoDBOperation extends datafire.Operation {
-  constructor(name, integration) {
+  constructor(name, integration, run) {
     super(name, integration);
+    this.run = run;
   }
 
   call(args, callback) {
-    callback(null, 'baz');
+    if (!this.integration.account) throw new Error("Must supply an account for MongoDB");
+    this.run(args, callback);
   }
 }
 
@@ -28,11 +30,13 @@ class MongoDBIntegration extends datafire.Integration {
   constructor(mockClient) {
     super('mongodb', spec);
     this.client = mockClient || mongodb.MongoClient;
-    this.addOperation(new MongoDBOperation('get', this))
+    this.addOperation(new MongoDBOperation('get', this, (args, cb) => {
+      cb(null, 'baz');
+    }))
   }
 
   initialize(cb) {
-    if (!this.account) throw new Error("Must specify an account for MongoDB");
+    if (!this.account) return cb();
     this.client.connect(this.account.url, (err, db) => {
       if (err) return cb(err);
       this.database = db;

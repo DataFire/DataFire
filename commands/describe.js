@@ -2,6 +2,8 @@ const chalk = require('chalk');
 const datafire = require('../index');
 const logger = require('../lib/logger');
 
+let RESTIntegration = require('../lib/rest-integration');
+
 module.exports = (args) => {
   let integration = datafire.Integration.new(args.integration);
   integration.initialize(err => {
@@ -9,9 +11,11 @@ module.exports = (args) => {
     let spec = integration.spec;
     logger.log();
     if (!args.operation) {
-      let url = spec.schemes[0] + '://' + spec.host + spec.basePath;
       logger.log(chalk.blue(spec.info.title));
-      logger.log(chalk.blue(url));
+      if (integration instanceof RESTIntegration) {
+        let url = spec.schemes[0] + '://' + spec.host + spec.basePath;
+        logger.log(chalk.blue(url));
+      }
       logger.logDescription(spec.info.description);
       logger.log();
       for (let opName in integration.operations) {
@@ -30,8 +34,10 @@ module.exports = (args) => {
           bestCode = code;
         }
       }
-      logger.log('\nRESPONSE')
-      logger.logSchema(operation.info.responses[bestCode].schema);
+      if (bestCode) {
+        logger.log('\nRESPONSE')
+        logger.logSchema(operation.info.responses[bestCode].schema);
+      }
       logger.log();
     }
   });
