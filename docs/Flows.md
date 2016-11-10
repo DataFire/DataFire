@@ -14,18 +14,18 @@ Below is an example of DataFlow code. The steps are:
 ```js
 const datafire = require('datafire');
 const fs = require('fs');
-const hn = datafire.Integration.new('hacker_news');
+const hacker_news = datafire.Integration.new('hacker_news');
 
 const flow = module.exports =
       new datafire.Flow('copyStory', 'Copies the top HN story to a local file');
 
 flow
   .step('stories', {
-    do: hn.getStories(),
+    do: hacker_news.getStories(),
     params: {storyType: 'top'},
   })
   .step('story_details', {
-    do: hn.getItem(),
+    do: hacker_news.getItem(),
     params: data => {
       return {itemID: data.stories[0]}
     }
