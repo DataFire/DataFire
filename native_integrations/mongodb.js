@@ -1,6 +1,17 @@
 let datafire = require('../index');
 let mongodb = require('mongodb');
 
+let QUERY_PARAM = {
+  name: 'query',
+  description: 'A MongoDB query',
+  type: 'object',
+}
+let PROJECTION_PARAM = {
+  name: 'projection',
+  description: 'A MongoDB projection',
+  type: 'object',
+}
+
 let SPEC = {
   info: {
     title: "MongoDB",
@@ -14,6 +25,7 @@ let SPEC = {
   },
   operations: {
     insert: {
+      description: "Insert a document",
       parameters: [{
         name: 'document',
         type: 'object',
@@ -27,30 +39,48 @@ let SPEC = {
           }
         }
       }
+    },
+    find: {
+      description: "Retrieve an array of documents",
+      parameters: [
+        QUERY_PARAM,
+        PROJECTION_PARAM,
+      ],
+      response: {
+        schema: {
+          type: 'array',
+          items: {
+            type: 'object',
+          }
+        }
+      }
+    },
+    findOne: {
+      description: "Retrieve a single document",
+      parameters: [
+        QUERY_PARAM,
+        PROJECTION_PARAM,
+      ],
+      response: {
+        schema: {
+          type: 'object'
+        }
+      }
     }
   }
 }
 
 class MongoDBOperation extends datafire.Operation {
-  constructor(name, integration, run) {
+  constructor(name, collection, integration, run) {
     super(name, integration);
     this.runQuery = run;
-    this.info = SPEC.operations[name];
-    this.info.parameters.unshift({
-      name: 'collection',
-      type: 'string',
-      description: 'The MongoDB collection to operate on',
-      required: true,
-    });
+    this.collection = collection;
   }
 
   call(args, callback) {
     if (!this.integration.account) throw new Error("Must supply an account for MongoDB");
-    let collection = this.integration.database.collection(args.collection);
-    this.runQuery(collection, args, (err, result) => {
-      if (err) return callback(err);
-      return callback(null, result.result);
-    });
+    let collection = this.integration.database.collection(this.collection);
+    this.runQuery(collection, args, callback);
   }
 }
 
@@ -58,11 +88,9 @@ class MongoDBIntegration extends datafire.Integration {
   constructor(mockClient) {
     super('mongodb', SPEC);
     this.client = mockClient || mongodb.MongoClient;
-    this.addOperation(new MongoDBOperation('insert', this, (collection, args, cb) => {
-      collection.insert(args.document || args.documents, cb);
-    }))
   }
 
+  // Override
   initialize(cb) {
     if (!this.account) return cb();
     this.client.connect(this.account.url, (err, db) => {
@@ -72,9 +100,34 @@ class MongoDBIntegration extends datafire.Integration {
     })
   }
 
+  // Override
   destroy(cb) {
     if (this.database) this.database.close();
     cb();
+  }
+
+  find(collection) {
+    return new MongoDBOperation('find', collection, this, (collection, args, cb) => {
+      collection.find(args.query, args.projection, (err, docs) => {
+        if (err) return cb(err);
+        docs.toArray(cb);
+      });
+    });
+  }
+
+  findOne(collection) {
+    return new MongoDBOperation('findOne', collection, this, (collection, args, cb) => {
+      collection.findOne(args.query || {}, args.projection || {}, cb);
+    });
+  }
+
+  insert(collection) {
+    return new MongoDBOperation('insert', collection, this, (collection, args, cb) => {
+      collection.insert(args.document || args.documents, (err, result) => {
+        if (err) return cb(err);
+        cb(null, result.result);
+      });
+    });
   }
 }
 

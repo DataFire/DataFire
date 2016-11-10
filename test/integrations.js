@@ -1,5 +1,6 @@
 let expect = require('chai').expect;
 let mongomock = require('mongo-mock');
+mongomock.max_delay = 0;
 
 let datafire = require('../index');
 datafire.integrationsDirectory = __dirname + '/integrations';
@@ -12,14 +13,30 @@ describe('MongoDB Integration', () => {
     let mongo = new MongoDBIntegration(mongomock.MongoClient).as('test');
     let flow = new datafire.Flow('test_flow');
     flow.step('insert',
-              mongo.insert(),
-              {collection: 'Foo', document: {foo: 'bar'}});
-    flow.step('result',
+              mongo.insert('Foo'),
+              {document: {foo: 'bar'}});
+    flow.step('insert_result',
               data => {
                 expect(data.insert.ok).to.equal(1);
                 expect(data.insert.n).to.equal(1);
-                done();
+              });
+    flow.step('find',
+              mongo.find('Foo'),
+              {query: {foo: 'bar'}})
+    flow.step('find_result',
+              data => {
+                expect(data.find.length).to.equal(1);
+                expect(data.find[0].foo).to.equal('bar');
               })
-    flow.execute();
+    flow.step('findOne',
+              mongo.findOne('Foo'))
+    flow.step('findOne_result',
+              data => {
+                expect(data.findOne.foo).to.equal('bar');
+              })
+    flow.execute(err => {
+      expect(err).to.be.null;
+      done();
+    });
   })
 })
