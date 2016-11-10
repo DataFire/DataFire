@@ -47,8 +47,7 @@
                 8276,
                 20823448
               ]
-            },
-            "x-lucy/view": "<h1 class=\"text-uppercase\">\n  {{ answers.storyType }} Stories - Hacker News\n</h1>\n<hr>\n<lucy for=\"story\" in=\"result\">\n  <!-- story is just the itemID, so we need to execute another request -->\n  <lucy if=\"index < 5\">\n    <lucy include=\"Item\" action=\"getItem\" inputvars=\"{itemID: story}\">\n    </lucy>\n    <hr>\n  </lucy>\n</lucy>"
+            }
           }
         }
       }
@@ -92,8 +91,7 @@
                     8876
                   ]
                 }
-            },
-            "x-lucy/view": "<h1 class=\"text-capitalize\">{{ result.type }}</h1>\n<hr>\n<lucy include=\"Item\">"
+            }
           }
         }
       }
@@ -133,8 +131,7 @@
             },
             "schema": {
               "$ref": "#/definitions/User"
-            },
-            "x-lucy/view": "<lucy include=\"User\">"
+            }
           }
         }
       }
@@ -192,11 +189,9 @@
             "type": "integer"
           }
         }
-      },
-      "x-lucy/view": "<h2>\n  <lucy if=\"!result.url\">{{ result.title }}</lucy>\n  <lucy if=\"result.url\">\n    <a href=\"{{ result.url }}\" target=\"_blank\">\n      {{ result.title }}\n    </a>\n  </lucy>\n</h2>\n<p>\n  By {{ result.by }} - {{ result.score }} points\n</p>\n<!-- should be embeddable html -->\n<p class=\"small\">{{ result.text }}</p>"
+      }
     },
     "User": {
-      "x-lucy/view": "<h1>{{ result.id }} ({{ result.karma }})</h1>\n<!-- Undocumented use of 'length' -->\n<p class=\"small\">{{ result.submitted.length }} Submissions</p>\n<!-- Find a way to embed as HTML -->\n<p>{{ result.about }}</p>",
       "properties": {
         "id": {
           "type": "string"
