@@ -12,17 +12,45 @@ let spec = {
       "name": "url"
     }
   },
+  "operations": {
+    "insert": {}
+  }
 }
 
 class MongoDBOperation extends datafire.Operation {
   constructor(name, integration, run) {
     super(name, integration);
-    this.run = run;
+    this.runQuery = run;
+    this.info.parameters = [{
+      name: 'collection',
+      type: 'string',
+      description: 'The MongoDB collection to operate on',
+      required: true,
+    }];
+    if (this.name === 'insert') {
+      this.info.parameters.push({
+        name: 'document',
+        type: 'object',
+        description: 'The document to insert',
+      })
+      this.info.response = {
+        schema: {
+          properties: {
+            ok: {type: 'integer'},
+            n: {type: 'integer'},
+          }
+        }
+      }
+    }
   }
 
   call(args, callback) {
     if (!this.integration.account) throw new Error("Must supply an account for MongoDB");
-    this.run(args, callback);
+    let collection = this.integration.database.collection(args.collection);
+    this.runQuery(collection, args, (err, result) => {
+      if (err) return callback(err);
+      return callback(null, result.result);
+    });
   }
 }
 
@@ -30,8 +58,8 @@ class MongoDBIntegration extends datafire.Integration {
   constructor(mockClient) {
     super('mongodb', spec);
     this.client = mockClient || mongodb.MongoClient;
-    this.addOperation(new MongoDBOperation('get', this, (args, cb) => {
-      cb(null, 'baz');
+    this.addOperation(new MongoDBOperation('insert', this, (collection, args, cb) => {
+      collection.insert(args.document || args.documents, cb);
     }))
   }
 

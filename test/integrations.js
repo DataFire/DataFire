@@ -11,11 +11,13 @@ describe('MongoDB Integration', () => {
   it('should exist', (done) => {
     let mongo = new MongoDBIntegration(mongomock.MongoClient).as('test');
     let flow = new datafire.Flow('test_flow');
-    flow.step('mongo_get',
-              mongo.get({foo: 'bar'}));
+    flow.step('insert',
+              mongo.insert(),
+              {collection: 'Foo', document: {foo: 'bar'}});
     flow.step('result',
               data => {
-                expect(data.mongo_get).to.equal('baz');
+                expect(data.insert.ok).to.equal(1);
+                expect(data.insert.n).to.equal(1);
                 done();
               })
     flow.execute();
