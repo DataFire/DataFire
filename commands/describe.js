@@ -28,15 +28,9 @@ module.exports = (args) => {
       logger.log();
       logger.logParameters(operation.info.parameters);
       logger.log();
-      let bestCode = null;
-      for (let code in operation.info.responses) {
-        if (code.startsWith('2') && (!bestCode || code < bestCode)) {
-          bestCode = code;
-        }
-      }
-      if (bestCode) {
+      if (operation.info.response) {
         logger.log('\nRESPONSE')
-        logger.logSchema(operation.info.responses[bestCode].schema);
+        logger.logSchema(operation.info.response.schema);
       }
       logger.log();
     }
