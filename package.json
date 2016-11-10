@@ -7,7 +7,7 @@
     "datafire": "bin/datafire"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha && ./test/commands/run.sh"
   },
   "repository": {
     "type": "git",
