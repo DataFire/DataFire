@@ -77,11 +77,11 @@ const flow = module.exports =
 
 flow
   .step('stories', {
-    do: hn.get('/{storyType}stories.json'),
-    params: {storyType: 'top'}
+    do: hn.getStories(),
+    params: {storyType: 'top'},
   })
   .step('story_details', {
-    do: hn.get('/item/{itemID}.json'),
+    do: hn.getItem(),
     params: data => {
       return {itemID: data.stories[0]}
     }
@@ -91,7 +91,6 @@ flow
       fs.writeFileSync('./story.json', JSON.stringify(data.story_details, null, 2));
     }
   });
-
 ```
 
 Now let's run it:
