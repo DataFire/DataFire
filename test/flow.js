@@ -209,5 +209,33 @@ describe('Flows', () => {
         .catch(e => {})
     executeFailure(done);
   });
+
+  it('should allow async do', done => {
+    flow.step('async', {
+      do: (data, cb) => {
+        setTimeout(() => {
+          cb(null, 'foo');
+        }, 100)
+      },
+      finish: data => {
+        expect(data.async).to.equal('foo')
+      }
+    })
+    executeSuccess(done);
+  });
+
+  it('should allow async errors', done => {
+    flow.step('async', {
+      do: (data, cb) => {
+        setTimeout(() => {
+          cb(new Error("whoops"));
+        }, 100)
+      },
+    })
+    .catch(e => {
+      expect(e.message).to.equal('whoops')
+    })
+    executeSuccess(done);
+  });
 });
 
