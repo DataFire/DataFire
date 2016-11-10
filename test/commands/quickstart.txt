@@ -1,0 +1,10 @@
+stories
+  operation: getStories
+  Success: got 387 items
+story_details
+  operation: getItem
+  Success
+write_file
+  operation: custom
+  Success
+Success

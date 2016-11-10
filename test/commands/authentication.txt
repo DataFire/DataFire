@@ -1,0 +1,4 @@
+user
+  operation: GET /user
+  Success
+Success

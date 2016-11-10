@@ -12,4 +12,13 @@ datafire call hacker_news -o "GET /item/{itemID}.json" --params.itemID 444 > ./t
 
 cd examples/quickstart
 datafire integrate hacker_news > /dev/null
-datafire run getTopStory.js > ../../test/commands/run.txt
+datafire run getTopStory.js > ../../test/commands/quickstart.txt
+
+cd ../authentication
+datafire integrate github > /dev/null
+datafire run getUser.js > ../../test/commands/authentication.txt
+
+cd ../error_handling
+datafire integrate hacker_news > /dev/null
+datafire run triggerError.js > ../../test/commands/error_handling.txt
+

@@ -1,9 +1,0 @@
-stories:    getStories
-GET	/{storyType}stories.json
-Get an up-to-date list of stories for the given type
-story_details: getItem
-GET	/item/{itemID}.json
-Get details for a given item
-write_file: (custom)
-write_file: Success
-Success
