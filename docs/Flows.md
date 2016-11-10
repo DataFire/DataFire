@@ -1,6 +1,6 @@
 # Flows
-Flows are a series of asynchronous steps. Each step will generally make one or more calls
-to a given API endpoint, and store the resulting data in the `data` object. However,
+Every flow is a series of steps. Each step will generally make one or more calls
+to a given API endpoint, and store the resulting data in `flow.data`. However,
 you can add steps that execute any arbitrary code.
 
 Flows use a waterfall design pattern - each step has access to the data returned in all
@@ -77,7 +77,7 @@ flow.step('user', {
 You can also chain calls to `step()`. Each step has access to the responses
 from all the previous steps.
 
-```
+```js
 flow
   .step('users', {
     do: github.get('/users'),
@@ -92,9 +92,32 @@ flow
   });
 ```
 
-### `Flow.stepAsync(name, operation, request)`
+#### `options.do`
+`options.do` is generally an Operation returned by an Integration, e.g.
+`hacker_news.getItem()`.  However, as you might have noticed in the
+quickstart example, you can also pass in your own function:
+```js
+flow.step('write_file', {
+  do: data => {
+    fs.writeFileSync('./story.json', JSON.stringify(data.story))
+  }
+});
+```
 
-### `Flow.stepRepeat(name, operation, request)`
+You can also make your function asynchronous:
+```js
+flow.step('write_file', {
+  do: (data, callback) => {
+    fs.writeFile('./story.json', JSON.stringify(data.story), (err) => {
+      if (err) return callback(err);
+      callback(null, "Success");
+    })
+  }
+});
+```
+
+### `Flow.repeatStep(name, operation, request)`
+**Unimplemented**
 
 ### `Flow.catch(callback)`
 Catches all HTTP errors (e.g. 404 or 500), and thrown errors.
