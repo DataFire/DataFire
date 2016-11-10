@@ -83,7 +83,7 @@ COMMANDS.forEach(cmd => {
         cmd.name,
         cmd.description,
         (yargs) => {
-          cmd.options.forEach(o => {
+          (cmd.options || []).forEach(o => {
             yargs.option(o.name, {alias: o.alias, describe: o.description})
           })
         },
