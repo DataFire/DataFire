@@ -1,12 +1,15 @@
 # Flows
 Every flow is a series of steps. Each step will generally make one or more calls
 to a given API endpoint, and store the resulting data in `flow.data`. However,
-you can add steps that execute any arbitrary code.
+you can add steps that do anything.
 
-Flows use a waterfall design pattern - each step has access to the data returned in all
-previous steps, and can use this data to construct its request.
+Flows use a waterfall design pattern - each step has access to all data returned in
+previous steps, and can use this to generate the next request.
 
-Below is an example of DataFlow code:
+Below is an example of DataFlow code. The steps are:
+* `stories` - Gets a list of story IDs from Hacker News, e.g. `[234, 2352, 1834]`
+* `story_details` - Gets details for the fist story
+* `write_file` - Writes the details to a local file
 
 ```js
 const datafire = require('datafire');
