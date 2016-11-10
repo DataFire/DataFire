@@ -53,46 +53,7 @@ Adds a new step to the flow.
 * `options.do` - either a function or a datafire `Operation`
 * `options.params` - an object with the parameters to pass to `operation`, or
 a function that returns that object
-* `options.finish` - a synchronous function to run after `do` has executed.
-Use this to modify or check the response in `data[name]`
-
-#### Setting parameters
-The following two steps are equivalent. The first uses an object literal for `params`,
-while the second wraps it inside a function.
-```js
-flow.step('user', {
-  do: github.get('/users/{username}'),
-  params: {username: 'torvalds'}
-})
-```
-
-```js
-flow.step('user', {
-  do: github.get('/users/{username}'),
-  params: data => {
-    return {username: 'torvalds'}
-  }
-})
-```
-
-#### Chaining
-You can also chain calls to `step()`. Each step has access to the responses
-from all the previous steps.
-
-```js
-flow
-  .step('users', {
-    do: github.get('/users'),
-  })
-  .step('repos', {
-    do: github.get('/users/{username}/repos'),
-    params: data => {
-      return {
-        username: data.users[0].login,
-      }
-    }
-  });
-```
+* `options.finish` - a function to run after `do` has executed.
 
 #### `options.do`
 `options.do` is generally an Operation returned by an Integration, e.g.
@@ -117,6 +78,51 @@ flow.step('write_file', {
   }
 });
 ```
+
+#### `options.params`
+Use `options.params` to pass parameters to the Operation in `options.do`.
+
+The following two steps are equivalent. The first uses an object literal for `params`,
+while the second wraps it inside a function.
+```js
+flow.step('user', {
+  do: github.get('/users/{username}'),
+  params: {username: 'torvalds'}
+})
+```
+
+```js
+flow.step('user', {
+  do: github.get('/users/{username}'),
+  params: data => {
+    return {username: 'torvalds'}
+  }
+})
+```
+
+#### `options.finish`
+A synchronous function to run after `options.do` has completed. Use this to
+modify or check the response in `data[step.name]`.
+
+#### Chaining
+You can also chain calls to `step()`. Each step has access to the responses
+from all the previous steps.
+
+```js
+flow
+  .step('users', {
+    do: github.get('/users'),
+  })
+  .step('repos', {
+    do: github.get('/users/{username}/repos'),
+    params: data => {
+      return {
+        username: data.users[0].login,
+      }
+    }
+  });
+```
+
 
 ---
 ### `Flow.repeatStep(name, operation, request)`
