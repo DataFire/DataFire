@@ -30,12 +30,14 @@ describe('MongoDB Integration', () => {
       type: 'cat',
     }]
 
-    flow.step('insert', mongo.insert('Pet'), {documents: pets})
-        .step('insert_result',
-              data => {
-                expect(data.insert.ok).to.equal(1);
-                expect(data.insert.n).to.equal(pets.length);
-              });
+    flow.step('insert', {
+      operation: mongo.insert('Pet'),
+      params: {documents: pets},
+      finish: data => {
+        expect(data.insert.ok).to.equal(1);
+        expect(data.insert.n).to.equal(pets.length);
+      }
+    });
     executeSuccess(flow, done);
   })
 
