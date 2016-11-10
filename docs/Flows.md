@@ -10,19 +10,28 @@ Below is an example of DataFlow code:
 
 ```js
 const datafire = require('datafire');
-const gmail = new datafire.Integration('gmail');
-const github = new datafire.Integration('github');
+const fs = require('fs');
+const hn = datafire.Integration.new('hacker_news');
 
-const flow = module.exports = new datafire.Dataflow();
-flow.step('messages', gmail.get('/messages'), {limit: 10})
-    .step('add_issues', github.post('/issues'), (data) => {
-      if (!data.messages.length) return flow.fail("No messages found");
-      return data.messages.map(message => {
-        title: message.subject,
-        body: message.body,
-        assignee: 'bobby-brennan',
-      })
-});
+const flow = module.exports =
+      new datafire.Flow('copyStory', 'Copies the top HN story to a local file');
+
+flow
+  .step('stories', {
+    do: hn.get('/{storyType}stories.json'),
+    params: {storyType: 'top'}
+  })
+  .step('story_details', {
+    do: hn.get('/item/{itemID}.json'),
+    params: data => {
+      return {itemID: data.stories[0]}
+    }
+  })
+  .step('write_file', {
+    do: data => {
+      fs.writeFileSync('./story.json', JSON.stringify(data.story_details, null, 2));
+    }
+  });
 ```
 
 # API
@@ -36,46 +45,51 @@ Example:
 let flow = new datafire.Flow('copyStuff', "Copies stuff from here to there");
 ```
 
-### `Flow.step(name, operation, request)`
+### `Flow.step(name, options)`
 Adds a new step to the flow.
-* `name` - a name for this step. If `operation` is from a DataFire integration,
-the response will be available in `data[name]`.
-* `operation` - either a function or a datafire `Operation`
-* `request` - either a literal object with the parameters to pass to `operation`, or
-a function that returns that literal object
+* `name` - a unique name for this step.
+* `options.do` - either a function or a datafire `Operation`
+* `options.params` - an object with the parameters to pass to `operation`, or
+a function that returns that object
+* `options.finish` - a synchronous function to run after `do` has executed.
+Use this to modify or check the response in `data[name]`
 
-The following two flows are equivalent. The first uses an object literal for `request`,
+#### Setting parameters
+The following two steps are equivalent. The first uses an object literal for `params`,
 while the second wraps it inside a function.
 ```js
-let github = new datafire.Integration('github');
-let flow = new datafire.Flow('copyStuff', "Copies stuff from here to there");
-flow.step('user',
-          github.get('/users/{username}'),
-          {username: 'torvalds'})
+flow.step('user', {
+  do: github.get('/users/{username}'),
+  params: {username: 'torvalds'}
+})
 ```
 
 ```js
-let github = new datafire.Integration('github');
-let flow = new datafire.Flow('copyStuff', "Copies stuff from here to there");
-flow.step('user',
-          github.get('/users/{username}'),
-          function(data) {
-            return {username: 'torvalds'}
-          })
+flow.step('user', {
+  do: github.get('/users/{username}'),
+  params: data => {
+    return {username: 'torvalds'}
+  }
+})
 ```
 
+#### Chaining
 You can also chain calls to `step()`. Each step has access to the responses
 from all the previous steps.
 
 ```
-flow.step('user',
-          github.get('/users/{username}'),
-          {username: 'torvalds'})
-    .step('repos',
-          github.get('/repos/{owner}/{repo}'),
-          function(data) {
-            return {owner: data.user.login, repo: 'foobar'}
-          });
+flow
+  .step('users', {
+    do: github.get('/users'),
+  })
+  .step('repos', {
+    do: github.get('/users/{username}/repos'),
+    params: data => {
+      return {
+        username: data.users[0].login,
+      }
+    }
+  });
 ```
 
 ### `Flow.stepAsync(name, operation, request)`
@@ -83,23 +97,35 @@ flow.step('user',
 ### `Flow.stepRepeat(name, operation, request)`
 
 ### `Flow.catch(callback)`
-Catches all HTTP errors (e.g. 404 or 500), as well as calls to `flow.fail()`.
+Catches all HTTP errors (e.g. 404 or 500), and thrown errors.
 Use this to react to errors e.g. by sending an e-mail.
 
 ```js
-flow.step('messages', gmail.get('/messages'), {limit: 10})
-    .catch((err, data) => {
-       if (err.statusCode === 401) data.messages = [];
-       else flow.fail(err);
-    })
-    .step('add_issues', github.post('/issues'), (data) => {
-      if (!messages.length) return flow.succeed();
-      return data.messages.map(message => {
-        title: message.subject,
-        body: message.body,
-        assignee: 'bobby-brennan',
-      })
-    });
+flow
+  .step('messages', {
+    do: gmail.get('/messages'),
+    params: {limit: 10},
+  })
+  .catch((err, data) => {
+    if (err.statusCode === 429) {
+      console.log('Gmail rate limit exceeded, ignoring')
+      flow.succeed();
+    } else {
+      throw err;
+    }
+  })
+  .step('add_issue', {
+    do: github.post('/issues'),
+    params: data => {
+      return {
+        body {
+          title: "There are " + data.messages.length + " new messages",
+          body: messages.map(m => m.subject).join('\n'),
+          assignee: 'bobby-brennan',
+        }
+      }
+    }
+  });
 ```
 
 
@@ -109,16 +135,23 @@ Can be called inside of a step to exit early. No subsequent steps will be called
 ### `Flow.succeed(message)`
 Can be called inside of a step to exit early. No subsequent steps will be called.
 
-# Exposing options
-You can parameterize your flow with options:
+### `Flow.setDefaults(defaults)`
+Use `setDefaults` to parameterize your flow with options:
+
 ```js
 flow.setDefaults({
   username: 'torvalds',
   repo: 'linux',
 })
-flow.step('issues',
-          github.get('/repos/{owner}/{repo}/issues'),
-          () => ({repo: flow.options.repo, username: flow.options.username}))
+flow.step('issues', {
+  do: github.get('/repos/{owner}/{repo}/issues'),
+  params: () => {
+    return {
+      repo: flow.options.repo,
+      username: flow.options.username,
+    }
+  }
+})
 ```
 
 You can then pass options via the command line:
@@ -131,32 +164,3 @@ Or via an HTTP request (if you're using Serverless):
 curl http://something.execute-api.us-east-1.amazonaws.com/dev/copyIssues?username="expresjs"&repo="expres"
 ```
 
-# Miscellaneous
-
-#### Async flow steps
-```js
-flow.asyncStep('widgets', (data, callback) => {
-  fs.readFile('./widgets.json', 'utf8', (err, content) => {
-    if (err) return flow.fail(err);
-    callback(content);
-  })
-})
-```
-
-#### Repeatable steps
-e.g. to retrieve every page of results before continuing. In this example,
-DataFire repeatedly populates data.issues_page, which the client appends to 
-`data.issues` until no results are returned.
-
-```js
-flow.repeatStep('issues_page', github.get('/issues'), (data) => {
-  data.page = data.page || 0;
-  data.issues = data.issues || [];
-  data.issues = data.issues.concat(data.issues_page || []);
-  if (data.issues_page && !data.issues_page.length) {
-    return flow.continue();
-  } else {
-    return {page: data.page++}
-  }
-})
-```
