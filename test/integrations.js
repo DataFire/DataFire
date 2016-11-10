@@ -9,33 +9,42 @@ datafire.credentialsDirectory = __dirname + '/credentials';
 let MongoDBIntegration = require('../native_integrations/mongodb');
 
 describe('MongoDB Integration', () => {
-  it('should exist', (done) => {
+  it('should work', (done) => {
     let mongo = new MongoDBIntegration(mongomock.MongoClient).as('test');
     let flow = new datafire.Flow('test_flow');
-    flow.step('insert',
-              mongo.insert('Foo'),
-              {document: {foo: 'bar'}});
-    flow.step('insert_result',
+
+    let pets = [{
+      name: 'Lucy',
+      type: 'dog',
+    }, {
+      name: 'Blaney',
+      type: 'dog',
+    }, {
+      name: 'Grumpy',
+      type: 'cat',
+    }]
+
+    flow.step('insert', mongo.insert('Pet'), {documents: pets})
+        .step('insert_result',
               data => {
                 expect(data.insert.ok).to.equal(1);
-                expect(data.insert.n).to.equal(1);
+                expect(data.insert.n).to.equal(pets.length);
               });
-    flow.step('find',
-              mongo.find('Foo'),
-              {query: {foo: 'bar'}})
-    flow.step('find_result',
+    flow.step('find', mongo.find('Pet'), {query: {type: 'dog'}})
+        .step('find_result',
               data => {
-                expect(data.find.length).to.equal(1);
-                expect(data.find[0].foo).to.equal('bar');
-              })
-    flow.step('findOne',
-              mongo.findOne('Foo'))
+                expect(data.find.length).to.equal(2);
+                expect(data.find[0].name).to.equal('Lucy');
+                expect(data.find[1].name).to.equal('Blaney');
+              });
+    flow.step('findOne', mongo.findOne('Pet'), {query: {name: "Grumpy"}})
     flow.step('findOne_result',
               data => {
-                expect(data.findOne.foo).to.equal('bar');
+                expect(data.findOne.name).to.equal('Grumpy');
+                expect(data.findOne.type).to.equal('cat');
               })
     flow.execute(err => {
-      expect(err).to.be.null;
+      if (err) throw err;
       done();
     });
   })

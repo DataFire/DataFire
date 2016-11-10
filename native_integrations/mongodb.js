@@ -70,6 +70,13 @@ let SPEC = {
   }
 }
 
+const mongoResultCallback = (cb) => {
+  return (err, result) => {
+    if (err) return cb(err);
+    return cb(null, result.result);
+  }
+}
+
 class MongoDBOperation extends datafire.Operation {
   constructor(name, collection, integration, run) {
     super(name, integration);
@@ -123,10 +130,19 @@ class MongoDBIntegration extends datafire.Integration {
 
   insert(collection) {
     return new MongoDBOperation('insert', collection, this, (collection, args, cb) => {
-      collection.insert(args.document || args.documents, (err, result) => {
-        if (err) return cb(err);
-        cb(null, result.result);
-      });
+      collection.insert(args.document || args.documents, mongoResultCallback(cb));
+    });
+  }
+
+  update(collection) {
+    return new MongoDBOperation('update', collection, this, (collection, args, cb) => {
+      collection.update(args.document, args.update, mongoResultCallback(cb));
+    });
+  }
+
+  remove(collection) {
+    return new MongoDBOperation('delete', collection, this, (collection, args, cb) => {
+      collection.remove(args.query, mongoResultCallback(cb));
     });
   }
 }
