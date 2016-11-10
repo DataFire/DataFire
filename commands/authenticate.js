@@ -67,7 +67,7 @@ let saveCredentials = (integration, creds) => {
   let oldCreds = fs.existsSync(credFile) ? require(credFile) : {};
   inquirer.prompt(QUESTION_SETS.alias).then(answers => {
     oldCreds[answers.alias] = creds;
-    console.log('Saving credentials to ' + credFile.replace(process.cwd(), '.'));
+    logger.log('Saving credentials to ' + credFile.replace(process.cwd(), '.'));
     fs.writeFileSync(credFile, JSON.stringify(oldCreds, null, 2));
   });
 }
