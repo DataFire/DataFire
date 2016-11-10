@@ -131,7 +131,8 @@ flow
 ---
 ### `Flow.catch(callback)`
 Catches all HTTP errors (e.g. 404 or 500), and thrown errors.
-Use this to react to errors e.g. by sending an e-mail.
+Use this to recover from errors, perform additional logging,
+or send error alerts via e-mail/SMS
 
 ```js
 flow
