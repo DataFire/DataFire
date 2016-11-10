@@ -1,5 +1,5 @@
 let datafire = require('../../index');
-let hn = new datafire.Integration('hacker_news');
+let hn = datafire.Integration.new('hacker_news');
 
 let flow = module.exports =
       new datafire.Flow('triggerError', "Intentionally cause an error to show catch usage")

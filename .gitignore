@@ -5,3 +5,5 @@ integrations/
 
 credentials/
 !test/credentials/
+
+examples/**/*.json

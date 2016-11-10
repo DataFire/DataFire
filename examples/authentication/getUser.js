@@ -1,6 +1,6 @@
 const datafire = require('../../index');
 const fs = require('fs');
-const github = new datafire.Integration('github').as('default');
+const github = datafire.Integration.new('github').as('default');
 
 const flow = module.exports =
       new datafire.Flow('getUser', 'Copies the logged in user to a local file');
