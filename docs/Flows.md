@@ -125,7 +125,7 @@ flow
 
 
 ---
-### `Flow.repeatStep(name, operation, request)`
+### `Flow.repeatStep(name, options)`
 **Not Implemented**
 
 ---
