@@ -44,7 +44,7 @@ datafire call github -o "GET /user" --as account_alias
 # Pass parameters with --params.foo
 datafire call github -i "GET /users/{username}" --params.username karpathy
 
-# Run a dataflow script (see below)
+# Run a flow
 datafire run ./getMessages.js  
 ```
 
