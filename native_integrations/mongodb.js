@@ -30,6 +30,10 @@ let SPEC = {
         name: 'document',
         type: 'object',
         description: 'The document to insert',
+      }, {
+        name: 'documents',
+        type: 'array',
+        description: 'An array of documents to insert',
       }],
       response: {
         schema: {
