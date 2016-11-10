@@ -9,3 +9,7 @@ datafire describe hacker_news -o "GET /item/{itemID}.json"
 
 datafire call hacker_news -o getItem --params.itemID 444
 datafire call hacker_news -o "GET /item/{itemID}.json" --params.itemID 444
+
+cd examples/quickstart
+datafire integrate hacker_news
+datafire run getTopStory.js
