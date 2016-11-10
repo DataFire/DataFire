@@ -38,9 +38,7 @@ flow
 ```
 
 # API
-
-## Flow
-### `Flow.constructor(name, description)`
+## `Flow.constructor(name, description)`
 Creates a new flow
 
 Example:
@@ -48,7 +46,7 @@ Example:
 let flow = new datafire.Flow('copyStuff', "Copies stuff from here to there");
 ```
 
-### `Flow.step(name, options)`
+## `Flow.step(name, options)`
 Adds a new step to the flow.
 * `name` - a unique name for this step.
 * `options.do` - either a function or a datafire `Operation`
@@ -57,7 +55,7 @@ a function that returns that object
 * `options.finish` - a synchronous function to run after `do` has executed.
 Use this to modify or check the response in `data[name]`
 
-#### Setting parameters
+### Setting parameters
 The following two steps are equivalent. The first uses an object literal for `params`,
 while the second wraps it inside a function.
 ```js
@@ -76,7 +74,7 @@ flow.step('user', {
 })
 ```
 
-#### Chaining
+### Chaining
 You can also chain calls to `step()`. Each step has access to the responses
 from all the previous steps.
 
@@ -95,7 +93,7 @@ flow
   });
 ```
 
-#### `options.do`
+### `options.do`
 `options.do` is generally an Operation returned by an Integration, e.g.
 `hacker_news.getItem()`.  However, as you might have noticed in the
 quickstart example, you can also pass in your own function:
@@ -119,10 +117,10 @@ flow.step('write_file', {
 });
 ```
 
-### `Flow.repeatStep(name, operation, request)`
+## `Flow.repeatStep(name, operation, request)`
 **Unimplemented**
 
-### `Flow.catch(callback)`
+## `Flow.catch(callback)`
 Catches all HTTP errors (e.g. 404 or 500), and thrown errors.
 Use this to react to errors e.g. by sending an e-mail.
 
@@ -155,13 +153,13 @@ flow
 ```
 
 
-### `Flow.fail(message)`
+## `Flow.fail(message)`
 Can be called inside of a step to exit early. No subsequent steps will be called.
 
-### `Flow.succeed(message)`
+## `Flow.succeed(message)`
 Can be called inside of a step to exit early. No subsequent steps will be called.
 
-### `Flow.setDefaults(defaults)`
+## `Flow.setDefaults(defaults)`
 Use `setDefaults` to parameterize your flow with options:
 
 ```js
