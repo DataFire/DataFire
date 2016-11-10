@@ -11,7 +11,7 @@ DataFire natively supports over
 &bull; Slack &bull; GitHub &bull; Twilio &bull; Trello &bull; Spotify &bull;
 Instagram &bull; Gmail &bull; Google Analytics &bull; YouTube &bull;
 
-as well as support for common databases and custom integrations.
+as well as support for common databases and [custom integrations](docs/Integrations.md).
 
 ## Installation
 > Be sure to install DataFire both globally and as a project dependency.
