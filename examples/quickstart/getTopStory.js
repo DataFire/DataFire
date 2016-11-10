@@ -7,17 +7,17 @@ const flow = module.exports =
 
 flow
   .step('stories', {
-    operation: hn.get('/{storyType}stories.json'),
+    do: hn.get('/{storyType}stories.json'),
     params: {storyType: 'top'}
   })
   .step('story_details', {
-    operation: hn.get('/item/{itemID}.json'),
+    do: hn.get('/item/{itemID}.json'),
     params: data => {
       return {itemID: data.stories[0]}
     }
   })
   .step('write_file', {
-    operation: data => {
+    do: data => {
       fs.writeFileSync('./story.json', JSON.stringify(data.story_details, null, 2));
     }
   });

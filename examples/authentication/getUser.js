@@ -5,8 +5,9 @@ const github = datafire.Integration.new('github').as('default');
 const flow = module.exports =
       new datafire.Flow('getUser', 'Copies the logged in user to a local file');
 
-flow.step('user', github.get('/user'))
-    .step('write_file',
-          data => {
-            fs.writeFileSync('./user.json', JSON.stringify(data.user, null, 2));
-          })
+flow.step('user', {
+  do: github.get('/user'),
+  finish: data => {
+    fs.writeFileSync('./user.json', JSON.stringify(data.user, null, 2));
+  }
+})

@@ -36,7 +36,7 @@ describe('Flows', () => {
 
   it('should run', (done) => {
     flow.step('succeed', {
-      operation: integration.get('/succeed'),
+      do: integration.get('/succeed'),
       finish: data => {
         expect(data.succeed).to.not.be.null;
         expect(data.succeed).to.equal('OK');
@@ -47,7 +47,7 @@ describe('Flows', () => {
 
   it('should should allow call by operationId', (done) => {
     flow.step('succeed',{
-      operation: integration.getSucceed(),
+      do: integration.getSucceed(),
       finish: data => {
         expect(data.succeed).to.not.be.null;
         expect(data.succeed).to.equal('OK');

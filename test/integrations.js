@@ -31,7 +31,7 @@ describe('MongoDB Integration', () => {
     }]
 
     flow.step('insert', {
-      operation: mongo.insert('Pet'),
+      do: mongo.insert('Pet'),
       params: {documents: pets},
       finish: data => {
         expect(data.insert.ok).to.equal(1);
