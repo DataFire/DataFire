@@ -1,0 +1,16 @@
+
+Hacker News
+https://hacker-news.firebaseio.com/v0
+
+getStories
+GET	/{storyType}stories.json
+Get an up-to-date list of stories for the given type
+
+getItem
+GET	/item/{itemID}.json
+Get details for a given item
+
+getUser
+GET	/user/{username}.json
+Get details for a given user
+

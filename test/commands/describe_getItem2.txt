@@ -1,0 +1,25 @@
+
+getItem
+GET	/item/{itemID}.json
+Get details for a given item
+
+PARAMETER  TYPE     REQUIRED  DEFAULT  DESCRIPTION                   
+itemID     integer  yes                The ID of the item to retrieve
+
+
+RESPONSE
+object
+  id:           integer
+  title:        string
+  deleted:      boolean
+  by:           string
+  time:         string
+  text:         string
+  dead:         boolean
+  parent:       integer
+  kids:         array[integer]
+  url:          string
+  score:        integer
+  parts:        array[integer]
+  descendants:  array[integer]
+

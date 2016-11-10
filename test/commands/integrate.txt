@@ -1,0 +1,1 @@
+Creating integration ./integrations/hacker_news.openapi.json

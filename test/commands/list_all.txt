@@ -1,0 +1,824 @@
+18f.gov
+This API drives the Discovery Market Research Tool.
+
+apis.guru
+Wikipedia for Web APIs. Repository of API specs in OpenAPI(fka Swagger) 2.0 format.
+
+apitransformer.com
+Transform API Descriptions from/to various formats
+
+audiosear.ch
+The Audiosear.ch API requires OAuth, which you can manage at OAuth Applications.API SDK clients avai...
+
+azure.com:arm-analysisservices
+The Azure Analysis Services Web API provides a RESTful set of web services that enables users to cre...
+
+azure.com:arm-authorization
+
+azure.com:arm-batch
+
+azure.com:arm-cdn
+Use these APIs to manage Azure CDN resources through the Azure Resource Manager. You must make sure ...
+
+azure.com:arm-cognitiveservices
+Cognitive Services Management Client
+
+azure.com:arm-commerce
+
+azure.com:arm-compute
+The Compute Management Client.
+
+azure.com:arm-compute-containerService
+The Container Service Client.
+
+azure.com:arm-devtestlabs
+The DevTest Labs Client.
+
+azure.com:arm-dns
+The DNS Management Client.
+
+azure.com:arm-eventhub
+Azure EventHub client
+
+azure.com:arm-insights
+
+azure.com:arm-intune
+Microsoft.Intune Resource provider Api features in the swagger-2.0 specification
+
+azure.com:arm-iothub
+API for using the IoT Hub Features.
+
+azure.com:arm-keyvault
+The Azure management API provides a RESTful set of web services that interact with Azure Key Vault.
+
+azure.com:arm-logic
+
+azure.com:arm-machinelearning-commitmentPlans
+These APIs allow end users to operate on Azure Machine Learning Commitment Plans resources and their...
+
+azure.com:arm-machinelearning-webservices
+These APIs allow end users to operate on Azure Machine Learning Web Services resources. They support...
+
+azure.com:arm-mediaservices
+Media Services resource management APIs.
+
+azure.com:arm-mobileengagement
+Microsoft Azure Mobile Engagement REST APIs.
+
+azure.com:arm-network
+The Microsoft Azure Network management API provides a RESTful set of web services that interact with...
+
+azure.com:arm-notificationhubs
+Azure NotificationHub client
+
+azure.com:arm-powerbiembedded
+Client to manage your Power BI embedded workspace collections and retrieve workspaces.
+
+azure.com:arm-recoveryservices
+
+azure.com:arm-recoveryservicesbackup
+
+azure.com:arm-redis
+REST API for Azure Redis Cache Service
+
+azure.com:arm-scheduler
+
+azure.com:arm-search
+Client that can be used to manage Azure Search services and API keys.
+
+azure.com:arm-servermanagement
+REST API for Azure Server Management Service
+
+azure.com:arm-servicebus
+Azure Service Bus client
+
+azure.com:arm-storage
+The Storage Management Client.
+
+azure.com:arm-trafficmanager
+
+azure.com:arm-web
+Use these APIs to manage Azure Websites resources through the Azure Resource Manager. All task opera...
+
+azure.com:insights
+
+backupify.com
+The Backupify API allows you to integrate the leading SaaS backup solution into your software, makin...
+
+bbc.com
+BBC Nitro is the BBC's application programming interface (API) for BBC Programmes Metadata.
+
+bbci.co.uk
+The definitive iPlayer API.
+
+beanstream.com
+https://www.beanstream.com/api/v1
+
+bigoven.com
+#Documentation
+
+bikewise.org
+This is an API for accessing information about bicycling related incidents. You can find the source ...
+
+bitbucket.org
+Code against the Bitbucket API to automate simple tasks, embed Bitbucket data into your own site, bu...
+
+botify.com
+Botify Saas API
+
+brandlovers.com
+Allows sellers to: 1) Load products definitions to the BrandLovers marktplace. 2) Receive and update...
+
+bufferapp.com
+Social media management for marketers and agencies
+
+cambase.io
+Cambase.io is a project by Evercam.io in order to make it easier for software developers to have a r...
+
+cenit.io
+Cenit IO is an Open Platform for Data and Business Integration (iPaaS)
+
+channel4.com
+This is the place to come for all the technical details you need to power your applications with Cha...
+
+cisco.com
+The Cisco Product Security Incident Response Team (PSIRT) openVuln API is a RESTful API that allows ...
+
+citrixonline.com:gotoassistseeit
+Allows you to integrate GoToAssist Seeit into your own solutions.General notes:GoToAssist Seeit sess...
+
+citrixonline.com:gotomeeting
+The Citrix GoToMeeting API provides seamless integration of GoToMeeting provisioning and meeting man...
+
+citrixonline.com:gototraining
+The Citrix GoToTraining API enables developers to use the stable and robust GoToTraining functionali...
+
+citrixonline.com:gotowebinar
+The Citrix GoToWebinar API provides seamless integration of webinar registrant and attendee data int...
+
+citrixonline.com:scim
+The SCIM API lets you manage users in your Citrix organization. You can then automate the provisioni...
+
+citycontext.com
+City Context provides a straightforward API to access UK Open Data: crime statistics, schools, demog...
+
+clarify.io
+The API to Search and Understand Audio & Video Data.
+
+clickmeter.com
+Api dashboard for ClickMeter API
+
+consumerfinance.gov
+Learn more about home mortgage data, download the data yourself, or build new tools using our API.
+
+core.ac.uk
+You can use the CORE API to access the
+
+cybertaxonomy.eu
+The Unified Taxonomic Information Service (UTIS) is the taxonomic backbone for the EU-BON project
+
+daisycon.com
+The Daisycon API allows you to retrieve statistics and link materials, update transactions, subscrib...
+
+data.gov
+Provides public users access to federal regulatory content.
+
+data2crm.com
+Make use of our in-depth documentation to get more information about the various functions of the se...
+
+datumbox.com
+Datumbox offers a Machine Learning platform composed of 14 classifiers and Natural Language processi...
+
+dweet.io
+Dweet.io allows users to share data from mobile, tablets, and pcs, and them to other devices and acc...
+
+eriomem.net
+This is the experimental API documentation for MassiveRand TRNG Web Service. Serving true random num...
+
+europeana.eu
+This Swagger API console provides an overview of and interface to the Europeana REST API. You can bu...
+
+exavault.com
+ExaVault's API allows you to incorporate ExaVault's suite of file transfer and user management tools...
+
+firebrowse.org
+A simple and elegant way to explore cancer data
+
+furkot.com
+Furkot provides Rest API to access user trip data.
+
+gavagai.se
+Let us do the job and read your documents for you. We will bring you executive summaries and tonalit...
+
+geneea.com
+
+
+geodesystems.com
+Search for data in lots of places - manage your documents, photos and critical business knowledge - ...
+
+getsandbox.com
+Sandbox API
+
+gettyimages.com
+Build applications using the world's most powerful imagery
+
+github.com
+Powerful collaboration, code review, and code management for open source and private projects.
+
+glugbot.com
+Text Processing API for Creative Writing
+
+googleapis.com:acceleratedmobilepageurl
+This API contains a single method, batchGet. Call this method to retrieve the AMP URL (and equivalen...
+
+googleapis.com:adexchangebuyer
+Accesses your bidding-account information, submits creatives for validation, finds available direct ...
+
+googleapis.com:adexchangebuyer2
+Accesses the latest features for managing Ad Exchange accounts, Real-Time Bidding configurations and...
+
+googleapis.com:adexchangeseller
+Accesses the inventory of Ad Exchange seller users and generates reports.
+
+googleapis.com:admin
+Fetches reports for the administrators of Google Apps customers about the usage, collaboration, secu...
+
+googleapis.com:adsense
+Accesses AdSense publishers' inventory and generates performance reports.
+
+googleapis.com:adsensehost
+Generates performance reports, generates ad codes, and provides publisher management capabilities fo...
+
+googleapis.com:analytics
+Views and manages your Google Analytics data.
+
+googleapis.com:analyticsreporting
+Accesses Analytics report data.
+
+googleapis.com:androidenterprise
+Manages the deployment of apps to Android for Work users.
+
+googleapis.com:androidpublisher
+Lets Android application developers access their Google Play accounts.
+
+googleapis.com:appengine
+Provisions and manages App Engine applications.
+
+googleapis.com:appsactivity
+Provides a historical view of activity.
+
+googleapis.com:appstate
+The Google App State API.
+
+googleapis.com:bigquery
+A data platform for customers to create, manage, share and query data.
+
+googleapis.com:blogger
+API for access to the data within Blogger.
+
+googleapis.com:books
+Searches for books and manages your Google Books library.
+
+googleapis.com:calendar
+Manipulates events and other calendar data.
+
+googleapis.com:civicinfo
+Provides polling places, early vote locations, contest data, election officials, and government repr...
+
+googleapis.com:classroom
+Manages classes, rosters, and invitations in Google Classroom.
+
+googleapis.com:cloudbilling
+Retrieves Google Developers Console billing accounts and associates them with projects.
+
+googleapis.com:cloudbuild
+Builds container images in the cloud.
+
+googleapis.com:clouddebugger
+Examines the call stack and variables of a running application without stopping or slowing it down.
+
+googleapis.com:clouderrorreporting
+Stackdriver Error Reporting groups and counts similar errors from cloud services. The Stackdriver Er...
+
+googleapis.com:cloudmonitoring
+Accesses Google Cloud Monitoring data.
+
+googleapis.com:cloudresourcemanager
+The Google Cloud Resource Manager API provides methods for creating, reading, and updating project m...
+
+googleapis.com:cloudtrace
+Send and retrieve trace data from Google Cloud Trace. Data is generated and available by default for...
+
+googleapis.com:clouduseraccounts
+Creates and manages users and groups for accessing Google Compute Engine virtual machines.
+
+googleapis.com:compute
+Creates and runs virtual machines on Google Cloud Platform.
+
+googleapis.com:consumersurveys
+Creates and conducts surveys, lists the surveys that an authenticated user owns, and retrieves surve...
+
+googleapis.com:container
+Builds and manages clusters that run container-based applications, powered by open source Kubernetes...
+
+googleapis.com:content
+Manages product items, inventory, and Merchant Center accounts for Google Shopping.
+
+googleapis.com:customsearch
+Lets you search over a website or collection of websites
+
+googleapis.com:dataflow
+Develops and executes data processing patterns like ETL, batch computation, and continuous computati...
+
+googleapis.com:dataproc
+An API for managing Hadoop-based clusters and jobs on Google Cloud Platform.
+
+googleapis.com:datastore
+Accesses the schemaless NoSQL database to provide fully managed, robust, scalable storage for your a...
+
+googleapis.com:deploymentmanager
+Declares, configures, and deploys complex solutions on Google Cloud Platform.
+
+googleapis.com:dfareporting
+Manages your DoubleClick Campaign Manager ad campaigns and reports.
+
+googleapis.com:discovery
+Provides information about other Google APIs, such as what APIs are available, the resource, and met...
+
+googleapis.com:dns
+Configures and serves authoritative DNS records.
+
+googleapis.com:doubleclickbidmanager
+API for viewing and managing your reports in DoubleClick Bid Manager.
+
+googleapis.com:doubleclicksearch
+Reports and modifies your advertising data in DoubleClick Search (for example, campaigns, ad groups,...
+
+googleapis.com:drive
+Manages files in Drive including uploading, downloading, searching, detecting changes, and updating ...
+
+googleapis.com:firebasedynamiclinks
+Firebase Dynamic Links API enables third party developers to programmatically create and manage Dyna...
+
+googleapis.com:firebaserules
+Creates and manages rules that determine when a Firebase Rules-enabled service should permit a reque...
+
+googleapis.com:fitness
+Stores and accesses user data in the fitness store from apps on any platform.
+
+googleapis.com:fusiontables
+API for working with Fusion Tables data.
+
+googleapis.com:games
+The API for Google Play Game Services.
+
+googleapis.com:gamesConfiguration
+The Publishing API for Google Play Game Services.
+
+googleapis.com:gamesManagement
+The Management API for Google Play Game Services.
+
+googleapis.com:genomics
+Stores, processes, explores and shares genomic data.
+
+googleapis.com:gmail
+Access Gmail mailboxes including sending user email.
+
+googleapis.com:groupsmigration
+Groups Migration Api.
+
+googleapis.com:groupssettings
+Lets you manage permission levels and related settings of a group.
+
+googleapis.com:iam
+Manages identity and access control for Google Cloud Platform resources, including the creation of s...
+
+googleapis.com:identitytoolkit
+Help the third party sites to implement federated login.
+
+googleapis.com:kgsearch
+Knowledge Graph Search API allows developers to search the Google Knowledge Graph for entities.
+
+googleapis.com:licensing
+Licensing API to view and manage license for your domain.
+
+googleapis.com:logging
+Writes log entries and manages your Stackdriver Logging configuration.
+
+googleapis.com:manufacturers
+Public API for managing Manufacturer Center related data.
+
+googleapis.com:mirror
+Interacts with Glass users via the timeline.
+
+googleapis.com:ml
+An API to enable creating and using machine learning models.
+
+googleapis.com:monitoring
+Manages your Stackdriver Monitoring data and configurations. Most projects must be associated with a...
+
+googleapis.com:oauth2
+Obtains end-user authorization grants for use with other Google APIs.
+
+googleapis.com:pagespeedonline
+Analyzes the performance of a web page and provides tailored suggestions to make that page faster.
+
+googleapis.com:partners
+Lets advertisers search certified companies and create contact leads with them, and also audits the ...
+
+googleapis.com:people
+The Google People API service gives access to information about profiles and contacts.
+
+googleapis.com:playmoviespartner
+Gets the delivery status of titles for Google Play Movies Partners.
+
+googleapis.com:plus
+Builds on top of the Google+ platform.
+
+googleapis.com:plusDomains
+Builds on top of the Google+ platform for Google Apps Domains.
+
+googleapis.com:prediction
+Lets you access a cloud hosted machine learning service that makes it easy to build smart apps
+
+googleapis.com:proximitybeacon
+Registers, manages, indexes, and searches beacons.
+
+googleapis.com:pubsub
+Provides reliable, many-to-many, asynchronous messaging between applications.
+
+googleapis.com:qpxExpress
+Finds the least expensive flights between an origin and a destination.
+
+googleapis.com:replicapool
+[Deprecated. Please use Instance Group Manager in Compute API] Provides groups of homogenous Compute...
+
+googleapis.com:replicapoolupdater
+[Deprecated. Please use compute.instanceGroupManagers.update method. replicapoolupdater API will be ...
+
+googleapis.com:reseller
+Creates and manages your customers and their subscriptions.
+
+googleapis.com:resourceviews
+The Resource View API allows users to create and manage logical sets of Google Compute Engine instan...
+
+googleapis.com:runtimeconfig
+Provides capabilities for dynamic configuration and coordination for applications running on Google ...
+
+googleapis.com:safebrowsing
+Enables client applications to check web resources (most commonly URLs) against Google-generated lis...
+
+googleapis.com:script
+Executes Google Apps Script projects.
+
+googleapis.com:servicecontrol
+Google Service Control provides control plane functionality to managed services, such as logging, mo...
+
+googleapis.com:servicemanagement
+Google Service Management allows service producers to publish their services on Google Cloud Platfor...
+
+googleapis.com:sheets
+Reads and writes Google Sheets.
+
+googleapis.com:siteVerification
+Verifies ownership of websites or domains with Google.
+
+googleapis.com:spectrum
+API for spectrum-management functions.
+
+googleapis.com:speech
+Google Cloud Speech API.
+
+googleapis.com:sqladmin
+Creates and configures Cloud SQL instances, which provide fully-managed MySQL databases.
+
+googleapis.com:storage
+Stores and retrieves potentially large, immutable data objects.
+
+googleapis.com:storagetransfer
+Transfers data from external data sources to a Google Cloud Storage bucket or between Google Cloud S...
+
+googleapis.com:surveys
+Creates and conducts surveys, lists the surveys that an authenticated user owns, and retrieves surve...
+
+googleapis.com:tagmanager
+Accesses Tag Manager accounts and containers.
+
+googleapis.com:taskqueue
+Accesses a Google App Engine Pull Task Queue over REST.
+
+googleapis.com:tasks
+Lets you manage your tasks and task lists.
+
+googleapis.com:toolresults
+Reads and publishes results from Cloud Test Lab.
+
+googleapis.com:translate
+Translates text from one language to another.
+
+googleapis.com:urlshortener
+Lets you create, inspect, and manage goo.gl short URLs
+
+googleapis.com:vision
+Integrates Google Vision features, including image labeling, face, logo, and landmark detection, opt...
+
+googleapis.com:webfonts
+Accesses the metadata for all families served by Google Fonts, providing a list of families currentl...
+
+googleapis.com:webmasters
+View Google Search Console data for your verified sites.
+
+googleapis.com:youtube
+Supports core YouTube features, such as uploading videos, creating and managing playlists, searching...
+
+googleapis.com:youtubeAnalytics
+Retrieves your YouTube Analytics data.
+
+googleapis.com:youtubereporting
+Schedules reporting jobs containing your YouTube Analytics data and downloads the resulting bulk dat...
+
+graphhopper.com
+Our Route Optimization API solves the so called vehicle routing problem fast. It calculates an optim...
+
+hacker_news
+
+healthcare.gov
+
+hetras-certification.net:booking
+
+hetras-certification.net:hotel
+
+hhs.gov
+
+
+iamreal.me
+Use I Am Real's patented technology to perform social, video, and SMS validation on your users.
+
+idtbeyond.com
+Our active docs provide the ability to test out your account and to see the responses to your querie...
+
+import.io
+## Introduction
+
+inboxroute.com
+MailSquad offers an affordable and super easy way to create, send and track delightful emails.
+
+indix.com
+
+infermedica.com
+Empower your healthcare services with intelligent diagnostic insights of Infermedica API.
+
+instagram.com
+Description of Instagram RESTful API.
+
+jirafe.com
+API endpoins for sending Jirafe events
+
+learnifier.com
+
+likefolio.com
+Create a session to start to use it
+
+m2010.vg
+Magento Commerce is the leading provider of open omnichannel innovation.
+
+magick.nu
+Authentication is required to access all methods of the API. Enter username and password.
+
+mandrillapp.com
+Mandrill is a reliable, scalable, and secure delivery API for transactional emails from websites and...
+
+medium.com
+Medium’s unofficial API documentation using OpenAPI specification.
+
+mondiamedia.com
+This is the API for building Mondia-Media-Products, like Tops.Every call need a valid client or user...
+
+mongodb
+
+moonmoonmoonmoon.com
+Turn nothing into something – make a drawing, make a mark.
+
+motaword.com
+Use MotaWord API to post and track your translation projects.
+
+nativeads.com
+This is a Native Ads Publisher API it provides same functionality as Native Ads Publisher Account GU...
+
+neowsapp.com
+A web service for near earth objects. All the data is from the  NASA JPL Asteroid team.
+
+netatmo.net
+Welcome to the Netatmo swagger on-line documentation !This site is a complement to the official Neta...
+
+netlicensing.io
+The Labs64 NetLicensing RESTful API gives you access to NetLicensing’s core features.AuthenticationY...
+
+netlify.com
+
+nrel.gov:building-case-studies
+The Buildings Database is a shared resource for the building industry. The Database, developed by th...
+
+nrel.gov:transportation-incentives-laws
+Query our database of State and Federal Laws and Incentives for Alternative Fuels
+
+nsidc.org
+This API allows programmers to build National Snow and Ice Data Center data and metadata services in...
+
+nytimes.com:archive_api
+Alpha.  The Archive API provides JSON lists of NYT articles by month.
+
+nytimes.com:article_search
+With the Article Search API, you can search New York Times articles from Sept. 18, 1851 to today, re...
+
+nytimes.com:books_api
+The Books API provides information about book reviews and The New York Times bestsellers lists.
+
+nytimes.com:community
+Get access to comments from registered users on New York Times articles.
+
+nytimes.com:congress_api
+Deprecated. Now provided by ProPublica (https://propublica.github.io/congress-api-docs/).
+
+nytimes.com:event_listings
+Deprecated.  With the Event Listings API, you can search the New York Times listing of noteworthy cu...
+
+nytimes.com:geo_api
+The Geographic API extends the Semantic API, using a linked data approach to enhance location concep...
+
+nytimes.com:most_popular_api
+Get lists of NYT Articles based on shares, emails, and views.
+
+nytimes.com:movie_reviews
+With the Movie Reviews API, you can search New York Times movie reviews by keyword and get lists of ...
+
+nytimes.com:semantic_api
+The Semantic API complements the Articles API. With the Semantic API, you get access to the long lis...
+
+nytimes.com:times_tags
+With the TimesTags API, you can mine the riches of the New York Times tag set. The TimesTags service...
+
+nytimes.com:timeswire
+With the Times Newswire API, you can get links and metadata for Times articles and blog posts as soo...
+
+nytimes.com:top_stories
+The Top Stories API provides JSON and JSONP lists of articles and associated images by section.
+
+oceandrivers.com
+This is the api to access the ODWeather API information
+
+omdbapi.com
+The Open Movie Database. The OMDb API is a free web service to obtain movie information, all content...
+
+ontraport.com
+Enter your App ID and API Key above. If you do not have an App ID or API Key login to your ONTRAPORT...
+
+opencagedata.com
+Worldwide forward and reverse geocoding
+
+orghunter.com
+Get the latest IRS data and most up to date charity information for your website or application
+
+owler.com
+Search for information on companies using a website or company name and get access to Company Data, ...
+
+oxforddictionaries.com
+
+pandorabots.com
+AIaaS provides API access to our bot hosting platform and SDKs, allowing developers to easily integr...
+
+passwordutility.net
+Validate and generate passwords using open source tools
+
+patientview.org
+The recommended REST API endpoints to be used when integrating with PatientView
+
+peel-ci.com
+The machine learning service APIs utilize hashtags from Twitter to find related, trending shows, rel...
+
+plenigo.com
+This is the API Documentation for the public plenigo server interfaces
+
+posty-api.herokuapp.com
+The posty_API is the core element of the posty softwarestack. It is developed to administrate a mail...
+
+prd-prsn.com
+Access to the Pearson OpenClass API
+
+pushpay.com
+Pushpay® improves sales and business processes by making payments simple.
+
+rbaskets.in
+RESTful API of Request Baskets service
+
+reactome.org
+Provides an API for pathway over-representation and expression analysis as well as species compariso...
+
+rebilly.com
+# Introduction
+
+refugerestrooms.org
+REFUGE is a web application that seeks to provide safe restroom access for transgender, intersex, an...
+
+reverb.com
+reverb
+
+rottentomatoes.com
+Test our API services using I/O Docs.
+
+rummblelabs.com
+Seldon is an Open Predictive Platform that currently allows item recommendations and general predict...
+
+scrapewebsite.email
+ScrapeWebsiteEmail is a service that exposes an api to fetch e-mails from a website.
+
+semantria.com
+Semantria applies Text and Sentiment Analysis to tweets, facebook posts, surveys, reviews or enterpr...
+
+sendgrid.com
+
+simplyrets.com
+The SimplyRETS API is an exciting step towards making it easier for
+
+slack.com
+A messaging app for teams
+
+slideroom.com
+SlideRoom provides a RESTful API for exporting data out of your organization's SlideRoom account.
+
+smart-me.com
+With the smart-me REST API you get Access to all your devices in the smart-me Cloud and you can add ...
+
+solarvps.com
+This is the Solar VPS Public API. You can find more at http://www.solarvps.com
+
+spectrocoin.com
+This is an API designed for merchants who are using SpectroCoin services and wishes to integrate the...
+
+spotify.com
+
+stackexchange.com
+Stack Exchange is a network of 130+ Q&A communities including Stack Overflow.
+
+statsocial.com
+API Reference:  The StatSocial API is organized around REST. Our API is designed to have predictable...
+
+swagger.io:generator
+This is an online swagger codegen server.  You can find out more at https://github.com/swagger-api/s...
+
+taxamo.com
+Taxamo’s elegant suite of APIs and comprehensive reporting dashboard enables digital merchants to ea...
+
+thenounproject.com
+Icons for Everything
+
+thetvdb.com
+API v2 targets v1 functionality with a few minor additions. The API is accessible via https://api.th...
+
+trello.com
+This document describes the REST API of Trello as published by Trello.com.
+
+twilio.com
+Enabling phones, VoIP, and messaging to be embedded into web, desktop, and mobile software.
+
+uploady.com
+The Uploady API allows you to connect to the Uploady free online storage platform.
+
+vatapi.com
+A developer friendly API to help your business achieve VAT compliance
+
+versioneye.com
+VersionEye is a cross-platform search engine for free/libre/open source software libraries.
+
+vestorly.com
+Vestorly Developers API
+
+waag.org
+An API for the distribution and annotation of open data, for small cities and big metropolitan areas...
+
+watchful.li
+
+wikimedia.org
+This API aims to provide coherent and low-latency access to Wikimedia content and services. It is cu...
+
+windows.net:arm-graphrbac
+The Graph RBAC Management Client
+
+windows.net:batch
+A client for issuing REST requests to the Azure Batch service.
+
+winning.email
+The Winning Email API allows you to access our services from your applications. Contact us if you ne...
+
+wordnik.com
+Wordnik is the world's biggest online English dictionary, by number of words
+
+xkcd.com
+Webcomic of romance, sarcasm, math, and language.
+
+yunbi.com
+Professional Cloud Trading Platform for Digital Assets
+
+zoomconnect.com
+The world's greatest SMS API
+
