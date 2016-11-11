@@ -9,6 +9,12 @@ To add a new account, run
 ```
 datafire authenticate <integration>
 ```
+DataFire will prompt you for your credentials, as well as an `alias` for the account.
+
+To use an account in your flow:
+```
+let gmail = datafire.Integration.new('gmail').as('your_account_alias');
+```
 
 ## OAuth 2.0
 Many integrations, such as GitHub and GMail, offer OAuth 2.0
