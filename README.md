@@ -123,6 +123,9 @@ crontab jobs
 rm jobs
 ```
 
+### DataFire.io
+Coming soon!
+
 ### AWS Lambda
 Upload a .zip file of your project, and set `handler` to `path/to/your/flow.handler`.
 
