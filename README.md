@@ -99,13 +99,38 @@ datafire run -f ./getTopStory.js
 ```
 You should see `story.json` in your current directory.
 
-## Serverless Execution
-To run a flow on a regular schedule, you can use [crontab](https://en.wikipedia.org/wiki/Cron),
-but DataFire also offers native support for execution on AWS Lambda,
-via the [Serverless](https://github.com/serverless/serverless) framework. You can then
-run your flow on a schedule or in response to a webhook.
+## Execution
+Flows can be run on the command line or using cron.
+You can also run them in response to HTTP events or on a recurring schedule
+using AWS Lambda or inside the Serverless framework.
 
-Just set your handler in `serverless.yml` to `yourFlow.handler`:
+Be sure to set `module.exports` to a flow object, e.g.
+```js
+module.exports = new Flow('myFlow', "an example flow");
+```
+
+### Command line
+```
+datafire run path/to/your/flow.js
+```
+
+### Crontab
+The following will run flow.js every 5 minutes:
+```
+crontab -l > jobs
+echo "*/5 * * * * datafire run flow.js" >> jobs
+crontab jobs
+rm jobs
+```
+
+### AWS Lambda
+Upload a .zip file of your project, and set `handler` to `path/to/your/flow.handler`.
+
+### Serverless
+> Read more about [Serverless](https://github.com/serverless/serverless) 
+
+To use the Serverless framework, just set your handler in `serverless.yml` to `yourFlow.handler`.
+E.g. for a flow in ./flows/copyIssues.js:
 
 ```yml
 service: copyIssues
@@ -116,7 +141,7 @@ provider:
 
 functions:
   copyIssues:
-    handler: copyIssues.handler
+    handler: flows.copyIssues.handler
     events:
       - schedule: rate(1 hour)
       - http: POST /copyIssues
