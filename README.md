@@ -80,12 +80,14 @@ flow
     do: hacker_news.getStories(),
     params: {storyType: 'top'},
   })
+
   .step('story_details', {
     do: hacker_news.getItem(),
     params: data => {
       return {itemID: data.stories[0]}
     }
   })
+
   .step('write_file', {
     do: data => {
       fs.writeFileSync('./story.json', JSON.stringify(data.story_details, null, 2));
