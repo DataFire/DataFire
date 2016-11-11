@@ -1,6 +1,9 @@
 const fs = require('fs');
 const http = require('http');
 const inquirer = require('inquirer');
+const urlParser = require('url');
+const querystring = require('querystring');
+const request = require('request');
 
 const OAUTH_PORT = 3333;
 
@@ -71,7 +74,7 @@ module.exports = (args) => {
       if (!secOption) throw new Error("Security definition " + accountToEdit.securityDefinition + " not found");
     }
     if (args.generate_token) {
-      generateToken(integration, secOption, accounts, accountToEdit)
+      startOAuthServer(integration, secOption.def, accounts, accountToEdit)
     } else if (secOptions.length === 1) {
       authenticate(integration, secOption, accounts, accountToEdit);
     } else if (accountToEdit) {
@@ -117,25 +120,16 @@ let saveAccounts = (integration, accounts) => {
   fs.writeFileSync(credFile, JSON.stringify(accounts, null, 2));
 }
 
-let generateToken = (integration, secDef, accounts, accountToEdit) => {
-  startOAuthServer(OAUTH_PORT, (err) => {
-    if (err) throw err;
-    console.log('startd server');
-    let url = getOAuthURL(integration, secDef, accountToEdit.client_id);
-    logger.log("Visit this url to retrieve your access and refresh tokens:")
-    logger.log(url);
-  })
-}
-
 let getOAuthURL = (integration, secDef, clientId) => {
   var flow = secDef.flow;
   var url = secDef.authorizationUrl;
   var scopes = [Object.keys(secDef.scopes)[0]];
   var state = Math.random();
   var redirect = 'http://localhost:' + OAUTH_PORT;
-  url += '?response_type=' + (flow === 'implicit' ? 'token' : 'code');
+  url += '?response_type=code';// + (flow === 'implicit' ? 'token' : 'code');
   url += '&redirect_uri=' + redirect;
   url += '&client_id=' + encodeURIComponent(clientId);
+  url += '&access_type=offline';
   if (scopes.length > 0) {
     url += '&scope=' + encodeURIComponent(scopes.join(' '));
   }
@@ -143,9 +137,50 @@ let getOAuthURL = (integration, secDef, clientId) => {
   return url;
 }
 
-let startOAuthServer = (port, callback) => {
+let startOAuthServer = (integration, secDef, accounts, accountToEdit) => {
+  if (integration.name === 'gmail') {
+    secDef.flow = 'code';
+    secDef.tokenUrl = 'https://www.googleapis.com/oauth2/v4/token';
+  }
   let server = http.createServer((req, res) => {
-    console.log('q', req.query);
-    res.send('Your access code is: ' + req.url);
-  }).listen(port, callback);
+    let search = urlParser.parse(req.url).search || '?';
+    search = search.substring(1);
+    if (search) {
+      search = querystring.parse(search);
+      request.post({
+        url: secDef.tokenUrl,
+        form: {
+          code: search.code,
+          client_id: accountToEdit.client_id,
+          client_secret: accountToEdit.client_secret,
+          redirect_uri: 'http://localhost:3333',
+          grant_type: 'authorization_code',
+        },
+        json: true,
+      }, (err, resp, body) => {
+        let newURL = '/#access_token=' + encodeURIComponent(body.access_token);
+        newURL += '&refresh_token=' + encodeURIComponent(body.refresh_token);
+        newURL += '&saved=true';
+        res.writeHead(302, {
+          'Location': newURL,
+        });
+        res.end();
+        accountToEdit.access_token = body.access_token;
+        accountToEdit.refresh_token = body.refresh_token;
+        saveAccounts(integration, accounts);
+        server.close();
+      })
+    } else {
+      fs.readFile(__dirname + '/../www/oauth_callback.html', 'utf8', (err, data) => {
+        if (err) throw err;
+        res.end(data);
+        server.close();
+      })
+    }
+  }).listen(OAUTH_PORT, (err) => {
+    if (err) throw err;
+    let url = getOAuthURL(integration, secDef, accountToEdit.client_id);
+    logger.log("Visit this url to retrieve your access and refresh tokens:")
+    logger.logURL(url);
+  });
 }

@@ -1,0 +1,28 @@
+<html>
+  <head>
+  </head>
+  <body>
+    <h4>Your access token is:</h4><pre id="access_token"></pre>
+    <h4>Your refresh token is:</h4><pre id="refresh_token"></pre>
+    <h4 id="saved">
+    <script type="text/javascript">
+      var qp = null;
+      if (window.location.hash) {
+        qp = location.hash.substring(1);
+      } else {
+        qp = location.search.substring(1);
+      }
+      qp = !qp ? {} : JSON.parse('{"' + qp.replace(/&/g, '","').replace(/=/g,'":"') + '"}',
+        function(key, value) {
+          return key==="" ? value : decodeURIComponent(value);
+        })
+      document.getElementById('access_token').innerHTML = qp.access_token
+      document.getElementById('refresh_token').innerHTML = qp.refresh_token
+      if (qp.saved) {
+        document.getElementById('saved').innerHTML = "Your new credentials have been saved to disk."
+      } else {
+        document.getElementById('saved').innerHTML = "Your credentials have not been saved. Please copy these credentials and paste them in to the datafire prompt"
+      }
+    </script>
+  </body>
+</html>
