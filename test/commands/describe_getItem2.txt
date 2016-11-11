@@ -7,7 +7,7 @@ PARAMETER  TYPE     REQUIRED  DEFAULT  DESCRIPTION
 itemID     integer  yes                The ID of the item to retrieve
 
 
-RESPONSE
+Response body
 object
   id:           integer
   title:        string
