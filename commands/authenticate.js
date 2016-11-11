@@ -29,6 +29,9 @@ const QUESTION_SETS = {
     {name: 'access_token', message: "access_token:"},
     {name: 'refresh_token', message: "refresh_token (optional):"},
   ],
+  scopes: [
+    {name: 'scopes', type: 'checkbox', message: 'Choose at least one scope to authorize'},
+  ]
 }
 
 QUESTION_SETS.oauth2 = QUESTION_SETS.oauth_tokens.concat(QUESTION_SETS.oauth_client);
@@ -194,8 +197,8 @@ let startOAuthServer = (integration, secDef, accounts, accountToEdit, clientAcco
         res.end(data);
         if (!search.saved) {
           inquirer.prompt(QUESTION_SETS.oauth_tokens).then(answers => {
-            accountToEdit.access_token = answers.access_token;
-            accountToEdit.refresh_token = answers.refresh_token;
+            if (answers.access_token) accountToEdit.access_token = answers.access_token;
+            if (answers.refresh_token) accountToEdit.refresh_token = answers.refresh_token;
             saveAccounts(integration, accounts);
             server.close();
             process.exit(0);
@@ -208,9 +211,13 @@ let startOAuthServer = (integration, secDef, accounts, accountToEdit, clientAcco
     }
   }).listen(OAUTH_PORT, (err) => {
     if (err) throw err;
-    let scope = Object.keys(secDef.scopes)[0];
-    let url = getOAuthURL(integration, secDef, clientAccount.client_id, [scope]);
-    logger.log("Visit this url to retrieve your access and refresh tokens:")
-    logger.logURL(url);
+    QUESTION_SETS.scopes[0].choices = Object.keys(secDef.scopes).map(s => {
+      return {value: s, name: s + ' (' + secDef.scopes[s] + ')'}
+    })
+    inquirer.prompt(QUESTION_SETS.scopes).then(answers => {
+      let url = getOAuthURL(integration, secDef, clientAccount.client_id, answers.scopes);
+      logger.log("Visit this url to retrieve your access and refresh tokens:")
+      logger.logURL(url);
+    })
   });
 }
