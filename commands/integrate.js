@@ -93,12 +93,19 @@ let integrateURL = (name, url) => {
   })
 }
 
+let TLDs = ['.com', '.org', '.net', '.gov', '.io', '.co.uk']
+let getNameFromHost = (host) => {
+  if (host.startsWith('www.')) host = host.substring(4);
+  TLDs.forEach(tld => {
+    if (host.endsWith(tld)) host = host.substring(0, host.length - tld.length);
+  })
+  return host.replace(/\./, '_');
+}
+
 let integrateRSS = (name, url) => {
   let urlObj = urlParser.parse(url);
   if (!name) {
-    name = urlParser.parse(url).hostname;
-    if (name.startsWith('www.')) name = name.substring(4);
-    name = name.substring(0, name.indexOf('.'));
+    name = getNameFromHost(urlObj.hostname);
   }
   let spec = {
     swagger: '2.0',
@@ -118,6 +125,7 @@ let integrateRSS = (name, url) => {
     }
   }
   rssParser.parseURL(url, (err, feed) => {
+    if (err) throw err;
     feed = feed.feed;
     spec.info = {
       title: feed.title,
