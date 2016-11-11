@@ -21,10 +21,6 @@ echo "*/5 * * * * datafire run flow.js" >> jobs
 crontab jobs
 rm jobs
 ```
-
-### DataFire.io
-Coming soon!
-
 ### AWS Lambda
 Upload a .zip file of your project, and set `handler` to `path/to/your/flow.handler`.
 
@@ -48,3 +44,7 @@ functions:
       - schedule: rate(1 hour)
       - http: POST /copyIssues
 ```
+
+### DataFire.io
+Coming soon!
+
