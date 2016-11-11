@@ -7,7 +7,7 @@ Flows use a [waterfall](https://coderwall.com/p/zpjrra/async-waterfall-in-nodejs
 pattern - each step has access to all data returned in
 previous steps, and can use this to generate the next request.
 
-Below is an example of DataFlow code. The steps are:
+Below is an example flow. The steps are:
 * `stories` - Gets a list of story IDs from Hacker News, e.g. `[234, 2352, 1834]`
 * `story_details` - Gets details for the first story
 * `write_file` - Writes the details to a local file
