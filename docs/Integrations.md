@@ -13,6 +13,7 @@ to convert it to Open API 2.0
 
 # Custom Integrations
 > Custom Integrations are currently experimental
+
 You can also define your own integration by extending the `datafire.Integration` class.
 
 See [RSSIntegration](../lib/rss-integration.js),
