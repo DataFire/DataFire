@@ -3,12 +3,13 @@ Every flow is a series of steps. Each step will generally make one or more calls
 to a given API endpoint, and store the resulting data in `flow.data`. However,
 you can add steps that do anything.
 
-Flows use a waterfall design pattern - each step has access to all data returned in
+Flows use a [waterfall](https://coderwall.com/p/zpjrra/async-waterfall-in-nodejs)
+pattern - each step has access to all data returned in
 previous steps, and can use this to generate the next request.
 
 Below is an example of DataFlow code. The steps are:
 * `stories` - Gets a list of story IDs from Hacker News, e.g. `[234, 2352, 1834]`
-* `story_details` - Gets details for the fist story
+* `story_details` - Gets details for the first story
 * `write_file` - Writes the details to a local file
 
 ```js
@@ -131,7 +132,8 @@ flow
 ---
 ### `Flow.catch(callback)`
 Catches all HTTP errors (e.g. 404 or 500), and thrown errors.
-Use this to react to errors e.g. by sending an e-mail.
+Use this to recover from errors, perform additional logging,
+or send error alerts via e-mail/SMS
 
 ```js
 flow
