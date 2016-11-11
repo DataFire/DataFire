@@ -99,6 +99,10 @@ datafire run -f ./getTopStory.js
 ```
 You should see `story.json` in your current directory.
 
+## Authentication
+You can save authentication details for any DataFire integration.
+Read more in [Authentication.md](docs/Authentication.md)
+
 ## Running Flows
 Once you've written a flow, you have a number of options for running it:
 
