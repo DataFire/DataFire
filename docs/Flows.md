@@ -3,7 +3,8 @@ Every flow is a series of steps. Each step will generally make one or more calls
 to a given API endpoint, and store the resulting data in `flow.data`. However,
 you can add steps that do anything.
 
-Flows use a waterfall pattern - each step has access to all data returned in
+Flows use a [waterfall](https://coderwall.com/p/zpjrra/async-waterfall-in-nodejs)
+pattern - each step has access to all data returned in
 previous steps, and can use this to generate the next request.
 
 Below is an example of DataFlow code. The steps are:
