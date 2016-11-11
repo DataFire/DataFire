@@ -20,16 +20,18 @@ let COMMANDS = [{
     description: "Show all available integrations",
   }]
 }, {
-  name: 'integrate <integration>',
+  name: 'integrate [integration]',
   description: "Add an integration to the current project",
   examples: ["datafire integrate hacker_news"],
   runner: require('./commands/integrate'),
   options: [{
-    name: 'url',
-    alias: 'u',
+    name: 'openapi',
     description: "The URL of an Open API JSON specification",
   }, {
-    name: 'as',
+    name: 'rss',
+    description: "The URL of an RSS feed",
+  }, {
+    name: 'name',
     description: "An alias to use for the integration in this project",
   }]
 }, {

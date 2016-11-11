@@ -1,19 +1,53 @@
 let fs = require('fs');
 let request = require('request');
 let chalk = require('chalk');
+let rssParser = require('rss-parser');
+let urlParser = require('url');
 
 let logger = require('../lib/logger');
 let datafire = require('../index');
 
 const OPENAPI_SUFFIX = '.openapi.json';
+const RSS_SUFFIX = '.rss.json';
 const APIS_GURU_URL = "https://api.apis.guru/v2/list.json";
 const NATIVE_INTEGRATIONS_DIR = __dirname + '/../native_integrations';
 const NATIVE_INTEGRATIONS = fs.readdirSync(NATIVE_INTEGRATIONS_DIR);
 
+const RSS_SCHEMA = {
+  type: 'object',
+  properties: {
+    feed: {
+      type: 'object',
+      properties: {
+        link: {type: 'string'},
+        title: {type: 'string'},
+        feedUrl: {type: 'string'},
+        entries: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              id: {type: 'string'},
+              link: {type: 'string'},
+              title: {type: 'string'},
+              pubDate: {type: 'string'},
+              author: {type: 'string'},
+              content: {type: 'string'},
+              contentSnippet: {type: 'string'},
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 module.exports = (args) => {
-  fs.mkdir('./integrations', (err) => {
-    if (args.url) {
-      integrateURL(args.as || args.integration, args.url);
+  fs.mkdir(datafire.integrationsDirectory, (err) => {
+    if (args.openapi) {
+      integrateURL(args.name || args.integration, args.openapi);
+    } else if (args.rss) {
+      integrateRSS(args.name, args.rss);
     } else {
       if (getLocalSpec(args.integration)) return integrateFile(args.integration);
       request.get(APIS_GURU_URL, {json: true}, (err, resp, body) => {
@@ -27,7 +61,7 @@ module.exports = (args) => {
         }
         let info = body[exactMatch || validKeys[0]];
         let url = info.versions[info.preferred].swaggerUrl;
-        integrateURL(args.as || args.integration, url);
+        integrateURL(args.name || args.integration, url);
       })
     }
   })
@@ -59,3 +93,37 @@ let integrateURL = (name, url) => {
   })
 }
 
+let integrateRSS = (name, url) => {
+  let urlObj = urlParser.parse(url);
+  if (!name) {
+    name = urlParser.parse(url).hostname;
+    if (name.startsWith('www.')) name = name.substring(4);
+    name = name.substring(0, name.indexOf('.'));
+  }
+  let spec = {
+    swagger: '2.0',
+    host: urlObj.hostname,
+    basePath: '/',
+    schemes: [urlObj.protocol.substring(0, urlObj.protocol.length - 1)],
+    paths: {},
+    definitions: {Feed: RSS_SCHEMA}
+  }
+  spec.paths[urlObj.pathname] = {
+    get: {
+      operationId: 'getItems',
+      description: "Retrieve the RSS feed",
+      responses: {
+        '200': {description: "OK", schema: {$ref: '#/definitions/Feed'}}
+      }
+    }
+  }
+  rssParser.parseURL(url, (err, feed) => {
+    feed = feed.feed;
+    spec.info = {
+      title: feed.title,
+      description: feed.description,
+    };
+    let filename = datafire.integrationsDirectory + '/' + name + RSS_SUFFIX;
+    fs.writeFileSync(filename, JSON.stringify(spec, null, 2));
+  })
+}

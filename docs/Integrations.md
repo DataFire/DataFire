@@ -1,7 +1,8 @@
 ## Add a Custom Integration
-Integrations can be added by the URL of an Open API (Swagger) specification:
+Integrations can be added by the URL of an Open API (Swagger) specification or an RSS feed:
 ```
-datafire integrate --url https://api.foobar.com/openapi.json --as foobar
+datafire integrate --rss https://www.reddit.com/.rss
+datafire integrate --openapi https://api.foobar.com/openapi.json --name foobar
 ```
 This will copy the API specification into the `./integrations` directory in your current folder.
 
