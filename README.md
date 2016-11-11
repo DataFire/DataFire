@@ -1,9 +1,9 @@
 # DataFire
 
-DataFire is an open source integration framework. It is built on top of
-[Open API](https://github.com/OAI/OpenAPI-Specification) and integrates with the
-[Serverless framework](https://github.com/serverless/serverless) for running flows
-on AWS Lambda.
+DataFire is an open source integration framework. It is built on top of open standards such as
+RSS and [Open API](https://github.com/OAI/OpenAPI-Specification), and can be run locally, on
+AWS Lambda, on the [Serverless](https://github.com/serverless/serverless) framework, or on
+[DataFire.io](https://datafire.io)
 
 DataFire natively supports over
 [250 public APIs](https://github.com/APIs-guru/openapi-directory) including:
