@@ -21,7 +21,12 @@ module.exports = (args) => {
         let api = body[k];
         if (api) {
           api = api.versions[api.preferred];
+          if (api.info.title) logger.log(chalk.blue(api.info.title));
           logger.logDescription(api.info.description);
+        } else {
+          let integration = datafire.Integration.new(k);
+          if (integration.spec.info.title) logger.log(chalk.blue(integration.spec.info.title));
+          logger.logDescription(integration.spec.info.description);
         }
         logger.log();
       });
