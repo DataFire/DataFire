@@ -100,8 +100,15 @@ datafire run -f ./getTopStory.js
 You should see `story.json` in your current directory.
 
 ## Running Flows
-Flows can be run on the command line or using cron.
-You can also run them in response to HTTP events or on a recurring schedule
-using AWS Lambda or inside the Serverless framework.
+Once you've written a flow, you have a number of options for running it:
+
+* Manually on the command line
+* On a schedule with cron
+* On AWS Lambda
+* Inside a Serverless project
+* On [DataFire.io](https://datafire.io)
+
+Lamdba, Serverless, and DataFire all offer ways to run your flow
+either on a schedule or in response to HTTP requests (webhooks).
 
 Read [RunningFlows.md](docs/RunningFlows.md) to learn more.
