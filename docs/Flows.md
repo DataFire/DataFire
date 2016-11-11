@@ -57,7 +57,10 @@ a function that returns that object
 * `options.finish` - a function to run after `do` has executed.
 
 #### `options.do`
-`options.do` is generally an Operation returned by an Integration, e.g.
+`do` is the body of each step. It's where you'll fetch data, read/write files,
+and call out to APIs or databases.
+
+`do` often comes from an integration, e.g.
 `hacker_news.getItem()`.  However, as you might have noticed in the
 quickstart example, you can also pass in your own function:
 ```js
