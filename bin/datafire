@@ -1,2 +1,6 @@
 #!/usr/bin/env node
-require('../distribution/index');
+if (process.version > 'v6') {
+  require('../index');
+} else {
+  require('../distribution/index');
+}

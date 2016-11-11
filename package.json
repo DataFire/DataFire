@@ -4,8 +4,7 @@
   "description": "",
   "main": "distribution/index.js",
   "bin": {
-    "datafire": "bin/datafire",
-    "dfd": "bin/datafire-dev"
+    "datafire": "bin/datafire"
   },
   "scripts": {
     "test": "mocha && ./test/commands/run.sh",
@@ -31,6 +30,7 @@
     "mongodb": "^2.2.11",
     "prettyjson": "^1.1.3",
     "request": "^2.78.0",
+    "rss-parser": "^2.5.2",
     "swagger-parser": "^3.4.1",
     "yargs": "^6.3.0"
   },
