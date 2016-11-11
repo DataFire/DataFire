@@ -21,13 +21,17 @@ const QUESTION_SETS = {
   apiKey: [
     {name: 'api_key', message: "api_key:"},
   ],
-  oauth2: [
+  oauth_client: [
+    {name: 'client_id', message: "client_id:"},
+    {name: 'client_secret', message: "client_secret:"},
+  ],
+  oauth_tokens: [
     {name: 'access_token', message: "access_token:"},
     {name: 'refresh_token', message: "refresh_token (optional):"},
-    {name: 'client_id', message: "client_id (optional):"},
-    {name: 'client_secret', message: "client_secret (optional):"},
   ],
 }
+
+QUESTION_SETS.oauth2 = QUESTION_SETS.oauth_tokens.concat(QUESTION_SETS.oauth_client);
 
 let setDefaults = (questions, defaults) => {
   return questions.map(q => {
@@ -74,7 +78,11 @@ module.exports = (args) => {
       if (!secOption) throw new Error("Security definition " + accountToEdit.securityDefinition + " not found");
     }
     if (args.generate_token) {
-      startOAuthServer(integration, secOption.def, accounts, accountToEdit)
+      let clientAccount = accountToEdit;
+      if (args.client) {
+        clientAccount = accounts[args.client];
+      }
+      generateToken(integration, secOption, accounts, accountToEdit, clientAccount);
     } else if (secOptions.length === 1) {
       authenticate(integration, secOption, accounts, accountToEdit);
     } else if (accountToEdit) {
@@ -82,24 +90,21 @@ module.exports = (args) => {
     } else {
       let question = {name: 'definition', message: "This API has multiple authentication flows. Which do you want to use?", type: 'list'};
       question.choices = secOptions.map(o => ({name: o.def.type + ' (' + o.name + ')', value: o}))
-      inquirer.prompt([question]).then(answer => {
-        authenticate(integration, answer.definition, accounts, accountToEdit);
+      inquirer.prompt([question]).then(answers => {
+        authenticate(integration, answers.definition, accounts, accountToEdit);
       })
     }
   })
 }
 
-let authenticate = (integration, secDef, accounts, accountToEdit) => {
-  let questions = QUESTION_SETS[secDef.def.type];
-  if (accountToEdit && secDef.def.type === 'oauth2') {
-    logger.log("You can retrieve an access token here:\n" + getOAuthURL(integration, secDef.def, accountToEdit.client_id));
-  }
+let authenticate = (integration, secOption, accounts, accountToEdit) => {
+  let questions = QUESTION_SETS[secOption.def.type];
   if (accountToEdit) questions = setDefaults(questions, accountToEdit);
   inquirer.prompt(questions).then(answers => {
     for (let k in answers) {
       if (!answers[k]) delete answers[k];
     }
-    answers.securityDefinition = secDef.name;
+    answers.securityDefinition = secOption.name;
     if (accountToEdit) {
       for (let k in answers) accountToEdit[k] = answers[k];
       saveAccounts(integration, accounts);
@@ -113,6 +118,19 @@ let authenticate = (integration, secDef, accounts, accountToEdit) => {
   })
 }
 
+let generateToken = (integration, secOption, accounts, accountToEdit, clientAccount) => {
+  let questions = [];
+  if (!accountToEdit) questions = questions.concat(QUESTION_SETS.alias);
+  if (!clientAccount) questions = questions.concat(QUESTION_SETS.oauth_client);
+  inquirer.prompt(questions).then(answers => {
+    if (answers.alias) accountToEdit = accounts[answers.alias] = {};
+    if (answers.client_id) accountToEdit.client_id = answers.client_id;
+    if (answers.client_secret) accountToEdit.client_secret = answers.client_secret;
+    if (!clientAccount) clientAccount = accountToEdit;
+    accountToEdit.securityDefinition = secOption.name;
+    startOAuthServer(integration, secOption.def, accounts, accountToEdit, clientAccount)
+  })
+}
 let saveAccounts = (integration, accounts) => {
   let oldCreds = getAccounts(integration.name);
   let credFile = datafire.credentialsDirectory + '/' + integration.name + '.json';
@@ -120,16 +138,15 @@ let saveAccounts = (integration, accounts) => {
   fs.writeFileSync(credFile, JSON.stringify(accounts, null, 2));
 }
 
-let getOAuthURL = (integration, secDef, clientId) => {
+let getOAuthURL = (integration, secDef, clientId, scopes) => {
   var flow = secDef.flow;
   var url = secDef.authorizationUrl;
-  var scopes = [Object.keys(secDef.scopes)[0]];
   var state = Math.random();
   var redirect = 'http://localhost:' + OAUTH_PORT;
-  url += '?response_type=code';// + (flow === 'implicit' ? 'token' : 'code');
+  url += '?response_type=' + (flow === 'implicit' ? 'token' : 'code');
   url += '&redirect_uri=' + redirect;
   url += '&client_id=' + encodeURIComponent(clientId);
-  url += '&access_type=offline';
+  if (flow === 'accessCode') url += '&access_type=offline';
   if (scopes.length > 0) {
     url += '&scope=' + encodeURIComponent(scopes.join(' '));
   }
@@ -137,28 +154,30 @@ let getOAuthURL = (integration, secDef, clientId) => {
   return url;
 }
 
-let startOAuthServer = (integration, secDef, accounts, accountToEdit) => {
-  if (integration.name === 'gmail') {
-    secDef.flow = 'code';
-    secDef.tokenUrl = 'https://www.googleapis.com/oauth2/v4/token';
-  }
+let startOAuthServer = (integration, secDef, accounts, accountToEdit, clientAccount) => {
   let server = http.createServer((req, res) => {
+    let urlObj = urlParser.parse(req.url);
+    if (urlObj.pathname !== '/') {
+      res.writeHead(404);
+      res.end();
+      return;
+    }
     let search = urlParser.parse(req.url).search || '?';
     search = search.substring(1);
-    if (search) {
-      search = querystring.parse(search);
+    search = querystring.parse(search);
+    if (search.code) {
       request.post({
         url: secDef.tokenUrl,
         form: {
           code: search.code,
-          client_id: accountToEdit.client_id,
-          client_secret: accountToEdit.client_secret,
+          client_id: clientAccount.client_id,
+          client_secret: clientAccount.client_secret,
           redirect_uri: 'http://localhost:3333',
           grant_type: 'authorization_code',
         },
         json: true,
       }, (err, resp, body) => {
-        let newURL = '/#access_token=' + encodeURIComponent(body.access_token);
+        let newURL = '/?saved=true#access_token=' + encodeURIComponent(body.access_token);
         newURL += '&refresh_token=' + encodeURIComponent(body.refresh_token);
         newURL += '&saved=true';
         res.writeHead(302, {
@@ -168,18 +187,29 @@ let startOAuthServer = (integration, secDef, accounts, accountToEdit) => {
         accountToEdit.access_token = body.access_token;
         accountToEdit.refresh_token = body.refresh_token;
         saveAccounts(integration, accounts);
-        server.close();
       })
     } else {
       fs.readFile(__dirname + '/../www/oauth_callback.html', 'utf8', (err, data) => {
         if (err) throw err;
         res.end(data);
-        server.close();
+        if (!search.saved) {
+          inquirer.prompt(QUESTION_SETS.oauth_tokens).then(answers => {
+            accountToEdit.access_token = answers.access_token;
+            accountToEdit.refresh_token = answers.refresh_token;
+            saveAccounts(integration, accounts);
+            server.close();
+            process.exit(0);
+          })
+        } else {
+          server.close();
+          process.exit(0);
+        }
       })
     }
   }).listen(OAUTH_PORT, (err) => {
     if (err) throw err;
-    let url = getOAuthURL(integration, secDef, accountToEdit.client_id);
+    let scope = Object.keys(secDef.scopes)[0];
+    let url = getOAuthURL(integration, secDef, clientAccount.client_id, [scope]);
     logger.log("Visit this url to retrieve your access and refresh tokens:")
     logger.logURL(url);
   });
