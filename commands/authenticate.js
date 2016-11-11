@@ -6,6 +6,7 @@ const querystring = require('querystring');
 const request = require('request');
 
 const OAUTH_PORT = 3333;
+const DEFAULT_REDIRECT_URI = 'http://localhost:' + OAUTH_PORT;
 
 const datafire = require('../index');
 const logger = require('../lib/logger');
@@ -24,6 +25,7 @@ const QUESTION_SETS = {
   oauth_client: [
     {name: 'client_id', message: "client_id:"},
     {name: 'client_secret', message: "client_secret:"},
+    {name: 'redirect_uri', message: "redirect_uri:", default: DEFAULT_REDIRECT_URI},
   ],
   oauth_tokens: [
     {name: 'access_token', message: "access_token:"},
@@ -129,6 +131,7 @@ let generateToken = (integration, secOption, accounts, accountToEdit, clientAcco
     if (answers.alias) accountToEdit = accounts[answers.alias] = {};
     if (answers.client_id) accountToEdit.client_id = answers.client_id;
     if (answers.client_secret) accountToEdit.client_secret = answers.client_secret;
+    if (answers.redirect_uri) accountToEdit.redirect_uri = answers.redirect_uri;
     if (!clientAccount) clientAccount = accountToEdit;
     accountToEdit.securityDefinition = secOption.name;
     startOAuthServer(integration, secOption.def, accounts, accountToEdit, clientAccount)
@@ -141,14 +144,13 @@ let saveAccounts = (integration, accounts) => {
   fs.writeFileSync(credFile, JSON.stringify(accounts, null, 2));
 }
 
-let getOAuthURL = (integration, secDef, clientId, scopes) => {
+let getOAuthURL = (integration, secDef, clientAccount, scopes) => {
   var flow = secDef.flow;
   var url = secDef.authorizationUrl;
   var state = Math.random();
-  var redirect = 'http://localhost:' + OAUTH_PORT;
   url += '?response_type=' + (flow === 'implicit' ? 'token' : 'code');
-  url += '&redirect_uri=' + redirect;
-  url += '&client_id=' + encodeURIComponent(clientId);
+  url += '&redirect_uri=' + clientAccount.redirect_uri || DEFAULT_REDIRECT_URI;
+  url += '&client_id=' + encodeURIComponent(clientAccount.client_id);
   if (flow === 'accessCode') url += '&access_type=offline';
   if (scopes.length > 0) {
     url += '&scope=' + encodeURIComponent(scopes.join(' '));
@@ -175,7 +177,7 @@ let startOAuthServer = (integration, secDef, accounts, accountToEdit, clientAcco
           code: search.code,
           client_id: clientAccount.client_id,
           client_secret: clientAccount.client_secret,
-          redirect_uri: 'http://localhost:3333',
+          redirect_uri: clientAccount.redirect_uri || DEFAULT_REDIRECT_URI,
           grant_type: 'authorization_code',
         },
         json: true,
@@ -215,7 +217,7 @@ let startOAuthServer = (integration, secDef, accounts, accountToEdit, clientAcco
       return {value: s, name: s + ' (' + secDef.scopes[s] + ')'}
     })
     inquirer.prompt(QUESTION_SETS.scopes).then(answers => {
-      let url = getOAuthURL(integration, secDef, clientAccount.client_id, answers.scopes);
+      let url = getOAuthURL(integration, secDef, clientAccount, answers.scopes);
       logger.log("Visit this url to retrieve your access and refresh tokens:")
       logger.logURL(url);
     })
