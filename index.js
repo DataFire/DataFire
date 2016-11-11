@@ -1,4 +1,5 @@
 let logger = require('./lib/logger');
+require("babel-polyfill");
 
 let datafire = module.exports = {};
 datafire.credentialsDirectory = process.cwd() + '/credentials';

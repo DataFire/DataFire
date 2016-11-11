@@ -7,3 +7,6 @@ credentials/
 !test/credentials/
 
 examples/**/*.json
+
+.npmignore
+distribution/

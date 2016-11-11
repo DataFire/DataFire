@@ -2,12 +2,14 @@
   "name": "datafire",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "distribution/index.js",
   "bin": {
-    "datafire": "bin/datafire"
+    "datafire": "bin/datafire",
+    "df": "bin/datafire-dev"
   },
   "scripts": {
-    "test": "mocha && ./test/commands/run.sh"
+    "test": "mocha && ./test/commands/run.sh",
+    "build": "./scripts/build.sh"
   },
   "repository": {
     "type": "git",
@@ -21,6 +23,7 @@
   "homepage": "https://github.com/bobby-brennan/datafire-v2#readme",
   "dependencies": {
     "async": "^2.1.2",
+    "babel-polyfill": "^6.16.0",
     "btoa": "^1.1.2",
     "chalk": "^1.1.3",
     "columnify": "^1.5.4",
@@ -32,6 +35,9 @@
     "yargs": "^6.3.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-polyfill": "^6.16.0",
+    "babel-preset-es2015": "^6.18.0",
     "chai": "^3.5.0",
     "express": "^4.14.0",
     "mocha": "^3.1.2",
