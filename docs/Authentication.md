@@ -12,7 +12,7 @@ datafire authenticate <integration>
 DataFire will prompt you for your credentials, as well as an `alias` for the account.
 
 To use an account in your flow:
-```
+```js
 let gmail = datafire.Integration.new('gmail').as('your_account_alias');
 ```
 
