@@ -5,7 +5,7 @@
   "main": "distribution/index.js",
   "bin": {
     "datafire": "bin/datafire",
-    "df": "bin/datafire-dev"
+    "dfd": "bin/datafire-dev"
   },
   "scripts": {
     "test": "mocha && ./test/commands/run.sh",
