@@ -21,6 +21,12 @@ npm install -g bobby-brennan/datafire
 npm install --save bobby-brennan/datafire
 ```
 
+## Examples
+* [Quickstart](examples/quickstart)
+* [Authentication](examples/authentication)
+* [Error Handling](examples/error_handling)
+* [News Headlines](examples/headlines) - Send yourself a daily e-mail with headlines from NPR, CNN, and NYTimes
+
 ## Exploring Integrations
 ![Exploing Integrations](./docs/explore.gif)
 
@@ -80,12 +86,14 @@ flow
     do: hacker_news.getStories(),
     params: {storyType: 'top'},
   })
+
   .step('story_details', {
     do: hacker_news.getItem(),
     params: data => {
       return {itemID: data.stories[0]}
     }
   })
+
   .step('write_file', {
     do: data => {
       fs.writeFileSync('./story.json', JSON.stringify(data.story_details, null, 2));
@@ -99,53 +107,24 @@ datafire run -f ./getTopStory.js
 ```
 You should see `story.json` in your current directory.
 
-## Execution
-Flows can be run on the command line or using cron.
-You can also run them in response to HTTP events or on a recurring schedule
-using AWS Lambda or inside the Serverless framework.
+## Authentication
+> See [Authentication.md](./docs/Authentication.md) for the full documentation
 
-Be sure to set `module.exports` to a flow object, e.g.
-```js
-module.exports = new Flow('myFlow', "an example flow");
-```
+DataFire can store authentication details for multiple accounts for each integration,
+and supports basic authentication (username/password), API keys, and OAuth 2.0.
 
-### Command line
-```
-datafire run path/to/your/flow.js
-```
+## Running Flows
+> See [RunningFlows.md](./docs/RunningFlows.md) for the full documentation
 
-### Crontab
-The following will run flow.js every 5 minutes:
-```
-crontab -l > jobs
-echo "*/5 * * * * datafire run flow.js" >> jobs
-crontab jobs
-rm jobs
-```
+Once you've written a flow, you have a number of options for running it:
 
-### DataFire.io
-Coming soon!
+* Manually on the command line
+* On a schedule with cron
+* On AWS Lambda
+* Inside a Serverless project
+* On [DataFire.io](https://datafire.io)
 
-### AWS Lambda
-Upload a .zip file of your project, and set `handler` to `path/to/your/flow.handler`.
+Lamdba, Serverless, and DataFire all offer ways to run your flow
+either on a schedule or in response to HTTP requests (webhooks).
 
-### Serverless
-> Read more about [Serverless](https://github.com/serverless/serverless) 
-
-To use the Serverless framework, just set your handler in `serverless.yml` to `yourFlow.handler`.
-E.g. for a flow in ./flows/copyIssues.js:
-
-```yml
-service: copyIssues
-
-provider:
-  name: aws
-  runtime: nodejs4.3
-
-functions:
-  copyIssues:
-    handler: flows.copyIssues.handler
-    events:
-      - schedule: rate(1 hour)
-      - http: POST /copyIssues
-```
+Read [RunningFlows.md](docs/RunningFlows.md) to learn more.
