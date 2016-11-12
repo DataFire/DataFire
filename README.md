@@ -102,8 +102,10 @@ datafire run -f ./getTopStory.js
 You should see `story.json` in your current directory.
 
 ## Authentication
-You can save authentication details for any DataFire integration.
-Read more in [Authentication.md](docs/Authentication.md)
+> See [Authentication.md](./docs/Authentication.md) for the full documentation
+
+DataFire can store authentication details for multiple accounts for each integration,
+and supports basic authentication (username/password), API keys, and OAuth 2.0.
 
 ## Running Flows
 > See [RunningFlows.md](./docs/RunningFlows.md) for the full documentation
