@@ -15,7 +15,7 @@ datafire run path/to/your/flow.js
 The following will run flow.js every 5 minutes:
 ```
 crontab -l > jobs
-echo "*/5 * * * * datafire run flow.js" >> jobs
+echo "*/5 * * * * datafire run /path/to/flow.js" >> jobs
 crontab jobs
 rm jobs
 ```
