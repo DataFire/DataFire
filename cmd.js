@@ -99,5 +99,5 @@ COMMANDS.forEach(cmd => {
   })
 })
 
-args = args.help('h').alias('h', 'help').argv;
+args = args.help('h').alias('h', 'help').strict().argv;
 
