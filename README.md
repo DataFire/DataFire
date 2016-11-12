@@ -59,6 +59,9 @@ datafire run ./getMessages.js
 ## Writing Flows
 > See [Flows.md](./docs/Flows.md) for the full documentation
 
+Flows allow you to make a series of calls to different APIs and services.
+You can synchronize, transfer, and react to data, no matter where it's stored.
+
 ### Quickstart
 > You can view this flow in the [examples directory](./examples/quickstart).
 
