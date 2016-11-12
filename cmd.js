@@ -11,7 +11,7 @@ let COMMANDS = [{
     description: "Show all available integrations",
   }]
 }, {
-  name: 'integrate [integration]',
+  name: 'integrate [integrations..]',
   description: "Add an integration to the current project",
   examples: ["datafire integrate hacker_news"],
   runner: require('./commands/integrate'),

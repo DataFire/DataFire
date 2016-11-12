@@ -45,23 +45,25 @@ const RSS_SCHEMA = {
 module.exports = (args) => {
   fs.mkdir(datafire.integrationsDirectory, (err) => {
     if (args.openapi) {
-      integrateURL(args.name || args.integration, args.openapi);
+      integrateURL(args.name, args.openapi);
     } else if (args.rss) {
       integrateRSS(args.name, args.rss);
     } else {
-      if (getLocalSpec(args.integration)) return integrateFile(args.integration);
-      request.get(APIS_GURU_URL, {json: true}, (err, resp, body) => {
-        if (err) throw err;
-        let keys = Object.keys(body);
-        let validKeys = keys.filter(k => k.indexOf(args.integration) !== -1);
-        if (validKeys.length === 0) throw new Error("API " + args.integration + " not found");
-        let exactMatch = validKeys.filter(f => f === args.integration)[0];
-        if (validKeys.length > 1 && !exactMatch) {
-          throw new Error("Ambiguous API name: " + args.integration + "\n\nPlease choose one of:\n" + validKeys.join('\n'));
-        }
-        let info = body[exactMatch || validKeys[0]];
-        let url = info.versions[info.preferred].swaggerUrl;
-        integrateURL(args.name || args.integration, url);
+      (args.integrations || []).forEach(integration => {
+        if (getLocalSpec(integration)) return integrateFile(integration);
+        request.get(APIS_GURU_URL, {json: true}, (err, resp, body) => {
+          if (err) throw err;
+          let keys = Object.keys(body);
+          let validKeys = keys.filter(k => k.indexOf(integration) !== -1);
+          if (validKeys.length === 0) throw new Error("API " + integration + " not found");
+          let exactMatch = validKeys.filter(f => f === integration)[0];
+          if (validKeys.length > 1 && !exactMatch) {
+            throw new Error("Ambiguous API name: " + integration + "\n\nPlease choose one of:\n" + validKeys.join('\n'));
+          }
+          let info = body[exactMatch || validKeys[0]];
+          let url = info.versions[info.preferred].swaggerUrl;
+          integrateURL(args.name || integration, url);
+        })
       })
     }
   })
