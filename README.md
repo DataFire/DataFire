@@ -1,4 +1,5 @@
 # DataFire
+> DataFire is currently in **beta**. The API is not stable.
 
 DataFire is an open source integration framework. It is built on top of open standards such as
 RSS and [Open API](https://github.com/OAI/OpenAPI-Specification), and can be run locally, on
