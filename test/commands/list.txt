@@ -1,6 +1,11 @@
 bbc
+cnn
 github
 gmail
+googleapis
 hacker_news
-mongodb
-xkcd
+npr
+nytimes
+reddit
+washington_post
+youtube

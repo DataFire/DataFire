@@ -1,4 +1,7 @@
 get_story
   operation: getStories
   Error: 401
+{
+  "error": "Permission denied"
+}
 Success
