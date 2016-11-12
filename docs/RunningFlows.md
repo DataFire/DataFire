@@ -1,7 +1,5 @@
 # Executing Flows
-Flows can be run on the command line or using cron.
-You can also run them in response to HTTP events (webhooks) or on a recurring schedule
-using AWS Lambda or inside the Serverless framework.
+Flows can be run manually, on a schedule, or in response to an HTTP request.
 
 Be sure to set `module.exports` to a flow object, e.g.
 ```js
