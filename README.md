@@ -106,6 +106,8 @@ You can save authentication details for any DataFire integration.
 Read more in [Authentication.md](docs/Authentication.md)
 
 ## Running Flows
+> See [RunningFlows.md](./docs/RunningFlows.md) for the full documentation
+
 Once you've written a flow, you have a number of options for running it:
 
 * Manually on the command line
