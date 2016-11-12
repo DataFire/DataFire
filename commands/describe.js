@@ -20,6 +20,7 @@ module.exports = (args) => {
       logger.log();
       for (let opName in integration.spec.operations) {
         let op = integration.spec.operations[opName];
+        if (args.query && !operationMatchesQuery(opName, op, args.query)) continue;
         logger.logOperation(opName, op);
         logger.log();
       }
@@ -44,4 +45,13 @@ module.exports = (args) => {
   });
 }
 
-
+let operationMatchesQuery = (name, op, q) => {
+  q = q.toLowerCase();
+  let searchText = name + '\n';
+  if (op.description) searchText += op.description + '\n';
+  if (op.summary) searchText += op.summary + '\n';
+  if (op.path) searchText += op.path + '\n';
+  if (op.method) searchText += op.method + '\n';
+  searchText = searchText.toLowerCase();
+  return searchText.indexOf(q) !== -1;
+}

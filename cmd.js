@@ -37,6 +37,10 @@ let COMMANDS = [{
     name: 'operation',
     alias: 'o',
     description: "The operation to describe",
+  }, {
+    name: 'query',
+    alias: 'q',
+    description: "Filters for operations matching the query",
   }]
 }, {
   name: 'authenticate <integration>',
