@@ -1,5 +1,5 @@
 # Executing Flows
-Flows can be run on the command line or using cron.
+Flows can be run manually on the command line or automatically using cron.
 You can also run them in response to HTTP events (webhooks) or on a recurring schedule
 using AWS Lambda or inside the Serverless framework.
 
@@ -21,11 +21,14 @@ echo "*/5 * * * * datafire run flow.js" >> jobs
 crontab jobs
 rm jobs
 ```
+
+
 ### AWS Lambda
 Upload a .zip file of your project, and set `handler` to `path/to/your/flow.handler`.
 
+
 ### Serverless
-> Read more about [Serverless](https://github.com/serverless/serverless) 
+> Read more about [Serverless](https://github.com/serverless/serverless)
 
 To use the Serverless framework, just set your handler in `serverless.yml` to `yourFlow.handler`.
 E.g. for a flow in ./flows/copyIssues.js:

@@ -53,7 +53,7 @@ datafire call github -o "GET /user" --as account_alias
 datafire call github -i "GET /users/{username}" --params.username karpathy
 
 # Run a flow
-datafire run ./getMessages.js  
+datafire run ./getMessages.js
 ```
 
 ## Writing Flows
@@ -110,8 +110,9 @@ You should see `story.json` in your current directory.
 ## Authentication
 > See [Authentication.md](./docs/Authentication.md) for the full documentation
 
-DataFire can store authentication details for multiple accounts for each integration,
-and supports basic authentication (username/password), API keys, and OAuth 2.0.
+DataFire can store authentication details for each integration, and multiple accounts
+can be created for a given integration.
+Support for basic authentication (username/password), API keys, and OAuth 2.0 is built-in.
 
 ## Running Flows
 > See [RunningFlows.md](./docs/RunningFlows.md) for the full documentation
