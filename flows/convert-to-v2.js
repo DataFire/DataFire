@@ -68,10 +68,14 @@ const datafire = require('datafire');
 const flow = module.exports = new datafire.Flow("${v1.title}", "${v1.description || ''}");
 `
   let integrated = [];
-  links.forEach(link => {
+  links.forEach((link, idx) => {
     if (integrated.indexOf(link.name) !== -1) return;
     integrated.push(link.name);
-    code += `const ${link.name} = datafire.Integration.new('${link.name}')\n`
+    code += `const ${link.name} = datafire.Integration.new('${link.name}')`
+    if (v1.settings && v1.settings.links[idx].account) {
+      code += ".as('" + v1.settings.links[idx].account + "')";
+    }
+    code += ';\n';
   });
 
   let extraCode = v1.links
