@@ -121,7 +121,7 @@ class MongoDBIntegration extends datafire.Integration {
   // Override
   initialize(cb) {
     if (!this.account) return cb();
-    this.client.connect(this.account.url, (err, db) => {
+    this.client.connect(this.account.mongo_url, (err, db) => {
       if (err) return cb(err);
       this.database = db;
       cb();
@@ -145,7 +145,11 @@ class MongoDBIntegration extends datafire.Integration {
 
   findOne(collection) {
     return new MongoDBOperation('findOne', collection, this, (collection, args, cb) => {
-      collection.findOne(args.query || {}, args.projection || {}, cb);
+      collection.findOne(args.query || {}, args.projection || {}, (err, item) => {
+        if (err) return cb(err);
+        if (!item) return cb(new Error("Not found"));
+        cb(null, item);
+      });
     });
   }
 
