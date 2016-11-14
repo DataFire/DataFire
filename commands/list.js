@@ -18,16 +18,15 @@ module.exports = (args) => {
       if (err) throw err;
       let keys = Object.keys(body).concat(NATIVE_INTEGRATIONS).sort();
       keys.forEach(k => {
-        logger.log(chalk.magenta(k));
         let api = body[k];
         if (api) {
           api = api.versions[api.preferred];
-          if (api.info.title) logger.log(chalk.blue(api.info.title));
-          logger.logDescription(api.info.description);
+          if (args.query && !integrationMatchesQuery(k, api, args.query)) return;
+          logger.logIntegration(k, api);
         } else {
           let integration = datafire.Integration.new(k);
-          if (integration.spec.info.title) logger.log(chalk.blue(integration.spec.info.title));
-          logger.logDescription(integration.spec.info.description);
+          if (args.query && !integrationMatchesQuery(k, integration.spec, args.query)) return;
+          logger.logIntegration(k, integration.spec);
         }
         logger.log();
       });
@@ -42,3 +41,12 @@ module.exports = (args) => {
   }
 }
 
+const integrationMatchesQuery = (name, spec, query) => {
+  let searchText = name;
+  let info = spec.info;
+  if (info.title) searchText += info.title;
+  if (info.description) searchText += info.description;
+  searchText = searchText.toLowerCase();
+  query = query.toLowerCase();
+  return searchText.indexOf(query) !== -1;
+}

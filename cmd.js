@@ -9,6 +9,10 @@ let COMMANDS = [{
     name: 'all',
     alias: 'a',
     description: "Show all available integrations",
+  }, {
+    name: 'query',
+    alias: 'q',
+    description: "Filter integrations by text",
   }]
 }, {
   name: 'integrate [integrations..]',
