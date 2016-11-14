@@ -1,5 +1,7 @@
+const path = require('path');
+
 module.exports = function(args) {
-  let flow = require(process.cwd() + '/' + args.flow);
+  let flow = require(path.join(process.cwd(), args.flow));
   if (args.params) {
     flow.setOptions(args.params);
   }

@@ -1,11 +1,12 @@
 const fs = require('fs');
+const path = require('path');
 const request = require('request');
 const chalk = require('chalk');
 const datafire = require('../index');
 const logger = require('../lib/logger');
 
 const APIS_GURU_URL = "https://api.apis.guru/v2/list.json";
-const NATIVE_INTEGRATIONS_DIR = __dirname + '/../native_integrations';
+const NATIVE_INTEGRATIONS_DIR = path.join(__dirname, '..', 'native_integrations');
 
 let getNameFromFilename = f => f.substring(0, f.indexOf('.'));
 
@@ -33,7 +34,7 @@ module.exports = (args) => {
     });
   } else {
     fs.readdir(datafire.integrationsDirectory, (err, files) => {
-      if (err) return cb(err);
+      if (err) throw err;
       files.map(getNameFromFilename).forEach(name => {
         logger.log(chalk.magenta(name));
       })

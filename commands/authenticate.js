@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const http = require('http');
 const inquirer = require('inquirer');
 const urlParser = require('url');
@@ -7,6 +8,7 @@ const request = require('request');
 
 const OAUTH_PORT = 3333;
 const DEFAULT_REDIRECT_URI = 'http://localhost:' + OAUTH_PORT;
+const CALLBACK_HTML_FILE = path.join(__dirname, '..', 'www', 'oauth_callback.html');
 
 const datafire = require('../index');
 const logger = require('../lib/logger');
@@ -59,7 +61,7 @@ let setDefaults = (questions, defaults) => {
 }
 
 let getAccounts = (integration) => {
-  let credFile = datafire.credentialsDirectory + '/' + integration + '.json';
+  let credFile = path.join(datafire.credentialsDirectory, integration + '.json');
   return fs.existsSync(credFile) ? require(credFile) : {};
 }
 
@@ -151,7 +153,7 @@ let generateToken = (integration, secOption, accounts, accountToEdit, clientAcco
 }
 let saveAccounts = (integration, accounts) => {
   let oldCreds = getAccounts(integration.name);
-  let credFile = datafire.credentialsDirectory + '/' + integration.name + '.json';
+  let credFile = path.join(datafire.credentialsDirectory, integration.name + '.json');
   logger.log('Saving credentials to ' + credFile.replace(process.cwd(), '.'));
   fs.writeFileSync(credFile, JSON.stringify(accounts, null, 2));
 }
@@ -206,7 +208,7 @@ let startOAuthServer = (integration, secDef, accounts, accountToEdit, clientAcco
         saveAccounts(integration, accounts);
       })
     } else {
-      fs.readFile(__dirname + '/../www/oauth_callback.html', 'utf8', (err, data) => {
+      fs.readFile(CALLBACK_HTML_FILE, 'utf8', (err, data) => {
         if (err) throw err;
         res.end(data);
         if (!search.saved) {

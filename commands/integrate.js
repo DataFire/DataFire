@@ -1,16 +1,17 @@
-let fs = require('fs');
-let request = require('request');
-let chalk = require('chalk');
-let rssParser = require('rss-parser');
-let urlParser = require('url');
+const fs = require('fs');
+const path = require('path');
+const request = require('request');
+const chalk = require('chalk');
+const rssParser = require('rss-parser');
+const urlParser = require('url');
 
-let logger = require('../lib/logger');
-let datafire = require('../index');
+const logger = require('../lib/logger');
+const datafire = require('../index');
 
 const OPENAPI_SUFFIX = '.openapi.json';
 const RSS_SUFFIX = '.rss.json';
 const APIS_GURU_URL = "https://api.apis.guru/v2/list.json";
-const NATIVE_INTEGRATIONS_DIR = __dirname + '/../native_integrations';
+const NATIVE_INTEGRATIONS_DIR = path.join(__dirname, '..', 'native_integrations');
 const NATIVE_INTEGRATIONS = fs.readdirSync(NATIVE_INTEGRATIONS_DIR);
 
 const RSS_SCHEMA = {
@@ -69,34 +70,34 @@ module.exports = (args) => {
   })
 }
 
-let getLocalSpec = (name) => {
+const getLocalSpec = (name) => {
   return NATIVE_INTEGRATIONS.filter(fname => fname.startsWith(name + '.'))[0];
 }
 
-let integrateFile = (name) => {
+const integrateFile = (name) => {
   let filename = getLocalSpec(name);
   if (!filename) throw new Error("Integration " + name + " not found");
-  fs.readFile(NATIVE_INTEGRATIONS_DIR + '/' + filename, 'utf8', (err, data) => {
+  fs.readFile(path.join(NATIVE_INTEGRATIONS_DIR, filename), 'utf8', (err, data) => {
     if (err) throw err;
-    let outFilename = datafire.integrationsDirectory + '/' + filename;
+    let outFilename = path.join(datafire.integrationsDirectory, filename);
     logger.log('Creating integration ' + outFilename.replace(process.cwd(), '.'));
     fs.writeFileSync(outFilename, data);
   });
 }
 
-let integrateURL = (name, url) => {
+const integrateURL = (name, url) => {
   request.get(url, {json: true}, (err, resp, body) => {
     if (err) throw err;
     if (!body.host) throw new Error("Invalid swagger:" + JSON.stringify(body, null, 2))
     name = name || body.host;
-    let filename = datafire.integrationsDirectory + '/' + name + OPENAPI_SUFFIX;
+    let filename = path.join(datafire.integrationsDirectory, name + OPENAPI_SUFFIX);
     logger.log('Creating integration ' + filename.replace(process.cwd(), '.'));
     fs.writeFileSync(filename, JSON.stringify(body, null, 2));
   })
 }
 
-let TLDs = ['.com', '.org', '.net', '.gov', '.io', '.co.uk']
-let getNameFromHost = (host) => {
+const TLDs = ['.com', '.org', '.net', '.gov', '.io', '.co.uk']
+const getNameFromHost = (host) => {
   if (host.startsWith('www.')) host = host.substring(4);
   TLDs.forEach(tld => {
     if (host.endsWith(tld)) host = host.substring(0, host.length - tld.length);
@@ -104,7 +105,7 @@ let getNameFromHost = (host) => {
   return host.replace(/\./, '_');
 }
 
-let integrateRSS = (name, url) => {
+const integrateRSS = (name, url) => {
   let urlObj = urlParser.parse(url);
   if (!name) {
     name = getNameFromHost(urlObj.hostname);
@@ -133,7 +134,7 @@ let integrateRSS = (name, url) => {
       title: feed.title,
       description: feed.description,
     };
-    let filename = datafire.integrationsDirectory + '/' + name + RSS_SUFFIX;
+    let filename = path.join(datafire.integrationsDirectory, name + RSS_SUFFIX);
     fs.writeFileSync(filename, JSON.stringify(spec, null, 2));
   })
 }
