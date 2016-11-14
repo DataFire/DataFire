@@ -26,8 +26,8 @@ let SPEC = {
   },
   securityDefinitions: {
     mongo_url: {
-      type: "string",
-      name: "url"
+      type: "apiKey",
+      name: "mongo_url"
     }
   },
   operations: {
