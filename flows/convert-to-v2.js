@@ -8,6 +8,7 @@ const mongo = datafire.Integration.new('mongodb').as('dfread2');
 
 flow.setDefaults({
   flow_id: '',
+  out_file: './flow-v2.js',
 });
 
 const convertName = (key) => {
@@ -31,13 +32,13 @@ const getV2Code = (v1, links) => {
   links.forEach(l => l.name = convertName(l.key));
   let code = `
 
-const datafire = require('../index.js');
+const datafire = require('datafire');
 const flow = module.exports = new datafire.Flow("${v1.title}", "${v1.description || ''}");
 `
   let integrated = [];
   links.forEach(link => {
-    if (integrated.indexOf(link._id) !== -1) return;
-    integrated.push(link._id);
+    if (integrated.indexOf(link.name) !== -1) return;
+    integrated.push(link.name);
     code += `const ${link.name} = datafire.Integration.new('${link.name}')\n`
   });
 
@@ -84,6 +85,6 @@ flow
   })
   .step('write', {
     do: data => {
-      fs.writeFileSync('./flow-v2.js', getV2Code(data.flow_v1, data.links))
+      fs.writeFileSync(flow.params.out_file, getV2Code(data.flow_v1, data.links))
     }
   })
