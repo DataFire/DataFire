@@ -1,3 +1,5 @@
+"use strict";
+
 let btoa = require('btoa');
 let datafire = require('datafire');
 let flow = module.exports = new datafire.Flow('headlines', "Get headlines from several news sources in your inbox");
