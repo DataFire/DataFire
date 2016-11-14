@@ -21,8 +21,9 @@ const convertScript = (script, links) => {
   script = script.replace(/^[\s\S]*function\s+request\s*\(\s*(.*)\s*\)\s*\{/, '($1) => {');
   script = script.replace(/data\[(\d+)\]/g, (match, dataIdx) => {
     let link = links[+dataIdx];
-    return 'data.' + link.name;
-  })
+    return 'data.' + link.name + dataIdx;
+  });
+  script = script.replace(/constants\./g, 'flow.params.');
   return script.split('\n').join('\n  ');
 }
 
@@ -55,7 +56,7 @@ const flow = module.exports = new datafire.Flow("${v1.title}", "${v1.description
   v1.links.forEach((l, idx) => {
     let link = links[idx];
     code += `
-flow.step('${link.name}', {
+flow.step('${link.name}${idx}', {
   do: ${link.name}.${l.operation.method}("${l.operation.path}"),
   params: ${convertScript(l.script, links)}
 })
