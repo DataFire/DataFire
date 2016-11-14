@@ -82,6 +82,11 @@ let COMMANDS = [{
   examples: ["datafire run ./flow.js"],
   description: "Run a flow locally",
   runner: require('./commands/run'),
+  options: [{
+    name: 'params',
+    alias: 'p',
+    description: "Pass parameters to the flow",
+  }]
 }]
 
 let args = require('yargs')
