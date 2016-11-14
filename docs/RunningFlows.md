@@ -1,9 +1,10 @@
 # Executing Flows
-Flows can be run manually on the command line or automatically using cron.
-You can also run them in response to HTTP events (webhooks) or on a recurring schedule
-using AWS Lambda or inside the Serverless framework.
+Flows can be run manually, on a schedule, or in response to an HTTP request.
 
-Be sure to set `module.exports` to a flow object, e.g.
+While it's easy to self-host flows using cron, support is also built in for
+AWS Lambda, which offers a [liberal free tier](https://aws.amazon.com/lambda/pricing/)
+
+In your code, be sure to set `module.exports` to a flow object, e.g.
 ```js
 module.exports = new Flow('myFlow', "an example flow");
 ```
@@ -17,7 +18,7 @@ datafire run path/to/your/flow.js
 The following will run flow.js every 5 minutes:
 ```
 crontab -l > jobs
-echo "*/5 * * * * datafire run flow.js" >> jobs
+echo "*/5 * * * * datafire run /path/to/flow.js" >> jobs
 crontab jobs
 rm jobs
 ```

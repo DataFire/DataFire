@@ -1,4 +1,5 @@
 # DataFire
+> DataFire is currently in **beta**. The API is not stable.
 
 DataFire is an open source integration framework. It is built on top of open standards such as
 RSS and [Open API](https://github.com/OAI/OpenAPI-Specification), and can be run locally, on
@@ -58,6 +59,9 @@ datafire run ./getMessages.js
 
 ## Writing Flows
 > See [Flows.md](./docs/Flows.md) for the full documentation
+
+Flows allow you to make a series of calls to different APIs and services.
+You can synchronize, transfer, and react to data, no matter where it's stored.
 
 ### Quickstart
 > You can view this flow in the [examples directory](./examples/quickstart).
