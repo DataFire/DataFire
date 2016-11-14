@@ -1,4 +1,5 @@
 # DataFire
+> DataFire is currently in **beta**. The API is not stable.
 
 DataFire is an open source integration framework. It is built on top of open standards such as
 RSS and [Open API](https://github.com/OAI/OpenAPI-Specification), and can be run locally, on
@@ -53,11 +54,14 @@ datafire call github -o "GET /user" --as account_alias
 datafire call github -i "GET /users/{username}" --params.username karpathy
 
 # Run a flow
-datafire run ./getMessages.js  
+datafire run ./getMessages.js
 ```
 
 ## Writing Flows
 > See [Flows.md](./docs/Flows.md) for the full documentation
+
+Flows allow you to make a series of calls to different APIs and services.
+You can synchronize, transfer, and react to data, no matter where it's stored.
 
 ### Quickstart
 > You can view this flow in the [examples directory](./examples/quickstart).
@@ -110,8 +114,9 @@ You should see `story.json` in your current directory.
 ## Authentication
 > See [Authentication.md](./docs/Authentication.md) for the full documentation
 
-DataFire can store authentication details for multiple accounts for each integration,
-and supports basic authentication (username/password), API keys, and OAuth 2.0.
+DataFire can store authentication details for each integration, and multiple accounts
+can be created for a given integration.
+Support for basic authentication (username/password), API keys, and OAuth 2.0 is built-in.
 
 ## Running Flows
 > See [RunningFlows.md](./docs/RunningFlows.md) for the full documentation

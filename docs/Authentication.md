@@ -16,6 +16,22 @@ To use an account in your flow:
 let gmail = datafire.Integration.new('gmail').as('your_account_alias');
 ```
 
+## Set a Default Account
+To make flows easier to transfer between people and organizations, you tell an integration
+to use the `default` account:
+
+```js
+let gmail = datafire.Integration.new('gmail').as('default');
+```
+
+This will use the default account for that integration, or choose
+the first account if no default is set.
+
+To set a default account, run
+```
+datafire authenticate <integration> --set_default alias_name
+```
+
 ## OAuth 2.0
 Many integrations, such as GitHub and GMail, offer OAuth 2.0
 authentication. OAuth tokens are more secure than using
@@ -36,7 +52,7 @@ or
 In your application's settings, set `redirect_uri`
 to `http://localhost:3333`.
 
-Finally, run 
+Finally, run
 ````
 datafire authenticate <integration> --generate_token
 ```
@@ -45,8 +61,9 @@ DataFire will prompt you for your `client_id` and `client_secret`,
 then provide you with a URL to visit to log into your account.
 
 Once you've logged in, you'll be redirected to localhost:3333, where
-you should see your `access_token` and, if present, `refresh_token`.
+you should see your `access_token` and, if applicable, `refresh_token`.
 
 If the integration uses an `implict` flow, you'll need to copy these
 credentials into the DataFire prompt. Otherwise DataFire will save them
 automatically.
+

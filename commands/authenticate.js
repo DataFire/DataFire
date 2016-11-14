@@ -82,7 +82,10 @@ module.exports = (args) => {
       secOption = secOptions.filter(o => o.name === accountToEdit.securityDefinition)[0];
       if (!secOption) throw new Error("Security definition " + accountToEdit.securityDefinition + " not found");
     }
-    if (args.generate_token) {
+    if (args.set_default) {
+      accounts.default = args.set_default;
+      saveAccounts(integration, accounts);
+    } else if (args.generate_token) {
       let clientAccount = accountToEdit;
       if (args.client) {
         clientAccount = accounts[args.client];
