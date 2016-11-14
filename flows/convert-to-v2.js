@@ -1,4 +1,6 @@
 const fs = require('fs');
+const path = require('path');
+const async = require('async');
 const ObjectId = require('mongodb').ObjectId;
 
 const datafire = require('../index');
@@ -8,8 +10,29 @@ const mongo = datafire.Integration.new('mongodb').as('dfread2');
 
 flow.setDefaults({
   flow_id: '',
-  out_file: './flow-v2.js',
+  out_dir: './flow-v2.js',
 });
+
+const unescapeString = function(str) {
+  return str.replace(/\\u0024/g, '$').replace(/\\u002E/g, '.');
+}
+
+const unescapeKeys = function(obj) {
+  if (!obj || typeof obj !== 'object') return obj;
+  var out = {}, o, k;
+  for (var key in obj) {
+    o = obj[key];
+    k = unescapeString(key);
+    if (Array.isArray(o)) {
+      out[k] = o.map(function(inner) {return unescapeKeys(inner, unescapeString)});
+    } else if (typeof o === 'object') {
+      out[k] = unescapeKeys(o, unescapeString);
+    } else {
+      out[k] = o;
+    }
+  }
+  return out;
+};
 
 const convertName = (key) => {
   key = key.substring(key.indexOf(':') + 1);
@@ -81,10 +104,20 @@ flow
       return data.flow_v1.links.map(l => ({
         query: {_id: ObjectId(l.connection)},
       }))
+    },
+    finish: data => {
+      data.links.forEach(l => l.swagger = unescapeKeys(l.swagger));
     }
   })
   .step('write', {
     do: data => {
-      fs.writeFileSync(flow.params.out_file, getV2Code(data.flow_v1, data.links))
+      fs.writeFileSync(path.join(flow.params.out_dir, 'flow.js'), getV2Code(data.flow_v1, data.links))
+      let integrationsDir = path.join(flow.params.out_dir, 'integrations');
+      try {
+        fs.mkdirSync(integrationsDir);
+      } catch (e) {}
+      data.links.forEach(l => {
+        fs.writeFileSync(path.join(integrationsDir, l.name + '.openapi.json'), JSON.stringify(l.swagger, null, 2));
+      })
     }
   })
