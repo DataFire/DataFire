@@ -1,11 +1,2 @@
-bbc
-cnn
 github
-gmail
-googleapis
 hacker_news
-npr
-nytimes
-reddit
-washington_post
-youtube
