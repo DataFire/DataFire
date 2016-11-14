@@ -56,6 +56,22 @@ describe('Flows', () => {
     executeSuccess(done);
   });
 
+  it('should allow parallel requests', done => {
+    flow.step('parallel', {
+      do: integration.getSucceed(),
+      params: [{}, {}, {}],
+      finish: data => {
+        expect(data.parallel).to.be.instanceof(Array);
+        expect(data.parallel.length).to.equal(3);
+        expect(data.parallel[0]).to.equal('OK');
+        expect(data.parallel[1]).to.equal('OK');
+        expect(data.parallel[2]).to.equal('OK');
+        done();
+      }
+    })
+    flow.execute();
+  })
+
   it('should not use auth by default', (done) => {
     flow.step('fail', integration.get('/secret'))
     flow.catch((err, data) => {
