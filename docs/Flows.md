@@ -18,7 +18,7 @@ const fs = require('fs');
 const hacker_news = datafire.Integration.new('hacker_news');
 
 const flow = module.exports =
-      new datafire.Flow('copyStory', 'Copies the top HN story to a local file');
+      new datafire.Flow('Top HN Story', 'Copies the top HN story to a local file');
 
 flow
   .step('stories', {
@@ -44,7 +44,7 @@ Creates a new flow
 
 Example:
 ```js
-let flow = new datafire.Flow('copyStuff', "Copies stuff from here to there");
+let flow = new datafire.Flow('Copy Stuff', "Copies stuff from here to there");
 ```
 
 ---

@@ -2,7 +2,7 @@
 
 let btoa = require('btoa');
 let datafire = require('datafire');
-let flow = module.exports = new datafire.Flow('headlines', "Get headlines from several news sources in your inbox");
+let flow = module.exports = new datafire.Flow('Headlines', "Get headlines from several news sources in your inbox");
 
 let gmail = datafire.Integration.new('gmail').as('default');
 

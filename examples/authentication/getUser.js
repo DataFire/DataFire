@@ -3,7 +3,7 @@ const fs = require('fs');
 const github = datafire.Integration.new('github').as('default');
 
 const flow = module.exports =
-      new datafire.Flow('getUser', 'Copies the logged in user to a local file');
+      new datafire.Flow('Get User', 'Copies the logged in user to a local file');
 
 flow.step('user', {
   do: github.get('/user'),

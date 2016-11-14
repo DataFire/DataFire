@@ -2,7 +2,7 @@ let datafire = require('../../index');
 let hn = datafire.Integration.new('hacker_news');
 
 let flow = module.exports =
-      new datafire.Flow('triggerError', "Intentionally cause an error to show catch usage")
+      new datafire.Flow('Trigger Error', "Intentionally cause an error to show catch usage")
 
 flow
   .step('get_story', {
