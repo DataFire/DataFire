@@ -10,7 +10,7 @@ const mongo = datafire.Integration.new('mongodb').as('dfread2');
 
 flow.setDefaults({
   flow_id: '',
-  out_dir: './flow-v2.js',
+  out_dir: '.',
 });
 
 const unescapeString = function(str) {
