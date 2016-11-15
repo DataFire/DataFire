@@ -114,6 +114,8 @@ module.exports = (args) => {
       if (!accountToEdit) throw new Error("Account " + args.as + " not found");
       secOption = secOptions.filter(o => o.name === accountToEdit.securityDefinition)[0];
       if (!secOption) throw new Error("Security definition " + accountToEdit.securityDefinition + " not found");
+    } else if (secOptions.length === 1) {
+      secOption = secOptions[0];
     }
     let questions = secOption ? [] : getChooseDefQuestion(secOptions);
     inquirer.prompt(questions).then(answers => {
