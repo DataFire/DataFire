@@ -4,6 +4,7 @@ const request = require('request');
 const chalk = require('chalk');
 const rssParser = require('rss-parser');
 const urlParser = require('url');
+const YAML = require('yamljs');
 
 const logger = require('../lib/logger');
 const datafire = require('../index');
@@ -85,24 +86,32 @@ const integrateFile = (name) => {
   });
 }
 
-const integrateURL = (name, url) => {
-  request.get(url, {json: true}, (err, resp, body) => {
-    if (err) throw err;
-    if (!body.host) throw new Error("Invalid swagger:" + JSON.stringify(body, null, 2))
-    name = name || body.host;
-    let filename = path.join(datafire.integrationsDirectory, name + OPENAPI_SUFFIX);
-    logger.log('Creating integration ' + filename.replace(process.cwd(), '.'));
-    fs.writeFileSync(filename, JSON.stringify(body, null, 2));
-  })
-}
-
-const TLDs = ['.com', '.org', '.net', '.gov', '.io', '.co.uk']
+const TLDs = ['.com', '.org', '.net', '.gov', '.io', '.co.uk'];
+const SUBDOMAINS = ['www.', 'api.', 'developer.'];
 const getNameFromHost = (host) => {
-  if (host.startsWith('www.')) host = host.substring(4);
+  SUBDOMAINS.forEach(sub => {
+    if (host.startsWith(sub)) host = host.substring(sub.length);
+  })
   TLDs.forEach(tld => {
     if (host.endsWith(tld)) host = host.substring(0, host.length - tld.length);
   })
   return host.replace(/\./, '_');
+}
+
+const integrateURL = (name, url) => {
+  request.get(url, (err, resp, body) => {
+    if (err) throw err;
+    if (resp.headers['content-type'].indexOf('yaml') !== -1) {
+      body = YAML.parse(body);
+    } else {
+      body = JSON.parse(body);
+    }
+    if (!body.host) throw new Error("Invalid swagger:" + JSON.stringify(body, null, 2))
+    name = name || getNameFromHost(body.host);
+    let filename = path.join(datafire.integrationsDirectory, name + OPENAPI_SUFFIX);
+    logger.log('Creating integration ' + filename.replace(process.cwd(), '.'));
+    fs.writeFileSync(filename, JSON.stringify(body, null, 2));
+  })
 }
 
 const integrateRSS = (name, url) => {

@@ -32,6 +32,7 @@
     "request": "^2.78.0",
     "rss-parser": "^2.5.2",
     "swagger-parser": "^3.4.1",
+    "yamljs": "^0.2.8",
     "yargs": "^6.3.0"
   },
   "devDependencies": {
