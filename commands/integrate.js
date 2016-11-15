@@ -44,27 +44,27 @@ const RSS_SCHEMA = {
   }
 }
 
-module.exports = (args) => {
+module.exports = (args, callback) => {
   fs.mkdir(datafire.integrationsDirectory, (err) => {
     if (args.openapi) {
-      integrateURL(args.name, args.openapi);
+      integrateURL(args.name, args.openapi, false, callback);
     } else if (args.rss) {
-      integrateRSS(args.name, args.rss);
+      integrateRSS(args.name, args.rss, callback);
     } else {
       (args.integrations || []).forEach(integration => {
         if (getLocalSpec(integration)) return integrateFile(integration);
         request.get(APIS_GURU_URL, {json: true}, (err, resp, body) => {
-          if (err) throw err;
+          if (err) return callback(err);
           let keys = Object.keys(body);
           let validKeys = keys.filter(k => k.indexOf(integration) !== -1);
-          if (validKeys.length === 0) throw new Error("API " + integration + " not found");
+          if (validKeys.length === 0) return callback(new Error("Integration " + integration + " not found"));
           let exactMatch = validKeys.filter(f => f === integration)[0];
           if (validKeys.length > 1 && !exactMatch) {
-            throw new Error("Ambiguous API name: " + integration + "\n\nPlease choose one of:\n" + validKeys.join('\n'));
+            return callback(new Error("Ambiguous API name: " + integration + "\n\nPlease choose one of:\n" + validKeys.join('\n')));
           }
           let info = body[exactMatch || validKeys[0]];
           let url = info.versions[info.preferred].swaggerUrl;
-          integrateURL(args.name || integration, url, true);
+          integrateURL(args.name || integration, url, true, callback);
         })
       })
     }
@@ -75,14 +75,14 @@ const getLocalSpec = (name) => {
   return NATIVE_INTEGRATIONS.filter(fname => fname.startsWith(name + '.'))[0];
 }
 
-const integrateFile = (name) => {
+const integrateFile = (name, callback) => {
   let filename = getLocalSpec(name);
-  if (!filename) throw new Error("Integration " + name + " not found");
+  if (!filename) return callback(new Error("Integration " + name + " not found"));
   fs.readFile(path.join(NATIVE_INTEGRATIONS_DIR, filename), 'utf8', (err, data) => {
-    if (err) throw err;
+    if (err) return callback(err);
     let outFilename = path.join(datafire.integrationsDirectory, filename);
     logger.log('Creating integration ' + outFilename.replace(process.cwd(), '.'));
-    fs.writeFileSync(outFilename, data);
+    fs.writeFile(outFilename, data, callback);
   });
 }
 
@@ -98,24 +98,24 @@ const getNameFromHost = (host) => {
   return host.replace(/\./, '_');
 }
 
-const integrateURL = (name, url, applyPatches) => {
+const integrateURL = (name, url, applyPatches, callback) => {
   request.get(url, (err, resp, body) => {
-    if (err) throw err;
+    if (err) return callback(err);
     if (resp.headers['content-type'].indexOf('yaml') !== -1) {
       body = YAML.parse(body);
     } else {
       body = JSON.parse(body);
     }
-    if (!body.host) throw new Error("Invalid swagger:" + JSON.stringify(body, null, 2))
+    if (!body.host) return callback(new Error("Invalid swagger:" + JSON.stringify(body, null, 2)))
     if (applyPatches) maybePatchIntegration(body);
     name = name || getNameFromHost(body.host);
     let filename = path.join(datafire.integrationsDirectory, name + OPENAPI_SUFFIX);
     logger.log('Creating integration ' + filename.replace(process.cwd(), '.'));
-    fs.writeFileSync(filename, JSON.stringify(body, null, 2));
+    fs.writeFile(filename, JSON.stringify(body, null, 2), callback);
   })
 }
 
-const integrateRSS = (name, url) => {
+const integrateRSS = (name, url, callback) => {
   let urlObj = urlParser.parse(url);
   if (!name) {
     name = getNameFromHost(urlObj.hostname);
@@ -138,14 +138,14 @@ const integrateRSS = (name, url) => {
     }
   }
   rssParser.parseURL(url, (err, feed) => {
-    if (err) throw err;
+    if (err) return callback(err);
     feed = feed.feed;
     spec.info = {
       title: feed.title,
       description: feed.description,
     };
     let filename = path.join(datafire.integrationsDirectory, name + RSS_SUFFIX);
-    fs.writeFileSync(filename, JSON.stringify(spec, null, 2));
+    fs.writeFile(filename, JSON.stringify(spec, null, 2), callback);
   })
 }
 

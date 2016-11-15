@@ -108,16 +108,19 @@ COMMANDS.forEach(cmd => {
           })
         },
         (args) => {
-          let object = args._[1];
-          try {
-            cmd.runner(args);
-          } catch (e) {
+          let handleError = e => {
+            if (!e) return;
             logger.logError(e.toString());
             if (args.verbose) {
               logger.log(e.stack);
             } else {
               process.exit(1);
             }
+          }
+          try {
+            cmd.runner(args, handleError);
+          } catch (e) {
+            handleError(e);
           }
         });
   (cmd.examples || []).forEach(ex => {
