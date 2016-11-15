@@ -1,0 +1,35 @@
+const fs = require('fs');
+const path = require('path');
+const datafire = require('../../index');
+
+const ISSUE_FILE = path.join(__dirname, 'issues_seen.json')
+if (!fs.existsSync(ISSUE_FILE)) fs.writeFileSync(ISSUE_FILE, '[]');
+
+const github = datafire.Integration.new('github');
+const zoomconnect = datafire.Integration.new('zoomconnect');
+const flow = module.exports = new datafire.Flow('Monitor GitHub Issues', "Sends an SMS when new issues are found");
+
+flow.setDefaults({
+  owner: 'bobby-brennan',
+  repo: 'rss-parser',
+})
+
+flow.step('issues', {
+  do: github.get('/repos/{owner}/{repo}/issues'),
+  params: data => {
+    return {
+      owner: flow.params.owner,
+      repo: flow.params.repo,
+      state: 'all',
+      page: 1,
+    }
+  },
+  nextPage: (data, params) => {
+    params.page++;
+    return params;
+  },
+  finish: data => {
+    fs.writeFileSync('./issues.json', JSON.stringify(data.issues, null, 2))
+  }
+});
+
