@@ -10,8 +10,8 @@ const zoomconnect = datafire.Integration.new('zoomconnect');
 const flow = module.exports = new datafire.Flow('Monitor GitHub Issues', "Sends an SMS when new issues are found");
 
 flow.setDefaults({
-  owner: 'bobby-brennan',
-  repo: 'rss-parser',
+  owner: 'git',
+  repo: 'git',
 })
 
 flow.step('issues', {
