@@ -70,6 +70,29 @@ describe('Flows', () => {
       }
     })
     flow.execute();
+  });
+
+  it('should support pagination', (done) => {
+    flow.step('paginate', {
+      do: integration.getPage(),
+      params: {page: 1},
+      nextPage: (data, params) => {
+        params.page++;
+        return params;
+      },
+      finish: data => {
+        expect(data.paginate).to.be.instanceof(Array);
+        expect(data.paginate.length).to.equal(6);
+        expect(data.paginate[0]).to.equal('A');
+        expect(data.paginate[1]).to.equal('B');
+        expect(data.paginate[2]).to.equal('C');
+        expect(data.paginate[3]).to.equal('D');
+        expect(data.paginate[4]).to.equal('E');
+        expect(data.paginate[5]).to.equal('F');
+        done();
+      }
+    })
+    flow.execute();
   })
 
   it('should not use auth by default', (done) => {

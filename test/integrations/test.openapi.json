@@ -28,6 +28,21 @@
         }
       }
     },
+    "/page": {
+      "get": {
+        "operationId": "getPage",
+        "parameters": [{
+           "name": "page",
+           "in": "query",
+           "type": "integer"
+        }],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/secret": {
       "get": {
         "responses": {

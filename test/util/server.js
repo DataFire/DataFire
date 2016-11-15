@@ -21,3 +21,14 @@ let authorize = (req, res, next) => {
 app.get('/secret', authorize, (req, res) => {
   res.json("OK");
 })
+
+app.get('/page', (req, res) => {
+  let page = +req.query.page;
+  if (page === 1) {
+    return res.json(['A', 'B', 'C'])
+  } else if (page === 2) {
+    return res.json(['D', 'E', 'F']);
+  } else {
+    return res.json([]);
+  }
+})
