@@ -150,11 +150,6 @@ flow
   });
 ```
 
-
----
-### `Flow.repeatStep(name, options)`
-**Not Implemented**
-
 ---
 ### `Flow.catch(callback)`
 Catches all HTTP errors (e.g. 404 or 500), and thrown errors.
