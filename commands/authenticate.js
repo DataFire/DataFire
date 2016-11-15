@@ -43,11 +43,16 @@ const QUESTION_SETS = {
 
 QUESTION_SETS.oauth2 = QUESTION_SETS.oauth_tokens.concat(QUESTION_SETS.oauth_client);
 
-let getQuestions = (secDef) => {
+let getQuestions = (secDef, allDefs) => {
   let qs = JSON.parse(JSON.stringify(QUESTION_SETS[secDef.type]));
   if (secDef.type === 'apiKey') {
-    qs[0].name = secDef.name;
-    qs[0].message = secDef.name + ':';
+    let allApiKeys = Object.keys(allDefs).map(k => allDefs[k]).filter(d => d.type === 'apiKey');
+    qs = allApiKeys.map(def => {
+      return {
+        name: def.name,
+        message: def.name + ':',
+      }
+    })
   }
   return qs;
 }
@@ -130,7 +135,7 @@ module.exports = (args) => {
 }
 
 let authenticate = (integration, secOption, accounts, accountToEdit) => {
-  let questions = getQuestions(secOption.def);
+  let questions = getQuestions(secOption.def, integration.spec.securityDefinitions);
   if (accountToEdit) questions = setDefaults(questions, accountToEdit);
   inquirer.prompt(questions).then(answers => {
     for (let k in answers) {
