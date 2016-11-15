@@ -53,7 +53,7 @@ module.exports = (args, callback) => {
     if (args.openapi) {
       integrateURL(args.name, args.openapi, false, callback);
     } else if (specFormat) {
-      integrateSpec(specFormat, args[specFormat], callback);
+      integrateSpec(args.name, specFormat, args[specFormat], callback);
     } else if (args.rss) {
       integrateRSS(args.name, args.rss, callback);
     } else {
@@ -77,6 +77,13 @@ module.exports = (args, callback) => {
   })
 }
 
+const addIntegration = (name, type, spec, callback) => {
+  name = name || getNameFromHost(spec.host);
+  let filename = path.join(datafire.integrationsDirectory, name + (type === 'rss' ? RSS_SUFFIX : OPENAPI_SUFFIX));
+  logger.log('Writing integration ' + name + ' to ' + filename.replace(process.cwd(), '.'));
+  fs.writeFile(filename, JSON.stringify(spec, null, 2), callback);
+}
+
 const getLocalSpec = (name) => {
   return NATIVE_INTEGRATIONS.filter(fname => fname.startsWith(name + '.'))[0];
 }
@@ -86,9 +93,7 @@ const integrateFile = (name, callback) => {
   if (!filename) return callback(new Error("Integration " + name + " not found"));
   fs.readFile(path.join(NATIVE_INTEGRATIONS_DIR, filename), 'utf8', (err, data) => {
     if (err) return callback(err);
-    let outFilename = path.join(datafire.integrationsDirectory, filename);
-    logger.log('Creating integration ' + outFilename.replace(process.cwd(), '.'));
-    fs.writeFile(outFilename, data, callback);
+    addIntegration(name, 'openapi', JSON.parse(data), callback);
   });
 }
 
@@ -114,10 +119,7 @@ const integrateURL = (name, url, applyPatches, callback) => {
     }
     if (!body.host) return callback(new Error("Invalid swagger:" + JSON.stringify(body, null, 2)))
     if (applyPatches) maybePatchIntegration(body);
-    name = name || getNameFromHost(body.host);
-    let filename = path.join(datafire.integrationsDirectory, name + OPENAPI_SUFFIX);
-    logger.log('Creating integration ' + filename.replace(process.cwd(), '.'));
-    fs.writeFile(filename, JSON.stringify(body, null, 2), callback);
+    addIntegration(name, 'openapi', body, callback);
   })
 }
 
@@ -150,13 +152,12 @@ const integrateRSS = (name, url, callback) => {
       title: feed.title,
       description: feed.description,
     };
-    let filename = path.join(datafire.integrationsDirectory, name + RSS_SUFFIX);
-    fs.writeFile(filename, JSON.stringify(spec, null, 2), callback);
+    addIntegration(name, 'rss', spec, callback);
   })
 }
 
-const integrateSpec = (name, url, callback) => {
-  let cmd = 'api-spec-converter "' + url + '" --from ' + name + ' --to swagger_2';
+const integrateSpec = (name, format, url, callback) => {
+  let cmd = 'api-spec-converter "' + url + '" --from ' + format + ' --to swagger_2';
   proc.exec(cmd, (err, stdout) => {
     if (err) {
       logger.logError('Please install api-spec-converter');
@@ -164,7 +165,7 @@ const integrateSpec = (name, url, callback) => {
       return callback(err);
     }
     let filename = path.join(datafire.integrationsDirectory, name + OPENAPI_SUFFIX);
-    fs.writeFile(filename, stdout, callback);
+    addIntegration(name, 'openapi', JSON.parse(stdout), callback);
   })
 }
 
