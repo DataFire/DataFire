@@ -1,7 +1,6 @@
 # Flows
-Every flow is a series of steps. Each step will generally make one or more calls
-to a given API endpoint, and store the resulting data in `flow.data`. However,
-you can add steps that do anything.
+Every flow is a series of steps. Each step performs an asynchronous task (usually
+an API call), and stores the result in `flow.data`.
 
 Flows use a [waterfall](https://coderwall.com/p/zpjrra/async-waterfall-in-nodejs)
 pattern - each step has access to all data returned in
