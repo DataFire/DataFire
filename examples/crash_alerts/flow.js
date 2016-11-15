@@ -22,7 +22,7 @@ flow.step('heroku1', {
   }
 })
 
-flow.step('mail', {
+flow.step('slack', {
   do: slack.get('/chat.postMessage'),
   params: (data) => {
     var allProcesses = [];

@@ -1,0 +1,1105 @@
+{
+  "info": {
+    "description": "Manage your Heroku apps, configs, collaborators & resources",
+    "title": "Heroku"
+  },
+  "securityDefinitions": {
+    "oauth2": {
+      "type": "oauth2",
+      "flow": "application",
+      "scopes": {
+        "identity": "Read-only access to your account information.",
+        "global": "Read and write access to all of your account, apps and resources. Equivalent to the default authorization obtained when using the CLI.",
+        "read": "Read access to all of your apps and resources, excluding account information and configuration variables",
+        "write": "Write access to all of your apps and resources, excluding account information and configuration variables",
+        "read-protected": "Read access to all of your apps and resources, excluding account information.",
+        "write-protected": "Write access to all of your apps and resources, excluding account information."
+      }
+    }
+  },
+  "paths": {
+    "/apps/{app}/stack": {
+      "put": {
+        "externalDocs": {
+          "url": "https://api-docs.heroku.com/stacks"
+        },
+        "description": "Migrate an app to a new stack.",
+        "parameters": [
+          {
+            "enum": [
+              "application/json",
+              "application/xml"
+            ],
+            "description": "Content type.",
+            "default": "application/json",
+            "type": "string",
+            "in": "header",
+            "required": true,
+            "name": "Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "get": {
+        "externalDocs": {
+          "url": "https://api-docs.heroku.com/stacks"
+        },
+        "description": "List available stacks for an app.",
+        "parameters": [
+          {
+            "enum": [
+              "application/json",
+              "application/xml"
+            ],
+            "description": "Content type.",
+            "default": "application/json",
+            "type": "string",
+            "in": "header",
+            "required": true,
+            "name": "Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "description": "The app name.",
+          "type": "string",
+          "in": "path",
+          "required": true,
+          "name": "app"
+        }
+      ]
+    },
+    "/apps/{app}/releases/{release}": {
+      "get": {
+        "externalDocs": {
+          "url": "https://api-docs.heroku.com/releases"
+        },
+        "description": "Get info for a release.",
+        "parameters": [
+          {
+            "enum": [
+              "application/json",
+              "application/xml"
+            ],
+            "description": "Content type.",
+            "default": "application/json",
+            "type": "string",
+            "in": "header",
+            "required": true,
+            "name": "Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "description": "The app name.",
+          "type": "string",
+          "in": "path",
+          "required": true,
+          "name": "app"
+        },
+        {
+          "description": "The release name.",
+          "type": "string",
+          "in": "path",
+          "required": true,
+          "name": "release"
+        }
+      ]
+    },
+    "/apps/{app}/releases": {
+      "post": {
+        "externalDocs": {
+          "url": "https://api-docs.heroku.com/releases"
+        },
+        "description": "Rollback to a release.",
+        "parameters": [
+          {
+            "enum": [
+              "application/json",
+              "application/xml"
+            ],
+            "description": "Content type.",
+            "default": "application/json",
+            "type": "string",
+            "in": "header",
+            "required": true,
+            "name": "Accept"
+          },
+          {
+            "description": "The release to which to roll back.",
+            "type": "string",
+            "in": "query",
+            "required": true,
+            "name": "rollback"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "get": {
+        "externalDocs": {
+          "url": "https://api-docs.heroku.com/releases"
+        },
+        "description": "List releases for an app.",
+        "parameters": [
+          {
+            "enum": [
+              "application/json",
+              "application/xml"
+            ],
+            "description": "Content type.",
+            "default": "application/json",
+            "type": "string",
+            "in": "header",
+            "required": true,
+            "name": "Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "description": "The app name.",
+          "type": "string",
+          "in": "path",
+          "required": true,
+          "name": "app"
+        }
+      ]
+    },
+    "/apps/{app}/ps/scale": {
+      "post": {
+        "externalDocs": {
+          "url": "https://api-docs.heroku.com/ps"
+        },
+        "description": "Scale processes of an app.",
+        "parameters": [
+          {
+            "enum": [
+              "application/json",
+              "application/xml"
+            ],
+            "description": "Content type.",
+            "default": "application/json",
+            "type": "string",
+            "in": "header",
+            "required": true,
+            "name": "Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "description": "The app name.",
+          "type": "string",
+          "in": "path",
+          "required": true,
+          "name": "app"
+        },
+        {
+          "description": "The type of process to scale.",
+          "type": "string",
+          "in": "query",
+          "required": true,
+          "name": "type"
+        },
+        {
+          "description": "The desired number of processes of this type.",
+          "type": "string",
+          "in": "query",
+          "required": true,
+          "name": "qty"
+        }
+      ]
+    },
+    "/apps/{app}/ps/stop": {
+      "post": {
+        "externalDocs": {
+          "url": "https://api-docs.heroku.com/ps"
+        },
+        "description": "Stop processes of an app. Specify either ps or type to stop the specified processes.",
+        "parameters": [
+          {
+            "enum": [
+              "application/json",
+              "application/xml"
+            ],
+            "description": "Content type.",
+            "default": "application/json",
+            "type": "string",
+            "in": "header",
+            "required": true,
+            "name": "Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "description": "The app name.",
+          "type": "string",
+          "in": "path",
+          "required": true,
+          "name": "app"
+        }
+      ]
+    },
+    "/apps/{app}/ps/restart": {
+      "post": {
+        "externalDocs": {
+          "url": "https://api-docs.heroku.com/ps"
+        },
+        "description": "Restart processes of an app. Specify either ps or type to restart only the specified processes. Leave both blank to restart the entire app.",
+        "parameters": [
+          {
+            "enum": [
+              "application/json",
+              "application/xml"
+            ],
+            "description": "Content type.",
+            "default": "application/json",
+            "type": "string",
+            "in": "header",
+            "required": true,
+            "name": "Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "description": "The app name.",
+          "type": "string",
+          "in": "path",
+          "required": true,
+          "name": "app"
+        },
+        {
+          "description": "The name of a process to restart.",
+          "type": "string",
+          "in": "query",
+          "required": false,
+          "name": "ps"
+        },
+        {
+          "description": "The type of process to restart.",
+          "type": "string",
+          "in": "query",
+          "required": false,
+          "name": "type"
+        }
+      ]
+    },
+    "/apps/{app}/ps": {
+      "post": {
+        "externalDocs": {
+          "url": "https://api-docs.heroku.com/ps"
+        },
+        "description": "Run a one-off process.",
+        "parameters": [
+          {
+            "enum": [
+              "application/json",
+              "application/xml"
+            ],
+            "description": "Content type.",
+            "default": "application/json",
+            "type": "string",
+            "in": "header",
+            "required": true,
+            "name": "Accept"
+          },
+          {
+            "description": "The command to run.",
+            "type": "string",
+            "in": "query",
+            "required": true,
+            "name": "command"
+          },
+          {
+            "description": "true: use rendezvous to access stdin/stdout - <blank>: stream process output to the application log",
+            "type": "string",
+            "in": "query",
+            "required": false,
+            "name": "attach"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "get": {
+        "externalDocs": {
+          "url": "https://api-docs.heroku.com/ps"
+        },
+        "description": "List processes for an app.",
+        "parameters": [
+          {
+            "enum": [
+              "application/json",
+              "application/xml"
+            ],
+            "description": "Content type.",
+            "default": "application/json",
+            "type": "string",
+            "in": "header",
+            "required": true,
+            "name": "Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "description": "The app name.",
+          "type": "string",
+          "in": "path",
+          "required": true,
+          "name": "app"
+        }
+      ]
+    },
+    "/apps/{app}/logs": {
+      "get": {
+        "externalDocs": {
+          "url": "https://api-docs.heroku.com/logs"
+        },
+        "description": "Get logs for an app.",
+        "parameters": [
+          {
+            "enum": [
+              "application/json",
+              "application/xml"
+            ],
+            "description": "Content type.",
+            "default": "application/json",
+            "type": "string",
+            "in": "header",
+            "required": true,
+            "name": "Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "description": "The app name.",
+          "type": "string",
+          "in": "path",
+          "required": true,
+          "name": "app"
+        },
+        {
+          "description": "Use logplex to stream logs (always true).",
+          "default": "true",
+          "type": "string",
+          "in": "query",
+          "required": true,
+          "name": "logplex"
+        },
+        {
+          "description": "The number of lines to display.",
+          "type": "integer",
+          "in": "query",
+          "required": false,
+          "name": "num"
+        },
+        {
+          "description": "Only display logs from a given process.",
+          "type": "string",
+          "in": "query",
+          "required": false,
+          "name": "ps"
+        },
+        {
+          "description": "Only display logs from a given source.",
+          "type": "string",
+          "in": "query",
+          "required": false,
+          "name": "source"
+        },
+        {
+          "description": "1: continually stream logs - <blank>: display only num logs",
+          "type": "string",
+          "in": "query",
+          "required": false,
+          "name": "tail"
+        }
+      ]
+    },
+    "/user/keys/{key}": {
+      "delete": {
+        "externalDocs": {
+          "url": "https://api-docs.heroku.com/keys"
+        },
+        "description": "Remove an SSH key from this account.",
+        "parameters": [
+          {
+            "enum": [
+              "application/json",
+              "application/xml"
+            ],
+            "description": "Content type.",
+            "default": "application/json",
+            "type": "string",
+            "in": "header",
+            "required": true,
+            "name": "Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "description": "The username@hostname description field of the key.",
+          "type": "string",
+          "in": "path",
+          "required": true,
+          "name": "key"
+        }
+      ]
+    },
+    "/user/keys": {
+      "post": {
+        "externalDocs": {
+          "url": "https://api-docs.heroku.com/keys"
+        },
+        "description": "Associate an SSH key with this account.",
+        "parameters": [
+          {
+            "enum": [
+              "application/json",
+              "application/xml"
+            ],
+            "description": "Content type.",
+            "default": "application/json",
+            "type": "string",
+            "in": "header",
+            "required": true,
+            "name": "Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "get": {
+        "externalDocs": {
+          "url": "https://api-docs.heroku.com/keys"
+        },
+        "description": "List SSH keys.",
+        "parameters": [
+          {
+            "enum": [
+              "application/json",
+              "application/xml"
+            ],
+            "description": "Content type.",
+            "default": "application/json",
+            "type": "string",
+            "in": "header",
+            "required": true,
+            "name": "Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "parameters": []
+    },
+    "/apps/{app}/domains/{domain_name}": {
+      "delete": {
+        "externalDocs": {
+          "url": "https://api-docs.heroku.com/domains"
+        },
+        "description": "Remove a domain from an app.",
+        "parameters": [
+          {
+            "enum": [
+              "application/json",
+              "application/xml"
+            ],
+            "description": "Content type.",
+            "default": "application/json",
+            "type": "string",
+            "in": "header",
+            "required": true,
+            "name": "Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "description": "The app name.",
+          "type": "string",
+          "in": "path",
+          "required": true,
+          "name": "app"
+        },
+        {
+          "description": "The domain to remove.",
+          "type": "string",
+          "in": "path",
+          "required": true,
+          "name": "domain_name"
+        }
+      ]
+    },
+    "/apps/{app}/domains": {
+      "get": {
+        "externalDocs": {
+          "url": "https://api-docs.heroku.com/domains"
+        },
+        "description": "List domains for an app.",
+        "parameters": [
+          {
+            "enum": [
+              "application/json",
+              "application/xml"
+            ],
+            "description": "Content type.",
+            "default": "application/json",
+            "type": "string",
+            "in": "header",
+            "required": true,
+            "name": "Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "description": "The app name.",
+          "type": "string",
+          "in": "path",
+          "required": true,
+          "name": "app"
+        }
+      ]
+    },
+    "/apps/{app}/config_vars/{key}": {
+      "delete": {
+        "externalDocs": {
+          "url": "https://api-docs.heroku.com/config"
+        },
+        "description": "Remove a config var from an app.",
+        "parameters": [
+          {
+            "enum": [
+              "application/json",
+              "application/xml"
+            ],
+            "description": "Content type.",
+            "default": "application/json",
+            "type": "string",
+            "in": "header",
+            "required": true,
+            "name": "Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "description": "The app name.",
+          "type": "string",
+          "in": "path",
+          "required": true,
+          "name": "app"
+        },
+        {
+          "description": "The config var to remove.",
+          "type": "string",
+          "in": "path",
+          "required": true,
+          "name": "key"
+        }
+      ]
+    },
+    "/apps/{app}/config_vars": {
+      "put": {
+        "externalDocs": {
+          "url": "https://api-docs.heroku.com/config"
+        },
+        "description": "Add config vars to an app.",
+        "parameters": [
+          {
+            "enum": [
+              "application/json",
+              "application/xml"
+            ],
+            "description": "Content type.",
+            "default": "application/json",
+            "type": "string",
+            "in": "header",
+            "required": true,
+            "name": "Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "get": {
+        "externalDocs": {
+          "url": "https://api-docs.heroku.com/config"
+        },
+        "description": "List config vars for an app.",
+        "parameters": [
+          {
+            "enum": [
+              "application/json",
+              "application/xml"
+            ],
+            "description": "Content type.",
+            "default": "application/json",
+            "type": "string",
+            "in": "header",
+            "required": true,
+            "name": "Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "description": "The app name.",
+          "type": "string",
+          "in": "path",
+          "required": true,
+          "name": "app"
+        }
+      ]
+    },
+    "/apps/{app}/collaborators/{email}": {
+      "delete": {
+        "externalDocs": {
+          "url": "https://api-docs.heroku.com/collaborators"
+        },
+        "description": "Remove a collaborator from an app.",
+        "parameters": [
+          {
+            "enum": [
+              "application/json",
+              "application/xml"
+            ],
+            "description": "Content type.",
+            "default": "application/json",
+            "type": "string",
+            "in": "header",
+            "required": true,
+            "name": "Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "description": "The app name.",
+          "type": "string",
+          "in": "path",
+          "required": true,
+          "name": "app"
+        },
+        {
+          "description": "The email of the user to remove as a collaborator.",
+          "type": "string",
+          "in": "path",
+          "required": true,
+          "name": "email"
+        }
+      ]
+    },
+    "/apps/{app}/collaborators": {
+      "get": {
+        "externalDocs": {
+          "url": "https://api-docs.heroku.com/collaborators"
+        },
+        "description": "List collaborators for an app.",
+        "parameters": [
+          {
+            "enum": [
+              "application/json",
+              "application/xml"
+            ],
+            "description": "Content type.",
+            "default": "application/json",
+            "type": "string",
+            "in": "header",
+            "required": true,
+            "name": "Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "description": "The app name.",
+          "type": "string",
+          "in": "path",
+          "required": true,
+          "name": "app"
+        }
+      ]
+    },
+    "/apps/{name}": {
+      "delete": {
+        "externalDocs": {
+          "url": "https://api-docs.heroku.com/apps"
+        },
+        "description": "Destroy an app.",
+        "parameters": [
+          {
+            "enum": [
+              "application/json",
+              "application/xml"
+            ],
+            "description": "Content type.",
+            "default": "application/json",
+            "type": "string",
+            "in": "header",
+            "required": true,
+            "name": "Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "get": {
+        "externalDocs": {
+          "url": "https://api-docs.heroku.com/apps"
+        },
+        "description": "Get info for an app.",
+        "parameters": [
+          {
+            "enum": [
+              "application/json",
+              "application/xml"
+            ],
+            "description": "Content type.",
+            "default": "application/json",
+            "type": "string",
+            "in": "header",
+            "required": true,
+            "name": "Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "description": "The app name.",
+          "type": "string",
+          "in": "path",
+          "required": true,
+          "name": "name"
+        }
+      ]
+    },
+    "/apps": {
+      "post": {
+        "externalDocs": {
+          "url": "https://api-docs.heroku.com/apps"
+        },
+        "description": "Create an app.",
+        "parameters": [
+          {
+            "enum": [
+              "application/json",
+              "application/xml"
+            ],
+            "description": "Content type.",
+            "default": "application/json",
+            "type": "string",
+            "in": "header",
+            "required": true,
+            "name": "Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "get": {
+        "externalDocs": {
+          "url": "https://api-docs.heroku.com/apps"
+        },
+        "description": "List apps.",
+        "parameters": [
+          {
+            "enum": [
+              "application/json",
+              "application/xml"
+            ],
+            "description": "Content type.",
+            "default": "application/json",
+            "type": "string",
+            "in": "header",
+            "required": true,
+            "name": "Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "parameters": []
+    },
+    "/apps/{app}/addons/{addon}": {
+      "delete": {
+        "externalDocs": {
+          "url": "https://api-docs.heroku.com/addons"
+        },
+        "description": "Uninstall an addon from an app.",
+        "parameters": [
+          {
+            "enum": [
+              "application/json",
+              "application/xml"
+            ],
+            "description": "Content type.",
+            "default": "application/json",
+            "type": "string",
+            "in": "header",
+            "required": true,
+            "name": "Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "put": {
+        "externalDocs": {
+          "url": "https://api-docs.heroku.com/addons"
+        },
+        "description": "Upgrade an addon to an app.",
+        "parameters": [
+          {
+            "enum": [
+              "application/json",
+              "application/xml"
+            ],
+            "description": "Content type.",
+            "default": "application/json",
+            "type": "string",
+            "in": "header",
+            "required": true,
+            "name": "Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "post": {
+        "externalDocs": {
+          "url": "https://api-docs.heroku.com/addons"
+        },
+        "description": "Install an addon to an app.",
+        "parameters": [
+          {
+            "enum": [
+              "application/json",
+              "application/xml"
+            ],
+            "description": "Content type.",
+            "default": "application/json",
+            "type": "string",
+            "in": "header",
+            "required": true,
+            "name": "Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "description": "The app name.",
+          "type": "string",
+          "in": "path",
+          "required": true,
+          "name": "app"
+        },
+        {
+          "description": "the addon name.",
+          "type": "string",
+          "in": "path",
+          "required": true,
+          "name": "addon"
+        }
+      ]
+    },
+    "/apps/{app}/addons": {
+      "get": {
+        "externalDocs": {
+          "url": "https://api-docs.heroku.com/addons"
+        },
+        "description": "List addons installed on an app.",
+        "parameters": [
+          {
+            "enum": [
+              "application/json",
+              "application/xml"
+            ],
+            "description": "Content type.",
+            "default": "application/json",
+            "type": "string",
+            "in": "header",
+            "required": true,
+            "name": "Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "description": "The app name.",
+          "type": "string",
+          "in": "path",
+          "required": true,
+          "name": "app"
+        }
+      ]
+    },
+    "/addons": {
+      "get": {
+        "externalDocs": {
+          "url": "https://api-docs.heroku.com/addons"
+        },
+        "description": "List all available addons.",
+        "parameters": [
+          {
+            "enum": [
+              "application/json",
+              "application/xml"
+            ],
+            "description": "Content type.",
+            "default": "application/json",
+            "type": "string",
+            "in": "header",
+            "required": true,
+            "name": "Accept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      },
+      "parameters": []
+    }
+  },
+  "schemes": [
+    "https"
+  ],
+  "basePath": "/",
+  "host": "api.heroku.com",
+  "swagger": "2.0"
+}
