@@ -174,6 +174,13 @@ const maybePatchIntegration = (spec) => {
       tokenUrl: 'https://www.googleapis.com/oauth2/v4/token',
       description: "Allows offline access using a refresh_token",
     }
-
+  } else if (spec.host === 'trello.com') {
+    spec.securityDefinitions.api_key.name = 'key';
+    spec.securityDefinitions.api_token = {
+      type: 'apiKey',
+      in: 'query',
+      name: 'token',
+    }
+    delete spec.securityDefinitions.trello_auth;
   }
 }
