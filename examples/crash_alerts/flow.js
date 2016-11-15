@@ -5,9 +5,6 @@ const slack = datafire.Integration.new('slack').as('default');
 
 flow.step('apps', {
   do: heroku.get("/apps"),
-  params: () => {
-    return {}
-  }
 })
 
 flow.step('app_status', {
