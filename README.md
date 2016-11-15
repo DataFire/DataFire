@@ -116,6 +116,11 @@ datafire run -f ./getTopStory.js
 ```
 You should see `story.json` in your current directory.
 
+## Integrations
+> See [Integrations.md](./docs/Integrations.md) for the full documentation
+You can add new integrations automatically from an OpenAPI specification or RSS feed.
+There is also experimental support for writing custom integrations.
+
 ## Authentication
 > See [Authentication.md](./docs/Authentication.md) for the full documentation
 
@@ -136,5 +141,3 @@ Once you've written a flow, you have a number of options for running it:
 
 Lamdba, Serverless, and DataFire all offer ways to run your flow
 either on a schedule or in response to HTTP requests (webhooks).
-
-Read [RunningFlows.md](docs/RunningFlows.md) to learn more.
