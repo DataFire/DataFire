@@ -118,6 +118,7 @@ You should see `story.json` in your current directory.
 
 ## Integrations
 > See [Integrations.md](./docs/Integrations.md) for the full documentation
+
 You can add new integrations automatically from an OpenAPI specification or RSS feed.
 There is also experimental support for writing custom integrations.
 
