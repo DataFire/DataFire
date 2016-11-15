@@ -1,4 +1,4 @@
-const datafire = require('../../index');
+const datafire = require('datafire');
 const fs = require('fs');
 const github = datafire.Integration.new('github').as('default');
 

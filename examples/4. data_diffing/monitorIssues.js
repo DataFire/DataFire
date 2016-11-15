@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const datafire = require('../../index');
+const datafire = require('datafire');
 
 const ISSUE_FILE = path.join(__dirname, 'issues_seen.json')
 if (!fs.existsSync(ISSUE_FILE)) fs.writeFileSync(ISSUE_FILE, '[]');

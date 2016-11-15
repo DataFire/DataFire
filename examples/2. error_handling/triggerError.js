@@ -1,4 +1,4 @@
-let datafire = require('../../index');
+const datafire = require('datafire');
 let hn = datafire.Integration.new('hacker_news');
 
 let flow = module.exports =
