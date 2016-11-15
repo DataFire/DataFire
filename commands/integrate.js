@@ -150,37 +150,11 @@ const integrateRSS = (name, url) => {
 }
 
 const maybePatchIntegration = (spec) => {
-  if (spec.host === 'api.github.com') {
-    for (let path in spec.paths) {
-      let op = spec.paths[path].get;
-      if (op && path.endsWith('s')) {
-        op.parameters.push({
-          name: 'page',
-          in: 'query',
-          type: 'integer',
-        })
-      }
-    }
-  } else if (spec.host === 'www.googleapis.com' && spec.securityDefinitions) {
-    let curDef = Object.keys(spec.securityDefinitions)
-          .map(k => spec.securityDefinitions[k])
-          .filter(d => d.type === 'oauth2')[0];
-    if (!curDef) return;
-    spec.securityDefinitions.offline = {
-      type: 'oauth2',
-      flow: 'accessCode',
-      scopes: curDef.scopes,
-      authorizationUrl: 'https://accounts.google.com/o/oauth2/auth',
-      tokenUrl: 'https://www.googleapis.com/oauth2/v4/token',
-      description: "Allows offline access using a refresh_token",
-    }
-  } else if (spec.host === 'trello.com') {
-    spec.securityDefinitions.api_key.name = 'key';
-    spec.securityDefinitions.api_token = {
-      type: 'apiKey',
-      in: 'query',
-      name: 'token',
-    }
-    delete spec.securityDefinitions.trello_auth;
+  let patch = null;
+  try {
+    patch = require('../patches/' + spec.host);
+  } catch (e) {
+    return;
   }
+  patch(spec);
 }
