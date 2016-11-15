@@ -35,6 +35,9 @@ const QUESTION_SETS = {
   ],
   scopes: [
     {name: 'scopes', type: 'checkbox', message: 'Choose at least one scope to authorize'},
+  ],
+  choose_definition: [
+    {name: 'definition', message: "This API has multiple authentication flows. Which do you want to use?", type: 'list'}
   ]
 }
 
@@ -46,6 +49,20 @@ let getQuestions = (secDef) => {
     qs[0].name = secDef.name;
     qs[0].message = secDef.name + ':';
   }
+  return qs;
+}
+
+let getChooseDefQuestion = (secOptions) => {
+  let qs = JSON.parse(JSON.stringify(QUESTION_SETS.choose_definition));
+  qs[0].choices = secOptions.map(o => {
+    let description = '(' + o.name;
+    if (o.def.description) description += ' - ' + o.def.description;
+    description += ')';
+    return {
+      name: o.def.type + ' ' + description,
+      value: o,
+    }
+  });
   return qs;
 }
 
@@ -86,33 +103,29 @@ module.exports = (args) => {
     });
     let accounts = getAccounts(integration.name);
     let accountToEdit = null;
-    let secOption = secOptions[0];
+    let secOption = null;
     if (args.as) {
       accountToEdit = accounts[args.as];
       if (!accountToEdit) throw new Error("Account " + args.as + " not found");
       secOption = secOptions.filter(o => o.name === accountToEdit.securityDefinition)[0];
       if (!secOption) throw new Error("Security definition " + accountToEdit.securityDefinition + " not found");
     }
-    if (args.set_default) {
-      accounts.default = args.set_default;
-      saveAccounts(integration, accounts);
-    } else if (args.generate_token) {
-      let clientAccount = accountToEdit;
-      if (args.client) {
-        clientAccount = accounts[args.client];
+    let questions = secOption ? [] : getChooseDefQuestion(secOptions);
+    inquirer.prompt(questions).then(answers => {
+      if (answers.definition) secOption = answers.definition;
+      if (args.set_default) {
+        accounts.default = args.set_default;
+        saveAccounts(integration, accounts);
+      } else if (args.generate_token) {
+        let clientAccount = accountToEdit;
+        if (args.client) {
+          clientAccount = accounts[args.client];
+        }
+        generateToken(integration, secOption, accounts, accountToEdit, clientAccount);
+      } else {
+        authenticate(integration, secOption, accounts, accountToEdit);
       }
-      generateToken(integration, secOption, accounts, accountToEdit, clientAccount);
-    } else if (secOptions.length === 1) {
-      authenticate(integration, secOption, accounts, accountToEdit);
-    } else if (accountToEdit) {
-      authenticate(integration, secOption, accounts, accountToEdit);
-    } else {
-      let question = {name: 'definition', message: "This API has multiple authentication flows. Which do you want to use?", type: 'list'};
-      question.choices = secOptions.map(o => ({name: o.def.type + ' (' + o.name + ')', value: o}))
-      inquirer.prompt([question]).then(answers => {
-        authenticate(integration, answers.definition, accounts, accountToEdit);
-      })
-    }
+    })
   })
 }
 
@@ -205,6 +218,8 @@ let startOAuthServer = (integration, secDef, accounts, accountToEdit, clientAcco
         res.end();
         accountToEdit.access_token = body.access_token;
         accountToEdit.refresh_token = body.refresh_token;
+        accountToEdit.client_id = clientAccount.client_id;
+        accountToEdit.client_secret = clientAccount.client_secret;
         saveAccounts(integration, accounts);
       })
     } else {
@@ -215,6 +230,8 @@ let startOAuthServer = (integration, secDef, accounts, accountToEdit, clientAcco
           inquirer.prompt(QUESTION_SETS.oauth_tokens).then(answers => {
             if (answers.access_token) accountToEdit.access_token = answers.access_token;
             if (answers.refresh_token) accountToEdit.refresh_token = answers.refresh_token;
+            accountToEdit.client_id = clientAccount.client_id;
+            accountToEdit.client_secret = clientAccount.client_secret;
             saveAccounts(integration, accounts);
             server.close();
             process.exit(0);
