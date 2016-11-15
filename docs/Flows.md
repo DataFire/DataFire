@@ -208,8 +208,8 @@ flow.step('issues', {
   do: github.get('/repos/{owner}/{repo}/issues'),
   params: () => {
     return {
-      repo: flow.options.repo,
-      username: flow.options.username,
+      repo: flow.params.repo,
+      username: flow.params.username,
     }
   }
 })
