@@ -30,6 +30,7 @@ npm install --save bobby-brennan/datafire
 * [Data Diffing](examples/4. data_diffing)
 * [News Headlines](examples/headlines) - Send yourself a daily e-mail with headlines from NPR, CNN, and NYTimes
 * [Listen to This](examples/listen_to_this) - Create a Spotify playlist from tracks posted to Reddit's r/listentothis
+* [GitHub to Trello](examples/github_to_trello) - Create Trello cards for every issue in your repo
 
 ## Exploring Integrations
 ![Exploing Integrations](./docs/explore.gif)
