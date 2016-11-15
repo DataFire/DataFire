@@ -1,6 +1,6 @@
 const datafire = require('datafire');
 const flow = module.exports = new datafire.Flow("Create a Spotify playlist from r/listenToThis", "Create a new playlist every day using suggestions from Reddit");
-const spotify = datafire.Integration.new('spotify').as('guitpicker07');
+const spotify = datafire.Integration.new('spotify').as('default');
 const reddit = datafire.Integration.new('reddit');
 
 flow.step('spotify', {
@@ -11,7 +11,7 @@ flow.step('spotify', {
 })
 
 flow.step('reddit', {
-  do: reddit.get("/r/{subreddit}/.rss"),
+  do: reddit.subreddit(),
   params: () => {
     return {subreddit: 'listentothis'}
   }
