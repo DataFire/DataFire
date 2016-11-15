@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const proc = require('child_process');
 const request = require('request');
 const chalk = require('chalk');
 const rssParser = require('rss-parser');
@@ -14,6 +15,8 @@ const RSS_SUFFIX = '.rss.json';
 const APIS_GURU_URL = "https://api.apis.guru/v2/list.json";
 const NATIVE_INTEGRATIONS_DIR = path.join(__dirname, '..', 'native_integrations');
 const NATIVE_INTEGRATIONS = fs.readdirSync(NATIVE_INTEGRATIONS_DIR);
+
+const SPEC_FORMATS = ['raml', 'wadl', 'swagger_1', 'api_blueprint', 'io_docs', 'google'];
 
 const RSS_SCHEMA = {
   type: 'object',
@@ -46,8 +49,11 @@ const RSS_SCHEMA = {
 
 module.exports = (args, callback) => {
   fs.mkdir(datafire.integrationsDirectory, (err) => {
+    let specFormat = SPEC_FORMATS.filter(f => args[f])[0];
     if (args.openapi) {
       integrateURL(args.name, args.openapi, false, callback);
+    } else if (specFormat) {
+      integrateSpec(specFormat, args[specFormat], callback);
     } else if (args.rss) {
       integrateRSS(args.name, args.rss, callback);
     } else {
@@ -146,6 +152,19 @@ const integrateRSS = (name, url, callback) => {
     };
     let filename = path.join(datafire.integrationsDirectory, name + RSS_SUFFIX);
     fs.writeFile(filename, JSON.stringify(spec, null, 2), callback);
+  })
+}
+
+const integrateSpec = (name, url, callback) => {
+  let cmd = 'api-spec-converter "' + url + '" --from ' + name + ' --to swagger_2';
+  proc.exec(cmd, (err, stdout) => {
+    if (err) {
+      logger.logError('Please install api-spec-converter');
+      logger.log('npm install -g api-spec-converter');
+      return callback(err);
+    }
+    let filename = path.join(datafire.integrationsDirectory, name + OPENAPI_SUFFIX);
+    fs.writeFile(filename, stdout, callback);
   })
 }
 
