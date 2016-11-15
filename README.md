@@ -27,7 +27,7 @@ npm install --save bobby-brennan/datafire
 * [Authentication](examples/1. authentication)
 * [Error Handling](examples/2. error_handling)
 * [Pagination](examples/3. pagination)
-
+* [Data Diffing](examples/4. data_diffing)
 * [News Headlines](examples/headlines) - Send yourself a daily e-mail with headlines from NPR, CNN, and NYTimes
 
 ## Exploring Integrations
