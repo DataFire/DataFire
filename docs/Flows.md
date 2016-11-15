@@ -54,6 +54,7 @@ Adds a new step to the flow.
 * `options.do` - either a function or a datafire `Operation`
 * `options.params` - an object with the parameters to pass to `operation`, or
 a function that returns that object
+* `options.nextPage` - collect multiple pages of results
 * `options.finish` - a function to run after `do` has executed.
 
 #### `options.do`
@@ -102,6 +103,28 @@ flow.step('user', {
     return {username: 'torvalds'}
   }
 })
+```
+
+#### `options.nextPage`
+Use `options.nextPage` if results are spread across multiple pages.
+
+`nextPage` takes in the last set of parameters used, and modifies them
+to get the next page of results.  If `nextPage` returns false/undefined,
+DataFire will stop traversing pages of results.
+
+```js
+flow.step('users', {
+  do: github.get('/users'),
+  params: {page: 1},
+  nextPage: (data, params) => {
+    if (users.length > 100) return;
+    params.page++;
+    return params;
+  },
+  finish: data => {
+    fs.writeFileSync('./users.json', JSON.stringify(data.users, null, 2))
+  }
+});
 ```
 
 #### `options.finish`
