@@ -64,7 +64,7 @@ module.exports = (args) => {
           }
           let info = body[exactMatch || validKeys[0]];
           let url = info.versions[info.preferred].swaggerUrl;
-          integrateURL(args.name || integration, url);
+          integrateURL(args.name || integration, url, true);
         })
       })
     }
@@ -98,7 +98,7 @@ const getNameFromHost = (host) => {
   return host.replace(/\./, '_');
 }
 
-const integrateURL = (name, url) => {
+const integrateURL = (name, url, applyPatches) => {
   request.get(url, (err, resp, body) => {
     if (err) throw err;
     if (resp.headers['content-type'].indexOf('yaml') !== -1) {
@@ -107,6 +107,7 @@ const integrateURL = (name, url) => {
       body = JSON.parse(body);
     }
     if (!body.host) throw new Error("Invalid swagger:" + JSON.stringify(body, null, 2))
+    if (applyPatches) maybePatchIntegration(body);
     name = name || getNameFromHost(body.host);
     let filename = path.join(datafire.integrationsDirectory, name + OPENAPI_SUFFIX);
     logger.log('Creating integration ' + filename.replace(process.cwd(), '.'));
@@ -146,4 +147,19 @@ const integrateRSS = (name, url) => {
     let filename = path.join(datafire.integrationsDirectory, name + RSS_SUFFIX);
     fs.writeFileSync(filename, JSON.stringify(spec, null, 2));
   })
+}
+
+const maybePatchIntegration = (spec) => {
+  if (spec.host === 'api.github.com') {
+    for (let path in spec.paths) {
+      let op = spec.paths[path].get;
+      if (op && path.endsWith('s')) {
+        op.parameters.push({
+          name: 'page',
+          in: 'query',
+          type: 'integer',
+        })
+      }
+    }
+  }
 }
