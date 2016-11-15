@@ -23,9 +23,11 @@ npm install --save bobby-brennan/datafire
 ```
 
 ## Examples
-* [Quickstart](examples/quickstart)
-* [Authentication](examples/authentication)
-* [Error Handling](examples/error_handling)
+* [Quickstart](examples/0. quickstart)
+* [Authentication](examples/1. authentication)
+* [Error Handling](examples/2. error_handling)
+* [Pagination](examples/3. pagination)
+
 * [News Headlines](examples/headlines) - Send yourself a daily e-mail with headlines from NPR, CNN, and NYTimes
 
 ## Exploring Integrations

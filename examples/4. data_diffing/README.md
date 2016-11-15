@@ -1,11 +1,11 @@
-# Watching for New Data
-Some integration platforms will automatically monitor data sources and
-trigger your flow when a new item comes in. For instance, you might want
-to get an SMS every time a new issue is opened in GitHub. This involves
-tracking what issues have been seen, probably by keeping a list of IDs
+# Data Diffing
+Often you'll want to monitor a data source for when a new item is added,
+or when an item changes. Some integration platforms will automatically monitor data sources and
+trigger your flow when a change occurs. This involves
+keeping track of what has been seen, usually by keeping a list of IDs
 in an external database.
 
-To maintain flexibility, DataFire leaves monitoring up to the user.
+To maintain flexibility, DataFire leaves diff detection up to the user.
 In this example, the flow maintains a local file containing
 all the issue IDs it has seen - if a new one comes in, it adds it to the
 list and sends an SMS.
