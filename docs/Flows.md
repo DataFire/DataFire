@@ -217,7 +217,7 @@ flow.step('issues', {
 
 You can then pass options via the command line:
 ```
-datafire run -f ./copyIssues.js --options.username="expressjs" --options.repo="express"
+datafire run -f ./copyIssues.js --params.username="expressjs" --params.repo="express"
 ```
 
 Or via an HTTP request (if you're using Serverless):
