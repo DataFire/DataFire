@@ -1,4 +1,3 @@
-Success
 by:     sketerpot
 id:     444
 kids: 
