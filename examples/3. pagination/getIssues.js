@@ -7,7 +7,7 @@ if (!fs.existsSync(ISSUE_FILE)) fs.writeFileSync(ISSUE_FILE, '[]');
 
 const github = datafire.Integration.new('github');
 const zoomconnect = datafire.Integration.new('zoomconnect');
-const flow = module.exports = new datafire.Flow('Monitor GitHub Issues', "Sends an SMS when new issues are found");
+const flow = module.exports = new datafire.Flow('GitHub Issues', "Retrieve all pages of GitHub issues from a repository");
 
 flow.setDefaults({
   owner: 'git',
