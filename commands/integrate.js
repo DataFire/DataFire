@@ -51,7 +51,7 @@ module.exports = (args, callback) => {
   fs.mkdir(datafire.integrationsDirectory, (err) => {
     let specFormat = SPEC_FORMATS.filter(f => args[f])[0];
     if (args.openapi) {
-      integrateURL(args.name, args.openapi, false, callback);
+      integrateURL(args.name, '', args.openapi, false, callback);
     } else if (specFormat) {
       integrateSpec(args.name, specFormat, args[specFormat], callback);
     } else if (args.rss) {
@@ -70,7 +70,7 @@ module.exports = (args, callback) => {
           }
           let info = body[exactMatch || validKeys[0]];
           let url = info.versions[info.preferred].swaggerUrl;
-          integrateURL(args.name || integration, url, true, callback);
+          integrateURL(args.name || integration, validKeys[0], url, true, callback);
         })
       })
     }
@@ -109,7 +109,7 @@ const getNameFromHost = (host) => {
   return host.replace(/\./, '_');
 }
 
-const integrateURL = (name, url, applyPatches, callback) => {
+const integrateURL = (name, key, url, applyPatches, callback) => {
   request.get(url, (err, resp, body) => {
     if (err) return callback(err);
     if (resp.headers['content-type'].indexOf('yaml') !== -1) {
@@ -119,6 +119,7 @@ const integrateURL = (name, url, applyPatches, callback) => {
     }
     if (!body.host) return callback(new Error("Invalid swagger:" + JSON.stringify(body, null, 2)))
     if (applyPatches) maybePatchIntegration(body);
+    if (key) body.info['x-datafire-key'] = key;
     addIntegration(name, 'openapi', body, callback);
   })
 }
