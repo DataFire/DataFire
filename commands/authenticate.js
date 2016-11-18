@@ -216,6 +216,7 @@ let startOAuthServer = (integration, secDef, accounts, accountToEdit, clientAcco
         },
         json: true,
       }, (err, resp, body) => {
+        if (err) throw err;
         let newURL = '/?saved=true#access_token=' + encodeURIComponent(body.access_token);
         newURL += '&refresh_token=' + encodeURIComponent(body.refresh_token);
         newURL += '&saved=true';
