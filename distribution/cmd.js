@@ -71,6 +71,7 @@ var COMMANDS = [{
   options: [{
     name: 'operation',
     alias: 'o',
+    required: true,
     description: "The operation to call"
   }, {
     name: 'as',
@@ -95,9 +96,11 @@ var COMMANDS = [{
 var args = require('yargs').option('v', { alias: 'verbose' }).global('v').recommendCommands();
 
 COMMANDS.forEach(function (cmd) {
+  cmd.examples = cmd.examples || [];
+  cmd.options = cmd.options || [];
   args = args.command(cmd.name, cmd.description, function (yargs) {
-    (cmd.options || []).forEach(function (o) {
-      yargs.option(o.name, { alias: o.alias, describe: o.description });
+    cmd.options.forEach(function (o) {
+      yargs.option(o.name, { alias: o.alias, describe: o.description, demand: o.required });
     });
   }, function (args) {
     var handleError = function handleError(e) {
@@ -115,7 +118,7 @@ COMMANDS.forEach(function (cmd) {
       handleError(e);
     }
   });
-  (cmd.examples || []).forEach(function (ex) {
+  cmd.examples.forEach(function (ex) {
     args = args.example(cmd.name, ex);
   });
 });
