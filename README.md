@@ -1,6 +1,17 @@
 # DataFire
 > This is a **preview release**. The API may change.
 
+[![Share on Twitter][twitter-image]][twitter-link]
+
+[![Chat on gitter][gitter-image]][gitter-link]
+[![NPM version][npm-image]][npm-link]
+[![Bower version][bower-image]][bower-link]
+[![Build status][travis-image]][travis-link]
+
+[![Code climate][climate-image]][climate-link]
+[![Dependency status][deps-image]][deps-link]
+[![devDependency status][devdeps-image]][devdeps-link]
+
 DataFire is an open source integration framework. It is built on top of open standards such as
 RSS and [Open API](https://github.com/OAI/OpenAPI-Specification), and can be run locally, on
 AWS Lambda, on the [Serverless](https://github.com/serverless/serverless) framework, or on
@@ -142,3 +153,20 @@ Once you've written a flow, you have a number of options for running it:
 
 Lamdba, Serverless, and DataFire all offer ways to run your flow
 either on a schedule or in response to HTTP requests (webhooks).
+
+[twitter-image]: https://img.shields.io/twitter/url/http/lucybot.github.io/api-spec-converter.svg?style=social
+[twitter-link]: https://twitter.com/intent/tweet?text=Convert+between+API+description+formats+such+as+Swagger+and+RAML:&url=http%3A%2F%2Flucybot.github.io%2Fapi-spec-converter
+[gitter-image]: https://img.shields.io/gitter/room/lucybot/api-spec-converter.svg
+[gitter-link]: https://gitter.im/lucybot/api-spec-converter
+[npm-image]: https://img.shields.io/npm/v/api-spec-converter.svg
+[npm-link]: https://npmjs.org/package/api-spec-converter
+[bower-image]: https://img.shields.io/bower/v/api-spec-converter.svg
+[bower-link]: http://bower.io/
+[travis-image]: https://img.shields.io/travis/lucybot/api-spec-converter.svg
+[travis-link]: https://travis-ci.org/lucybot/api-spec-converter
+[climate-image]: https://img.shields.io/codeclimate/github/lucybot/api-spec-converter.svg
+[climate-link]: https://codeclimate.com/github/lucybot/api-spec-converter
+[deps-image]: https://img.shields.io/david/lucybot/api-spec-converter.svg
+[deps-link]: https://david-dm.org/lucybot/api-spec-converter
+[devdeps-image]: https://img.shields.io/david/dev/lucybot/api-spec-converter.svg
+[devdeps-link]: https://david-dm.org/lucybot/api-spec-converter#info=devDependencies
