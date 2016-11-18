@@ -43,7 +43,7 @@ Flows allow you to make a series of calls to different APIs and services.
 You can synchronize, transfer, and react to data, no matter where it's stored.
 
 ### Quickstart
-> You can view this flow in the [examples directory](./examples/quickstart).
+> You can view this flow in the [examples directory](./examples/0. quickstart).
 
 This quick tutorial will fetch stories from Hacker News, get the details
 for the top story, then store the results to a local file.
