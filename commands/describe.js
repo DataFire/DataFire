@@ -36,10 +36,7 @@ module.exports = (args) => {
       logger.log();
       logger.logParameters(operation.parameters);
       logger.log();
-      if (operation.response && operation.response.schema) {
-        logger.log('\nResponse body')
-        logger.logSchema(operation.response.schema);
-      }
+      logger.logResponse(operation.response);
       logger.log();
     }
   });

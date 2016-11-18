@@ -5,7 +5,7 @@ Get an alert in Slack when a Heroku process crashes.
 datafire integrate slack heroku
 datafire authenticate slack
 # Follow prompts
-datafire authenticate heroiku
+datafire authenticate heroku
 # Follow prompts
 
 datafire run flow.js --params.channel general

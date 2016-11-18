@@ -1,7 +1,0 @@
-get_story
-  operation: getStories
-  Error: 401 - Unauthorized
-{
-  "error": "Permission denied"
-}
-Success

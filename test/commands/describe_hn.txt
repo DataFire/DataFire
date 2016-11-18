@@ -1,6 +1,7 @@
 
 Hacker News
 https://hacker-news.firebaseio.com/v0
+Hacker News is a social news website focusing on computer science and entrepreneurship
 
 getStories
 GET	/{storyType}stories.json

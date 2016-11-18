@@ -20,14 +20,4 @@ cd examples/0.\ quickstart
 datafire integrate hacker_news > /dev/null
 datafire run getTopStory.js > ../../test/commands/quickstart.txt
 
-echo "Running authentication..."
-cd ../1.\ authentication
-datafire integrate github > /dev/null
-datafire run getUser.js > ../../test/commands/authentication.txt
-
-echo "Running error_handling..."
-cd ../2.\ error_handling
-datafire integrate hacker_news > /dev/null
-datafire run triggerError.js > ../../test/commands/error_handling.txt
-
 echo "Success"
