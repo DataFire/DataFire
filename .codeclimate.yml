@@ -1,11 +1,12 @@
-engines: 
+engines:
   eslint:
     enabled: true
-    
+    channel: eslint-3
+
 ratings:
    paths:
    - "**.js"
-   
+
 exclude_paths:
 - "distribution/*"
 - "examples/*"
