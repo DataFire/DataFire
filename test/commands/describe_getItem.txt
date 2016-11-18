@@ -3,9 +3,8 @@ getItem
 GET	/item/{itemID}.json
 Get details for a given item
 
-PARAMETER  TYPE     REQUIRED  DEFAULT  DESCRIPTION                   
-itemID     integer  yes                The ID of the item to retrieve
-
+Parameters
+itemID  integer  required  The ID of the item to retrieve
 
 Response body
 object
