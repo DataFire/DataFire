@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bobby-brennan/datafire-v2.git"
+    "url": "git+https://github.com/DataFire/DataFire.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/bobby-brennan/datafire-v2/issues"
+    "url": "https://github.com/DataFire/DataFire/issues"
   },
-  "homepage": "https://github.com/bobby-brennan/datafire-v2#readme",
+  "homepage": "https://github.com/DataFire/DataFire#readme",
   "dependencies": {
     "async": "^2.1.2",
     "babel-polyfill": "^6.16.0",
