@@ -85,19 +85,19 @@ Now we can create a Flow. Edit `./getTopStory.js`:
 ```js
 const datafire = require('datafire');
 const fs = require('fs');
-const hacker_news = datafire.Integration.new('hacker_news');
+const hackerNews = datafire.Integration.new('hacker_news');
 
 const flow = module.exports =
       new datafire.Flow('Top HN Story', 'Copies the top HN story to a local file');
 
 flow
   .step('stories', {
-    do: hacker_news.getStories(),
+    do: hackerNews.getStories(),
     params: {storyType: 'top'},
   })
 
   .step('story_details', {
-    do: hacker_news.getItem(),
+    do: hackerNews.getItem(),
     params: data => {
       return {itemID: data.stories[0]}
     }
