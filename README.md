@@ -5,8 +5,8 @@
 [![Chat on gitter][gitter-image]][gitter-link]
 
 [![NPM version][npm-image]][npm-link]
-[![Dependency status][deps-image]][deps-link]
-[![devDependency status][devdeps-image]][devdeps-link]
+<!--[![Dependency status][deps-image]][deps-link]
+[![devDependency status][devdeps-image]][devdeps-link]-->
 [![Travis][travis-image]][travis-link]
 [![Code Climate][climate-image]][climate-link]
 
