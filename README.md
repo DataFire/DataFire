@@ -1,13 +1,13 @@
 # DataFire
 > This is a **preview release**. The API may change.
 
+[![NPM version][npm-image]][npm-link]
+[![Travis][travis-image]][travis-link]
+[![Code Climate][climate-image]][climate-link]
+<!--[![Dependency status][deps-image]][deps-link]
+[![devDependency status][devdeps-image]][devdeps-link]-->
 [![Share on Twitter][twitter-image]][twitter-link]
 [![Chat on gitter][gitter-image]][gitter-link]
-
-[![NPM version][npm-image]][npm-link]
-[![Dependency status][deps-image]][deps-link]
-[![devDependency status][devdeps-image]][devdeps-link]
-[![Code climate][climate-image]][climate-link]
 
 DataFire is an open source integration framework. It is built on top of open standards such as
 RSS and [Open API](https://github.com/OAI/OpenAPI-Specification), and can be run locally, on
@@ -102,8 +102,9 @@ You should see `story.json` in your current directory.
 > Run `datafire --help` or `datafire <command> --help` for more info
 
 ```bash
-datafire list -a   # View all available integrations
-datafire list      # View installed integrations
+datafire list -a          # View all available integrations
+datafire list -a -q SMS   # Search for integrations by keyword
+datafire list             # View installed integrations
 
 datafire integrate gmail   # Add integrations by name (or a substring)
 
