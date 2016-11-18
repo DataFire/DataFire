@@ -31,6 +31,8 @@ npm install --save datafire
 ```
 
 ## Examples
+> See [Datafire/headlines](https://github.com/DataFire/headlines) for a reference project.
+
 * [Quickstart](examples/0. quickstart)
 * [News Headlines](examples/headlines) - Send yourself a daily e-mail with headlines from NPR, CNN, and NYTimes
 * [Listen to This](examples/listen_to_this) - Create a Spotify playlist from tracks posted to Reddit's r/listentothis
