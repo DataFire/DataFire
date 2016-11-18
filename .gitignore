@@ -9,3 +9,4 @@ credentials/
 examples/**/*.json
 
 .npmignore
+distribution/
