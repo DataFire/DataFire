@@ -154,7 +154,7 @@ either on a schedule or in response to HTTP requests (webhooks).
 [twitter-image]: https://img.shields.io/twitter/url/http/github.com/DataFire/DataFire.svg?style=social
 [twitter-link]: https://twitter.com/intent/tweet?text=DataFire%20-%20open+source+integration+framework:&url=http%3A%2F%2Fgithub.com%2FDataFire%2FDataFire
 [gitter-image]: https://img.shields.io/gitter/room/DataFire/DataFire.svg
-[gitter-link]: https://gitter.im/DataFire
+[gitter-link]: https://gitter.im/DataFire/Lobby
 [npm-image]: https://img.shields.io/npm/v/datafire.svg
 [npm-link]: https://npmjs.org/package/datafire
 [travis-image]: https://img.shields.io/travis/DataFire/DataFire.svg
