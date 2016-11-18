@@ -18,8 +18,8 @@ as well as common databases, RSS feeds, and [custom integrations](docs/Integrati
 > Be sure to install DataFire both globally and as a project dependency.
 
 ```
-npm install -g datafire
-npm install --save datafire
+npm install -g datafire@beta
+npm install --save datafire@beta
 ```
 
 ## Examples
