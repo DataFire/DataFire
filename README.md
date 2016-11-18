@@ -102,8 +102,9 @@ You should see `story.json` in your current directory.
 > Run `datafire --help` or `datafire <command> --help` for more info
 
 ```bash
-datafire list -a   # View all available integrations
-datafire list      # View installed integrations
+datafire list -a          # View all available integrations
+datafire list -a -q SMS   # Search for integrations by keyword
+datafire list             # View installed integrations
 
 datafire integrate gmail   # Add integrations by name (or a substring)
 
