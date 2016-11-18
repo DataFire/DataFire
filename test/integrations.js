@@ -1,5 +1,3 @@
-"use strict";
-
 let expect = require('chai').expect;
 let mongomock = require('mongo-mock');
 mongomock.max_delay = 0;

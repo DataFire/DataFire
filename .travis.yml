@@ -1,5 +1,5 @@
 language: node_js
 node_js:
   - "6"
-  - "4.2"
+#  - "4.2"
 script: mocha
