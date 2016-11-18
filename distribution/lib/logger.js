@@ -47,11 +47,14 @@ var Logger = function () {
   }, {
     key: 'chalkType',
     value: function chalkType(type) {
+      if (typeof type !== 'string') {
+        if (type.properties) type = 'object';else if (type.items) type = 'array';else type = type.type;
+      }
       type = type || 'string';
       if (type === 'string') return chalk.green(type);
       if (type === 'integer' || type === 'number') return chalk.blue(type);
-      if (type === 'boolean') return chalk.yellow(type);
-      if (type === 'array' || type === 'object') return chalk.magenta(type);
+      if (type === 'boolean') return chalk.cyan(type);
+      if (type === 'array' || type === 'object') return chalk.yellow(type);
       return type;
     }
   }, {
@@ -79,17 +82,18 @@ var Logger = function () {
   }, {
     key: 'logJSON',
     value: function logJSON(json) {
-      Logger.log(prettyjson.render(json, { keysColor: 'blue' }));
+      Logger.log(prettyjson.render(json, { keysColor: 'white', stringColor: 'green', dashColor: 'white' }));
     }
   }, {
     key: 'logSchema',
     value: function logSchema(schema, indent, name) {
       indent = indent || '';
       if (indent.length > 12) return Logger.log('...\n\n');
-      var toLog = name ? indent + Logger.padString(name + ': ', 14) : '';
-      toLog += Logger.chalkType(schema.properties ? 'object' : schema.type);
+      var toLog = indent;
+      if (name) toLog += chalk.white(Logger.padString(name + ': ', 14));
+      toLog += Logger.chalkType(schema);
       if (schema.items) {
-        toLog += '[' + Logger.chalkType(schema.items.type) + ']';
+        toLog += '[' + Logger.chalkType(schema.items) + ']';
       }
       if (schema.description) {
         var desc = chalk.gray(Logger.truncate(schema.description, 60));
@@ -117,8 +121,8 @@ var Logger = function () {
     key: 'logIntegration',
     value: function logIntegration(name, spec) {
       Logger.log(chalk.magenta(name));
-      if (spec.info.title) Logger.log(chalk.blue(spec.info.title));
-      Logger.logDescription(spec.info.description);
+      if (spec.info.title) Logger.log('  ' + chalk.blue(spec.info.title));
+      Logger.logDescription(spec.info.description, '  ');
     }
   }, {
     key: 'logOperation',
@@ -135,13 +139,14 @@ var Logger = function () {
     }
   }, {
     key: 'logDescription',
-    value: function logDescription(str) {
+    value: function logDescription(str, indent) {
       if (!str) return;
+      indent = indent || '';
       str = Logger.stripHtml(str);
       var newline = str.indexOf('\n');
       if (newline !== -1) str = str.substring(0, newline);
       str = Logger.truncate(str.trim(), MAX_DESCRIPTION_LENGTH);
-      Logger.log(chalk.gray(str));
+      Logger.log(indent + chalk.gray(str));
     }
   }, {
     key: 'logParameters',
@@ -154,8 +159,7 @@ var Logger = function () {
       var paramDescriptions = parameters.map(function (p) {
         var ret = { parameter: p.name };
         ret.type = Logger.chalkType(p.in === 'body' ? 'object' : p.type);
-        ret.required = p.required ? chalk.red('yes') : '';
-        ret.default = p.default;
+        ret.required = p.required ? chalk.red('required') : '';
         if (p.description) {
           ret.description = chalk.gray(p.description);
         }
@@ -168,8 +172,10 @@ var Logger = function () {
         if (p.schema) requestSchema = p.schema;
         return ret;
       });
+      Logger.log('Parameters');
       Logger.log(columnify(paramDescriptions, {
         columnSplitter: '  ',
+        showHeaders: false,
         config: {
           description: {
             maxWidth: 80
@@ -180,6 +186,13 @@ var Logger = function () {
         Logger.log('\nRequest body');
         Logger.logSchema(requestSchema);
       }
+    }
+  }, {
+    key: 'logResponse',
+    value: function logResponse(response) {
+      if (!response || !response.schema) return;
+      Logger.log('Response body');
+      Logger.logSchema(response.schema);
     }
   }, {
     key: 'logFlow',

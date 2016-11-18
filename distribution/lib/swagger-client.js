@@ -57,6 +57,7 @@ SwaggerClient.prototype.authorize = function (auth) {
 SwaggerClient.prototype.refreshOAuth = function (cb) {
   var self = this;
   var definition = self.swagger.securityDefinitions[self.auth.securityDefinition];
+  if (!definition.tokenUrl) throw new Error("No token URL found for " + self.auth.securityDefinition);
   var form = {
     client_id: self.auth.client_id,
     client_secret: self.auth.client_secret,
@@ -205,7 +206,7 @@ SwaggerClient.prototype.request = function (method, path, answers, callback) {
       err.statusCode = resp.statusCode;
       callback(err, body);
     } else if (implicitError) {
-      return callback(new Error(implicitError));
+      callback(new Error(implicitError));
     } else {
       callback(null, body);
     }

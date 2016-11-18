@@ -10,6 +10,13 @@ var path = require('path');
 
 var NATIVE_DIR = path.join(__dirname, '..', 'native_integrations');
 
+var maybeReadJSON = function maybeReadJSON(dir, file) {
+  var filename = path.join(dir, file);
+  try {
+    return JSON.parse(fs.readFileSync(filename, 'utf8'));
+  } catch (e) {}
+};
+
 var Integration = function () {
   function Integration(name, spec) {
     var _this = this;
@@ -69,11 +76,11 @@ var Integration = function () {
     }
   }, {
     key: 'saveCredentials',
-    value: function saveCredentials(newCreds) {
+    value: function saveCredentials(newCreds, cb) {
       this.account = newCreds;
       var accounts = this.getAccounts();
       accounts[this.accountName] = newCreds;
-      fs.writeFileSync(path.join(datafire.credentialsDirectory, this.name + '.json'), JSON.stringify(accounts, null, 2));
+      fs.writeFile(path.join(datafire.credentialsDirectory, this.name + '.json'), JSON.stringify(accounts, null, 2), cb);
     }
   }, {
     key: 'getOperationDetails',
@@ -102,20 +109,10 @@ var Integration = function () {
         return new MongoDBIntegration();
       }
       var tryOpen = function tryOpen(dir) {
-        var filename = path.join(dir, name + '.openapi.json');
         var spec = null;
-        try {
-          spec = require(filename);
-        } catch (e) {
-          filename = path.join(dir, name + '.rss.json');
-          try {
-            spec = require(filename);
-          } catch (e) {};
-        }
-        if (!spec) return;
-        if (filename.endsWith('.openapi.json')) {
+        if (spec = maybeReadJSON(dir, name + '.openapi.json')) {
           return new RESTIntegration(name, spec);
-        } else {
+        } else if (spec = maybeReadJSON(dir, name + '.rss.json')) {
           return new RSSIntegration(name, spec);
         }
       };

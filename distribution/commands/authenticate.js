@@ -207,6 +207,7 @@ var startOAuthServer = function startOAuthServer(integration, secDef, accounts, 
         },
         json: true
       }, function (err, resp, body) {
+        if (err) throw err;
         var newURL = '/?saved=true#access_token=' + encodeURIComponent(body.access_token);
         newURL += '&refresh_token=' + encodeURIComponent(body.refresh_token);
         newURL += '&saved=true';

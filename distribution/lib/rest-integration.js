@@ -37,8 +37,10 @@ var RESTOperation = function (_Operation) {
           if (!isRetry && err.statusCode === 401 && _this2.integration.account && _this2.integration.account.refresh_token) {
             _this2.integration.client.refreshOAuth(function (err, tok) {
               if (err) return cb(err);
-              _this2.integration.saveCredentials(_this2.integration.client.auth);
-              _this2.call(args, cb, true);
+              _this2.integration.saveCredentials(_this2.integration.client.auth, function (err) {
+                // ignore err - fails on AWS Lambda
+                _this2.call(args, cb, true);
+              });
             });
           } else {
             return cb(err);

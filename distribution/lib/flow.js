@@ -19,6 +19,7 @@ var Flow = function () {
 
     this.name = name;
     this.description = description;
+    this.initialized = false;
     this.steps = [];
     this.catches = [];
     this.integrations = [];
@@ -98,6 +99,7 @@ var Flow = function () {
       this.executing = true;
       this.initializeIntegrations(function (err) {
         if (err) return finish(err);
+        _this.initialized = true;
         _this.data = {};
         _this.executeFromStep(0, function (err) {
           if (err) return finish(err);
@@ -144,6 +146,7 @@ var Flow = function () {
   }, {
     key: 'initializeIntegrations',
     value: function initializeIntegrations(cb) {
+      if (this.initialized) return cb();
       this.callForAllIntegrations('initialize', cb);
     }
   }, {

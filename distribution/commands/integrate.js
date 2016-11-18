@@ -100,10 +100,11 @@ var getLocalSpec = function getLocalSpec(name) {
 
 var integrateFile = function integrateFile(name, callback) {
   var filename = getLocalSpec(name);
+  var type = filename.indexOf('.rss.') === -1 ? 'openapi' : 'rss';
   if (!filename) return callback(new Error("Integration " + name + " not found"));
   fs.readFile(path.join(NATIVE_INTEGRATIONS_DIR, filename), 'utf8', function (err, data) {
     if (err) return callback(err);
-    addIntegration(name, 'openapi', JSON.parse(data), callback);
+    addIntegration(name, type, JSON.parse(data), callback);
   });
 };
 
