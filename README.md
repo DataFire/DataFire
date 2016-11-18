@@ -26,8 +26,8 @@ as well as MongoDB, RSS feeds, and [custom integrations](docs/Integrations.md).
 > Be sure to install DataFire both globally and as a project dependency.
 
 ```
-npm install -g datafire@beta
-npm install --save datafire@beta
+npm install -g datafire
+npm install --save datafire
 ```
 
 ## Examples
