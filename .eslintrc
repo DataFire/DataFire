@@ -8,3 +8,4 @@ parserOptions:
 rules:
   comma-dangle: [2, only-multiline]
   global-require: 0
+  guard-for-in: 0
