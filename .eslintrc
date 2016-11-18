@@ -1,0 +1,9 @@
+env:
+  node: true
+  es6: true
+
+parserOptions:
+  ecmaVersion: 2016
+
+rules:
+  comma-dangle: [2, only-multiline]
