@@ -1,6 +1,6 @@
 # Quickstart
 ```
-cd examples/hacker_news
+cd examples/0.\ quickstart
 datafire integrate hacker_news
 datafire run getTopStory.js
 ```
