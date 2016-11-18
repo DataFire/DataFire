@@ -36,32 +36,6 @@ npm install --save datafire
 ## Exploring Integrations
 ![Exploing Integrations](./docs/explore.gif)
 
-## Commands
-> Run `datafire --help` or `datafire <command> --help` for more info
-
-```bash
-datafire list -a   # View all available integrations
-datafire list      # View installed integrations
-
-datafire integrate gmail   # Add integrations by name (or a substring)
-
-datafire describe gmail                                # Show info and operations
-datafire describe gmail -o gmail.users.messages.list   # Show operation details
-datafire describe gmail -o "GET /{userId}/messages"    # Alternative operation name
-
-datafire authenticate gmail   # Store credentials for later use
-
-# Make a test call to the API
-datafire call github -o "GET /users"
-# Use stored credentials with --as
-datafire call github -o "GET /user" --as account_alias
-# Pass parameters with --params.foo
-datafire call github -i "GET /users/{username}" --params.username karpathy
-
-# Run a flow
-datafire run ./getMessages.js
-```
-
 ## Writing Flows
 > See [Flows.md](./docs/Flows.md) for the full documentation
 
@@ -115,6 +89,32 @@ Now let's run it:
 datafire run -f ./getTopStory.js
 ```
 You should see `story.json` in your current directory.
+
+## Commands
+> Run `datafire --help` or `datafire <command> --help` for more info
+
+```bash
+datafire list -a   # View all available integrations
+datafire list      # View installed integrations
+
+datafire integrate gmail   # Add integrations by name (or a substring)
+
+datafire describe gmail                                # Show info and operations
+datafire describe gmail -o gmail.users.messages.list   # Show operation details
+datafire describe gmail -o "GET /{userId}/messages"    # Alternative operation name
+
+datafire authenticate gmail   # Store credentials for later use
+
+# Make a test call to the API
+datafire call github -o "GET /users"
+# Use stored credentials with --as
+datafire call github -o "GET /user" --as account_alias
+# Pass parameters with --params.foo
+datafire call github -i "GET /users/{username}" --params.username karpathy
+
+# Run a flow
+datafire run ./getMessages.js
+```
 
 ## Integrations
 > See [Integrations.md](./docs/Integrations.md) for the full documentation
