@@ -72,6 +72,7 @@ let COMMANDS = [{
   options: [{
     name: 'operation',
     alias: 'o',
+    required: true,
     description: "The operation to call",
   }, {
     name: 'as',
@@ -99,12 +100,14 @@ let args = require('yargs')
            .recommendCommands();
 
 COMMANDS.forEach(cmd => {
+  cmd.examples = cmd.examples || [];
+  cmd.options = cmd.options || [];
   args = args.command(
         cmd.name,
         cmd.description,
         (yargs) => {
-          (cmd.options || []).forEach(o => {
-            yargs.option(o.name, {alias: o.alias, describe: o.description})
+          cmd.options.forEach(o => {
+            yargs.option(o.name, {alias: o.alias, describe: o.description, demand: o.required})
           })
         },
         (args) => {
@@ -123,9 +126,9 @@ COMMANDS.forEach(cmd => {
             handleError(e);
           }
         });
-  (cmd.examples || []).forEach(ex => {
+  cmd.examples.forEach(ex => {
     args = args.example(cmd.name, ex);
-  })
+  });
 })
 
 args = args.help('h').alias('h', 'help').strict().argv;
