@@ -1,7 +1,1 @@
-github
-gmail
 hacker_news
-oceandrivers
-slack
-trello
-twilio

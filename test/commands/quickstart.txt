@@ -1,6 +1,6 @@
 stories
   operation: getStories
-  Success: got 500 items
+  Success: got 466 items
 story_details
   operation: getItem
   Success
