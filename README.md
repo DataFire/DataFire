@@ -2,13 +2,12 @@
 > This is a **preview release**. The API may change.
 
 [![Share on Twitter][twitter-image]][twitter-link]
-
 [![Chat on gitter][gitter-image]][gitter-link]
-[![NPM version][npm-image]][npm-link]
 
-[![Code climate][climate-image]][climate-link]
+[![NPM version][npm-image]][npm-link]
 [![Dependency status][deps-image]][deps-link]
 [![devDependency status][devdeps-image]][devdeps-link]
+[![Code climate][climate-image]][climate-link]
 
 DataFire is an open source integration framework. It is built on top of open standards such as
 RSS and [Open API](https://github.com/OAI/OpenAPI-Specification), and can be run locally, on
