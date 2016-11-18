@@ -103,7 +103,7 @@ You should see `story.json` in your current directory.
 
 ```bash
 datafire list -a          # View all available integrations
-datafire list -a -q SMS   # Search for integrations by keyword
+datafire list -a -q news  # Search for integrations by keyword
 datafire list             # View installed integrations
 
 datafire integrate gmail   # Add integrations by name (or a substring)
