@@ -5,8 +5,6 @@
 
 [![Chat on gitter][gitter-image]][gitter-link]
 [![NPM version][npm-image]][npm-link]
-[![Bower version][bower-image]][bower-link]
-[![Build status][travis-image]][travis-link]
 
 [![Code climate][climate-image]][climate-link]
 [![Dependency status][deps-image]][deps-link]
