@@ -62,7 +62,7 @@ const fs = require('fs');
 const hackerNews = datafire.Integration.new('hacker_news');
 
 const flow = module.exports =
-      new datafire.Flow('Top HN Story', 'Copies the top HN story to a local file');
+        new datafire.Flow('Top HN Story', 'Copies the top HN story to a local file');
 
 flow
   .step('stories', {
