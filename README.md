@@ -154,19 +154,17 @@ Once you've written a flow, you have a number of options for running it:
 Lamdba, Serverless, and DataFire all offer ways to run your flow
 either on a schedule or in response to HTTP requests (webhooks).
 
-[twitter-image]: https://img.shields.io/twitter/url/http/lucybot.github.io/api-spec-converter.svg?style=social
-[twitter-link]: https://twitter.com/intent/tweet?text=Convert+between+API+description+formats+such+as+Swagger+and+RAML:&url=http%3A%2F%2Flucybot.github.io%2Fapi-spec-converter
-[gitter-image]: https://img.shields.io/gitter/room/lucybot/api-spec-converter.svg
-[gitter-link]: https://gitter.im/lucybot/api-spec-converter
-[npm-image]: https://img.shields.io/npm/v/api-spec-converter.svg
-[npm-link]: https://npmjs.org/package/api-spec-converter
-[bower-image]: https://img.shields.io/bower/v/api-spec-converter.svg
-[bower-link]: http://bower.io/
-[travis-image]: https://img.shields.io/travis/lucybot/api-spec-converter.svg
-[travis-link]: https://travis-ci.org/lucybot/api-spec-converter
-[climate-image]: https://img.shields.io/codeclimate/github/lucybot/api-spec-converter.svg
-[climate-link]: https://codeclimate.com/github/lucybot/api-spec-converter
-[deps-image]: https://img.shields.io/david/lucybot/api-spec-converter.svg
-[deps-link]: https://david-dm.org/lucybot/api-spec-converter
-[devdeps-image]: https://img.shields.io/david/dev/lucybot/api-spec-converter.svg
-[devdeps-link]: https://david-dm.org/lucybot/api-spec-converter#info=devDependencies
+[twitter-image]: https://img.shields.io/twitter/url/http/github.com/DataFire/DataFire.svg?style=social
+[twitter-link]: https://twitter.com/intent/tweet?text=DataFire%20-%20open+source+integration+framework:&url=http%3A%2F%2Fgithub.com%2FDataFire%2FDataFire
+[gitter-image]: https://img.shields.io/gitter/room/DataFire/DataFire.svg
+[gitter-link]: https://gitter.im/DataFire/DataFire
+[npm-image]: https://img.shields.io/npm/v/datafire.svg
+[npm-link]: https://npmjs.org/package/datafire
+[travis-image]: https://img.shields.io/travis/DataFire/DataFire.svg
+[travis-link]: https://travis-ci.org/DataFire/DataFire
+[climate-image]: https://img.shields.io/codeclimate/github/DataFire/DataFire.svg
+[climate-link]: https://codeclimate.com/github/DataFire/DataFire
+[deps-image]: https://img.shields.io/david/DataFire/DataFire.svg
+[deps-link]: https://david-dm.org/DataFire/DataFire
+[devdeps-image]: https://img.shields.io/david/dev/DataFire/DataFire.svg
+[devdeps-link]: https://david-dm.org/DataFire/DataFire#info=devDependencies
