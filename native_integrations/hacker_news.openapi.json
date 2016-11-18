@@ -2,7 +2,8 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "Hacker News"
+    "title": "Hacker News",
+    "description": "Hacker News is a social news website focusing on computer science and entrepreneurship"
   },
   "host": "hacker-news.firebaseio.com",
   "basePath": "/v0",
