@@ -60,8 +60,8 @@ for the top story, then store the results to a local file.
 
 First, let's create a new folder and add the Hacker News integration:
 ```
-mkdir hacker_news_flow
-cd hacker_news_flow
+mkdir hacker_news_flow && cd hacker_news_flow
+npm install datafire
 datafire integrate hacker_news
 ```
 
