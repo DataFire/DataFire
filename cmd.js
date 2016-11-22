@@ -1,4 +1,5 @@
 let logger = require('./lib/logger');
+let datafire = require('./index');
 
 let COMMANDS = [{
   name: 'list',
@@ -120,6 +121,8 @@ COMMANDS.forEach(cmd => {
               process.exit(1);
             }
           }
+          if (cmd.name === 'authenticate') args.directory = datafire.credentialsDirectory;
+          else args.directory = datafire.integrationsDirectory;
           try {
             cmd.runner(args, handleError);
           } catch (e) {
