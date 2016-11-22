@@ -1,9 +1,9 @@
 # DataFire
 > This is a **preview release**. The API may change.
 
-[![NPM version][npm-image]][npm-link]
 [![Travis][travis-image]][travis-link]
 [![Code Climate][climate-image]][climate-link]
+[![NPM version][npm-image]][npm-link]
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://www.npmjs.com/package/datafire)
 <!--[![Dependency status][deps-image]][deps-link]
 [![devDependency status][devdeps-image]][devdeps-link]-->
