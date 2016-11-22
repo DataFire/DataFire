@@ -161,7 +161,7 @@ either on a schedule or in response to HTTP requests (webhooks).
 [gitter-link]: https://gitter.im/DataFire/Lobby
 [npm-image]: https://img.shields.io/npm/v/datafire.svg
 [npm-link]: https://npmjs.org/package/datafire
-[travis-image]: https://img.shields.io/travis/DataFire/DataFire.svg
+[travis-image]: https://travis-ci.org/serverless/serverless.svg?branch=master
 [travis-link]: https://travis-ci.org/DataFire/DataFire
 [climate-image]: https://img.shields.io/codeclimate/github/DataFire/DataFire.svg
 [climate-link]: https://codeclimate.com/github/DataFire/DataFire
