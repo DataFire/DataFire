@@ -163,7 +163,7 @@ either on a schedule or in response to HTTP requests (webhooks).
 [npm-link]: https://npmjs.org/package/datafire
 [travis-image]: https://travis-ci.org/serverless/serverless.svg?branch=master
 [travis-link]: https://travis-ci.org/DataFire/DataFire
-[climate-image]: https://img.shields.io/codeclimate/github/DataFire/DataFire.svg
+[climate-image]: https://codeclimate.com/github/DataFire/DataFire.png
 [climate-link]: https://codeclimate.com/github/DataFire/DataFire
 [deps-image]: https://img.shields.io/david/DataFire/DataFire.svg
 [deps-link]: https://david-dm.org/DataFire/DataFire
