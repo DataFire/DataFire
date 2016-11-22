@@ -33,15 +33,15 @@ npm install --save datafire
 ## Examples
 > See [Datafire/headlines](https://github.com/DataFire/headlines) for a reference project.
 
-* [Quickstart](examples/0. quickstart)
+* [Quickstart](examples/0.%20quickstart)
 * [News Headlines](examples/headlines) - Send yourself a daily e-mail with headlines from NPR, CNN, and NYTimes
 * [Listen to This](examples/listen_to_this) - Create a Spotify playlist from tracks posted to Reddit's r/listentothis
 * [GitHub to Trello](examples/github_to_trello) - Create Trello cards for every issue in your repo
 * [Heroku Crash Alerts](examples/crash_alerts) - Get a Slack message when a Heroku process crashes
-* [Authentication](examples/1. authentication)
-* [Error Handling](examples/2. error_handling)
-* [Pagination](examples/3. pagination)
-* [Data Diffing](examples/4. data_diffing)
+* [Authentication](examples/1.%20authentication)
+* [Error Handling](examples/2.%20error_handling)
+* [Pagination](examples/3.%20pagination)
+* [Data Diffing](examples/4.%20data_diffing)
 
 ## Exploring Integrations
 ![Exploing Integrations](./docs/explore.gif)
