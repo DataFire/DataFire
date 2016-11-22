@@ -4,6 +4,7 @@
 [![NPM version][npm-image]][npm-link]
 [![Travis][travis-image]][travis-link]
 [![Code Climate][climate-image]][climate-link]
+[![license](https://img.shields.io/npm/l/datafire.svg)](https://www.npmjs.com/package/datafire)
 <!--[![Dependency status][deps-image]][deps-link]
 [![devDependency status][devdeps-image]][devdeps-link]-->
 [![Share on Twitter][twitter-image]][twitter-link]
