@@ -10,12 +10,6 @@ const YAML = require('yamljs');
 const logger = require('../lib/logger');
 const datafire = require('../index');
 
-const OPENAPI_SUFFIX = '.openapi.json';
-const RSS_SUFFIX = '.rss.json';
-const APIS_GURU_URL = "https://api.apis.guru/v2/list.json";
-const NATIVE_INTEGRATIONS_DIR = path.join(__dirname, '..', 'native_integrations');
-const NATIVE_INTEGRATIONS = fs.readdirSync(NATIVE_INTEGRATIONS_DIR);
-
 const SPEC_FORMATS = ['raml', 'wadl', 'swagger_1', 'api_blueprint', 'io_docs', 'google'];
 
 const RSS_SCHEMA = {
@@ -52,28 +46,17 @@ module.exports = (args, callback) => {
     if (err && err.code !== 'EEXIST') return callback(err);
     let specFormat = SPEC_FORMATS.filter(f => args[f])[0];
     if (args.openapi) {
-      integrateURL(args.directory, args.name, '', args.openapi, false, callback);
+      integrateOpenAPI(args.directory, args.name, args.openapi, args.patch, callback);
     } else if (specFormat) {
       integrateSpec(args.directory, args.name, specFormat, args[specFormat], callback);
     } else if (args.rss) {
       integrateRSS(args.directory, args.name, args.rss, callback);
     } else {
-      (args.integrations || []).forEach(integration => {
-        if (getLocalSpec(integration)) return integrateFile(args.directory, integration);
-        request.get(APIS_GURU_URL, {json: true}, (err, resp, body) => {
-          if (err) return callback(err);
-          let keys = Object.keys(body);
-          let validKeys = keys.filter(k => k.indexOf(integration) !== -1);
-          if (validKeys.length === 0) return callback(new Error("Integration " + integration + " not found"));
-          let exactMatch = validKeys.filter(f => f === integration)[0];
-          if (validKeys.length > 1 && !exactMatch) {
-            return callback(new Error("Ambiguous API name: " + integration + "\n\nPlease choose one of:\n" + validKeys.join('\n')));
-          }
-          let info = body[exactMatch || validKeys[0]];
-          let url = info.versions[info.preferred].swaggerUrl;
-          integrateURL(args.directory, args.name || integration, validKeys[0], url, true, callback);
-        })
-      })
+      let packageNames = args.integrations.map(i => '@datafire/' + i);
+      proc.exec('npm install --save ' + packageNames.join(' '), (err, stdout, stderr) => {
+        if (err) return callback(err);
+        callback();
+      });
     }
   })
 }
@@ -100,6 +83,17 @@ const integrateFile = (dir, name, callback) => {
     if (err) return callback(err);
     addIntegration(dir, name, type, JSON.parse(data), callback);
   });
+  spec.info['x-datafire'] = {name, type};
+  let dir = path.join(directory, name);
+  let filename = path.join(dir, 'integration.json');
+  fs.mkdir(dir, err => {
+    if (err && err.code !== 'EEXIST') return callback(err);
+    fs.writeFile(filename, JSON.stringify(spec, null, 2), e => {
+      if (e) return callback(e);
+      logger.log('Created integration ' + name + ' in ' + filename.replace(process.cwd(), '.'));
+      callback(null, spec);
+    });
+  })
 }
 
 const TLDs = ['.com', '.org', '.net', '.gov', '.io', '.co.uk'];
@@ -114,7 +108,7 @@ const getNameFromHost = (host) => {
   return host.replace(/\./, '_');
 }
 
-const integrateURL = (dir, name, key, url, applyPatches, callback) => {
+const integrateOpenAPI = (dir, name, url, patch, callback) => {
   request.get(url, (err, resp, body) => {
     if (err) return callback(err);
     if (resp.headers['content-type'].indexOf('yaml') !== -1) {
@@ -123,8 +117,7 @@ const integrateURL = (dir, name, key, url, applyPatches, callback) => {
       body = JSON.parse(body);
     }
     if (!body.host) return callback(new Error("Invalid swagger:" + JSON.stringify(body, null, 2)))
-    if (applyPatches) maybePatchIntegration(body);
-    if (key) body.info['x-datafire-key'] = key;
+    if (patch) patch(body);
     addIntegration(dir, name, 'openapi', body, callback);
   })
 }
@@ -174,12 +167,3 @@ const integrateSpec = (dir, name, format, url, callback) => {
   })
 }
 
-const maybePatchIntegration = (spec) => {
-  let patch = null;
-  try {
-    patch = require('../patches/' + spec.host);
-  } catch (e) {
-    return;
-  }
-  patch(spec);
-}
