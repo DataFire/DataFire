@@ -1,7 +1,8 @@
-let logger = require('./lib/logger');
-let datafire = require('./index');
+const logger = require('./lib/logger');
+const datafire = require('./index');
+const locations = require('./lib/locations');
 
-let COMMANDS = [{
+const COMMANDS = [{
   name: 'list',
   description: "List integrations in the current project, or all available integrations if -a is used",
   examples: ["datafire list", "datafire list -a"],
@@ -121,8 +122,8 @@ COMMANDS.forEach(cmd => {
               process.exit(1);
             }
           }
-          if (cmd.name === 'authenticate') args.directory = datafire.credentialsDirectory;
-          else args.directory = datafire.integrationsDirectory;
+          if (cmd.name === 'authenticate') args.directory = locations.credentials[0];
+          else args.directory = locations.integrations[0];
           try {
             cmd.runner(args, handleError);
           } catch (e) {

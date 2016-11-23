@@ -5,8 +5,9 @@ let logger = require('../lib/logger');
 logger.silent = true;
 
 let datafire = require('../index');
-datafire.integrationsDirectory = __dirname + '/integrations';
-datafire.credentialsDirectory = __dirname + '/credentials';
+let locations = require('../lib/locations');
+locations.integrations.push(__dirname + '/integrations');
+locations.credentials = [__dirname + '/credentials'];
 
 describe('Flows', () => {
   let flow = integration = null;
