@@ -12,7 +12,8 @@ const datafire = require('../index');
 
 const SPEC_FORMATS = ['raml', 'wadl', 'swagger_1', 'api_blueprint', 'io_docs', 'google'];
 
-const PACKAGE_PREFIX = process.env.DATAFIRE_REGISTRY_DIR || '@datafire'
+const PACKAGE_PREFIX = process.env.DATAFIRE_REGISTRY_DIR ?
+  process.env.DATAFIRE_REGISTRY_DIR + '/integrations' : '@datafire'
 
 const RSS_SCHEMA = {
   type: 'object',

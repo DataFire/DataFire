@@ -5,39 +5,44 @@ const chalk = require('chalk');
 const datafire = require('../index');
 const logger = require('../lib/logger');
 
-const APIS_GURU_URL = "https://api.apis.guru/v2/list.json";
-const NATIVE_INTEGRATIONS_DIR = path.join(__dirname, '..', 'native_integrations');
+const INTEGRATION_LOCATIONS = require('../lib/locations').integrations;
 
-let getNameFromFilename = f => f.substring(0, f.indexOf('.'));
-
-const NATIVE_INTEGRATIONS = fs.readdirSync(NATIVE_INTEGRATIONS_DIR).map(getNameFromFilename);
+const INTEGRATION_LIST_URL = "https://api.apis.guru/v2/list.json";
+const getAllIntegrations =  (callback) => {
+  if (process.env.DATAFIRE_REGISTRY_DIR) {
+    let list = require(process.env.DATAFIRE_REGISTRY_DIR + '/list.json');
+    callback(null, list);
+  } else {
+    request.get(INTEGRATION_LIST_URL, {json: true}, (err, resp, body) => {
+      callback(err, body);
+    })
+  }
+}
 
 module.exports = (args) => {
   if (args.all) {
-    request.get(APIS_GURU_URL, {json: true}, (err, resp, body) => {
+    getAllIntegrations((err, list) => {
       if (err) throw err;
-      let keys = Object.keys(body).concat(NATIVE_INTEGRATIONS).sort();
+      let keys = Object.keys(list);
       keys.forEach(k => {
-        let api = body[k];
-        if (api) {
-          api = api.versions[api.preferred];
-          if (args.query && !integrationMatchesQuery(k, api, args.query)) return;
-          logger.logIntegration(k, api);
-        } else {
-          let integration = datafire.Integration.new(k);
-          if (args.query && !integrationMatchesQuery(k, integration.spec, args.query)) return;
-          logger.logIntegration(k, integration.spec);
-        }
+        let api = list[k];
+        if (args.query && !integrationMatchesQuery(k, api, args.query)) return;
+        logger.logIntegration(k, {info: api});
         logger.log();
       });
     });
   } else {
-    fs.readdir(datafire.integrationsDirectory, (err, files) => {
-      if (err) throw err;
-      files.map(getNameFromFilename).forEach(name => {
-        logger.log(chalk.magenta(name));
+    INTEGRATION_LOCATIONS.forEach(dir => {
+      fs.readdir(dir, (err, dirs) => {
+        if (err) {
+          if (err.code === 'ENOENT') return;
+          throw err;
+        }
+        dirs.forEach(name => {
+          logger.log(chalk.magenta(name));
+        })
       })
-    })
+    });
   }
 }
 
