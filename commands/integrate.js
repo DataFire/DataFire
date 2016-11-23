@@ -12,6 +12,8 @@ const datafire = require('../index');
 
 const SPEC_FORMATS = ['raml', 'wadl', 'swagger_1', 'api_blueprint', 'io_docs', 'google'];
 
+const PACKAGE_PREFIX = process.env.DATAFIRE_REGISTRY_DIR || '@datafire'
+
 const RSS_SCHEMA = {
   type: 'object',
   properties: {
@@ -52,7 +54,7 @@ module.exports = (args, callback) => {
     } else if (args.rss) {
       integrateRSS(args.directory, args.name, args.rss, callback);
     } else {
-      let packageNames = args.integrations.map(i => '@datafire/' + i);
+      let packageNames = args.integrations.map(i => PACKAGE_PREFIX + '/' + i);
       proc.exec('npm install --save ' + packageNames.join(' '), (err, stdout, stderr) => {
         if (err) return callback(err);
         callback();
