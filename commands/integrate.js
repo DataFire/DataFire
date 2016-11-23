@@ -1,4 +1,5 @@
 const fs = require('fs');
+const async = require('async');
 const path = require('path');
 const proc = require('child_process');
 const request = require('request');
@@ -125,35 +126,65 @@ const integrateOpenAPI = (dir, name, url, patch, callback) => {
   })
 }
 
-const integrateRSS = (dir, name, url, callback) => {
-  let urlObj = urlParser.parse(url);
-  if (!name) {
-    name = getNameFromHost(urlObj.hostname);
+const integrateRSS = (dir, name, urls, callback) => {
+  if (typeof urls === 'string') {
+    urls = {
+      getItems: urls,
+    }
   }
   let spec = {
     swagger: '2.0',
-    host: urlObj.hostname,
     basePath: '/',
-    schemes: [urlObj.protocol.substring(0, urlObj.protocol.length - 1)],
     paths: {},
-    definitions: {Feed: RSS_SCHEMA}
+    definitions: {Feed: RSS_SCHEMA},
+    info: {},
   }
-  spec.paths[urlObj.pathname] = {
-    get: {
-      operationId: 'getItems',
-      description: "Retrieve the RSS feed",
-      responses: {
-        '200': {description: "OK", schema: {$ref: '#/definitions/Feed'}}
+  for (let operation in urls) {
+    let url = urls[operation];
+    let urlObj = urlParser.parse(url);
+    urlObj.pathname = urlObj.pathname.replace(/%7B/g, '{').replace(/%7D/g, '}');
+    spec.host = urlObj.hostname;
+    spec.schemes = [urlObj.protocol.substring(0, urlObj.protocol.length - 1)];
+    if (!name) {
+      name = getNameFromHost(urlObj.hostname);
+    }
+    spec.paths[urlObj.pathname] = {
+      get: {
+        operationId: operation,
+        description: "Retrieve the RSS feed",
+        responses: {
+          '200': {description: "OK", schema: {$ref: '#/definitions/Feed'}}
+        },
+        parameters: (urlObj.pathname.match(/\{\w+\}/g) || [])
+              .map(p => p.substring(1, p.length - 1))
+              .map(p => ({
+                name: p,
+                in: 'path',
+                type: 'string',
+                required: true,
+              }))
       }
     }
   }
-  rssParser.parseURL(url, (err, feed) => {
+  async.parallel(Object.keys(spec.paths).map(path => {
+    let op = spec.paths[path].get;
+    return acb => {
+      if (op.parameters.length) return acb();
+      rssParser.parseURL(spec.schemes[0] + '://' + spec.host + path, (err, feed) => {
+        if (err) return acb(err);
+        feed = feed.feed;
+        spec.paths[path].get.summary = feed.title;
+        spec.paths[path].get.description = feed.description;
+        acb();
+      })
+    }
+  }), err => {
     if (err) return callback(err);
-    feed = feed.feed;
-    spec.info = {
-      title: feed.title,
-      description: feed.description,
-    };
+    let paths = Object.keys(spec.paths);
+    if (paths.length === 1) {
+      spec.info.title = spec.paths[paths[0]].summary;
+      spec.info.description = spec.paths[paths[0]].description;
+    }
     addIntegration(dir, name, 'rss', spec, callback);
   })
 }

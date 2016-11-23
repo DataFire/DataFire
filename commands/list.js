@@ -46,9 +46,8 @@ module.exports = (args) => {
   }
 }
 
-const integrationMatchesQuery = (name, spec, query) => {
+const integrationMatchesQuery = (name, info, query) => {
   let searchText = name;
-  let info = spec.info;
   if (info.title) searchText += info.title;
   if (info.description) searchText += info.description;
   searchText = searchText.toLowerCase();
