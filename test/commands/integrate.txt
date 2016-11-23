@@ -1,1 +1,0 @@
-Writing integration hacker_news to ./integrations/hacker_news.openapi.json
