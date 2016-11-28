@@ -1,4 +1,3 @@
-process.env.FORCE_COLOR=1;
 const logger = require('./lib/logger');
 const datafire = require('./index');
 const locations = require('./lib/locations');
