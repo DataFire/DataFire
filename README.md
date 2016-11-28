@@ -1,18 +1,20 @@
 # DataFire
 > This is a **preview release**. The API may change.
 
-[![NPM version][npm-image]][npm-link]
 [![Travis][travis-image]][travis-link]
 [![Code Climate][climate-image]][climate-link]
+[![NPM version][npm-image]][npm-link]
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://www.npmjs.com/package/datafire)
 <!--[![Dependency status][deps-image]][deps-link]
 [![devDependency status][devdeps-image]][devdeps-link]-->
 [![Share on Twitter][twitter-image]][twitter-link]
 [![Chat on gitter][gitter-image]][gitter-link]
 
-DataFire is an open source integration framework. It is built on top of open standards such as
-RSS and [Open API](https://github.com/OAI/OpenAPI-Specification), and can be run locally, on
-AWS Lambda, on the [Serverless](https://github.com/serverless/serverless) framework, or on
-[DataFire.io](https://datafire.io)
+DataFire is an open source integration framework - think Grunt for APIs, or Zapier for the command line.
+It is built on top of open standards such as RSS and
+[Open API](https://github.com/OAI/OpenAPI-Specification). Flows can be run locally, on
+AWS Lambda, Google Cloud, or Azure via the [Serverless](https://github.com/serverless/serverless) framework, or on
+[DataFire.io](https://datafire.io).
 
 DataFire natively supports over
 [250 public APIs](https://github.com/APIs-guru/openapi-directory) including:
@@ -33,17 +35,20 @@ npm install --save datafire
 ## Examples
 > See [Datafire/headlines](https://github.com/DataFire/headlines) for a reference project.
 
-* [Quickstart](examples/0. quickstart)
+* [Quickstart](examples/0.%20quickstart)
 * [News Headlines](examples/headlines) - Send yourself a daily e-mail with headlines from NPR, CNN, and NYTimes
 * [Listen to This](examples/listen_to_this) - Create a Spotify playlist from tracks posted to Reddit's r/listentothis
 * [GitHub to Trello](examples/github_to_trello) - Create Trello cards for every issue in your repo
 * [Heroku Crash Alerts](examples/crash_alerts) - Get a Slack message when a Heroku process crashes
-* [Authentication](examples/1. authentication)
-* [Error Handling](examples/2. error_handling)
-* [Pagination](examples/3. pagination)
-* [Data Diffing](examples/4. data_diffing)
+* [Authentication](examples/1.%20authentication)
+* [Error Handling](examples/2.%20error_handling)
+* [Pagination](examples/3.%20pagination)
+* [Data Diffing](examples/4.%20data_diffing)
 
 ## Exploring Integrations
+You can use the command line tool to search for integrations. Once an integration
+is installed, you can view the parameters and response schema for each operation,
+as well as make test calls.
 ![Exploing Integrations](./docs/explore.gif)
 
 ## Writing Flows
@@ -60,8 +65,8 @@ for the top story, then store the results to a local file.
 
 First, let's create a new folder and add the Hacker News integration:
 ```
-mkdir hacker_news_flow
-cd hacker_news_flow
+mkdir hacker_news_flow && cd hacker_news_flow
+npm install datafire
 datafire integrate hacker_news
 ```
 
@@ -156,13 +161,13 @@ either on a schedule or in response to HTTP requests (webhooks).
 
 [twitter-image]: https://img.shields.io/twitter/url/http/github.com/DataFire/DataFire.svg?style=social
 [twitter-link]: https://twitter.com/intent/tweet?text=DataFire%20-%20open+source+integration+framework:&url=http%3A%2F%2Fgithub.com%2FDataFire%2FDataFire
-[gitter-image]: https://img.shields.io/gitter/room/DataFire/DataFire.svg
+[gitter-image]: https://badges.gitter.im/DataFire/DataFire.png
 [gitter-link]: https://gitter.im/DataFire/Lobby
 [npm-image]: https://img.shields.io/npm/v/datafire.svg
 [npm-link]: https://npmjs.org/package/datafire
-[travis-image]: https://img.shields.io/travis/DataFire/DataFire.svg
+[travis-image]: https://travis-ci.org/DataFire/DataFire.svg?branch=master
 [travis-link]: https://travis-ci.org/DataFire/DataFire
-[climate-image]: https://img.shields.io/codeclimate/github/DataFire/DataFire.svg
+[climate-image]: https://codeclimate.com/github/DataFire/DataFire.png
 [climate-link]: https://codeclimate.com/github/DataFire/DataFire
 [deps-image]: https://img.shields.io/david/DataFire/DataFire.svg
 [deps-link]: https://david-dm.org/DataFire/DataFire
