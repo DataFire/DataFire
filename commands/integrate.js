@@ -88,8 +88,6 @@ const integrateFile = (dir, name, callback) => {
     addIntegration(dir, name, type, JSON.parse(data), callback);
   });
   spec.info['x-datafire'] = {name, type};
-  let dir = path.join(directory, name);
-  let filename = path.join(dir, 'integration.json');
   fs.mkdir(dir, err => {
     if (err && err.code !== 'EEXIST') return callback(err);
     fs.writeFile(filename, JSON.stringify(spec, null, 2), e => {
