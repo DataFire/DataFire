@@ -12,6 +12,7 @@ const CALLBACK_HTML_FILE = path.join(__dirname, '..', 'www', 'oauth_callback.htm
 
 const datafire = require('../index');
 const logger = require('../lib/logger');
+const locations = require('../lib/locations');
 
 const QUESTION_SETS = {
   alias: [
@@ -83,13 +84,13 @@ let setDefaults = (questions, defaults) => {
 }
 
 let getAccounts = (integration) => {
-  let credFile = path.join(datafire.credentialsDirectory, integration + '.json');
+  let credFile = path.join(locations.credentials[0], integration + '.json');
   return fs.existsSync(credFile) ? require(credFile) : {};
 }
 
 module.exports = (args) => {
   try {
-    fs.mkdirSync(datafire.credentialsDirectory);
+    fs.mkdirSync(locations.credentials[0]);
   } catch (e) {}
 
   let integration = datafire.Integration.new(args.integration);
@@ -173,7 +174,7 @@ let generateToken = (integration, secOption, accounts, accountToEdit, clientAcco
 }
 let saveAccounts = (integration, accounts) => {
   let oldCreds = getAccounts(integration.name);
-  let credFile = path.join(datafire.credentialsDirectory, integration.name + '.json');
+  let credFile = path.join(locations.credentials[0], integration.name + '.json');
   logger.log('Saving credentials to ' + credFile.replace(process.cwd(), '.'));
   fs.writeFileSync(credFile, JSON.stringify(accounts, null, 2));
 }
