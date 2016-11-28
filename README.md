@@ -36,6 +36,7 @@ npm install --save datafire
 You can use the command line tool to search for integrations. Once an integration
 is installed, you can view the parameters and response schema for each operation,
 as well as make test calls.
+
 ![Exploing Integrations](./docs/explore.gif)
 
 
