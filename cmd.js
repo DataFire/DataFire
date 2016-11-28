@@ -113,6 +113,9 @@ COMMANDS.forEach(cmd => {
           })
         },
         (args) => {
+          for (let k in args.params) {
+            args.params[k] = args.params[k].toString();
+          }
           let handleError = e => {
             if (!e) return;
             logger.logError(e.toString());
@@ -136,4 +139,3 @@ COMMANDS.forEach(cmd => {
 })
 
 args = args.help('h').alias('h', 'help').strict().argv;
-
