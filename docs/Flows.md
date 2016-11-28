@@ -49,12 +49,12 @@ let flow = new datafire.Flow('Copy Stuff', "Copies stuff from here to there");
 ---
 ### `Flow.step(name, options)`
 Adds a new step to the flow.
-* `name` - a unique name for this step.
+* `name` - a unique name for this step
 * `options.do` - either a function or a datafire `Operation`
 * `options.params` - an object with the parameters to pass to `operation`, or
 a function that returns that object
-* `options.nextPage` - collect multiple pages of results
-* `options.finish` - a function to run after `do` has executed.
+* `options.nextPage` - a function that modifies `params` to get the next page of results
+* `options.finish` - a function to run after `do` has executed
 
 #### `options.do`
 `do` is the body of each step. It's where you'll fetch data, read/write files,

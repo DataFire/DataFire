@@ -32,6 +32,14 @@ npm install -g datafire
 npm install --save datafire
 ```
 
+## Exploring Integrations
+You can use the command line tool to search for integrations. Once an integration
+is installed, you can view the parameters and response schema for each operation,
+as well as make test calls.
+
+![Exploing Integrations](./docs/explore.gif)
+
+
 ## Examples
 > See [Datafire/headlines](https://github.com/DataFire/headlines) for a reference project.
 
@@ -45,8 +53,6 @@ npm install --save datafire
 * [Pagination](examples/3.%20pagination)
 * [Data Diffing](examples/4.%20data_diffing)
 
-## Exploring Integrations
-![Exploing Integrations](./docs/explore.gif)
 
 ## Writing Flows
 > See [Flows.md](./docs/Flows.md) for the full documentation
