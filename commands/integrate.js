@@ -67,12 +67,17 @@ module.exports = (args, callback) => {
 
 const addIntegration = (directory, name, type, spec, callback) => {
   name = name || getNameFromHost(spec.host);
-  let filename = path.join(directory, name + (type === 'rss' ? RSS_SUFFIX : OPENAPI_SUFFIX));
+  let filename = path.join(directory, name, 'integration.json');
   logger.log('Writing integration ' + name + ' to ' + filename.replace(process.cwd(), '.'));
-  spec.info['x-datafire-name'] = name;
-  fs.writeFile(filename, JSON.stringify(spec, null, 2), e => {
-    callback(e, spec);
-  });
+  spec.info['x-datafire'] = {name, type};
+  fs.mkdir(path.join(directory, name), err => {
+    if (err && err.code !== 'EEXIST') return callback(err);
+    fs.writeFile(filename, JSON.stringify(spec, null, 2), e => {
+      if (e) return callback(e);
+      logger.log('Created integration ' + name + ' in ' + filename.replace(process.cwd(), '.'));
+      callback(null, spec);
+    });
+  })
 }
 
 const getLocalSpec = (name) => {
@@ -87,15 +92,6 @@ const integrateFile = (dir, name, callback) => {
     if (err) return callback(err);
     addIntegration(dir, name, type, JSON.parse(data), callback);
   });
-  spec.info['x-datafire'] = {name, type};
-  fs.mkdir(dir, err => {
-    if (err && err.code !== 'EEXIST') return callback(err);
-    fs.writeFile(filename, JSON.stringify(spec, null, 2), e => {
-      if (e) return callback(e);
-      logger.log('Created integration ' + name + ' in ' + filename.replace(process.cwd(), '.'));
-      callback(null, spec);
-    });
-  })
 }
 
 const TLDs = ['.com', '.org', '.net', '.gov', '.io', '.co.uk'];
