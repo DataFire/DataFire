@@ -3,7 +3,7 @@ const flow = module.exports = new datafire.Flow("Create a Spotify playlist from 
 const spotify = datafire.Integration.new('spotify').as('default');
 const reddit = datafire.Integration.new('reddit');
 
-flow.step('spotify', {
+flow.step('spotify_user', {
   do: spotify.get("/me"),
   params: (data) => {
     return {}
@@ -17,7 +17,7 @@ flow.step('reddit', {
   }
 })
 
-flow.step('spotify1', {
+flow.step('tracks', {
   do: spotify.get("/search"),
   params: (data) => {
     var tracks = data.reddit.feed.entries.slice(0, 10);
@@ -30,11 +30,11 @@ flow.step('spotify1', {
   }
 })
 
-flow.step('spotify2', {
+flow.step('add_playlist', {
   do: spotify.post("/users/{user_id}/playlists"),
   params: (data) => {
     return {
-      user_id: data.spotify.id,
+      user_id: data.spotify_user.id,
       body: {
         name: "r/listentothis for " + new Date().toISOString().slice(0,10),
       }
@@ -42,13 +42,13 @@ flow.step('spotify2', {
   }
 })
 
-flow.step('spotify3', {
+flow.step('add_tracks', {
   do: spotify.post("/users/{user_id}/playlists/{playlist_id}/tracks"),
   params: (data) => {
     return {
-      user_id: data.spotify.id,
-      playlist_id: data.spotify2.id,
-      uris: data.spotify1.filter(function(searchResults) {
+      user_id: data.spotify_user.id,
+      playlist_id: data.add_playlist.id,
+      uris: data.tracks.filter(function(searchResults) {
         return searchResults.tracks.items.length;
       }).map(function(searchResults) {
         return searchResults.tracks.items[0].uri;
