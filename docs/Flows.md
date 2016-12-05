@@ -54,6 +54,7 @@ Adds a new step to the flow.
 * `options.params` - an object with the parameters to pass to `operation`, or
 a function that returns that object
 * `options.nextPage` - a function that modifies `params` to get the next page of results
+* `options.batchSize` - the maximum number of parallel requests to send (only applicable if `options.params` is an array)
 * `options.finish` - a function to run after `do` has executed
 
 #### `options.do`
@@ -84,7 +85,8 @@ flow.step('write_file', {
 ```
 
 #### `options.params`
-Use `options.params` to pass parameters to the Operation in `options.do`.
+Use `options.params` to pass parameters to the Operation in `options.do`. You can also
+specify an array of parameters to make multiple calls to `options.do`.
 
 The following two steps are equivalent. The first uses an object literal for `params`,
 while the second wraps it inside a function.
