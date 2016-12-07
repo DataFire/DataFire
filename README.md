@@ -116,13 +116,14 @@ datafire list -a          # View all available integrations
 datafire list -a -q news  # Search for integrations by keyword
 datafire list             # View installed integrations
 
-datafire integrate gmail   # Add integrations by name (or a substring)
+datafire integrate google-gmail            # Add integrations by name
+npm install --save @datafire/google-gmail  # Or by NPM package
 
-datafire describe gmail                                # Show info and operations
-datafire describe gmail -o gmail.users.messages.list   # Show operation details
-datafire describe gmail -o "GET /{userId}/messages"    # Alternative operation name
+datafire describe google-gmail                              # Show info and operations
+datafire describe google-gmail -o users.messages.list       # Show operation details
+datafire describe google-gmail -o "GET /{userId}/messages"  # Alternative operation name
 
-datafire authenticate gmail   # Store credentials for later use
+datafire authenticate google-gmail   # Store credentials for later use
 
 # Make a test call to the API
 datafire call github -o "GET /users"
