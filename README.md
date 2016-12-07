@@ -41,7 +41,9 @@ as well as make test calls.
 
 
 ## Examples
-> See [Datafire-flows/headlines](https://github.com/DataFire-flows/headlines) for a reference project.
+> See [DataFire-flows/headlines](https://github.com/DataFire-flows/headlines) for a reference project.
+
+The [DataFire-flows](https://github.com/DataFire-flows) account has a few example flows you can clone and try.
 
 * [News Headlines](https://github.com/DataFire-flows/headlines) - Send yourself a daily e-mail with headlines from NPR, CNN, and NYTimes
 * [Listen to This](examples/listen_to_this) - Create a Spotify playlist from tracks posted to Reddit's r/listentothis
