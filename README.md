@@ -17,7 +17,7 @@ AWS Lambda, Google Cloud, or Azure via the [Serverless](https://github.com/serve
 [DataFire.io](https://datafire.io).
 
 DataFire natively supports over
-[250 public APIs](https://github.com/APIs-guru/openapi-directory) including:
+[250 public APIs](https://github.com/DataFire/Integrations) including:
 
 &bull; Slack &bull; GitHub &bull; Twilio &bull; Trello &bull; Spotify &bull;
 Instagram &bull; Gmail &bull; Google Analytics &bull; YouTube &bull;
