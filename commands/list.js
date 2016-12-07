@@ -7,7 +7,7 @@ const logger = require('../lib/logger');
 
 const INTEGRATION_LOCATIONS = require('../lib/locations').integrations;
 
-const INTEGRATION_LIST_URL = "https://api.apis.guru/v2/list.json";
+const INTEGRATION_LIST_URL = "https://raw.githubusercontent.com/DataFire/Integrations/master/list.json";
 const getAllIntegrations =  (callback) => {
   if (process.env.DATAFIRE_REGISTRY_DIR) {
     let list = require(process.env.DATAFIRE_REGISTRY_DIR + '/list.json');
