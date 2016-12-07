@@ -46,23 +46,23 @@ const RSS_SCHEMA = {
 }
 
 module.exports = (args, callback) => {
-  fs.mkdir(args.directory, (err) => {
-    if (err && err.code !== 'EEXIST') return callback(err);
-    let specFormat = SPEC_FORMATS.filter(f => args[f])[0];
-    if (args.openapi) {
-      integrateOpenAPI(args.directory, args.name, args.openapi, args.patch, callback);
-    } else if (specFormat) {
-      integrateSpec(args.directory, args.name, specFormat, args[specFormat], callback);
-    } else if (args.rss) {
-      integrateRSS(args.directory, args.name, args.rss, callback);
-    } else {
-      let packageNames = args.integrations.map(i => PACKAGE_PREFIX + '/' + i);
-      proc.exec('npm install --save ' + packageNames.join(' '), (err, stdout, stderr) => {
-        if (err) return callback(err);
-        callback();
-      });
-    }
-  })
+  let specFormat = SPEC_FORMATS.filter(f => args[f])[0];
+  if (args.openapi) {
+    integrateOpenAPI(args.directory, args.name, args.openapi, args.patch, callback);
+  } else if (specFormat) {
+    integrateSpec(args.directory, args.name, specFormat, args[specFormat], callback);
+  } else if (args.rss) {
+    integrateRSS(args.directory, args.name, args.rss, callback);
+  } else {
+    let packageNames = args.integrations.map(i => PACKAGE_PREFIX + '/' + i);
+    let cmd = 'npm install ';
+    if (args.save) cmd += '--save ';
+    cmd += packageNames.join(' ');
+    proc.exec(cmd, (err, stdout, stderr) => {
+      if (err) return callback(err);
+      callback();
+    });
+  }
 }
 
 const addIntegration = (directory, name, type, spec, callback) => {
@@ -70,13 +70,16 @@ const addIntegration = (directory, name, type, spec, callback) => {
   let filename = path.join(directory, name, 'integration.json');
   logger.log('Writing integration ' + name + ' to ' + filename.replace(process.cwd(), '.'));
   spec.info['x-datafire'] = {name, type};
-  fs.mkdir(path.join(directory, name), err => {
+  fs.mkdir(directory, (err) => {
     if (err && err.code !== 'EEXIST') return callback(err);
-    fs.writeFile(filename, JSON.stringify(spec, null, 2), e => {
-      if (e) return callback(e);
-      logger.log('Created integration ' + name + ' in ' + filename.replace(process.cwd(), '.'));
-      callback(null, spec);
-    });
+    fs.mkdir(path.join(directory, name), err => {
+      if (err && err.code !== 'EEXIST') return callback(err);
+      fs.writeFile(filename, JSON.stringify(spec, null, 2), e => {
+        if (e) return callback(e);
+        logger.log('Created integration ' + name + ' in ' + filename.replace(process.cwd(), '.'));
+        callback(null, spec);
+      });
+    })
   })
 }
 
