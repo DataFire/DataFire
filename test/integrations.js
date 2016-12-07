@@ -3,13 +3,14 @@ let mongomock = require('mongo-mock');
 mongomock.max_delay = 0;
 
 let datafire = require('../index');
-datafire.integrationsDirectory = __dirname + '/integrations';
-datafire.credentialsDirectory = __dirname + '/credentials';
+let locations = require('../lib/locations');
+locations.integrations.push(__dirname + '/integrations');
+locations.credentials = [__dirname + '/credentials'];
 
-let MongoDBIntegration = require('../native_integrations/mongodb');
+let mongo = datafire.Integration.new('mongodb').as('test');
+mongo.client = mongomock.MongoClient;
 
 describe('MongoDB Integration', () => {
-  let mongo = new MongoDBIntegration(mongomock.MongoClient).as('test');
   let executeSuccess = (flow, done) => {
     flow.execute(err => {
       if (err) throw err;

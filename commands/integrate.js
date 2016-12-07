@@ -1,4 +1,5 @@
 const fs = require('fs');
+const async = require('async');
 const path = require('path');
 const proc = require('child_process');
 const request = require('request');
@@ -10,13 +11,10 @@ const YAML = require('yamljs');
 const logger = require('../lib/logger');
 const datafire = require('../index');
 
-const OPENAPI_SUFFIX = '.openapi.json';
-const RSS_SUFFIX = '.rss.json';
-const APIS_GURU_URL = "https://api.apis.guru/v2/list.json";
-const NATIVE_INTEGRATIONS_DIR = path.join(__dirname, '..', 'native_integrations');
-const NATIVE_INTEGRATIONS = fs.readdirSync(NATIVE_INTEGRATIONS_DIR);
-
 const SPEC_FORMATS = ['raml', 'wadl', 'swagger_1', 'api_blueprint', 'io_docs', 'google'];
+
+const PACKAGE_PREFIX = process.env.DATAFIRE_REGISTRY_DIR ?
+  process.env.DATAFIRE_REGISTRY_DIR + '/integrations' : '@datafire'
 
 const RSS_SCHEMA = {
   type: 'object',
@@ -48,53 +46,51 @@ const RSS_SCHEMA = {
 }
 
 module.exports = (args, callback) => {
-  fs.mkdir(datafire.integrationsDirectory, (err) => {
+  fs.mkdir(args.directory, (err) => {
+    if (err && err.code !== 'EEXIST') return callback(err);
     let specFormat = SPEC_FORMATS.filter(f => args[f])[0];
     if (args.openapi) {
-      integrateURL(args.name, '', args.openapi, false, callback);
+      integrateOpenAPI(args.directory, args.name, args.openapi, args.patch, callback);
     } else if (specFormat) {
-      integrateSpec(args.name, specFormat, args[specFormat], callback);
+      integrateSpec(args.directory, args.name, specFormat, args[specFormat], callback);
     } else if (args.rss) {
-      integrateRSS(args.name, args.rss, callback);
+      integrateRSS(args.directory, args.name, args.rss, callback);
     } else {
-      (args.integrations || []).forEach(integration => {
-        if (getLocalSpec(integration)) return integrateFile(integration);
-        request.get(APIS_GURU_URL, {json: true}, (err, resp, body) => {
-          if (err) return callback(err);
-          let keys = Object.keys(body);
-          let validKeys = keys.filter(k => k.indexOf(integration) !== -1);
-          if (validKeys.length === 0) return callback(new Error("Integration " + integration + " not found"));
-          let exactMatch = validKeys.filter(f => f === integration)[0];
-          if (validKeys.length > 1 && !exactMatch) {
-            return callback(new Error("Ambiguous API name: " + integration + "\n\nPlease choose one of:\n" + validKeys.join('\n')));
-          }
-          let info = body[exactMatch || validKeys[0]];
-          let url = info.versions[info.preferred].swaggerUrl;
-          integrateURL(args.name || integration, validKeys[0], url, true, callback);
-        })
-      })
+      let packageNames = args.integrations.map(i => PACKAGE_PREFIX + '/' + i);
+      proc.exec('npm install --save ' + packageNames.join(' '), (err, stdout, stderr) => {
+        if (err) return callback(err);
+        callback();
+      });
     }
   })
 }
 
-const addIntegration = (name, type, spec, callback) => {
+const addIntegration = (directory, name, type, spec, callback) => {
   name = name || getNameFromHost(spec.host);
-  let filename = path.join(datafire.integrationsDirectory, name + (type === 'rss' ? RSS_SUFFIX : OPENAPI_SUFFIX));
+  let filename = path.join(directory, name, 'integration.json');
   logger.log('Writing integration ' + name + ' to ' + filename.replace(process.cwd(), '.'));
-  fs.writeFile(filename, JSON.stringify(spec, null, 2), callback);
+  spec.info['x-datafire'] = {name, type};
+  fs.mkdir(path.join(directory, name), err => {
+    if (err && err.code !== 'EEXIST') return callback(err);
+    fs.writeFile(filename, JSON.stringify(spec, null, 2), e => {
+      if (e) return callback(e);
+      logger.log('Created integration ' + name + ' in ' + filename.replace(process.cwd(), '.'));
+      callback(null, spec);
+    });
+  })
 }
 
 const getLocalSpec = (name) => {
   return NATIVE_INTEGRATIONS.filter(fname => fname.startsWith(name + '.'))[0];
 }
 
-const integrateFile = (name, callback) => {
+const integrateFile = (dir, name, callback) => {
   let filename = getLocalSpec(name);
   let type = filename.indexOf('.rss.') === -1 ? 'openapi' : 'rss';
   if (!filename) return callback(new Error("Integration " + name + " not found"));
   fs.readFile(path.join(NATIVE_INTEGRATIONS_DIR, filename), 'utf8', (err, data) => {
     if (err) return callback(err);
-    addIntegration(name, type, JSON.parse(data), callback);
+    addIntegration(dir, name, type, JSON.parse(data), callback);
   });
 }
 
@@ -110,7 +106,7 @@ const getNameFromHost = (host) => {
   return host.replace(/\./, '_');
 }
 
-const integrateURL = (name, key, url, applyPatches, callback) => {
+const integrateOpenAPI = (dir, name, url, patch, callback) => {
   request.get(url, (err, resp, body) => {
     if (err) return callback(err);
     if (resp.headers['content-type'].indexOf('yaml') !== -1) {
@@ -119,46 +115,75 @@ const integrateURL = (name, key, url, applyPatches, callback) => {
       body = JSON.parse(body);
     }
     if (!body.host) return callback(new Error("Invalid swagger:" + JSON.stringify(body, null, 2)))
-    if (applyPatches) maybePatchIntegration(body);
-    if (key) body.info['x-datafire-key'] = key;
-    addIntegration(name, 'openapi', body, callback);
+    if (patch) patch(body);
+    addIntegration(dir, name, 'openapi', body, callback);
   })
 }
 
-const integrateRSS = (name, url, callback) => {
-  let urlObj = urlParser.parse(url);
-  if (!name) {
-    name = getNameFromHost(urlObj.hostname);
+const integrateRSS = (dir, name, urls, callback) => {
+  if (typeof urls === 'string') {
+    urls = {
+      getItems: urls,
+    }
   }
   let spec = {
     swagger: '2.0',
-    host: urlObj.hostname,
     basePath: '/',
-    schemes: [urlObj.protocol.substring(0, urlObj.protocol.length - 1)],
     paths: {},
-    definitions: {Feed: RSS_SCHEMA}
+    definitions: {Feed: RSS_SCHEMA},
+    info: {},
   }
-  spec.paths[urlObj.pathname] = {
-    get: {
-      operationId: 'getItems',
-      description: "Retrieve the RSS feed",
-      responses: {
-        '200': {description: "OK", schema: {$ref: '#/definitions/Feed'}}
+  for (let operation in urls) {
+    let url = urls[operation];
+    let urlObj = urlParser.parse(url);
+    urlObj.pathname = urlObj.pathname.replace(/%7B/g, '{').replace(/%7D/g, '}');
+    spec.host = urlObj.hostname;
+    spec.schemes = [urlObj.protocol.substring(0, urlObj.protocol.length - 1)];
+    if (!name) {
+      name = getNameFromHost(urlObj.hostname);
+    }
+    spec.paths[urlObj.pathname] = {
+      get: {
+        operationId: operation,
+        description: "Retrieve the RSS feed",
+        responses: {
+          '200': {description: "OK", schema: {$ref: '#/definitions/Feed'}}
+        },
+        parameters: (urlObj.pathname.match(/\{\w+\}/g) || [])
+              .map(p => p.substring(1, p.length - 1))
+              .map(p => ({
+                name: p,
+                in: 'path',
+                type: 'string',
+                required: true,
+              }))
       }
     }
   }
-  rssParser.parseURL(url, (err, feed) => {
+  async.parallel(Object.keys(spec.paths).map(path => {
+    let op = spec.paths[path].get;
+    return acb => {
+      if (op.parameters.length) return acb();
+      rssParser.parseURL(spec.schemes[0] + '://' + spec.host + path, (err, feed) => {
+        if (err) return acb(err);
+        feed = feed.feed;
+        spec.paths[path].get.summary = feed.title;
+        spec.paths[path].get.description = feed.description;
+        acb();
+      })
+    }
+  }), err => {
     if (err) return callback(err);
-    feed = feed.feed;
-    spec.info = {
-      title: feed.title,
-      description: feed.description,
-    };
-    addIntegration(name, 'rss', spec, callback);
+    let paths = Object.keys(spec.paths);
+    if (paths.length === 1) {
+      spec.info.title = spec.paths[paths[0]].summary;
+      spec.info.description = spec.paths[paths[0]].description;
+    }
+    addIntegration(dir, name, 'rss', spec, callback);
   })
 }
 
-const integrateSpec = (name, format, url, callback) => {
+const integrateSpec = (dir, name, format, url, callback) => {
   let cmd = 'api-spec-converter "' + url + '" --from ' + format + ' --to swagger_2';
   proc.exec(cmd, (err, stdout) => {
     if (err) {
@@ -166,17 +191,7 @@ const integrateSpec = (name, format, url, callback) => {
       logger.log('npm install -g api-spec-converter');
       return callback(err);
     }
-    let filename = path.join(datafire.integrationsDirectory, name + OPENAPI_SUFFIX);
-    addIntegration(name, 'openapi', JSON.parse(stdout), callback);
+    addIntegration(dir, name, 'openapi', JSON.parse(stdout), callback);
   })
 }
 
-const maybePatchIntegration = (spec) => {
-  let patch = null;
-  try {
-    patch = require('../patches/' + spec.host);
-  } catch (e) {
-    return;
-  }
-  patch(spec);
-}

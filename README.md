@@ -41,10 +41,9 @@ as well as make test calls.
 
 
 ## Examples
-> See [Datafire/headlines](https://github.com/DataFire/headlines) for a reference project.
+> See [Datafire-flows/headlines](https://github.com/DataFire-flows/headlines) for a reference project.
 
-* [Quickstart](examples/0.%20quickstart)
-* [News Headlines](examples/headlines) - Send yourself a daily e-mail with headlines from NPR, CNN, and NYTimes
+* [News Headlines](https://github.com/DataFire-flows/headlines) - Send yourself a daily e-mail with headlines from NPR, CNN, and NYTimes
 * [Listen to This](examples/listen_to_this) - Create a Spotify playlist from tracks posted to Reddit's r/listentothis
 * [GitHub to Trello](examples/github_to_trello) - Create Trello cards for every issue in your repo
 * [Heroku Crash Alerts](examples/crash_alerts) - Get a Slack message when a Heroku process crashes
@@ -116,13 +115,14 @@ datafire list -a          # View all available integrations
 datafire list -a -q news  # Search for integrations by keyword
 datafire list             # View installed integrations
 
-datafire integrate gmail   # Add integrations by name (or a substring)
+datafire integrate google-gmail            # Add integrations by name
+npm install --save @datafire/google-gmail  # Or by NPM package
 
-datafire describe gmail                                # Show info and operations
-datafire describe gmail -o gmail.users.messages.list   # Show operation details
-datafire describe gmail -o "GET /{userId}/messages"    # Alternative operation name
+datafire describe google-gmail                              # Show info and operations
+datafire describe google-gmail -o users.messages.list       # Show operation details
+datafire describe google-gmail -o "GET /{userId}/messages"  # Alternative operation name
 
-datafire authenticate gmail   # Store credentials for later use
+datafire authenticate google-gmail   # Store credentials for later use
 
 # Make a test call to the API
 datafire call github -o "GET /users"

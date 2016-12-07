@@ -12,6 +12,7 @@ const CALLBACK_HTML_FILE = path.join(__dirname, '..', 'www', 'oauth_callback.htm
 
 const datafire = require('../index');
 const logger = require('../lib/logger');
+const locations = require('../lib/locations');
 
 const QUESTION_SETS = {
   alias: [
@@ -46,7 +47,9 @@ QUESTION_SETS.oauth2 = QUESTION_SETS.oauth_tokens.concat(QUESTION_SETS.oauth_cli
 let getQuestions = (secDef, allDefs) => {
   let qs = JSON.parse(JSON.stringify(QUESTION_SETS[secDef.type]));
   if (secDef.type === 'apiKey') {
-    let allApiKeys = Object.keys(allDefs).map(k => allDefs[k]).filter(d => d.type === 'apiKey');
+    let allApiKeys = Object.keys(allDefs)
+          .map(k => ({name: k, def: allDefs[k]}))
+          .filter(d => d.def.type === 'apiKey');
     qs = allApiKeys.map(def => {
       return {
         name: def.name,
@@ -59,6 +62,14 @@ let getQuestions = (secDef, allDefs) => {
 
 let getChooseDefQuestion = (secOptions) => {
   let qs = JSON.parse(JSON.stringify(QUESTION_SETS.choose_definition));
+  if (secOptions.filter(o => o.def.type === 'apiKey').length === secOptions.length) {
+    return [{
+      name: qs[0].name,
+      type: 'list',
+      choices: [{name: '(press enter to continue)', value: secOptions[0]}],
+      message: "You can specify one or more apiKeys for this API"
+    }]
+  }
   qs[0].choices = secOptions.map(o => {
     let description = '(' + o.name;
     if (o.def.description) description += ' - ' + o.def.description;
@@ -83,13 +94,13 @@ let setDefaults = (questions, defaults) => {
 }
 
 let getAccounts = (integration) => {
-  let credFile = path.join(datafire.credentialsDirectory, integration + '.json');
+  let credFile = path.join(locations.credentials[0], integration + '.json');
   return fs.existsSync(credFile) ? require(credFile) : {};
 }
 
 module.exports = (args) => {
   try {
-    fs.mkdirSync(datafire.credentialsDirectory);
+    fs.mkdirSync(locations.credentials[0]);
   } catch (e) {}
 
   let integration = datafire.Integration.new(args.integration);
@@ -173,7 +184,7 @@ let generateToken = (integration, secOption, accounts, accountToEdit, clientAcco
 }
 let saveAccounts = (integration, accounts) => {
   let oldCreds = getAccounts(integration.name);
-  let credFile = path.join(datafire.credentialsDirectory, integration.name + '.json');
+  let credFile = path.join(locations.credentials[0], integration.name + '.json');
   logger.log('Saving credentials to ' + credFile.replace(process.cwd(), '.'));
   fs.writeFileSync(credFile, JSON.stringify(accounts, null, 2));
 }

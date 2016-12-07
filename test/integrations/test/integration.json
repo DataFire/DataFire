@@ -2,7 +2,10 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0",
-    "title": "DataFire test"
+    "title": "DataFire test",
+    "x-datafire": {
+      "type": "openapi"
+    }
   },
   "host": "localhost:3333",
   "basePath": "/",
