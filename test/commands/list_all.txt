@@ -18,8 +18,17 @@ azure-arm-analysisservices
   AzureAnalysisServices
   The Azure Analysis Services Web API provides a RESTful set of web services that enables users to ...
 
+azure-arm-apimanagement-apimdeployment
+  ApiManagementClient
+  Use these REST APIs to manage Azure API Management deployment.
+
+azure-arm-apimanagement-apimmanagement
+  ApiManagementClient
+  Use these REST APIs for performing operations on entities like API, Product, and Subscription ass...
+
 azure-arm-authorization
   AuthorizationManagementClient
+  Role based access control provides you a way to apply granular level policy administration down t...
 
 azure-arm-batch
   BatchManagement
@@ -43,17 +52,24 @@ azure-arm-compute-containerservice
   ContainerServiceClient
   The Container Service Client.
 
+azure-arm-containerregistry
+  ContainerRegistryManagementClient
+
 azure-arm-devtestlabs
   DevTestLabsClient
-  The DevTest Labs Client.
+  Azure DevTest Labs REST API.
 
 azure-arm-dns
   DnsManagementClient
   The DNS Management Client.
 
+azure-arm-documentdb
+  DocumentDB
+  Azure DocumentDB Database Service Resource Provider REST API
+
 azure-arm-eventhub
   EventHubManagementClient
-  Azure EventHub client
+  Azure Event Hubs client
 
 azure-arm-insights
   InsightsManagementClient
@@ -72,6 +88,7 @@ azure-arm-keyvault
 
 azure-arm-logic
   LogicManagementClient
+  REST API for Azure Logic Apps.
 
 azure-arm-machinelearning-commitmentplans
   Azure ML Commitment Plans Management Client
@@ -99,7 +116,7 @@ azure-arm-notificationhubs
 
 azure-arm-powerbiembedded
   Power BI Embedded Management Client
-  Client to manage your Power BI embedded workspace collections and retrieve workspaces.
+  Client to manage your Power BI Embedded workspace collections and retrieve workspaces.
 
 azure-arm-recoveryservices
   RecoveryServicesClient
@@ -109,7 +126,7 @@ azure-arm-recoveryservicesbackup
 
 azure-arm-redis
   RedisManagementClient
-  REST API for Azure Redis Cache Service
+  REST API for Azure Redis Cache Service.
 
 azure-arm-scheduler
   SchedulerManagementClient
@@ -120,11 +137,15 @@ azure-arm-search
 
 azure-arm-servermanagement
   ServerManagement
-  REST API for Azure Server Management Service
+  REST API for Azure Server Management Service.
 
 azure-arm-servicebus
   ServiceBusManagementClient
   Azure Service Bus client
+
+azure-arm-sql
+  Azure SQL Database API spec
+  Provides create, read, update and delete functionality for Azure SQL resources including servers,...
 
 azure-arm-storage
   StorageManagementClient
@@ -229,6 +250,8 @@ clarify
 clickmeter
   ClickMeter
   Api dashboard for ClickMeter API
+
+cnn-rss
 
 consumerfinance.gov
   The Consumer Financial Protection Bureau
@@ -537,6 +560,10 @@ google-kgsearch
   Knowledge Graph Search
   Knowledge Graph Search API allows developers to search the Google Knowledge Graph for entities.
 
+google-language
+  Google Cloud Natural Language
+  Google Cloud Natural Language API provides natural language understanding technologies to develop...
+
 google-licensing
   Enterprise License Manager
   Licensing API to view and manage license for your domain.
@@ -649,6 +676,10 @@ google-siteverification
   Google Site Verification
   Verifies ownership of websites or domains with Google.
 
+google-slides
+  Google Slides
+  An API for creating and editing Google Slides presentations.
+
 google-spectrum
   Google Spectrum Database
   API for spectrum-management functions.
@@ -725,6 +756,10 @@ graphhopper
   Route Optimization
   Our Route Optimization API solves the so called vehicle routing problem fast. It calculates an op...
 
+hacker-news
+  Hacker News
+  Hacker News is a social news website focusing on computer science and entrepreneurship
+
 healthcare.gov
   Healthcare
 
@@ -767,6 +802,10 @@ instagram
 jirafe
   Jirafe Events
   API endpoins for sending Jirafe events
+
+kaltura
+  Kaltura
+  The Kaltura API
 
 learnifier
   Learnifier
@@ -826,6 +865,8 @@ netlicensing
 netlify
   Netlify's API definition
 
+npr-rss
+
 nrel-building-case-studies
   High Performance Building Database
   The Buildings Database is a shared resource for the building industry. The Database, developed by...
@@ -873,6 +914,8 @@ nytimes-most_popular_api
 nytimes-movie_reviews
   Movie Reviews
   With the Movie Reviews API, you can search New York Times movie reviews by keyword and get lists ...
+
+nytimes-rss
 
 nytimes-semantic_api
   Semantic
@@ -1017,6 +1060,9 @@ spectrocoin
 spotify
   Spotify
 
+squareup
+  Square Connect
+
 stackexchange
   StackExchange
   Stack Exchange is a network of 130+ Q&A communities including Stack Overflow.
@@ -1071,6 +1117,10 @@ waag
 
 watchful.li
   watchful.li
+
+wavecell
+  Wavecell.Sms.Api
+  This API allows Wavecell customers to originate request to send SMS messages anywhere in the Worl...
 
 wikimedia
   Wikimedia
