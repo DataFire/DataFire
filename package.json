@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/DataFire/DataFire#readme",
   "dependencies": {
+    "@datafire/mongodb": "0.0.3",
     "async": "^2.1.2",
     "babel-polyfill": "^6.16.0",
     "btoa": "^1.1.2",
