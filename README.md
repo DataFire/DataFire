@@ -48,10 +48,6 @@ The [DataFire-flows](https://github.com/DataFire-flows) account has a few exampl
 * [Listen to This](https://github.com/DataFire-flows/listen-to-this) - Create a Spotify playlist from tracks posted to Reddit's r/listentothis
 * [GitHub to Trello](https://github.com/DataFire-flows/github-issues-to-trello) - Create Trello cards for every issue in your repo
 * [Heroku Crash Alerts](https://github.com/DataFire-flows/heroku-crash-alerts) - Get a Slack message when a Heroku process crashes
-* [Authentication](examples/1.%20authentication)
-* [Error Handling](examples/2.%20error_handling)
-* [Pagination](examples/3.%20pagination)
-* [Data Diffing](examples/4.%20data_diffing)
 
 
 ## Writing Flows
