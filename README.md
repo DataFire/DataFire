@@ -66,14 +66,14 @@ First, let's create a new folder and add the Hacker News integration:
 ```
 mkdir hacker_news_flow && cd hacker_news_flow
 npm install datafire
-datafire integrate hacker_news
+datafire integrate hacker-news
 ```
 
 Now we can create a Flow. Edit `./getTopStory.js`:
 ```js
 const datafire = require('datafire');
 const fs = require('fs');
-const hackerNews = datafire.Integration.new('hacker_news');
+const hackerNews = datafire.Integration.new('hacker-news');
 
 const flow = module.exports =
         new datafire.Flow('Top HN Story', 'Copies the top HN story to a local file');
@@ -100,7 +100,7 @@ flow
 
 Now let's run it:
 ```
-datafire run -f ./getTopStory.js
+datafire run ./getTopStory.js
 ```
 You should see `story.json` in your current directory.
 
