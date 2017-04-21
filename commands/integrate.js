@@ -47,7 +47,7 @@ const RSS_SCHEMA = {
 
 module.exports = (args, callback) => {
   let specFormat = SPEC_FORMATS.filter(f => args[f])[0];
-  let directory = path.join(process.cwd(), 'integrations');
+  let directory = args.destination || path.join(process.cwd(), 'integrations');
   if (args.openapi) {
     integrateOpenAPI(directory, args.name, args.openapi, args.patch, callback);
   } else if (specFormat) {

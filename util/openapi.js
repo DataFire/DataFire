@@ -1,7 +1,11 @@
 let openapi = module.exports = {};
 
-openapi.initialize = function(spec) {
-  spec = dereference(spec, spec);
+openapi.initialize = function(spec, derefDefs=true) {
+  if (derefDefs) {
+    spec = dereference(spec, spec);
+  } else {
+    spec.paths = dereference(spec.paths, spec);
+  }
   for (let path in spec.paths) {
     let pathParams = spec.paths[path].parameters || [];
     delete spec.paths[path].parameters;
