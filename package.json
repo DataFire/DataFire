@@ -14,7 +14,6 @@
   "license": "MIT",
   "dependencies": {
     "ajv": "^4.11.5",
-    "body-parser": "^1.17.1",
     "chalk": "^1.1.3",
     "columnify": "^1.5.4",
     "cron": "^1.2.1",

@@ -12,9 +12,6 @@
   "produces": [
     "application/json"
   ],
-  "consumes": [
-    "application/json"
-  ],
   "paths": {
     "/ping": {
       "get": {
@@ -27,13 +24,21 @@
           "400": {
             "description": "Invalid request",
             "schema": {
-              "type": "string"
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
             }
           },
           "500": {
             "description": "Unknown error",
             "schema": {
-              "type": "string"
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
@@ -48,6 +53,11 @@
             "in": "query",
             "required": true,
             "maxLength": 10
+          },
+          {
+            "name": "uppercase",
+            "type": "boolean",
+            "in": "query"
           }
         ],
         "responses": {
@@ -58,13 +68,21 @@
           "400": {
             "description": "Invalid request",
             "schema": {
-              "type": "string"
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
             }
           },
           "500": {
             "description": "Unknown error",
             "schema": {
-              "type": "string"
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
@@ -92,13 +110,21 @@
           "400": {
             "description": "Invalid request",
             "schema": {
-              "type": "string"
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
             }
           },
           "500": {
             "description": "Unknown error",
             "schema": {
-              "type": "string"
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
@@ -107,6 +133,11 @@
     "/player/{id}": {
       "post": {
         "parameters": [
+          {
+            "in": "query",
+            "name": "insert",
+            "type": "boolean"
+          },
           {
             "in": "path",
             "required": true,
@@ -159,16 +190,27 @@
           "400": {
             "description": "Invalid request",
             "schema": {
-              "type": "string"
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
             }
           },
           "500": {
             "description": "Unknown error",
             "schema": {
-              "type": "string"
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
             }
           }
-        }
+        },
+        "consumes": [
+          "application/json"
+        ]
       }
     }
   }
