@@ -1,5 +1,4 @@
 # DataFire
-> This is a **preview release**. The API may change.
 
 [![Travis][travis-image]][travis-link]
 [![Code Climate][climate-image]][climate-link]
@@ -10,19 +9,19 @@
 [![Share on Twitter][twitter-image]][twitter-link]
 [![Chat on gitter][gitter-image]][gitter-link]
 
-DataFire is an open source integration framework - think Grunt for APIs, or Zapier for the command line.
+DataFire is an open source framework for building APIs and integrations.
 It is built on top of open standards such as RSS and
-[Open API](https://github.com/OAI/OpenAPI-Specification). Flows can be run locally, on
-AWS Lambda, Google Cloud, or Azure via the [Serverless](https://github.com/serverless/serverless) framework, or on
+[Open API](https://github.com/OAI/OpenAPI-Specification). Projects can be run locally, on a
+cloud provider (AWS/Google/Azure), or on
 [DataFire.io](https://datafire.io).
 
-DataFire natively supports over
-[250 public APIs](https://github.com/DataFire/Integrations/tree/master/integrations) including:
+DataFire provides over 7,000 pre-built actions for over 250 APIs, Databases, and RSS feeds, including:
 
 &bull; Slack &bull; GitHub &bull; Twilio &bull; Trello &bull; Spotify &bull;
 Instagram &bull; Gmail &bull; Google Analytics &bull; YouTube &bull;
 
-as well as MongoDB, RSS feeds, and [custom integrations](docs/Integrations.md).
+Actions are composable, so you can create your own actions by combining pre-built actions
+and custom code. They can be triggered by an HTTP endpoint, on a schedule, or manually.
 
 ## Installation
 > Be sure to install DataFire both globally and as a project dependency.
@@ -32,132 +31,136 @@ npm install -g datafire
 npm install --save datafire
 ```
 
-## Exploring Integrations
-You can use the command line tool to search for and install integrations, as well as
-make test calls. 
+## Hello World
+Here's a quick Hello World to get you started. You can view the [full example here](docs/Hello%20World.md),
+which includes input validation, custom HTTP responses, and more.
 
-![Exploing Integrations](./docs/explore.gif)
-
-
-## Examples
-> See [DataFire-flows/headlines](https://github.com/DataFire-flows/headlines) for a reference project.
-
-The [DataFire-flows](https://github.com/DataFire-flows) account has a few example flows you can clone and try.
-
-* [News Headlines](https://github.com/DataFire-flows/headlines) - Send yourself a daily e-mail with headlines from NPR, CNN, and NYTimes
-* [Listen to This](https://github.com/DataFire-flows/listen-to-this) - Create a Spotify playlist from tracks posted to Reddit's r/listentothis
-* [GitHub to Trello](https://github.com/DataFire-flows/github-issues-to-trello) - Create Trello cards for every issue in your repo
-* [Heroku Crash Alerts](https://github.com/DataFire-flows/heroku-crash-alerts) - Get a Slack message when a Heroku process crashes
-
-
-## Writing Flows
-> See [Flows.md](./docs/Flows.md) for the full documentation
-
-Flows allow you to make a series of calls to different APIs and services.
-You can synchronize, transfer, and react to data, no matter where it's stored.
-
-### Quickstart
-> You can view this flow in the [examples directory](./examples/0. quickstart).
-
-This quick tutorial will fetch stories from Hacker News, get the details
-for the top story, then store the results to a local file.
-
-First, let's create a new folder and add the Hacker News integration:
-```
-mkdir hacker_news_flow && cd hacker_news_flow
-npm install datafire
-datafire integrate hacker_news
-```
-
-Now we can create a Flow. Edit `./getTopStory.js`:
+#### ./hello.js
 ```js
-const datafire = require('datafire');
-const fs = require('fs');
-const hackerNews = datafire.Integration.new('hacker_news');
-
-const flow = module.exports =
-        new datafire.Flow('Top HN Story', 'Copies the top HN story to a local file');
-
-flow
-  .step('stories', {
-    do: hackerNews.getStories(),
-    params: {storyType: 'top'},
-  })
-
-  .step('story_details', {
-    do: hackerNews.getItem(),
-    params: data => {
-      return {itemID: data.stories[0]}
-    }
-  })
-
-  .step('write_file', {
-    do: data => {
-      fs.writeFileSync('./story.json', JSON.stringify(data.story_details, null, 2));
-    }
-  });
+var datafire = require('datafire');
+module.exports = new datafire.Action({
+  handler: function(input) {
+    return "Hello, world!";
+  },
+});
 ```
 
-Now let's run it:
+#### ./DataFire.yml
+```yaml
+paths:
+  /hello:
+    get:
+      action: ./hello.js
+tasks:
+  say_hi:
+    action: ./hello.js
+    schedule:
+      rate: rate(2 hours)
 ```
-datafire run -f ./getTopStory.js
-```
-You should see `story.json` in your current directory.
 
-## Commands
-> Run `datafire --help` or `datafire <command> --help` for more info
-
+Now we can run:
 ```bash
-datafire list -a          # View all available integrations
-datafire list -a -q news  # Search for integrations by keyword
-datafire list             # View installed integrations
+datafire serve --port 3000 &
+# DataFire listening on port 3000
 
-datafire integrate google-gmail            # Add integrations by name
-npm install --save @datafire/google-gmail  # Or by NPM package
-
-datafire describe google-gmail                              # Show info and operations
-datafire describe google-gmail -o users.messages.list       # Show operation details
-datafire describe google-gmail -o "GET /{userId}/messages"  # Alternative operation name
-
-datafire authenticate google-gmail   # Store credentials for later use
-
-# Make a test call to the API
-datafire call github -o "GET /users"
-# Use stored credentials with --as
-datafire call github -o "GET /user" --as account_alias
-# Pass parameters with --params.foo
-datafire call github -o "GET /users/{username}" --params.username karpathy
-
-# Run a flow
-datafire run ./getMessages.js
+curl http://localhost:3000/hello
+# "Hello, world!"
 ```
 
 ## Integrations
 > See [Integrations.md](./docs/Integrations.md) for the full documentation
 
-You can add new integrations automatically from an OpenAPI specification or RSS feed.
-There is also experimental support for writing custom integrations.
+Integrations are available in the `@datafire` scope in npm. For example, to install `hacker_news`:
+```bash
+npm install @datafire/hacker_news
+```
+
+You can see a list of available integrations with `datafire list -a`.
+
+Each integration comes with a set of actions. For example, the `hacker_news` integration
+contains the `getStories`, `getItem`, and `getUser` actions. You can use these actions
+directly, or wrap them with your own actions.
+
+For example, you can create an API endpoint that returns your Hacker News profile
+just by adding a path in DataFire.yml:
+
+```js
+paths:
+  /hacker_news:
+    get:
+      action: hacker_news/getUser
+      input:
+        userID: 'norvig'
+```
+
+You can also run actions in JavaScript - the `run()` method will return a Promise:
+```js
+var hackerNews = require('@datafire/hacker-news').actions;
+
+hackerNews.getUser.run({
+  userID: 'norvig',
+}).then(user => {
+  console.log(user);
+}).catch(e => {
+  console.log('error', e);
+})
+```
+
+## Flows
+> [Read more about flows](docs/Flows.md)
+
+Flows allow you to create complex actions that make a series of calls to different
+APIs and services. They keep track of results at each step so you can reference them
+at any step in the flow.
+
 
 ## Authentication
-> See [Authentication.md](./docs/Authentication.md) for the full documentation
+> [Read more about authentication](docs/Authentication.md)
 
-DataFire can store authentication details for each integration, and multiple accounts
-can be created for a given integration.
-Support for basic authentication (username/password), API keys, and OAuth 2.0 is built-in.
+You can use the `datafire authenticate` command to add credentials to your project.
+You can also specify credentials in YAML, or programmatically (e.g. in environment variable).
 
-## Running Flows
-> See [RunningFlows.md](./docs/RunningFlows.md) for the full documentation
+For example, in DataFire.yml:
+```yml
+paths:
+  /github_profile:
+    get:
+      action: github/me
+      account:
+        access_token: "abcde"
+```
 
-Once you've written a flow, you have a number of options for running it:
+## Commands
+> Run `datafire --help` or `datafire <command> --help` for more info
 
-* Manually on the command line
-* On a schedule with cron
-* On AWS Lambda
-* Inside a Serverless project
-* On [DataFire.io](https://datafire.io)
+```bash
+datafire serve --port 3000  # Start API server
+datafire serve --tasks      # Start API server and start running tasks
 
-Lamdba, Serverless, and DataFire all offer ways to run your flow
-either on a schedule or in response to HTTP requests (webhooks).
+datafire list             # View installed integrations
+datafire list -a          # View all available integrations
+datafire list -a -q news  # Search for integrations by keyword
+
+datafire integrate --openapi http://petstore.swagger.io/v2/swagger.json
+datafire integrate --rss http://www.reddit.com/.rss
+
+datafire describe hacker-news           # Show info and actions
+datafire describe hacker-news/getItem   # Show action details
+
+datafire authenticate google-gmail      # Store credentials in DataFire-auth.yml
+
+# Run an action
+datafire run ./sendMessage.js
+
+# Run integration actions with [integration]/[action]
+datafire run hacker-news/getStories
+
+# Pass parameters with --input
+datafire run hacker-news/getStories --input.storyType top
+
+# Use stored credentials with --as
+datafire run github/me --as account_alias
+```
 
 [twitter-image]: https://img.shields.io/twitter/url/http/github.com/DataFire/DataFire.svg?style=social
 [twitter-link]: https://twitter.com/intent/tweet?text=DataFire%20-%20open+source+integration+framework:&url=http%3A%2F%2Fgithub.com%2FDataFire%2FDataFire

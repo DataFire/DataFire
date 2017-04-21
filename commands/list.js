@@ -3,9 +3,13 @@ const path = require('path');
 const request = require('request');
 const chalk = require('chalk');
 const datafire = require('../index');
-const logger = require('../lib/logger');
+const logger = require('../util/logger');
 
-const INTEGRATION_LOCATIONS = require('../lib/locations').integrations;
+const INTEGRATION_LOCATIONS = [
+  path.join(process.cwd(), 'integrations'),
+  path.join(process.cwd(), 'node_modules', '@datafire'),
+  '@datafire',
+];
 
 const INTEGRATION_LIST_URL = "https://raw.githubusercontent.com/DataFire/Integrations/master/list.json";
 const getAllIntegrations =  (callback) => {

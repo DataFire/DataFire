@@ -1,4 +1,5 @@
-hacker_news
-google-gmail
 hacker-news
-mongodb
+hacker-news_firebaseio
+http
+instagram
+medium

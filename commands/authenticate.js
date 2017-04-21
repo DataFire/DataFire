@@ -5,14 +5,14 @@ const inquirer = require('inquirer');
 const urlParser = require('url');
 const querystring = require('querystring');
 const request = require('request');
+const YAML = require('yamljs');
 
 const OAUTH_PORT = 3333;
 const DEFAULT_REDIRECT_URI = 'http://localhost:' + OAUTH_PORT;
 const CALLBACK_HTML_FILE = path.join(__dirname, '..', 'www', 'oauth_callback.html');
 
 const datafire = require('../index');
-const logger = require('../lib/logger');
-const locations = require('../lib/locations');
+const logger = require('../util/logger');
 
 const QUESTION_SETS = {
   alias: [
@@ -93,100 +93,90 @@ let setDefaults = (questions, defaults) => {
   });
 }
 
-let getAccounts = (integration) => {
-  let credFile = path.join(locations.credentials[0], integration + '.json');
-  return fs.existsSync(credFile) ? require(credFile) : {};
-}
-
-module.exports = (args) => {
-  try {
-    fs.mkdirSync(locations.credentials[0]);
-  } catch (e) {}
-
-  let integration = datafire.Integration.new(args.integration);
-  integration.initialize(err => {
-    if (err) throw err;
-    let secDefs = integration.spec.securityDefinitions;
-    if (!secDefs || !Object.keys(secDefs).length) {
-      logger.logError("No security definitions found for " + args.integration);
-      return;
+module.exports = (args, callback) => {
+  let project = datafire.Project.fromDirectory(args.directory);
+  let integration = datafire.Integration.fromName(args.integration);
+  let secDefs = integration.securityDefinitions;
+  if (!secDefs || !Object.keys(secDefs).length) {
+    logger.logError("No security definitions found for " + args.integration);
+    return;
+  }
+  let secOptions = Object.keys(secDefs).map(name => {
+    return {
+      name: name,
+      def: secDefs[name],
     }
-    let secOptions = Object.keys(secDefs).map(name => {
-      return {
-        name: name,
-        def: secDefs[name],
+  });
+  let accountToEdit = null;
+  let secOption = null;
+  if (args.as) {
+    accountToEdit = project.accounts[args.as];
+    if (!accountToEdit) throw new Error("Account " + args.as + " not found");
+    secOption = secOptions.filter(o => o.name === accountToEdit.securityDefinition)[0];
+    if (!secOption) throw new Error("Security definition " + accountToEdit.securityDefinition + " not found");
+  } else if (secOptions.length === 1) {
+    secOption = secOptions[0];
+  }
+  let questions = secOption ? [] : getChooseDefQuestion(secOptions);
+  inquirer.prompt(questions).then(answers => {
+    if (answers.definition) secOption = answers.definition;
+    if (args.generate_token) {
+      let clientAccount = accountToEdit;
+      if (args.client) {
+        clientAccount = project.accounts[args.client];
       }
-    });
-    let accounts = getAccounts(integration.name);
-    let accountToEdit = null;
-    let secOption = null;
-    if (args.as) {
-      accountToEdit = accounts[args.as];
-      if (!accountToEdit) throw new Error("Account " + args.as + " not found");
-      secOption = secOptions.filter(o => o.name === accountToEdit.securityDefinition)[0];
-      if (!secOption) throw new Error("Security definition " + accountToEdit.securityDefinition + " not found");
-    } else if (secOptions.length === 1) {
-      secOption = secOptions[0];
+      generateToken(project, integration, secOption, accountToEdit, clientAccount);
+    } else {
+      authenticate(project, integration, secOption, accountToEdit);
     }
-    let questions = secOption ? [] : getChooseDefQuestion(secOptions);
-    inquirer.prompt(questions).then(answers => {
-      if (answers.definition) secOption = answers.definition;
-      if (args.set_default) {
-        accounts.default = args.set_default;
-        saveAccounts(integration, accounts);
-      } else if (args.generate_token) {
-        let clientAccount = accountToEdit;
-        if (args.client) {
-          clientAccount = accounts[args.client];
-        }
-        generateToken(integration, secOption, accounts, accountToEdit, clientAccount);
-      } else {
-        authenticate(integration, secOption, accounts, accountToEdit);
-      }
-    })
+    callback();
+  }, e => {
+    throw e;
   })
 }
 
-let authenticate = (integration, secOption, accounts, accountToEdit) => {
-  let questions = getQuestions(secOption.def, integration.spec.securityDefinitions);
+let authenticate = (project, integration, secOption, accountToEdit) => {
+  let questions = getQuestions(secOption.def, integration.securityDefinitions);
   if (accountToEdit) questions = setDefaults(questions, accountToEdit);
   inquirer.prompt(questions).then(answers => {
     for (let k in answers) {
       if (!answers[k]) delete answers[k];
     }
+    if (secOption.def.type === 'apiKey') {
+      answers = {apiKeys: answers};
+    }
     answers.securityDefinition = secOption.name;
     if (accountToEdit) {
       for (let k in answers) accountToEdit[k] = answers[k];
-      saveAccounts(integration, accounts);
+      saveAccounts(project);
       return
     } else {
       inquirer.prompt(QUESTION_SETS.alias).then(aliasAnswer => {
-        accounts[aliasAnswer.alias] = answers;
-        saveAccounts(integration, accounts);
+        project.accounts[aliasAnswer.alias] = answers;
+        saveAccounts(project);
       })
     }
   })
 }
 
-let generateToken = (integration, secOption, accounts, accountToEdit, clientAccount) => {
+let generateToken = (project, integration, secOption, accountToEdit, clientAccount) => {
   let questions = [];
   if (!accountToEdit) questions = questions.concat(QUESTION_SETS.alias);
   if (!clientAccount) questions = questions.concat(QUESTION_SETS.oauth_client);
   inquirer.prompt(questions).then(answers => {
-    if (answers.alias) accountToEdit = accounts[answers.alias] = {};
+    if (answers.alias) accountToEdit = project.accounts[answers.alias] = {};
     if (answers.client_id) accountToEdit.client_id = answers.client_id;
     if (answers.client_secret) accountToEdit.client_secret = answers.client_secret;
     if (answers.redirect_uri) accountToEdit.redirect_uri = answers.redirect_uri;
     if (!clientAccount) clientAccount = accountToEdit;
     accountToEdit.securityDefinition = secOption.name;
-    startOAuthServer(integration, secOption.def, accounts, accountToEdit, clientAccount)
+    startOAuthServer(project, integration, secOption.def, accountToEdit, clientAccount)
   })
 }
-let saveAccounts = (integration, accounts) => {
-  let oldCreds = getAccounts(integration.name);
-  let credFile = path.join(locations.credentials[0], integration.name + '.json');
-  logger.log('Saving credentials to ' + credFile.replace(process.cwd(), '.'));
-  fs.writeFileSync(credFile, JSON.stringify(accounts, null, 2));
+let saveAccounts = (project) => {
+  let file = path.join(project.directory, 'DataFire-accounts.yml');
+  logger.log('Saving credentials to ' + file.replace(process.cwd(), '.'));
+  fs.writeFileSync(file, YAML.stringify({accounts: project.accounts}, 10));
 }
 
 let getOAuthURL = (integration, secDef, clientAccount, scopes) => {
@@ -194,7 +184,7 @@ let getOAuthURL = (integration, secDef, clientAccount, scopes) => {
   var url = secDef.authorizationUrl;
   var state = Math.random();
   url += '?response_type=' + (flow === 'implicit' ? 'token' : 'code');
-  url += '&redirect_uri=' + clientAccount.redirect_uri || DEFAULT_REDIRECT_URI;
+  url += '&redirect_uri=' + encodeURIComponent(clientAccount.redirect_uri || DEFAULT_REDIRECT_URI);
   url += '&client_id=' + encodeURIComponent(clientAccount.client_id);
   if (flow === 'accessCode') url += '&access_type=offline';
   if (scopes.length > 0) {
@@ -204,7 +194,7 @@ let getOAuthURL = (integration, secDef, clientAccount, scopes) => {
   return url;
 }
 
-let startOAuthServer = (integration, secDef, accounts, accountToEdit, clientAccount) => {
+let startOAuthServer = (project, integration, secDef, accountToEdit, clientAccount) => {
   let server = http.createServer((req, res) => {
     let urlObj = urlParser.parse(req.url);
     if (urlObj.pathname !== '/') {
@@ -239,7 +229,7 @@ let startOAuthServer = (integration, secDef, accounts, accountToEdit, clientAcco
         accountToEdit.refresh_token = body.refresh_token;
         accountToEdit.client_id = clientAccount.client_id;
         accountToEdit.client_secret = clientAccount.client_secret;
-        saveAccounts(integration, accounts);
+        saveAccounts(project);
       })
     } else {
       fs.readFile(CALLBACK_HTML_FILE, 'utf8', (err, data) => {
@@ -251,7 +241,7 @@ let startOAuthServer = (integration, secDef, accounts, accountToEdit, clientAcco
             if (answers.refresh_token) accountToEdit.refresh_token = answers.refresh_token;
             accountToEdit.client_id = clientAccount.client_id;
             accountToEdit.client_secret = clientAccount.client_secret;
-            saveAccounts(integration, accounts);
+            saveAccounts(project);
             server.close();
             process.exit(0);
           })

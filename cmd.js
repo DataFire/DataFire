@@ -1,8 +1,31 @@
-const logger = require('./lib/logger');
-const datafire = require('./index');
-const locations = require('./lib/locations');
+let yargs = require('yargs').argv;
+let logger = require('./util/logger');
 
 const COMMANDS = [{
+  name: 'version',
+  description: "Shows the current version",
+  runner: args => {
+    console.log("DataFire v" + require('./package').version);
+  }
+}, {
+  name: 'serve',
+  description: "Serve the DataFire project in the current directory",
+  examples: ["datafire serve --port 3000"],
+  runner: require('./commands/serve'),
+  options: [{
+    name: 'port',
+    alias: 'p',
+    description: "The port to use",
+  }, {
+    name: 'directory',
+    alias: 'd',
+    description: "Location of the DataFire project",
+  }, {
+    name: 'tasks',
+    alias: 't',
+    description: "Run tasks",
+  }]
+}, {
   name: 'list',
   description: "List integrations in the current project, or all available integrations if -a is used",
   examples: ["datafire list", "datafire list -a"],
@@ -19,7 +42,7 @@ const COMMANDS = [{
 }, {
   name: 'integrate [integrations..]',
   description: "Add an integration to the current project",
-  examples: ["datafire integrate hacker_news"],
+  examples: ["datafire integrate hacker-news"],
   runner: require('./commands/integrate'),
   options: [{
     name: 'openapi',
@@ -35,18 +58,14 @@ const COMMANDS = [{
     description: "Save to package.json as a dependency",
   }]
 }, {
-  name: 'describe <integration>',
+  name: 'describe <integration|action>',
   description: "Show details for an integration or operation",
   examples: [
     "datafire describe hacker_news",
-    "datafire describe hacker_news -o getUser",
+    "datafire describe hacker_news/getUser",
   ],
   runner: require('./commands/describe'),
   options: [{
-    name: 'operation',
-    alias: 'o',
-    description: "The operation to describe",
-  }, {
     name: 'query',
     alias: 'q',
     description: "Filters for operations matching the query",
@@ -60,9 +79,6 @@ const COMMANDS = [{
     name: 'as',
     description: 'The alias of the account to edit',
   }, {
-    name: 'set_default',
-    description: 'Set a default account for the given integration'
-  }, {
     name: 'generate_token',
     description: "Generate a new OAuth 2.0 token",
   }, {
@@ -70,32 +86,17 @@ const COMMANDS = [{
     description: "With generate_token, the account alias to use as the OAuth client",
   }]
 }, {
-  name: 'call <integration>',
-  description: "Make a test call to an operation",
-  examples: ["datafire call hacker_news -o getUser -p.username sama"],
-  runner: require('./commands/call'),
-  options: [{
-    name: 'operation',
-    alias: 'o',
-    required: true,
-    description: "The operation to call",
-  }, {
-    name: 'as',
-    description: "The account alias to use",
-  }, {
-    name: 'params',
-    alias: 'p',
-    description: "Pass parameters to the operation",
-  }]
-}, {
-  name: 'run <flow>',
-  examples: ["datafire run ./flow.js"],
-  description: "Run a flow locally",
+  name: 'run <action>',
+  description: "Run an action",
   runner: require('./commands/run'),
+  examples: [
+    "datafire run ./actions/doSomething.js",
+    "datafire run hacker-news/getItem -i.itemID 8863",
+  ],
   options: [{
-    name: 'params',
-    alias: 'p',
-    description: "Pass parameters to the flow",
+    name: 'input',
+    alias: 'i',
+    description: "Pass input to the action",
   }]
 }]
 
@@ -116,20 +117,24 @@ COMMANDS.forEach(cmd => {
           })
         },
         (args) => {
-          for (let k in args.params) {
-            args.params[k] = args.params[k].toString();
+          if (args.action) {
+            let parts = args.action.split('/');
+            let isFile = /^\.\//.test(args.action);
+            if (isFile) {
+              delete args.integration;
+            } else if (parts.length !== 2) {
+              delete args.action;
+            } else {
+              args.integration = parts[0];
+              args.action = parts[1];
+            }
           }
           let handleError = e => {
             if (!e) return;
-            logger.logError(e.toString());
-            if (args.verbose) {
-              logger.log(e.stack);
-            } else {
-              process.exit(1);
-            }
+            logger.logError(e.message);
+            logger.logError(e.stack);
+            process.exit(1);
           }
-          if (cmd.name === 'authenticate') args.directory = locations.credentials[0];
-          else args.directory = locations.integrations[0];
           try {
             cmd.runner(args, handleError);
           } catch (e) {

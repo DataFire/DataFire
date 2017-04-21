@@ -11,4 +11,3 @@ text:
   """
 time:   1172111685
 type:   comment
-

@@ -1,23 +1,75 @@
 # Authentication
-Datafire will store credentials for each integration in
-`./credentials/{integration}.json`. The credential file
-may contain one or more accounts.
 
-> Be sure to add `credentials/` to your .gitignore
+If a particular integration needs auth, it will look in `context.accounts['integration_name']`.
+You can populate accounts programmatically, or using YAML configurations.
+
+You can use the `datafire authenticate` command to add credentials to your project.
+You can also specify credentials in YAML or programmatically (e.g. in environment variable).
+
+## YAML
+You can specify credentials for a particular action:
+
+```yml
+paths:
+  /github_profile:
+    get:
+      action: github/me
+      accounts:
+        github:
+          access_token: "abcde"
+```
+
+The `datafire authenticate` command will store each account in
+DataFire-accounts.yml, along with an alias you can reference elsewhere.
+
+For example, if we've added an account with alias `lucy`,
+
+```yml
+paths:
+  /github_profile:
+    get:
+      action: github/me
+      accounts:
+        github: lucy
+```
+
+or in NodeJS:
+```js
+var github = require('@datafire/github');
+var action = new datafire.Action({
+  handler: (input, context) => {
+    context.accounts.github = context.accounts.lucy;
+    return github.me.run({}, context);
+  },
+});
+```
+
+## Programmatically
+
+You can add your credentials at runtime:
+
+```js
+var github = require('@datafire/github');
+var action = new datafire.Action({
+  handler: (input, context) => {
+    context.accounts.github {
+      access_token: process.env.GITHUB_OAUTH_TOKEN,
+    }
+    return github.me.run({}, context);
+  },
+});
+```
+
+## Command-line Usage
 
 To add a new account, run
 ```
 datafire authenticate <integration>
 ```
-DataFire will prompt you for your credentials, as well as an `alias` for the account.
+DataFire will prompt you for your credentials, as well as an alias for the account.
 
-To use an account in your flow:
-```js
-let gmail = datafire.Integration.new('gmail').as('your_account_alias');
-```
-
-## OAuth 2.0
-Many integrations, such as GitHub and GMail, offer OAuth 2.0
+###  OAuth 2.0
+Many integrations, such as GitHub and Gmail, offer OAuth 2.0
 authentication. OAuth tokens are more secure than using
 API keys or passwords, but are a bit more complicated.
 
@@ -27,7 +79,13 @@ enter it by running:
 datafire authenticate <integration>
 ```
 
-To generate a new OAuth token, you'll need to create a new OAuth
+### Genrating OAuth tokens
+
+The easiest way to generate an OAuth token is on [datafire.io](https://datafire.io).
+However, you can also register your own OAuth client with the API provider
+in order to generate tokens yourself.
+
+First create a new OAuth
 client on the integration's website, for example,
 [github.com/settings/developers](https://github.com/settings/developers)
 or
@@ -51,19 +109,3 @@ If the integration uses an `implict` flow, you'll need to copy these
 credentials into the DataFire prompt. Otherwise DataFire will save them
 automatically.
 
-
-## Set a Default Account
-To make flows easier to transfer between people and organizations, you tell an integration
-to use the `default` account:
-
-```js
-let gmail = datafire.Integration.new('gmail').as('default');
-```
-
-This will use the default account for that integration, or choose
-the first account if no default is set.
-
-To set a default account, run
-```
-datafire authenticate <integration> --set_default alias_name
-```
