@@ -1,12 +1,6 @@
+DataFire-accounts.yml
 node_modules/
-
-integrations/
-!test/integrations/
-
-credentials/
-!test/credentials/
-
-examples/**/*.json
-
-.npmignore
 distribution/
+!integrations/
+integrations/*
+!/integrations/http/

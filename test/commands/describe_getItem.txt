@@ -1,12 +1,14 @@
 
 getItem
-GET	/item/{itemID}.json
 Get details for a given item
 
-Parameters
-itemID  integer  required  The ID of the item to retrieve
+Input
+object
+  itemID:       integer
+  The ID of the item to retrieve
 
-Response body
+
+Output
 object
   id:           integer
   title:        string

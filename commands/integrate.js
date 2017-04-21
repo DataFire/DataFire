@@ -8,7 +8,7 @@ const rssParser = require('rss-parser');
 const urlParser = require('url');
 const YAML = require('yamljs');
 
-const logger = require('../lib/logger');
+const logger = require('../util/logger');
 const datafire = require('../index');
 
 const SPEC_FORMATS = ['raml', 'wadl', 'swagger_1', 'api_blueprint', 'io_docs', 'google'];
@@ -47,12 +47,13 @@ const RSS_SCHEMA = {
 
 module.exports = (args, callback) => {
   let specFormat = SPEC_FORMATS.filter(f => args[f])[0];
+  let directory = path.join(process.cwd(), 'integrations');
   if (args.openapi) {
-    integrateOpenAPI(args.directory, args.name, args.openapi, args.patch, callback);
+    integrateOpenAPI(directory, args.name, args.openapi, args.patch, callback);
   } else if (specFormat) {
-    integrateSpec(args.directory, args.name, specFormat, args[specFormat], callback);
+    integrateSpec(directory, args.name, specFormat, args[specFormat], callback);
   } else if (args.rss) {
-    integrateRSS(args.directory, args.name, args.rss, callback);
+    integrateRSS(directory, args.name, args.rss, callback);
   } else {
     let packageNames = args.integrations.map(i => PACKAGE_PREFIX + '/' + i);
     let cmd = 'npm install ';
@@ -65,19 +66,29 @@ module.exports = (args, callback) => {
   }
 }
 
+const DATAFIRE_LOCATION = process.env.DATAFIRE_LOCATION || 'datafire';
+const OPENAPI_INTEGRATION_CODE = `
+let datafire = require('${DATAFIRE_LOCATION}');
+let openapi = require('./openapi.json');
+module.exports = datafire.Integration.fromOpenAPI(openapi);
+`.trim();
+
 const addIntegration = (directory, name, type, spec, callback) => {
   name = name || getNameFromHost(spec.host);
-  let filename = path.join(directory, name, 'integration.json');
-  logger.log('Writing integration ' + name + ' to ' + filename.replace(process.cwd(), '.'));
+  let baseDir = path.join(directory, name);
+  let openapiFilename = path.join(baseDir, 'openapi.json');
+  let integFilename = path.join(baseDir, 'index.js');
   spec.info['x-datafire'] = {name, type};
   fs.mkdir(directory, (err) => {
     if (err && err.code !== 'EEXIST') return callback(err);
     fs.mkdir(path.join(directory, name), err => {
       if (err && err.code !== 'EEXIST') return callback(err);
-      fs.writeFile(filename, JSON.stringify(spec, null, 2), e => {
+      fs.writeFile(openapiFilename, JSON.stringify(spec, null, 2), e => {
         if (e) return callback(e);
-        logger.log('Created integration ' + name + ' in ' + filename.replace(process.cwd(), '.'));
-        callback(null, spec);
+        fs.writeFile(integFilename, OPENAPI_INTEGRATION_CODE, e => {
+          logger.log('Created integration ' + name + ' in ' + baseDir.replace(process.cwd(), '.'));
+          callback(null, spec);
+        });
       });
     })
   })

@@ -1,54 +1,38 @@
+const path = require('path');
 const chalk = require('chalk');
 const datafire = require('../index');
-const logger = require('../lib/logger');
+const logger = require('../util/logger');
 
-let RESTIntegration = require('../lib/rest-integration');
-
-module.exports = (args) => {
-  let integration = datafire.Integration.new(args.integration);
-  integration.initialize(err => {
-    if (err) throw err;
-    let spec = integration.spec;
+module.exports = (args, callback) => {
+  let integration = datafire.Integration.fromName(args.integration);
+  logger.log();
+  if (!args.action) {
+    logger.log(chalk.blue(integration.title));
+    logger.logDescription(integration.description);
     logger.log();
-    if (!args.operation) {
-      logger.log(chalk.blue(spec.info.title));
-      if (integration instanceof RESTIntegration) {
-        let url = spec.schemes[0] + '://' + spec.host + spec.basePath;
-        logger.log(chalk.blue(url));
-      }
-      logger.logDescription(spec.info.description);
-      logger.log();
-      for (let opName in integration.spec.operations) {
-        let op = integration.spec.operations[opName];
-        if (args.query && !operationMatchesQuery(opName, op, args.query)) continue;
-        logger.logOperation(opName, op);
-        logger.log();
-      }
-    } else {
-      let operation = integration.getOperationDetails(args.operation);
-      let opName = '';
-      for (let opId in integration.spec.operations) {
-        if (integration.spec.operations[opId] === operation) {
-          opName = opId;
-        }
-      }
-      logger.logOperation(opName, operation);
-      logger.log();
-      logger.logParameters(operation.parameters);
-      logger.log();
-      logger.logResponse(operation.response);
+    for (let actionName in integration.actions) {
+      let action = integration.actions[actionName];
+      if (args.query && !actionMatchesQuery(actionName, action, args.query)) continue;
+      logger.logAction(actionName, action);
       logger.log();
     }
-  });
+  } else {
+    let action = integration.action(args.action);
+    logger.logAction(args.action, action);
+    logger.logHeading('\nInput');
+    logger.logSchema(action.inputSchema);
+    logger.logHeading('\nOutput');
+    logger.logSchema(action.outputSchema);
+    logger.log();
+  }
+  callback();
 }
 
-let operationMatchesQuery = (name, op, q) => {
+let actionMatchesQuery = (name, op, q) => {
   q = q.toLowerCase();
   let searchText = name + '\n';
+  if (op.title) searchText += op.title + '\n';
   if (op.description) searchText += op.description + '\n';
-  if (op.summary) searchText += op.summary + '\n';
-  if (op.path) searchText += op.path + '\n';
-  if (op.method) searchText += op.method + '\n';
   searchText = searchText.toLowerCase();
   return searchText.indexOf(q) !== -1;
 }
