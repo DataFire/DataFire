@@ -11,7 +11,16 @@ const ping = new lib.Action({
 })
 
 const hello = new lib.Action({
-  handler: input => Promise.resolve('Hello, ' + input.name),
+  inputs: [{
+    title: 'name',
+    type: 'string',
+    maxLength: 20,
+  }],
+  handler: (input, context) => {
+    let message = 'Hello, ' + input.name;
+    if (context.request.query.uppercase) message = message.toUpperCase();
+    return message;
+  },
 })
 
 const respond = new lib.Action({
@@ -58,6 +67,10 @@ const paths = {
           in: 'query',
           required: true,
           maxLength: 10,
+        }, {
+          name: 'uppercase',
+          type: 'boolean',
+          in: 'query',
         }],
       }
     },
@@ -80,8 +93,13 @@ const paths = {
     '/player/{id}': {
       post: {
         action: player,
+        parameters: [{
+          in: 'query',
+          name: 'insert',
+          type: 'boolean',
+        }]
       }
-    }
+    },
 }
 
 const BASE_URL = 'http://localhost:3333';
@@ -146,6 +164,36 @@ describe("Project", () => {
       expect(resp.statusCode).to.equal(200);
       obj.id = 23;
       expect(body).to.deep.equal(obj);
+      done();
+    })
+  });
+
+  it('should return error on non-int in path', (done) => {
+    const obj = {
+      name: 'Jordan',
+      aliases: ['MJ', 'His Airness'],
+    };
+    request.post(BASE_URL + '/player/MIKE', {json: true, body: obj}, (err, resp, body) => {
+      expect(resp.statusCode).to.equal(400);
+      expect(body).to.deep.equal({error: 'The "id" path parameter is invalid ("MIKE") \n"MIKE" is not a properly-formatted whole number'});
+      done();
+    })
+  });
+
+  it('should extend parameters with inputSchema', (done) => {
+    request.get(BASE_URL + '/hello?uppercase=true&name=world', {json: true}, (err, resp, body) => {
+      if (err) throw err;
+      expect(resp.statusCode).to.equal(200);
+      expect(body).to.equal("HELLO, WORLD");
+    })
+    done()
+  });
+
+  it('should prefer parameter.maxLength to schema.maxLength', (done) => {
+    let name = '1234567890abcd';  // max is 10 for param but 20 for inputSchema
+    request.get(BASE_URL + '/hello', {qs: {name}, json: true}, (err, resp, body) => {
+      expect(resp.statusCode).to.equal(400);
+      expect(resp.body).to.deep.equal({error: 'The "name" query parameter is invalid ("1234567890abcd") \nJSON Schema validation error. \nString is too long (14 chars), maximum 10'});
       done();
     })
   })
