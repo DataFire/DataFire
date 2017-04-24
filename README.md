@@ -55,8 +55,7 @@ paths:
 tasks:
   say_hi:
     action: ./hello.js
-    schedule:
-      rate: rate(2 hours)
+    schedule: rate(2 hours)
 ```
 
 Now we can run:
