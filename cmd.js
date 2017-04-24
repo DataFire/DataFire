@@ -118,15 +118,11 @@ COMMANDS.forEach(cmd => {
         },
         (args) => {
           if (args.action) {
-            let parts = args.action.split('/');
-            let isFile = /^\.?\//.test(args.action);
-            if (isFile) {
-              delete args.integration;
-            } else if (parts.length !== 2) {
+            let slash = args.action.indexOf('/');
+            if (slash === -1) {
               delete args.action;
             } else {
-              args.integration = parts[0];
-              args.action = parts[1];
+              delete args.integration;
             }
           }
           let handleError = e => {
