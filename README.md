@@ -126,8 +126,9 @@ paths:
   /github_profile:
     get:
       action: github/me
-      account:
-        access_token: "abcde"
+      accounts:
+        github:
+          access_token: "abcde"
 ```
 
 ## Commands
