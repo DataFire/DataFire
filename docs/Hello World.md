@@ -44,7 +44,7 @@ You can add inputs with [JSON Schema](http://json-schema.org/).
 ```js
 var datafire = require('datafire');
 module.exports = new datafire.Action({
-  handler: input => Promise.resolve('Hello, ' + input.name),
+  handler: input => 'Hello, ' + input.name,
   inputs: [{
     title: 'name',
     type: 'string',
