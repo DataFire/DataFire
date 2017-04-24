@@ -155,8 +155,8 @@ datafire run hacker_news/getStories
 # Pass parameters with --input
 datafire run hacker_news/getStories --input.storyType top
 
-# Use stored credentials with --as
-datafire run github/me --as account_alias
+# Use credentials with --accounts
+datafire run "github/GET /user" --accounts.github.access_token "abcde"
 ```
 
 [twitter-image]: https://img.shields.io/twitter/url/http/github.com/DataFire/DataFire.svg?style=social
