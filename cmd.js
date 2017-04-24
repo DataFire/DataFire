@@ -42,7 +42,7 @@ const COMMANDS = [{
 }, {
   name: 'integrate [integrations..]',
   description: "Add an integration to the current project",
-  examples: ["datafire integrate hacker-news"],
+  examples: ["datafire integrate --rss https://www.reddit.com/.rss"],
   runner: require('./commands/integrate'),
   options: [{
     name: 'openapi',
@@ -91,12 +91,16 @@ const COMMANDS = [{
   runner: require('./commands/run'),
   examples: [
     "datafire run ./actions/doSomething.js",
-    "datafire run hacker-news/getItem -i.itemID 8863",
+    "datafire run hacker_news/getItem -i.itemID 8863",
+    "datafire run github"
   ],
   options: [{
     name: 'input',
     alias: 'i',
     description: "Pass input to the action",
+  }, {
+    name: 'accounts',
+    description: "Pass in credentials"
   }]
 }]
 

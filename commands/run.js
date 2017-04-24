@@ -7,11 +7,15 @@ module.exports = function(args, callback) {
   if (typeof args.input === 'string' && action.inputSchema.type !== 'string') {
     args.input = JSON.parse(args.input);
   }
-  action.run(args.input)
+  let context = new datafire.Context({accounts: args.accounts, type: 'command'});
+  action.run(args.input, context)
     .then(result => {
       logger.logJSON(result);
       callback();
     }, e => {
+      if (e instanceof datafire.Response) {
+        e = new Error(e.statusCode + ": " + e.body);
+      }
       callback(e);
     })
 }
