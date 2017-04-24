@@ -10,19 +10,19 @@
 [![Share on Twitter][twitter-image]][twitter-link]
 [![Chat on gitter][gitter-image]][gitter-link]
 
-DataFire is an open source framework for building APIs and integrations.
-It is built on top of open standards such as RSS and
-[Open API](https://github.com/OAI/OpenAPI-Specification). Projects can be run locally, on a
+DataFire is an open source framework for building APIs and integrations. Projects can be run locally, on a
 cloud provider (AWS/Google/Azure), or on
 [DataFire.io](https://datafire.io).
 
-DataFire provides over 7,000 pre-built actions for over 250 APIs, Databases, and RSS feeds, including:
+DataFire is built on top of open standards such as RSS and
+[Open API](https://github.com/OAI/OpenAPI-Specification),
+making it easy to add new integrations. DataFire currently provides over 7,000 actions for over 250 services including:
 
 &bull; Slack &bull; GitHub &bull; Twilio &bull; Trello &bull; Spotify &bull;
-Instagram &bull; Gmail &bull; Google Analytics &bull; YouTube &bull;
+Instagram &bull; Gmail &bull; Google Analytics &bull; YouTube &bull; MongoDB &bull;
 
-Actions are composable, so you can create your own actions by combining pre-built actions
-and custom code. They can be triggered by an HTTP endpoint, on a schedule, or manually.
+Actions are composable, so you can create new actions by combining existing actions
+with code and external libraries. They can be triggered by an HTTP endpoint, on a schedule, or manually.
 
 ## Installation
 > Be sure to install DataFire both globally and as a project dependency.
@@ -34,7 +34,7 @@ npm install --save datafire
 
 ## Hello World
 Here's a quick Hello World to get you started. You can view the [full example here](docs/Hello%20World.md),
-which includes input validation, custom HTTP responses, and more.
+which includes input validation, custom HTTP responses, scheduled tasks, and more.
 
 #### ./hello.js
 ```js
@@ -52,10 +52,6 @@ paths:
   /hello:
     get:
       action: ./hello.js
-tasks:
-  say_hi:
-    action: ./hello.js
-    schedule: rate(2 hours)
 ```
 
 Now we can run:
@@ -125,7 +121,7 @@ For example, in DataFire.yml:
 paths:
   /github_profile:
     get:
-      action: github/me
+      action: github/GET /user
       accounts:
         github:
           access_token: "abcde"
@@ -159,8 +155,8 @@ datafire run hacker_news/getStories
 # Pass parameters with --input
 datafire run hacker_news/getStories --input.storyType top
 
-# Use stored credentials with --as
-datafire run github/me --as account_alias
+# Use credentials with --accounts
+datafire run "github/GET /user" --accounts.github.access_token "abcde"
 ```
 
 [twitter-image]: https://img.shields.io/twitter/url/http/github.com/DataFire/DataFire.svg?style=social

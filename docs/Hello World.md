@@ -6,7 +6,7 @@ that action to an HTTP endpoint and a scheduled task.
 ## Action
 We'll create our action in `hello.js`.
 
-`hello.js`:
+#### hello.js
 ```js
 var datafire = require('datafire');
 module.exports = new datafire.Action({
@@ -22,6 +22,7 @@ datafire run ./hello.js
 ## HTTP Endpoints
 Now let's create a `GET /hello` API endpoint in `DataFire.yml` that will trigger the Action:
 
+#### DataFire.yml
 ```yaml
 paths:
   /hello:
@@ -84,6 +85,19 @@ module.exports = new datafire.Action({
     } else {
       return "Hello, " + input.name;
     }
+  }
+})
+```
+
+## HTTP Requests
+You can use `context.request` to access the original request
+
+```js
+module.exports = new datafire.Action({
+  handler: (input, context) => {
+    console.log(context.method, context.path);
+    console.log(context.query.name);
+    console.log(context.headers.authorization);
   }
 })
 ```
