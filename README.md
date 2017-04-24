@@ -52,10 +52,6 @@ paths:
   /hello:
     get:
       action: ./hello.js
-tasks:
-  say_hi:
-    action: ./hello.js
-    schedule: rate(2 hours)
 ```
 
 Now we can run:
