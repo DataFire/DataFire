@@ -10,19 +10,19 @@
 [![Share on Twitter][twitter-image]][twitter-link]
 [![Chat on gitter][gitter-image]][gitter-link]
 
-DataFire is an open source framework for building APIs and integrations.
-It is built on top of open standards such as RSS and
-[Open API](https://github.com/OAI/OpenAPI-Specification). Projects can be run locally, on a
+DataFire is an open source framework for building APIs and integrations. Projects can be run locally, on a
 cloud provider (AWS/Google/Azure), or on
 [DataFire.io](https://datafire.io).
 
-DataFire provides over 7,000 pre-built actions for over 250 APIs, Databases, and RSS feeds, including:
+DataFire is built on top of open standards such as RSS and
+[Open API](https://github.com/OAI/OpenAPI-Specification),
+making it easy to add new integrations. DataFire currently provides over 7,000 actions for over 250 services including:
 
 &bull; Slack &bull; GitHub &bull; Twilio &bull; Trello &bull; Spotify &bull;
-Instagram &bull; Gmail &bull; Google Analytics &bull; YouTube &bull;
+Instagram &bull; Gmail &bull; Google Analytics &bull; YouTube &bull; MongoDB &bull;
 
-Actions are composable, so you can create your own actions by combining pre-built actions
-and custom code. They can be triggered by an HTTP endpoint, on a schedule, or manually.
+Actions are composable, so you can create new actions by combining existing actions
+with code and external libraries. They can be triggered by an HTTP endpoint, on a schedule, or manually.
 
 ## Installation
 > Be sure to install DataFire both globally and as a project dependency.
