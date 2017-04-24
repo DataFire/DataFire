@@ -13,6 +13,7 @@ const authorizer = new datafire.Action({
 })
 
 module.exports = new datafire.Project({
+  id: 'saas2',
   title: "SaaS #2",
   openapi: {
     host: 'localhost:3335',

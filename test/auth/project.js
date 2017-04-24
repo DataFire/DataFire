@@ -5,12 +5,12 @@ const saas2integ = require('./saas2').integration;
 const oauthinteg = require('./oauth').integration;
 
 const authorizer = new datafire.Action({
-  handler: (input, context) => {
+  handler: (input, ctx) => {
     const users = {
       jack: {name: "Jack White", secret: "foobar", saas2: 'user1'},
       meg: {name: "Meg White", secret: "bazquux", saas2: 'user2'},
     }
-    let user = users[context.request.headers.authorization];
+    let user = users[ctx.request.headers.authorization];
     if (!user) return new datafire.Response({statusCode: 401});
     return user;
   }
@@ -46,7 +46,8 @@ module.exports = new datafire.Project({
       get: {
         action: new datafire.Action({
           handler: (input, ctx) => {
-            return saas1integ.as({api_key: 'user1'}).actions["GET /secret"].run();
+            ctx.accounts.saas1 = {api_key: 'user1'};
+            return saas1integ.actions["GET /secret"].run(null, ctx);
           }
         })
       }
@@ -58,8 +59,8 @@ module.exports = new datafire.Project({
             saas2: saas2integ.securityDefinitions,
           },
           handler: (input, ctx) => {
-            let saas2 = saas2integ.as({api_key: ctx.accounts.user.saas2});
-            return saas2.actions['GET /files'].run();
+            ctx.accounts.saas2 = {api_key: ctx.accounts.user.saas2};
+            return saas2integ.actions['GET /files'].run(null, ctx);
           }
         })
       }
@@ -71,13 +72,11 @@ module.exports = new datafire.Project({
             oauth: oauthinteg.securityDefinitions,
           },
           handler: (input, ctx) => {
-            let oauth = oauthinteg.as({
-              oauth: {
-                access_token: 'expired',
-                refresh_token: 'invalid',
-              }
-            });
-            return oauth.actions['GET /test'].run();
+            ctx.accounts.oauth = {
+              access_token: 'expired',
+              refresh_token: 'invalid',
+            }
+            return oauthinteg.actions['GET /test'].run(null, ctx);
           }
         })
       }
@@ -89,13 +88,11 @@ module.exports = new datafire.Project({
             oauth: oauthinteg.securityDefinitions,
           },
           handler: (input, ctx) => {
-            let oauth = oauthinteg.as({
-              oauth: {
-                access_token: 'expired',
-                refresh_token: 'valid',
-              }
-            });
-            return oauth.actions['GET /test'].run();
+            ctx.accounts.oauth = {
+              access_token: 'expired',
+              refresh_token: 'valid',
+            }
+            return oauthinteg.actions['GET /test'].run(null, ctx);
           }
         })
       }
