@@ -55,8 +55,7 @@ paths:
 tasks:
   say_hi:
     action: ./hello.js
-    schedule:
-      rate: rate(2 hours)
+    schedule: rate(2 hours)
 ```
 
 Now we can run:
@@ -127,8 +126,9 @@ paths:
   /github_profile:
     get:
       action: github/me
-      account:
-        access_token: "abcde"
+      accounts:
+        github:
+          access_token: "abcde"
 ```
 
 ## Commands
@@ -145,19 +145,19 @@ datafire list -a -q news  # Search for integrations by keyword
 datafire integrate --openapi http://petstore.swagger.io/v2/swagger.json
 datafire integrate --rss http://www.reddit.com/.rss
 
-datafire describe hacker-news           # Show info and actions
-datafire describe hacker-news/getItem   # Show action details
+datafire describe hacker_news           # Show info and actions
+datafire describe hacker_news/getItem   # Show action details
 
-datafire authenticate google-gmail      # Store credentials in DataFire-auth.yml
+datafire authenticate google_gmail      # Store credentials in DataFire-auth.yml
 
 # Run an action
 datafire run ./sendMessage.js
 
 # Run integration actions with [integration]/[action]
-datafire run hacker-news/getStories
+datafire run hacker_news/getStories
 
 # Pass parameters with --input
-datafire run hacker-news/getStories --input.storyType top
+datafire run hacker_news/getStories --input.storyType top
 
 # Use stored credentials with --as
 datafire run github/me --as account_alias
