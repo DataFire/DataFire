@@ -4,7 +4,13 @@ const datafire = require('../index');
 const logger = require('../util/logger');
 
 module.exports = (args, callback) => {
-  let integration = datafire.Integration.fromName(args.integration);
+  let integrationName = args.integration;
+  if (!integrationName) {
+    let slash = args.action.indexOf('/');
+    integrationName = args.action.substring(0, slash);
+    args.action = args.action.substring(slash+1, args.action.length);
+  }
+  let integration = datafire.Integration.fromName(integrationName);
   logger.log();
   if (!args.action) {
     logger.log(chalk.blue(integration.title));
