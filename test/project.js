@@ -15,10 +15,14 @@ const hello = new lib.Action({
     title: 'name',
     type: 'string',
     maxLength: 20,
+  }, {
+    title: 'uppercase',
+    type: 'boolean',
+    default: false,
   }],
   handler: (input, context) => {
     let message = 'Hello, ' + input.name;
-    if (context.request.query.uppercase) message = message.toUpperCase();
+    if (input.uppercase) message = message.toUpperCase();
     return message;
   },
 })
@@ -72,6 +76,15 @@ const paths = {
           type: 'boolean',
           in: 'query',
         }],
+      }
+    },
+
+    '/hello_world': {
+      get: {
+        action: hello,
+        input: {
+          name: 'world',
+        }
       }
     },
 
@@ -146,6 +159,24 @@ describe("Project", () => {
       done();
     })
   });
+
+  it('should pass input from config', done => {
+    request.get(BASE_URL + '/hello_world', {json: true}, (err, resp, body) => {
+      if (err) throw err;
+      expect(resp.statusCode).to.equal(200, body.error);
+      expect(body).to.equal("Hello, world");
+      done();
+    })
+  });
+
+  it('should not allow HTTP input if config input is specified', done => {
+    request.get(BASE_URL + '/hello_world?uppercase=true', {json: true}, (err, resp, body) => {
+      if (err) throw err;
+      expect(resp.statusCode).to.equal(200, body.error);
+      expect(body).to.equal("Hello, world");
+      done();
+    })
+  })
 
   it('should allow custom response', (done) => {
     request.get(BASE_URL + '/respond?statusCode=418&message=I+am+a+teapot', {json: true}, (err, resp, body) => {

@@ -2,3 +2,4 @@ hacker-news
 hacker-news_firebaseio
 instagram
 medium
+mongodb
