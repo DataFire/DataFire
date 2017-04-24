@@ -67,10 +67,10 @@ module.exports = (args, callback) => {
 }
 
 const DATAFIRE_LOCATION = process.env.DATAFIRE_LOCATION || 'datafire';
-const OPENAPI_INTEGRATION_CODE = `
+const integrationCode = name => `
 let datafire = require('${DATAFIRE_LOCATION}');
 let openapi = require('./openapi.json');
-module.exports = datafire.Integration.fromOpenAPI(openapi);
+module.exports = datafire.Integration.fromOpenAPI(openapi, "${name}");
 `.trim();
 
 const addIntegration = (directory, name, type, spec, callback) => {
@@ -85,7 +85,7 @@ const addIntegration = (directory, name, type, spec, callback) => {
       if (err && err.code !== 'EEXIST') return callback(err);
       fs.writeFile(openapiFilename, JSON.stringify(spec, null, 2), e => {
         if (e) return callback(e);
-        fs.writeFile(integFilename, OPENAPI_INTEGRATION_CODE, e => {
+        fs.writeFile(integFilename, integrationCode(name), e => {
           logger.log('Created integration ' + name + ' in ' + baseDir.replace(process.cwd(), '.'));
           callback(null, spec);
         });
