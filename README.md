@@ -34,7 +34,7 @@ npm install --save datafire
 
 ## Hello World
 Here's a quick Hello World to get you started. You can view the [full example here](docs/Hello%20World.md),
-which includes input validation, custom HTTP responses, and more.
+which includes input validation, custom HTTP responses, scheduled tasks, and more.
 
 #### ./hello.js
 ```js
