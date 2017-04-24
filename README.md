@@ -121,7 +121,7 @@ For example, in DataFire.yml:
 paths:
   /github_profile:
     get:
-      action: github/me
+      action: github/GET /user
       accounts:
         github:
           access_token: "abcde"
