@@ -119,7 +119,7 @@ COMMANDS.forEach(cmd => {
         (args) => {
           if (args.action) {
             let parts = args.action.split('/');
-            let isFile = /^\.\//.test(args.action);
+            let isFile = /^\.?\//.test(args.action);
             if (isFile) {
               delete args.integration;
             } else if (parts.length !== 2) {
