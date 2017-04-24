@@ -6,6 +6,7 @@ const HOST = 'localhost:3336';
 const HOST_FULL = 'http://' + HOST;
 
 module.exports = new datafire.Project({
+  id: 'oauth',
   openapi: {
     host: HOST,
     securityDefinitions: {
