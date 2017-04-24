@@ -1,5 +1,5 @@
 # DataFire
-> This is a **preview release**. The API may change.
+> The DataFire API is changing! Check out [the latest preview](https://github.com/DataFire/DataFire/tree/v2)
 
 [![Travis][travis-image]][travis-link]
 [![Code Climate][climate-image]][climate-link]
