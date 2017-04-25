@@ -119,7 +119,7 @@ For example, in DataFire.yml:
 paths:
   /github_profile:
     get:
-      action: github/GET /user
+      action: github/user.get
       accounts:
         github:
           access_token: "abcde"
@@ -154,7 +154,7 @@ datafire run hacker_news/getStories
 datafire run hacker_news/getStories --input.storyType top
 
 # Use credentials with --accounts
-datafire run "github/GET /user" --accounts.github.access_token "abcde"
+datafire run github/user.get --accounts.github.access_token "abcde"
 ```
 
 [twitter-image]: https://img.shields.io/twitter/url/http/github.com/DataFire/DataFire.svg?style=social
