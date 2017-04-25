@@ -1,34 +1,56 @@
 # Authentication
+> If you want to try these examples, you can generate a GitHub
+> access token [on the settings page](https://github.com/settings/tokens)
 
-If a particular integration needs auth, it will look in `context.accounts['integration_name']`.
+## Passing Credentials
+
+If a particular integration needs auth, it will look in `context.accounts.integration_name`.
 You can populate accounts programmatically, or using YAML configurations.
 
-You can use the `datafire authenticate` command to add credentials to your project.
-You can also specify credentials in YAML or programmatically (e.g. in environment variable).
-
-## YAML
-You can specify credentials for a particular action:
+### YAML
+Use the `accounts` field to specify credentials:
 
 ```yml
 paths:
   /github_profile:
     get:
-      action: github/me
+      action: github/user.get
       accounts:
         github:
           access_token: "abcde"
 ```
 
+
+### Programmatically
+
+You can add your credentials at runtime:
+
+```js
+var github = require('@datafire/github');
+var action = new datafire.Action({
+  handler: (input, context) => {
+    context.accounts.github = {
+      access_token: process.env.GITHUB_OAUTH_TOKEN,
+    }
+    return github.user.get.run({}, context);
+  },
+});
+```
+
+### Aliases
 The `datafire authenticate` command will store each account in
 DataFire-accounts.yml, along with an alias you can reference elsewhere.
 
-For example, if we've added an account with alias `lucy`,
+> Be sure to add DataFire-accounts.yml to your .gitignore
+
+For example, if we've added an account with alias `lucy`, we can
+reference it in YAML:
 
 ```yml
 paths:
   /github_profile:
     get:
-      action: github/me
+      action: github/user.get
       accounts:
         github: lucy
 ```
@@ -39,24 +61,49 @@ var github = require('@datafire/github');
 var action = new datafire.Action({
   handler: (input, context) => {
     context.accounts.github = context.accounts.lucy;
-    return github.me.run({}, context);
+    return github.user.get.run({}, context);
   },
 });
 ```
 
-## Programmatically
-
-You can add your credentials at runtime:
+## Multiple Accounts
+You can create actions that use multiple accounts for the same integration.
+For example, you could copy GitHub issues from one repository to another.
 
 ```js
-var github = require('@datafire/github');
+var datafire = require('datafire');
+var github = require('@datafire/github').actions;
+var getIssues = github.repos.owner.repo.issues.get;
+var createIssue = github.repos.owner.repo.issues.post;
 var action = new datafire.Action({
-  handler: (input, context) => {
-    context.accounts.github {
-      access_token: process.env.GITHUB_OAUTH_TOKEN,
-    }
-    return github.me.run({}, context);
+  accounts: {
+    from_account: "GitHub account to use when retrieving issues",
+    to_account: "GitHub account to use when creating issues",
   },
+  inputs: [{
+    title: 'fromRepo',
+    type: 'string',
+    description: "Repo to copy issues from, in the form `username/repo`",
+  }, {
+    title: 'toRepo',
+    type: 'string',
+    description: "Repo to copy issues from, in the form `username/repo`",
+  }],
+  handler: (input, context) => {
+    return datafire.flow(context)
+      .then(_ => {
+        context.accounts.github = context.accounts.from_account;
+        [owner, repo] = input.fromRepo.split('/');
+        return getIssues({owner, repo}, context)
+      })
+      .then(issues => {
+        context.accounts.github = context.accounts.to_account;
+        [owner, repo] = input.toRepo.split('/');
+        return Promise.all(issues.map(issue => {
+          createIssue(issue, context);
+        }))
+      })
+  }
 });
 ```
 
