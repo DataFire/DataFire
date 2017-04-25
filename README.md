@@ -1,5 +1,5 @@
 # DataFire
-> This is a preview of the upcoming v2 release. See [v2.md](v2.md) for usage and gotchas
+> This is a preview of the upcoming v2 release. See [v2.md](v2.md) for installation and gotchas
 
 [![Travis][travis-image]][travis-link]
 [![Code Climate][climate-image]][climate-link]
@@ -10,17 +10,17 @@
 [![Share on Twitter][twitter-image]][twitter-link]
 [![Chat on gitter][gitter-image]][gitter-link]
 
-DataFire is an open source framework for building APIs and integrations. Projects can be run locally, on a
-cloud provider (AWS/Google/Azure), or on [DataFire.io](https://datafire.io).
+DataFire is an open source framework for building APIs and integrations.
 
-DataFire currently provides over 7,000 actions for over 350 services including:
+DataFire provides over [350 integrations](https://github.com/DataFire/Integrations), including:
 
 &bull; Slack &bull; GitHub &bull; Twilio &bull; Trello &bull; Spotify &bull;
 Instagram &bull; Gmail &bull; Google Analytics &bull; YouTube &bull; MongoDB &bull;
 
+Each integration provides a set of composable actions. New actions can be built by
+combining existing actions, NodeJS, and external libraries.
+
 Actions can be triggered by an HTTP endpoint, on a schedule, or manually.
-You can also create new actions by combining existing actions,
-code, and external libraries.
 
 ## Installation
 > Be sure to install DataFire both globally and as a project dependency.
