@@ -8,7 +8,7 @@ module.exports = function(args, callback) {
     args.input = JSON.parse(args.input);
   }
   let context = new datafire.Context({accounts: args.accounts, type: 'command'});
-  action.run(args.input, context)
+  action.run(args.input || null, context)
     .then(result => {
       logger.logJSON(result);
       callback();
