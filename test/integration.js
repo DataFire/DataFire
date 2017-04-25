@@ -87,26 +87,26 @@ describe('Integration', () => {
   it("should build from OpenAPI", () => {
     expect(integration instanceof datafire.Integration).to.equal(true);
     expect(Object.keys(integration.actions).length).to.equal(2);
-    let action = integration.actions['GET /hello'];
+    let action = integration.actions.hello.get;
     expect(action instanceof datafire.Action).to.equal(true);
   });
 
   it("should pass query parameters", () => {
-    return integration.actions['GET /hello'].run({name: 'world'})
+    return integration.actions.hello.get.run({name: 'world'})
       .then(data => {
         expect(data.query).to.deep.equal({name: 'world'});
       })
   });
 
   it("should pass header parameters", () => {
-    return integration.actions['GET /hello'].run({head: 'foo'})
+    return integration.actions.hello.get.run({head: 'foo'})
       .then(data => {
         expect(data.headers.head).to.equal('foo');
       })
   });
 
   it("should pass body parameter", () => {
-    return integration.actions['POST /bye/{name}'].run({
+    return integration.actions.bye.name.post.run({
       name: 'foo',
       body: {'bar': 'baz'},
     }).then(data => {

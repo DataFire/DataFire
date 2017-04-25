@@ -57,6 +57,22 @@ function dereference(obj, base, cache={}) {
   return obj;
 }
 
+openapi.getOperationId = (method, path, op) => {
+  if (op.operationId) {
+    if (/^\w+(\.\w+)*$/.test(op.operationId)) {
+      return op.operationId;
+    }
+  }
+  let opId = path.substring(1)
+      .replace(/\//g, '.')
+      .replace(/\.$/, '')
+      .replace(/\{/g, '')
+      .replace(/\}/g, '')
+      .replace(/[^\w\.]+/g, '_')
+  opId += '.' + method;
+  return opId;
+}
+
 openapi.getOperation = (method, path, pathOp) => {
   let op = {
     parameters: pathOp.parameters || [],
