@@ -16,12 +16,19 @@ module.exports = (args, callback) => {
     logger.log(chalk.blue(integration.title));
     logger.logDescription(integration.description);
     logger.log();
-    for (let actionName in integration.actions) {
-      let action = integration.actions[actionName];
-      if (args.query && !actionMatchesQuery(actionName, action, args.query)) continue;
-      logger.logAction(actionName, action);
-      logger.log();
+    function logAction(name, action) {
+      if (!(action instanceof datafire.Action)) {
+        for (let a in action) {
+          let newName = name ? name + '.' + a : a;
+          logAction(newName, action[a]);
+        }
+      } else {
+        if (args.query && !actionMatchesQuery(name, action, args.query)) return;
+        logger.logAction(name, action);
+        logger.log();
+      }
     }
+    logAction('', integration.actions);
   } else {
     let action = integration.action(args.action);
     logger.logAction(args.action, action);

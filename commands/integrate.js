@@ -8,6 +8,7 @@ const rssParser = require('rss-parser');
 const urlParser = require('url');
 const YAML = require('yamljs');
 
+const openapiUtil = require('../util/openapi');
 const logger = require('../util/logger');
 const datafire = require('../index');
 
@@ -130,6 +131,12 @@ const integrateOpenAPI = (dir, name, url, patch, callback) => {
     }
     if (!body.host) return callback(new Error("Invalid swagger:" + JSON.stringify(body, null, 2)))
     if (patch) patch(body);
+    for (let path in body.paths) {
+      for (let method in body.paths[path]) {
+        let op = body.paths[path][method];
+        op.operationId = openapiUtil.getOperationId(method, path, op);
+      }
+    }
     addIntegration(dir, name, 'openapi', body, callback);
   })
 }
