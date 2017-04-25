@@ -11,18 +11,16 @@
 [![Chat on gitter][gitter-image]][gitter-link]
 
 DataFire is an open source framework for building APIs and integrations. Projects can be run locally, on a
-cloud provider (AWS/Google/Azure), or on
-[DataFire.io](https://datafire.io).
+cloud provider (AWS/Google/Azure), or on [DataFire.io](https://datafire.io).
 
-DataFire is built on top of open standards such as RSS and
-[Open API](https://github.com/OAI/OpenAPI-Specification),
-making it easy to add new integrations. DataFire currently provides over 7,000 actions for over 250 services including:
+DataFire currently provides over 7,000 actions for over 350 services including:
 
 &bull; Slack &bull; GitHub &bull; Twilio &bull; Trello &bull; Spotify &bull;
 Instagram &bull; Gmail &bull; Google Analytics &bull; YouTube &bull; MongoDB &bull;
 
-Actions are composable, so you can create new actions by combining existing actions
-with code and external libraries. They can be triggered by an HTTP endpoint, on a schedule, or manually.
+Actions can be triggered by an HTTP endpoint, on a schedule, or manually.
+You can also create new actions by combining existing actions,
+code, and external libraries.
 
 ## Installation
 > Be sure to install DataFire both globally and as a project dependency.
@@ -33,8 +31,8 @@ npm install --save datafire
 ```
 
 ## Hello World
-Here's a quick Hello World to get you started. You can view the [full example here](docs/Hello%20World.md),
-which includes input validation, custom HTTP responses, scheduled tasks, and more.
+> View the [full example](docs/Hello%20World.md) to learn about input validation,
+> custom HTTP responses, scheduled tasks, and more.
 
 #### ./hello.js
 ```js
@@ -71,13 +69,11 @@ Integrations are available in the `@datafire` scope in npm. For example, to inst
 npm install @datafire/hacker_news
 ```
 
-You can see a list of available integrations with `datafire list -a`.
-
 Each integration comes with a set of actions. For example, the `hacker_news` integration
 contains the `getStories`, `getItem`, and `getUser` actions. You can use these actions
 directly, or wrap them with your own actions.
 
-For example, you can create an API endpoint that returns your Hacker News profile
+For example, you can create an API call that returns your Hacker News profile
 just by adding a path in DataFire.yml:
 
 ```js
@@ -86,7 +82,7 @@ paths:
     get:
       action: hacker_news/getUser
       input:
-        userID: 'norvig'
+        username: 'norvig'
 ```
 
 You can also run actions in JavaScript - the `run()` method will return a Promise:
@@ -121,7 +117,7 @@ For example, in DataFire.yml:
 paths:
   /github_profile:
     get:
-      action: github/GET /user
+      action: github/user.get
       accounts:
         github:
           access_token: "abcde"
@@ -150,13 +146,13 @@ datafire authenticate google_gmail      # Store credentials in DataFire-auth.yml
 datafire run ./sendMessage.js
 
 # Run integration actions with [integration]/[action]
-datafire run hacker_news/getStories
+datafire run github/repositories.get
 
 # Pass parameters with --input
-datafire run hacker_news/getStories --input.storyType top
+datafire run github/search.repositories.get --input.q java
 
 # Use credentials with --accounts
-datafire run "github/GET /user" --accounts.github.access_token "abcde"
+datafire run github/user.get --accounts.github.access_token "abcde"
 ```
 
 [twitter-image]: https://img.shields.io/twitter/url/http/github.com/DataFire/DataFire.svg?style=social
