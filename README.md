@@ -69,13 +69,11 @@ Integrations are available in the `@datafire` scope in npm. For example, to inst
 npm install @datafire/hacker_news
 ```
 
-You can see a list of available integrations with `datafire list -a`.
-
 Each integration comes with a set of actions. For example, the `hacker_news` integration
 contains the `getStories`, `getItem`, and `getUser` actions. You can use these actions
 directly, or wrap them with your own actions.
 
-For example, you can create an API endpoint that returns your Hacker News profile
+For example, you can create an API call that returns your Hacker News profile
 just by adding a path in DataFire.yml:
 
 ```js
@@ -148,10 +146,10 @@ datafire authenticate google_gmail      # Store credentials in DataFire-auth.yml
 datafire run ./sendMessage.js
 
 # Run integration actions with [integration]/[action]
-datafire run hacker_news/getStories
+datafire run github/repositories.get
 
 # Pass parameters with --input
-datafire run hacker_news/getStories --input.storyType top
+datafire run github/search.repositories.get --input.q java
 
 # Use credentials with --accounts
 datafire run github/user.get --accounts.github.access_token "abcde"
