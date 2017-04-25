@@ -84,7 +84,7 @@ paths:
     get:
       action: hacker_news/getUser
       input:
-        userID: 'norvig'
+        username: 'norvig'
 ```
 
 You can also run actions in JavaScript - the `run()` method will return a Promise:
