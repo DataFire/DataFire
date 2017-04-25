@@ -11,18 +11,16 @@
 [![Chat on gitter][gitter-image]][gitter-link]
 
 DataFire is an open source framework for building APIs and integrations. Projects can be run locally, on a
-cloud provider (AWS/Google/Azure), or on
-[DataFire.io](https://datafire.io).
+cloud provider (AWS/Google/Azure), or on [DataFire.io](https://datafire.io).
 
-DataFire is built on top of open standards such as RSS and
-[Open API](https://github.com/OAI/OpenAPI-Specification),
-making it easy to add new integrations. DataFire currently provides over 7,000 actions for over 250 services including:
+DataFire currently provides over 7,000 actions for over 350 services including:
 
 &bull; Slack &bull; GitHub &bull; Twilio &bull; Trello &bull; Spotify &bull;
 Instagram &bull; Gmail &bull; Google Analytics &bull; YouTube &bull; MongoDB &bull;
 
-Actions are composable, so you can create new actions by combining existing actions
-with code and external libraries. They can be triggered by an HTTP endpoint, on a schedule, or manually.
+Actions can be triggered by an HTTP endpoint, on a schedule, or manually.
+You can also create new actions by combining existing actions,
+code, and external libraries.
 
 ## Installation
 > Be sure to install DataFire both globally and as a project dependency.
@@ -33,8 +31,8 @@ npm install --save datafire
 ```
 
 ## Hello World
-Here's a quick Hello World to get you started. You can view the [full example here](docs/Hello%20World.md),
-which includes input validation, custom HTTP responses, scheduled tasks, and more.
+> View the [full example](docs/Hello%20World.md) to learn about input validation,
+> custom HTTP responses, scheduled tasks, and more.
 
 #### ./hello.js
 ```js
