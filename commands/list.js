@@ -24,30 +24,34 @@ const getAllIntegrations =  (callback) => {
 }
 
 module.exports = (args) => {
-  if (args.all) {
-    getAllIntegrations((err, list) => {
-      if (err) throw err;
-      let keys = Object.keys(list);
-      keys.forEach(k => {
-        let api = list[k];
-        if (args.query && !integrationMatchesQuery(k, api, args.query)) return;
-        logger.logIntegration(k, {info: api});
-        logger.log();
+  return new Promise((resolve, reject) => {
+    if (args.all) {
+      getAllIntegrations((err, list) => {
+        if (err) return reject(err);
+        let keys = Object.keys(list);
+        keys.forEach(k => {
+          let api = list[k];
+          if (args.query && !integrationMatchesQuery(k, api, args.query)) return;
+          logger.logIntegration(k, {info: api});
+          logger.log();
+        });
+        resolve();
       });
-    });
-  } else {
-    INTEGRATION_LOCATIONS.forEach(dir => {
-      fs.readdir(dir, (err, dirs) => {
-        if (err) {
-          if (err.code === 'ENOENT') return;
-          throw err;
-        }
-        dirs.forEach(name => {
-          logger.log(chalk.magenta(name));
+    } else {
+      INTEGRATION_LOCATIONS.forEach(dir => {
+        fs.readdir(dir, (err, dirs) => {
+          if (err) {
+            if (err.code === 'ENOENT') return;
+            return reject(err);
+          }
+          dirs.forEach(name => {
+            logger.log(chalk.magenta(name));
+          })
+          resolve();
         })
-      })
-    });
-  }
+      });
+    }
+  });
 }
 
 const integrationMatchesQuery = (name, info, query) => {
