@@ -59,6 +59,8 @@ datafire serve --port 3000 &
 
 curl http://localhost:3000/hello
 # "Hello, world!"
+
+kill $! # Stop the server
 ```
 
 ## Integrations
