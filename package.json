@@ -2,7 +2,7 @@
   "name": "datafire",
   "version": "2.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/entry.js",
   "bin": {
     "datafire": "bin/datafire"
   },
