@@ -14,12 +14,12 @@ const CALLBACK_HTML_FILE = path.join(__dirname, '..', 'www', 'oauth_callback.htm
 const datafire = require('../index');
 const logger = require('../util/logger');
 
-module.exports = (args, callback) => {
+module.exports = (args) => {
   let project = datafire.Project.fromDirectory(args.directory);
   let integration = datafire.Integration.fromName(args.integration);
   let security = integration.security;
   if (!security || !Object.keys(security).length) {
-    return callback(new Error("No security needed for " + args.integration));
+    return Promise.reject(new Error("No security needed for " + args.integration));
   }
   security = security[integration.id];
 
@@ -32,7 +32,7 @@ module.exports = (args, callback) => {
     aliasQuestion = [];
   }
 
-  inquirer.prompt(aliasQuestion)
+  return inquirer.prompt(aliasQuestion)
     .then(answers => {
       let alias = args.alias || answers.alias;
       let accountToEdit = project.accounts[alias] = project.accounts[alias] || {};
@@ -41,25 +41,23 @@ module.exports = (args, callback) => {
       }
       accountToEdit.integration = args.integration;
       if (security.oauth) {
-        inquirer.prompt([{
+        return inquirer.prompt([{
           type: 'confirm',
           name: 'generate_token',
-          message: "This integration supports OAuth 2.0. Do you want to generate a new token? Choose 'No' to enter credentials manually",
+          message: "This integration supports OAuth 2.0. Do you want to generate a new token? (press 'n' to enter manually): ",
           default: true,
         }])
         .then(results => {
           if (results.generate_token) {
-            generateToken(project, integration, security.oauth, accountToEdit, accountToEdit);
+            return generateToken(project, integration, security.oauth, accountToEdit, accountToEdit);
           } else {
-            promptAllFields(project, integration, security, accountToEdit);
+            return promptAllFields(project, integration, security, accountToEdit);
           }
         })
       } else {
-        promptAllFields(project, integration, security, accountToEdit);
+        return promptAllFields(project, integration, security, accountToEdit);
       }
     })
-    .then(_ => callback())
-    .catch(e => callback(e));
 }
 
 let promptAllFields = (project, integration, security, account) => {
@@ -70,7 +68,7 @@ let promptAllFields = (project, integration, security, account) => {
       message: field + ' - ' + security.fields[field] + ':',
     }
   })
-  inquirer.prompt(questions).then(answers => {
+  return inquirer.prompt(questions).then(answers => {
     for (let k in answers) {
       if (answers[k]) account[k] = answers[k];
     }
@@ -95,10 +93,10 @@ let generateToken = (project, integration, secOption, accountToEdit, clientAccou
       message: "Please enter a client_secret to use when generating the token",
     });
   }
-  inquirer.prompt(questions).then(answers => {
+  return inquirer.prompt(questions).then(answers => {
     if (answers.client_id) clientAccount.client_id = answers.client_id;
     if (answers.client_secret) clientAccount.client_secret = answers.client_secret;
-    startOAuthServer(project, integration, secOption, accountToEdit, clientAccount)
+    return startOAuthServer(project, integration, secOption, accountToEdit, clientAccount)
   })
 }
 let saveAccounts = (project) => {
@@ -123,85 +121,88 @@ let getOAuthURL = (integration, secDef, clientAccount, scopes) => {
 }
 
 let startOAuthServer = (project, integration, secDef, accountToEdit, clientAccount) => {
-  let server = http.createServer((req, res) => {
-    let urlObj = urlParser.parse(req.url);
-    if (urlObj.pathname !== '/') {
-      res.writeHead(404);
-      res.end();
-      return;
-    }
-    let search = urlParser.parse(req.url).search || '?';
-    search = search.substring(1);
-    search = querystring.parse(search);
-    if (search.code) {
-      request.post({
-        url: secDef.tokenUrl,
-        form: {
-          code: search.code,
-          client_id: clientAccount.client_id,
-          client_secret: clientAccount.client_secret,
-          redirect_uri: clientAccount.redirect_uri || DEFAULT_REDIRECT_URI,
-          grant_type: 'authorization_code',
-        },
-        json: true,
-      }, (err, resp, body) => {
-        if (err) throw err;
-        let newURL = '/?saved=true#access_token=' + encodeURIComponent(body.access_token);
-        newURL += '&refresh_token=' + encodeURIComponent(body.refresh_token);
-        newURL += '&saved=true';
-        res.writeHead(302, {
-          'Location': newURL,
-        });
+  return new Promise((resolve, reject) => {
+    let server = http.createServer((req, res) => {
+      let urlObj = urlParser.parse(req.url);
+      if (urlObj.pathname !== '/') {
+        res.writeHead(404);
         res.end();
-        accountToEdit.access_token = body.access_token;
-        accountToEdit.refresh_token = body.refresh_token;
-        accountToEdit.client_id = clientAccount.client_id;
-        accountToEdit.client_secret = clientAccount.client_secret;
-        saveAccounts(project);
-      })
-    } else {
-      fs.readFile(CALLBACK_HTML_FILE, 'utf8', (err, data) => {
-        if (err) throw err;
-        res.end(data);
-        if (!search.saved) {
-          inquirer.prompt([{
-            type: 'input',
-            name: 'access_token',
-            message: 'access_token:',
-          }, {
-            type: 'input',
-            name: 'refresh_token',
-            message: 'refresh_token:',
-          }]).then(answers => {
-            if (answers.access_token) accountToEdit.access_token = answers.access_token;
-            if (answers.refresh_token) accountToEdit.refresh_token = answers.refresh_token;
-            saveAccounts(project);
+        return;
+      }
+      let search = urlParser.parse(req.url).search || '?';
+      search = search.substring(1);
+      search = querystring.parse(search);
+      if (search.code) {
+        request.post({
+          url: secDef.tokenUrl,
+          form: {
+            code: search.code,
+            client_id: clientAccount.client_id,
+            client_secret: clientAccount.client_secret,
+            redirect_uri: clientAccount.redirect_uri || DEFAULT_REDIRECT_URI,
+            grant_type: 'authorization_code',
+          },
+          json: true,
+        }, (err, resp, body) => {
+          if (err) return reject(err);
+          let newURL = '/?saved=true#access_token=' + encodeURIComponent(body.access_token);
+          newURL += '&refresh_token=' + encodeURIComponent(body.refresh_token);
+          newURL += '&saved=true';
+          res.writeHead(302, {
+            'Location': newURL,
+          });
+          res.end();
+          accountToEdit.access_token = body.access_token;
+          accountToEdit.refresh_token = body.refresh_token;
+          accountToEdit.client_id = clientAccount.client_id;
+          accountToEdit.client_secret = clientAccount.client_secret;
+          saveAccounts(project);
+          resolve();
+        })
+      } else {
+        fs.readFile(CALLBACK_HTML_FILE, 'utf8', (err, data) => {
+          if (err) return reject(err);
+          res.end(data);
+          if (!search.saved) {
+            inquirer.prompt([{
+              type: 'input',
+              name: 'access_token',
+              message: 'access_token:',
+            }, {
+              type: 'input',
+              name: 'refresh_token',
+              message: 'refresh_token:',
+            }]).then(answers => {
+              if (answers.access_token) accountToEdit.access_token = answers.access_token;
+              if (answers.refresh_token) accountToEdit.refresh_token = answers.refresh_token;
+              saveAccounts(project);
+              server.close();
+              resolve();
+            })
+          } else {
             server.close();
-            process.exit(0);
-          })
-        } else {
-          server.close();
-          process.exit(0);
-        }
+            resolve();
+          }
+        })
+      }
+    }).listen(OAUTH_PORT, (err) => {
+      if (err) throw err;
+      let scopeQuestions = [{
+        type: 'checkbox',
+        name: 'scopes',
+        message: "Choose which scopes to enable for this account",
+        choices: Object.keys(secDef.scopes).map(s => {
+          let name = s;
+          if (secDef.scopes[s]) name += ' (' + secDef.scopes[s] + ')';
+          return {name, value: s};
+        }),
+      }]
+      inquirer.prompt(scopeQuestions).then(answers => {
+        let url = getOAuthURL(integration, secDef, clientAccount, answers.scopes);
+        logger.log("Visit the URL below to generate access and refresh tokens")
+        logger.logInfo("Be sure to set redirect_uri to http://localhost:3333 in your OAuth client's settings page");
+        logger.logURL(url);
       })
-    }
-  }).listen(OAUTH_PORT, (err) => {
-    if (err) throw err;
-    let scopeQuestions = [{
-      type: 'checkbox',
-      name: 'scopes',
-      message: "Choose which scopes to enable for this account",
-      choices: Object.keys(secDef.scopes).map(s => {
-        let name = s;
-        if (secDef.scopes[s]) name += ' (' + secDef.scopes[s] + ')';
-        return {name, value: s};
-      }),
-    }]
-    inquirer.prompt(scopeQuestions).then(answers => {
-      let url = getOAuthURL(integration, secDef, clientAccount, answers.scopes);
-      logger.log("Visit the URL below to generate access and refresh tokens")
-      logger.logInfo("Be sure to set redirect_uri to http://localhost:3333 in your OAuth client's settings page");
-      logger.logURL(url);
-    })
+    });
   });
 }

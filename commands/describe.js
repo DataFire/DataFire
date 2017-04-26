@@ -3,7 +3,7 @@ const chalk = require('chalk');
 const datafire = require('../index');
 const logger = require('../util/logger');
 
-module.exports = (args, callback) => {
+module.exports = (args) => {
   let integrationName = args.integration;
   if (!integrationName) {
     let slash = args.action.indexOf('/');
@@ -38,7 +38,7 @@ module.exports = (args, callback) => {
     logger.logSchema(action.outputSchema);
     logger.log();
   }
-  callback();
+  return Promise.resolve();
 }
 
 let actionMatchesQuery = (name, op, q) => {

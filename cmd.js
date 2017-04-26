@@ -6,6 +6,7 @@ const COMMANDS = [{
   description: "Shows the current version",
   runner: args => {
     console.log("DataFire v" + require('./package').version);
+    return Promise.resolve();
   }
 }, {
   name: 'serve',
@@ -128,17 +129,15 @@ COMMANDS.forEach(cmd => {
             }
             delete args.action_or_integration;
           }
-          let handleError = e => {
-            if (!e) return;
-            logger.logError(e.message);
-            logger.logError(e.stack);
-            process.exit(1);
-          }
-          try {
-            cmd.runner(args, handleError);
-          } catch (e) {
-            handleError(e);
-          }
+          cmd.runner(args)
+            .then(_ => {
+              process.exit(0)
+            })
+            .catch(e => {
+              logger.logError(e.message);
+              logger.logError(e.stack);
+              process.exit(1);
+            })
         });
   cmd.examples.forEach(ex => {
     args = args.example(cmd.name, ex);
