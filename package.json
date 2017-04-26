@@ -7,7 +7,7 @@
     "datafire": "bin/datafire"
   },
   "scripts": {
-    "test": "mocha --recursive && ./test/commands/run.sh",
+    "test": "mocha ./src/test --recursive && ./src/test/commands/run.sh",
     "build": "./scripts/build.sh"
   },
   "author": "",

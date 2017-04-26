@@ -5,7 +5,7 @@ const COMMANDS = [{
   name: 'version',
   description: "Shows the current version",
   runner: args => {
-    console.log("DataFire v" + require('./package').version);
+    console.log("DataFire v" + require('../package').version);
     return Promise.resolve();
   }
 }, {
