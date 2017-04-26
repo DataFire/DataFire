@@ -130,6 +130,7 @@ const getNameFromHost = (host) => {
 const integrateOpenAPI = (dir, name, url, patch, callback) => {
   request.get(url, (err, resp, body) => {
     if (err) return callback(err);
+    resp.headers['content-type'] = resp.headers['content-type'] || '';
     if (resp.headers['content-type'].indexOf('yaml') !== -1) {
       body = YAML.parse(body);
     } else {
