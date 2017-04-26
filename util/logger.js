@@ -64,6 +64,7 @@ class Logger {
   }
 
   static logJSON(json) {
+    if (json === undefined) return;
     Logger.log(prettyjson.render(json, {keysColor: 'white', stringColor: 'green', dashColor: 'white'}));
   }
 
