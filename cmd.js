@@ -58,7 +58,7 @@ const COMMANDS = [{
     description: "Save to package.json as a dependency",
   }]
 }, {
-  name: 'describe <integration|action>',
+  name: 'describe <action_or_integration>',
   description: "Show details for an integration or operation",
   examples: [
     "datafire describe hacker_news",
@@ -119,13 +119,14 @@ COMMANDS.forEach(cmd => {
           })
         },
         (args) => {
-          if (args.action) {
-            let slash = args.action.indexOf('/');
+          if (args.action_or_integration) {
+            let slash = args.action_or_integration.indexOf('/');
             if (slash === -1) {
-              delete args.action;
+              args.integration = args.action_or_integration;
             } else {
-              delete args.integration;
+              args.action = args.action_or_integration;
             }
+            delete args.action_or_integration;
           }
           let handleError = e => {
             if (!e) return;
