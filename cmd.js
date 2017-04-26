@@ -131,7 +131,9 @@ COMMANDS.forEach(cmd => {
           }
           cmd.runner(args)
             .then(_ => {
-              process.exit(0)
+              if (cmd.name !== 'serve') {
+                process.exit(0)
+              }
             })
             .catch(e => {
               logger.logError(e.message);
