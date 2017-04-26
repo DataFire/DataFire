@@ -33,3 +33,54 @@ module.exports = new datafire.Action({
   }
 });
 ```
+
+## Multiple Accounts
+You can create actions that use multiple accounts for the same integration.
+For example, you could copy GitHub issues from one repository to another.
+
+```js
+var datafire = require('datafire');
+var github = require('@datafire/github').actions;
+var action = new datafire.Action({
+  security: {
+    from_account: {
+      description: "Account to use when retrieving issues",
+      integration: 'github',
+    },
+    to_account: {
+      description: "Account to use when creating issues",
+      integration: 'github',
+    },
+  },
+  inputs: [{
+    title: 'fromRepo',
+    type: 'string',
+    description: "Repo to copy issues from, in the form `username/repo`",
+  }, {
+    title: 'toRepo',
+    type: 'string',
+    description: "Repo to copy issues from, in the form `username/repo`",
+  }],
+  handler: (input, context) => {
+    return datafire.flow(context)
+      .then(_ => {
+        context.accounts.github = context.accounts.from_account;
+        [owner, repo] = input.fromRepo.split('/');
+        return github.repos.owner.repo.issues.get.run({owner, repo}, context)
+      })
+      .then(issues => {
+        context.accounts.github = context.accounts.to_account;
+        [owner, repo] = input.toRepo.split('/');
+        return Promise.all(issues.map(issue => {
+          return github.repos.owner.repo.issues.post.run({
+            owner,
+            repo,
+            title: issue.title,
+            body: issue.body,
+          }, context);
+        }))
+      })
+  }
+});
+```
+

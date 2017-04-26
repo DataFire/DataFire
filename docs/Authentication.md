@@ -66,57 +66,49 @@ var action = new datafire.Action({
 });
 ```
 
-## Multiple Accounts
-You can create actions that use multiple accounts for the same integration.
-For example, you could copy GitHub issues from one repository to another.
+## Require Credentials
+You can declare a set of credentials that your Action expects using the
+`security` field. Each security item should specify an integration, or
+a set of expected fields.
 
 ```js
-var datafire = require('datafire');
-var github = require('@datafire/github').actions;
-var action = new datafire.Action({
+let scrape = new datafire.Action({
   security: {
-    from_account: {
-      description: "Account to use when retrieving issues",
-      integration: 'github',
+    github_account_to_scrape: {
+      description: "The github account to scrape",
+      integration: 'github'
     },
-    to_account: {
-      description: "Account to use when creating issues",
-      integration: 'github',
-    },
+    database: {
+      description: "Credentials for the database to write to"
+      fields: {
+        url: "The database URL",
+        username: "Database user",
+        password: "User's password"
+      }
+    }
   },
-  inputs: [{
-    title: 'fromRepo',
-    type: 'string',
-    description: "Repo to copy issues from, in the form `username/repo`",
-  }, {
-    title: 'toRepo',
-    type: 'string',
-    description: "Repo to copy issues from, in the form `username/repo`",
-  }],
   handler: (input, context) => {
-    return datafire.flow(context)
-      .then(_ => {
-        context.accounts.github = context.accounts.from_account;
-        [owner, repo] = input.fromRepo.split('/');
-        return github.repos.owner.repo.issues.get.run({owner, repo}, context)
-      })
-      .then(issues => {
-        context.accounts.github = context.accounts.to_account;
-        [owner, repo] = input.toRepo.split('/');
-        return Promise.all(issues.map(issue => {
-          return github.repos.owner.repo.issues.post.run({
-            owner,
-            repo,
-            title: issue.title,
-            body: issue.body,
-          }, context);
-        }))
-      })
+    // ...
   }
 });
+
+let context = new datafire.Context({
+  accounts: {
+    github_account_to_scrape: {
+      api_key: 'abcde'
+    },
+    database: {
+      url: '...',
+      username: 'foo',
+      password: 'bar',
+    }
+  }
+})
+
+scrape.run({}, context);
 ```
 
-## Command-line Usage
+## Add Credentials using the CLI
 
 To add a new account, run
 ```
