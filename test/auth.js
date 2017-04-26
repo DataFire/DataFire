@@ -42,7 +42,7 @@ describe('Authorization', () => {
   it('should return 200 for auth', done => {
     request.get(PROJECT_URL + '/me', {json: true, headers: {Authorization: 'jack'}}, (err, resp, body) => {
       expect(err).to.equal(null);
-      expect(resp.statusCode).to.equal(200, body);
+      expect(resp.statusCode).to.equal(200, body.error);
       expect(body).to.equal("You are logged in as Jack White");
       done();
     })
@@ -51,7 +51,7 @@ describe('Authorization', () => {
   it('should show user files from saas2', done => {
     request.get(PROJECT_URL + '/saas2/files', {json: true, headers: {Authorization: 'jack'}}, (err, resp, body) => {
       expect(err).to.equal(null);
-      expect(resp.statusCode).to.equal(200, body);
+      expect(resp.statusCode).to.equal(200, body.error);
       expect(body).to.deep.equal(['foo.txt', 'bar.md']);
       done();
     })
@@ -60,7 +60,7 @@ describe('Authorization', () => {
   it('should clear authorization on a second call', done => {
     request.get(PROJECT_URL + '/saas2/files', {json: true, headers: {Authorization: 'meg'}}, (err, resp, body) => {
       expect(err).to.equal(null);
-      expect(resp.statusCode).to.equal(200, body);
+      expect(resp.statusCode).to.equal(200, body.error);
       expect(body).to.deep.equal([]);
       done();
     })
@@ -77,7 +77,7 @@ describe('Authorization', () => {
   it('should proxy from project to saas1', done => {
     request.get(PROJECT_URL + '/saas1/secret', {json: true, headers: {Authorization: 'jack'}}, (err, resp, body) => {
       expect(err).to.equal(null);
-      expect(resp.statusCode).to.equal(200, body);
+      expect(resp.statusCode).to.equal(200, body.error);
       expect(body).to.equal('foobar');
       done();
     })
@@ -94,7 +94,7 @@ describe('Authorization', () => {
   it('should return 200 for valid oauth', done => {
     request.get(PROJECT_URL + '/oauth/valid', {json: true, headers: {Authorization: 'jack'}}, (err, resp, body) => {
       expect(err).to.equal(null);
-      expect(resp.statusCode).to.equal(200, body);
+      expect(resp.statusCode).to.equal(200, body.error);
       expect(body).to.equal('OK');
       done();
     })
