@@ -12,7 +12,7 @@ module.exports = function(args, callback) {
     accounts: Object.assign({}, project.accounts, args.accounts),
     type: 'command'
   });
-  action.run(args.input || null, context)
+  action.run(args.input, context)
     .then(result => {
       logger.logJSON(result);
       callback();
