@@ -107,6 +107,23 @@ Flows allow you to create complex actions that make a series of calls to differe
 APIs and services. They keep track of results at each step so you can reference them
 at any step in the flow.
 
+## Tasks
+You can schedule tasks in DataFire.yml by specifying a
+[rate or cron expression](http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#RateExpressions).
+```yaml
+tasks:
+  send_database_report:
+    action: ./send-db-report.js
+    schedule: rate(1 day) // or cron(0 0 * * * *)
+    accounts:
+      google_gmail: lucy
+      mongodb: mongo_read_only
+```
+
+Start running tasks with:
+```
+datafire serve --tasks
+```
 
 ## Authentication
 > [Read more about authentication](docs/Authentication.md)
