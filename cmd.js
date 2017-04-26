@@ -76,11 +76,9 @@ const COMMANDS = [{
   description: "Store a set of credentials for a given integration",
   runner: require('./commands/authenticate'),
   options: [{
-    name: 'as',
+    name: 'alias',
+    alias: 'a',
     description: 'The alias of the account to edit',
-  }, {
-    name: 'generate_token',
-    description: "Generate a new OAuth 2.0 token",
   }, {
     name: 'client',
     description: "With generate_token, the account alias to use as the OAuth client",

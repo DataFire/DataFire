@@ -73,12 +73,16 @@ For example, you could copy GitHub issues from one repository to another.
 ```js
 var datafire = require('datafire');
 var github = require('@datafire/github').actions;
-var getIssues = github.repos.owner.repo.issues.get;
-var createIssue = github.repos.owner.repo.issues.post;
 var action = new datafire.Action({
-  accounts: {
-    from_account: "GitHub account to use when retrieving issues",
-    to_account: "GitHub account to use when creating issues",
+  security: {
+    from_account: {
+      description: "Account to use when retrieving issues",
+      integration: 'github',
+    },
+    to_account: {
+      description: "Account to use when creating issues",
+      integration: 'github',
+    },
   },
   inputs: [{
     title: 'fromRepo',
@@ -94,13 +98,18 @@ var action = new datafire.Action({
       .then(_ => {
         context.accounts.github = context.accounts.from_account;
         [owner, repo] = input.fromRepo.split('/');
-        return getIssues({owner, repo}, context)
+        return github.repos.owner.repo.issues.get.run({owner, repo}, context)
       })
       .then(issues => {
         context.accounts.github = context.accounts.to_account;
         [owner, repo] = input.toRepo.split('/');
         return Promise.all(issues.map(issue => {
-          createIssue(issue, context);
+          return github.repos.owner.repo.issues.post.run({
+            owner,
+            repo,
+            title: issue.title,
+            body: issue.body,
+          }, context);
         }))
       })
   }
@@ -120,12 +129,6 @@ Many integrations, such as GitHub and Gmail, offer OAuth 2.0
 authentication. OAuth tokens are more secure than using
 API keys or passwords, but are a bit more complicated.
 
-If you've already generated an `access_token` manually, you can simply
-enter it by running:
-```
-datafire authenticate <integration>
-```
-
 ### Genrating OAuth tokens
 
 The easiest way to generate an OAuth token is on [datafire.io](https://datafire.io).
@@ -143,7 +146,7 @@ to `http://localhost:3333`.
 
 Finally, run
 ````
-datafire authenticate <integration> --generate_token
+datafire authenticate <integration>
 ```
 
 DataFire will prompt you for your `client_id` and `client_secret`,

@@ -189,6 +189,9 @@ class Logger {
     str = str || 'Success';
     Logger.log(chalk.green(str));
   }
+  static logInfo(str) {
+    Logger.log(chalk.blue(str));
+  }
   static logError(str) {
     str = str || 'Error';
     Logger.log(chalk.red(str));

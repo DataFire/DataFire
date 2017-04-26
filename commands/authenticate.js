@@ -14,163 +14,91 @@ const CALLBACK_HTML_FILE = path.join(__dirname, '..', 'www', 'oauth_callback.htm
 const datafire = require('../index');
 const logger = require('../util/logger');
 
-const QUESTION_SETS = {
-  alias: [
-    {name: 'alias', message: "Choose an alias for this account:"}
-  ],
-  basic: [
-    {name: 'username', message: "username:"},
-    {name: 'password', message: "password:", type: 'password'},
-  ],
-  apiKey: [
-    {name: 'api_key', message: "api_key:"},
-  ],
-  oauth_client: [
-    {name: 'client_id', message: "client_id:"},
-    {name: 'client_secret', message: "client_secret:"},
-    {name: 'redirect_uri', message: "redirect_uri:", default: DEFAULT_REDIRECT_URI},
-  ],
-  oauth_tokens: [
-    {name: 'access_token', message: "access_token:"},
-    {name: 'refresh_token', message: "refresh_token (optional):"},
-  ],
-  scopes: [
-    {name: 'scopes', type: 'checkbox', message: 'Choose at least one scope to authorize'},
-  ],
-  choose_definition: [
-    {name: 'definition', message: "This API has multiple authentication flows. Which do you want to use?", type: 'list'}
-  ]
-}
-
-QUESTION_SETS.oauth2 = QUESTION_SETS.oauth_tokens.concat(QUESTION_SETS.oauth_client);
-
-let getQuestions = (secDef, allDefs) => {
-  let qs = JSON.parse(JSON.stringify(QUESTION_SETS[secDef.type]));
-  if (secDef.type === 'apiKey') {
-    let allApiKeys = Object.keys(allDefs)
-          .map(k => ({name: k, def: allDefs[k]}))
-          .filter(d => d.def.type === 'apiKey');
-    qs = allApiKeys.map(def => {
-      return {
-        name: def.name,
-        message: def.name + ':',
-      }
-    })
-  }
-  return qs;
-}
-
-let getChooseDefQuestion = (secOptions) => {
-  let qs = JSON.parse(JSON.stringify(QUESTION_SETS.choose_definition));
-  if (secOptions.filter(o => o.def.type === 'apiKey').length === secOptions.length) {
-    return [{
-      name: qs[0].name,
-      type: 'list',
-      choices: [{name: '(press enter to continue)', value: secOptions[0]}],
-      message: "You can specify one or more apiKeys for this API"
-    }]
-  }
-  qs[0].choices = secOptions.map(o => {
-    let description = '(' + o.name;
-    if (o.def.description) description += ' - ' + o.def.description;
-    description += ')';
-    return {
-      name: o.def.type + ' ' + description,
-      value: o,
-    }
-  });
-  return qs;
-}
-
-let setDefaults = (questions, defaults) => {
-  return questions.map(q => {
-    return {
-      name: q.name,
-      message: q.message,
-      type: q.type,
-      default: defaults[q.name],
-    }
-  });
-}
-
 module.exports = (args, callback) => {
   let project = datafire.Project.fromDirectory(args.directory);
   let integration = datafire.Integration.fromName(args.integration);
-  let secDefs = integration.securityDefinitions;
-  if (!secDefs || !Object.keys(secDefs).length) {
-    logger.logError("No security definitions found for " + args.integration);
-    return;
+  let security = integration.security;
+  if (!security || !Object.keys(security).length) {
+    return callback(new Error("No security needed for " + args.integration));
   }
-  let secOptions = Object.keys(secDefs).map(name => {
-    return {
-      name: name,
-      def: secDefs[name],
-    }
-  });
-  let accountToEdit = null;
-  let secOption = null;
-  if (args.as) {
-    accountToEdit = project.accounts[args.as];
-    if (!accountToEdit) throw new Error("Account " + args.as + " not found");
-    secOption = secOptions.filter(o => o.name === accountToEdit.securityDefinition)[0];
-    if (!secOption) throw new Error("Security definition " + accountToEdit.securityDefinition + " not found");
-  } else if (secOptions.length === 1) {
-    secOption = secOptions[0];
+  security = security[integration.id];
+
+  let aliasQuestion = [{
+    type: 'input',
+    name: 'alias',
+    message: "Choose an alias for this account:",
+  }];
+  if (args.alias) {
+    aliasQuestion = [];
   }
-  let questions = secOption ? [] : getChooseDefQuestion(secOptions);
-  inquirer.prompt(questions).then(answers => {
-    if (answers.definition) secOption = answers.definition;
-    if (args.generate_token) {
-      let clientAccount = accountToEdit;
-      if (args.client) {
-        clientAccount = project.accounts[args.client];
+
+  inquirer.prompt(aliasQuestion)
+    .then(answers => {
+      let alias = args.alias || answers.alias;
+      let accountToEdit = project.accounts[alias] = project.accounts[alias] || {};
+      if (accountToEdit.integration && accountToEdit.integration !== args.integration) {
+        throw new Error("Account " + alias + " is for integration " + accountToEdit.integration + ", not " + args.integration);
       }
-      generateToken(project, integration, secOption, accountToEdit, clientAccount);
-    } else {
-      authenticate(project, integration, secOption, accountToEdit);
-    }
-    callback();
-  }, e => {
-    throw e;
-  })
+      accountToEdit.integration = args.integration;
+      if (security.oauth) {
+        inquirer.prompt([{
+          type: 'confirm',
+          name: 'generate_token',
+          message: "This integration supports OAuth 2.0. Do you want to generate a new token? Choose 'No' to enter credentials manually",
+          default: true,
+        }])
+        .then(results => {
+          if (results.generate_token) {
+            generateToken(project, integration, security.oauth, accountToEdit, accountToEdit);
+          } else {
+            promptAllFields(project, integration, security, accountToEdit);
+          }
+        })
+      } else {
+        promptAllFields(project, integration, security, accountToEdit);
+      }
+    })
+    .then(_ => callback())
+    .catch(e => callback(e));
 }
 
-let authenticate = (project, integration, secOption, accountToEdit) => {
-  let questions = getQuestions(secOption.def, integration.securityDefinitions);
-  if (accountToEdit) questions = setDefaults(questions, accountToEdit);
+let promptAllFields = (project, integration, security, account) => {
+  let questions = Object.keys(security.fields).map(field => {
+    return {
+      type: 'input',
+      name: field,
+      message: field + ' - ' + security.fields[field] + ':',
+    }
+  })
   inquirer.prompt(questions).then(answers => {
     for (let k in answers) {
-      if (!answers[k]) delete answers[k];
+      if (answers[k]) account[k] = answers[k];
     }
-    if (secOption.def.type === 'apiKey') {
-      answers = {apiKeys: answers};
-    }
-    answers.securityDefinition = secOption.name;
-    if (accountToEdit) {
-      for (let k in answers) accountToEdit[k] = answers[k];
-      saveAccounts(project);
-      return
-    } else {
-      inquirer.prompt(QUESTION_SETS.alias).then(aliasAnswer => {
-        project.accounts[aliasAnswer.alias] = answers;
-        saveAccounts(project);
-      })
-    }
+    account.integration = integration.id;
+    saveAccounts(project);
   })
 }
 
 let generateToken = (project, integration, secOption, accountToEdit, clientAccount) => {
   let questions = [];
-  if (!accountToEdit) questions = questions.concat(QUESTION_SETS.alias);
-  if (!clientAccount) questions = questions.concat(QUESTION_SETS.oauth_client);
+  if (!clientAccount.client_id || !clientAccount.client_secret) {
+    questions.push({
+      type: 'input',
+      name: 'client_id',
+      default: clientAccount.client_id,
+      message: "Please enter a client_id to use when generating the token",
+    });
+    questions.push({
+      type: 'input',
+      name: 'client_secret',
+      default: clientAccount.client_secret,
+      message: "Please enter a client_secret to use when generating the token",
+    });
+  }
   inquirer.prompt(questions).then(answers => {
-    if (answers.alias) accountToEdit = project.accounts[answers.alias] = {};
-    if (answers.client_id) accountToEdit.client_id = answers.client_id;
-    if (answers.client_secret) accountToEdit.client_secret = answers.client_secret;
-    if (answers.redirect_uri) accountToEdit.redirect_uri = answers.redirect_uri;
-    if (!clientAccount) clientAccount = accountToEdit;
-    accountToEdit.securityDefinition = secOption.name;
-    startOAuthServer(project, integration, secOption.def, accountToEdit, clientAccount)
+    if (answers.client_id) clientAccount.client_id = answers.client_id;
+    if (answers.client_secret) clientAccount.client_secret = answers.client_secret;
+    startOAuthServer(project, integration, secOption, accountToEdit, clientAccount)
   })
 }
 let saveAccounts = (project) => {
@@ -236,11 +164,17 @@ let startOAuthServer = (project, integration, secDef, accountToEdit, clientAccou
         if (err) throw err;
         res.end(data);
         if (!search.saved) {
-          inquirer.prompt(QUESTION_SETS.oauth_tokens).then(answers => {
+          inquirer.prompt([{
+            type: 'input',
+            name: 'access_token',
+            message: 'access_token:',
+          }, {
+            type: 'input',
+            name: 'refresh_token',
+            message: 'refresh_token:',
+          }]).then(answers => {
             if (answers.access_token) accountToEdit.access_token = answers.access_token;
             if (answers.refresh_token) accountToEdit.refresh_token = answers.refresh_token;
-            accountToEdit.client_id = clientAccount.client_id;
-            accountToEdit.client_secret = clientAccount.client_secret;
             saveAccounts(project);
             server.close();
             process.exit(0);
@@ -253,12 +187,20 @@ let startOAuthServer = (project, integration, secDef, accountToEdit, clientAccou
     }
   }).listen(OAUTH_PORT, (err) => {
     if (err) throw err;
-    QUESTION_SETS.scopes[0].choices = Object.keys(secDef.scopes).map(s => {
-      return {value: s, name: s + ' (' + secDef.scopes[s] + ')'}
-    })
-    inquirer.prompt(QUESTION_SETS.scopes).then(answers => {
+    let scopeQuestions = [{
+      type: 'checkbox',
+      name: 'scopes',
+      message: "Choose which scopes to enable for this account",
+      choices: Object.keys(secDef.scopes).map(s => {
+        let name = s;
+        if (secDef.scopes[s]) name += ' (' + secDef.scopes[s] + ')';
+        return {name, value: s};
+      }),
+    }]
+    inquirer.prompt(scopeQuestions).then(answers => {
       let url = getOAuthURL(integration, secDef, clientAccount, answers.scopes);
-      logger.log("Visit this url to retrieve your access and refresh tokens:")
+      logger.log("Visit the URL below to generate access and refresh tokens")
+      logger.logInfo("Be sure to set redirect_uri to http://localhost:3333 in your OAuth client's settings page");
       logger.logURL(url);
     })
   });
