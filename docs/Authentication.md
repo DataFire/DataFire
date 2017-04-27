@@ -147,7 +147,3 @@ then provide you with a URL to visit to log into your account.
 Once you've logged in, you'll be redirected to localhost:3333, where
 you should see your `access_token` and, if applicable, `refresh_token`.
 
-If the integration uses an `implict` flow, you'll need to copy these
-credentials into the DataFire prompt. Otherwise DataFire will save them
-automatically.
-
