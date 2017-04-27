@@ -137,7 +137,7 @@ In your application's settings, set `redirect_uri`
 to `http://localhost:3333`.
 
 Finally, run
-````
+```
 datafire authenticate <integration>
 ```
 
