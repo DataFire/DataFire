@@ -1,3 +1,5 @@
+"use strict";
+
 let chai = require('chai');
 let expect = chai.expect
 
@@ -10,7 +12,8 @@ locations.integrations.push(__dirname + '/integrations');
 locations.credentials = [__dirname + '/credentials'];
 
 describe('Flows', () => {
-  let flow = integration = null;
+  let flow = null;
+  let integration = null;
 
   let executeSuccess = (done) => {
     flow.execute(e => {
