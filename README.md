@@ -10,6 +10,21 @@
 [![Share on Twitter][twitter-image]][twitter-link]
 [![Chat on gitter][gitter-image]][gitter-link]
 
+[twitter-image]: https://img.shields.io/twitter/url/http/github.com/DataFire/DataFire.svg?style=social
+[twitter-link]: https://twitter.com/intent/tweet?text=DataFire%20-%20open+source+integration+framework:&url=http%3A%2F%2Fgithub.com%2FDataFire%2FDataFire
+[gitter-image]: https://badges.gitter.im/DataFire/DataFire.png
+[gitter-link]: https://gitter.im/DataFire/Lobby
+[npm-image]: https://img.shields.io/npm/v/datafire.svg
+[npm-link]: https://npmjs.org/package/datafire
+[travis-image]: https://travis-ci.org/DataFire/DataFire.svg?branch=master
+[travis-link]: https://travis-ci.org/DataFire/DataFire
+[climate-image]: https://codeclimate.com/github/DataFire/DataFire.png
+[climate-link]: https://codeclimate.com/github/DataFire/DataFire
+[deps-image]: https://img.shields.io/david/DataFire/DataFire.svg
+[deps-link]: https://david-dm.org/DataFire/DataFire
+[devdeps-image]: https://img.shields.io/david/dev/DataFire/DataFire.svg
+[devdeps-link]: https://david-dm.org/DataFire/DataFire#info=devDependencies
+
 DataFire is an open source framework for building and integrating APIs. It
 provides over [350 pre-built integrations](https://github.com/DataFire/Integrations), including:
 
@@ -157,17 +172,3 @@ datafire run github/search.repositories.get --input.q java
 datafire run github/user.get --accounts.github.access_token "abcde"
 ```
 
-[twitter-image]: https://img.shields.io/twitter/url/http/github.com/DataFire/DataFire.svg?style=social
-[twitter-link]: https://twitter.com/intent/tweet?text=DataFire%20-%20open+source+integration+framework:&url=http%3A%2F%2Fgithub.com%2FDataFire%2FDataFire
-[gitter-image]: https://badges.gitter.im/DataFire/DataFire.png
-[gitter-link]: https://gitter.im/DataFire/Lobby
-[npm-image]: https://img.shields.io/npm/v/datafire.svg
-[npm-link]: https://npmjs.org/package/datafire
-[travis-image]: https://travis-ci.org/DataFire/DataFire.svg?branch=master
-[travis-link]: https://travis-ci.org/DataFire/DataFire
-[climate-image]: https://codeclimate.com/github/DataFire/DataFire.png
-[climate-link]: https://codeclimate.com/github/DataFire/DataFire
-[deps-image]: https://img.shields.io/david/DataFire/DataFire.svg
-[deps-link]: https://david-dm.org/DataFire/DataFire
-[devdeps-image]: https://img.shields.io/david/dev/DataFire/DataFire.svg
-[devdeps-link]: https://david-dm.org/DataFire/DataFire#info=devDependencies
