@@ -66,6 +66,45 @@ var action = new datafire.Action({
 });
 ```
 
+## OAuth Clients
+If you want to add an OAuth client to your project (e.g. to allow users
+to log in with GitHub or Instagram), you can use the `oauth_callback`
+action for that integration. For example:
+
+```yaml
+paths:
+  /oauth_callback:
+    get:
+      action: ./github_callback.js
+      accounts:
+        github:
+          client_id: abcd
+          client_secret: xyz
+```
+
+```js
+let datafire = require('datafire');
+let github = require('@datafire/github');
+module.exports = new datafire.Action({
+  inputSchema: github.oauth_callback.inputSchema,
+  handler: (input, context) => {
+    return datafire.flow(context)
+      .then(_ =>  github.oauth_callback.run({code}, context))
+      .then(data => {
+        return mongodb.update({
+          table: 'users',
+          query: {
+            id: {$eq: context.user.id},
+          },
+          document: {
+            github_access_token: data.access_token,
+          }
+        })
+      })
+  }
+})
+```
+
 ## Require Credentials
 You can declare a set of credentials that your Action expects using the
 `security` field. Each security item should specify an integration, or
