@@ -10,8 +10,8 @@
 [![Share on Twitter][twitter-image]][twitter-link]
 [![Chat on gitter][gitter-image]][gitter-link]
 
-DataFire is an open source framework for building APIs and integrations. It also
-provides over [350 integrations](https://github.com/DataFire/Integrations), including:
+DataFire is an open source framework for building and integrating APIs. It
+provides over [350 pre-built integrations](https://github.com/DataFire/Integrations), including:
 
 MongoDB &bull; Slack &bull; GitHub &bull; Twilio &bull; Trello &bull; Spotify &bull;
 Instagram &bull; Gmail &bull; Google Analytics &bull; YouTube
