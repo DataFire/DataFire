@@ -118,6 +118,13 @@ Now let's run it:
 datafire run ./getTopStory.js
 ```
 
+## Flows
+> [Read more about flows](docs/Flows.md)
+
+Flows allow you to create complex actions that make a series of calls to different
+APIs and services. They keep track of results at each step so you can reference them
+at any step in the flow.
+
 ## Commands
 > Run `datafire --help` or `datafire <command> --help` for more info
 
