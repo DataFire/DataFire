@@ -1,3 +1,6 @@
+# Cookbook
+Some common patterns
+
 ## Pagination
 The GitHub action `repos.owner.repo.issues.get` returns an array of
 issues for a particular repository, but it only returns 30 issues at

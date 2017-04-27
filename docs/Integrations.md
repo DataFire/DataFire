@@ -1,4 +1,4 @@
-## Existing Integrations
+# Integrations
 Integrations are in the `@datafire` npm namespace. You can view available integrations by
 visiting datafire.io/integrations or running
 ```
