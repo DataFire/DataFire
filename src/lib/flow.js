@@ -1,4 +1,4 @@
-let getParameterNames = require('get-parameter-names');
+let getParameterNames = require('@captemulation/get-parameter-names');
 let Context = require('./context');
 
 let Flow = module.exports = function(context) {
