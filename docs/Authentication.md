@@ -105,6 +105,42 @@ module.exports = new datafire.Action({
 })
 ```
 
+## Authorizers
+Use authorizers to populate `context.accounts` with the results of an action.
+
+For example:
+```yaml
+authorizers:
+  user:
+    action: ./getUserByAPIKey.js
+```
+
+```js
+module.exports = new datafire.Action({
+  handler: (input, context) => {
+    let auth = context.request.headers.authorization;
+    if (!auth) return new datafire.Response({statusCode: 401});
+    return mongodb.findOne({
+      query: {
+        apiKey: {$eq: auth}
+      }
+    });
+  }
+})
+```
+
+Authorizers in the top level will be run for every request. You can also specify
+authorizers for individual paths:
+```yaml
+paths:
+  /secrets:
+    get:
+      authorizers:
+        user:
+          action: ./getUserByAPIKey.js
+      action: ./getSecrets.js
+```
+
 ## Require Credentials
 You can declare a set of credentials that your Action expects using the
 `security` field. Each security item should specify an integration, or
