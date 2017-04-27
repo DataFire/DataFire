@@ -2,6 +2,7 @@ let openapiUtil = require('../util/openapi');
 let request = require('request');
 let Action = require('./action');
 let Response = require('./response');
+let rssParser = require('rss-parser');
 
 const BODY_METHODS = ['put', 'patch', 'post'];
 
@@ -121,11 +122,17 @@ const getActionFromOperation = module.exports = function(method, path, security,
           } else if (resp.statusCode >= 300) {
             return reject(new Response({statusCode: resp.statusCode, body}));
           }
-
           if (resp.headers['content-type'].indexOf('application/json') !== -1) {  // TODO: more permissive check for JSON
             body = JSON.parse(body);
+            resolve(body);
+          } else if (openapi.info['x-datafire'] && openapi.info['x-datafire'].type === 'rss') {
+            rssParser.parseString(body, (err, feed) => {
+              if (err) reject(err);
+              else resolve(feed);
+            })
+          } else {
+            resolve(body);
           }
-          resolve(body);
         })
       }
 
