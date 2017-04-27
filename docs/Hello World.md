@@ -95,9 +95,11 @@ You can use `context.request` to access the original request
 ```js
 module.exports = new datafire.Action({
   handler: (input, context) => {
-    console.log(context.method, context.path);
-    console.log(context.query.name);
-    console.log(context.headers.authorization);
+    if (context.type === 'http') {
+      console.log(context.request.method, context.path);
+      console.log(context.request.query.name);
+      console.log(context.request.headers.authorization);
+    }
   }
 })
 ```
