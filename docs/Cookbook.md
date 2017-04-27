@@ -25,7 +25,7 @@ module.exports = new datafire.Action({
       // Otherwise, add the latest page of issues to allIssues,
       // and get the next page.
       allIssues = allIssues.concat(issues || []);
-      return github.repos.owner.repo.issues.get.run({
+      return github.repos.owner.repo.issues.get({
         page: page++,
         owner: 'npm',
         repo: 'npm',
@@ -69,13 +69,13 @@ var action = new datafire.Action({
       .then(_ => {
         context.accounts.github = context.accounts.from_account;
         [owner, repo] = input.fromRepo.split('/');
-        return github.repos.owner.repo.issues.get.run({owner, repo}, context)
+        return github.repos.owner.repo.issues.get({owner, repo}, context)
       })
       .then(issues => {
         context.accounts.github = context.accounts.to_account;
         [owner, repo] = input.toRepo.split('/');
         return Promise.all(issues.map(issue => {
-          return github.repos.owner.repo.issues.post.run({
+          return github.repos.owner.repo.issues.post({
             owner,
             repo,
             title: issue.title,

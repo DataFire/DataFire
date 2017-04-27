@@ -43,8 +43,8 @@ Integration.prototype.action = function(id) {
   let obj = this.actions;
   parts.forEach(part => obj = obj[part]);
   if (!obj) throw new Error("Action " + this.id + "/" + id + " not found.");
-  if (!(obj instanceof Action)) throw new Error(this.id + "/" + id + " is not an action");
-  return obj;
+  if (!(obj.action instanceof Action)) throw new Error(this.id + "/" + id + " is not an action");
+  return obj.action;
 }
 
 Integration.prototype.addAction = function(id, action) {
@@ -53,7 +53,24 @@ Integration.prototype.addAction = function(id, action) {
   let obj = this.actions;
   parts.forEach((part, idx) => {
     if (idx === parts.length - 1) {
-      obj[part] = action;
+      obj[part] = (input, ctx) => {
+        return action.run(input, ctx)
+          .catch(e => {
+            let message = "Action " + this.id + "/" + id + " failed";
+            if (e instanceof Response) {
+              message += " with status code " + e.statusCode + ': ' + e.body;
+            } else {
+              message += ': ' + e.message;
+            }
+            let error = new Error(message);
+            if (e instanceof Response) {
+              error.statusCode = e.statusCode;
+              error.body = e.body;
+            }
+            throw error;
+          })
+      }
+      obj[part].action = action;
     } else {
       obj = obj[part] = obj[part] || {};
     }

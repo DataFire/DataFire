@@ -137,7 +137,7 @@ COMMANDS.forEach(cmd => {
             })
             .catch(e => {
               logger.logError(e.message);
-              logger.logError(e.stack);
+              if (args.verbose) logger.logError(e.stack);
               process.exit(1);
             })
         });

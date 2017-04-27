@@ -86,7 +86,7 @@ describe('Authorization', () => {
   it('should return 401 for invalid oauth', done => {
     request.get(PROJECT_URL + '/oauth/invalid', {json: true, headers: {Authorization: 'jack'}}, (err, resp, body) => {
       expect(err).to.equal(null);
-      expect(resp.statusCode).to.equal(401, body);
+      expect(resp.statusCode).to.equal(401, body.error);
       done();
     })
   });
@@ -104,15 +104,15 @@ describe('Authorization', () => {
     let jack = new datafire.Context({accounts: {project: {api_key: 'jack'}}});
     let meg = new datafire.Context({accounts: {project: {api_key: 'meg'}}});
     return Promise.resolve()
-      .then(_ => project.integration.actions.me.run({}, jack))
+      .then(_ => project.integration.actions.me({}, jack))
       .then(msg => {
         expect(msg).to.equal("You are logged in as Jack White");
       })
-      .then(_ => project.integration.actions.me.run({}, meg))
+      .then(_ => project.integration.actions.me({}, meg))
       .then(msg => {
         expect(msg).to.equal("You are logged in as Meg White");
       })
-      .then(_ => project.integration.actions.me.run())
+      .then(_ => project.integration.actions.me())
       .then(msg => {
         throw new Error("shouldn't reach here")
       })

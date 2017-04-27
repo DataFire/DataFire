@@ -21,10 +21,10 @@ module.exports = new datafire.Action({
   accounts: gmail.me.security,
   handler: (input, context) => {
     return datafire.flow(context)
-      .then(_ => hackerNews.getStories.run({storyType: 'top'}))
+      .then(_ => hackerNews.getStories({storyType: 'top'}))
       .then(stories => {
         return Promise.all(stories.map(itemID => {
-          return hackerNews.actions.getItem.run({itemID})
+          return hackerNews.actions.getItem({itemID})
         }));
       })
       .then(storyDetails => {
@@ -35,10 +35,10 @@ module.exports = new datafire.Action({
         return message;
       })
       .then(message => {
-        return gmail.me.run({}, context);
+        return gmail.me({}, context);
       })
       .then(user => {
-        return gmail.sendMessage.run({
+        return gmail.sendMessage({
           to: user.email,
           from: user.email,
           subject: "Latest Hacker News Stories",
