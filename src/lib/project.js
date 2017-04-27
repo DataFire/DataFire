@@ -132,7 +132,10 @@ Project.prototype.setup = function(app) {
       let parameters = this.openapi.paths[path][method].parameters || [];
 
       app[method](expressPath, (req, res) => {
-        let event = this.monitor.startEvent('http', {path, method})
+        let event = this.monitor.startEvent('http', {
+          path, method,
+          id: method.toUpperCase() + ' ' + path,
+        })
         let respond = (result) => {
           this.monitor.endEvent(event);
           if (!(result instanceof Response)) {
@@ -185,7 +188,12 @@ Project.prototype.serve = function(opts) {
   opts = opts || {};
   if (typeof opts === 'number') opts = {port: opts};
   opts.port = opts.port || 3333;
-  if (opts.tasks) this.startTasks();
+  let numTasks = Object.keys(this.tasks).length;
+  if (opts.tasks && numTasks) {
+    this.startTasks();
+    console.log("DataFire running " + numTasks + " task" + (numTasks > 1 ? 's' : ''));
+  }
+  if (opts.nohttp || !Object.keys(this.paths).length) return Promise.resolve();
 
   return new Promise((resolve, reject) => {
     let app = express();
@@ -216,10 +224,10 @@ Project.prototype.startTasks = function() {
     let cron = schedule.parse(task.schedule);
     cron = schedule.cronToNodeCron(cron);
     let job = new CronJob(cron, () => {
-      let event = this.monitor.startEvent('task', {taskID});
+      let event = this.monitor.startEvent('task', {id: taskID});
       return task.action.run(task.input, new Context({
         type: 'task',
-        accounts: Object.assign({}, this.accounts),
+        accounts: Object.assign({}, this.accounts, task.accounts),
       }))
         .then(data => {
           event.success = true;
