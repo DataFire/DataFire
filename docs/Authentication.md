@@ -32,7 +32,7 @@ var action = new datafire.Action({
     context.accounts.github = {
       access_token: process.env.GITHUB_OAUTH_TOKEN,
     }
-    return github.user.get.run({}, context);
+    return github.user.get({}, context);
   },
 });
 ```
@@ -61,7 +61,7 @@ var github = require('@datafire/github');
 var action = new datafire.Action({
   handler: (input, context) => {
     context.accounts.github = context.accounts.lucy;
-    return github.user.get.run({}, context);
+    return github.user.get({}, context);
   },
 });
 ```

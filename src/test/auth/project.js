@@ -47,7 +47,7 @@ module.exports = new datafire.Project({
         action: new datafire.Action({
           handler: (input, ctx) => {
             ctx.accounts.saas1 = {api_key: 'user1'};
-            return saas1integ.actions.secret.get.run(null, ctx);
+            return saas1integ.actions.secret.get(null, ctx);
           }
         })
       }
@@ -60,7 +60,7 @@ module.exports = new datafire.Project({
           },
           handler: (input, ctx) => {
             ctx.accounts.saas2 = {api_key: ctx.accounts.user.saas2};
-            return saas2integ.actions.files.get.run(null, ctx);
+            return saas2integ.actions.files.get(null, ctx);
           }
         })
       }
@@ -76,7 +76,7 @@ module.exports = new datafire.Project({
               access_token: 'expired',
               refresh_token: 'invalid',
             }
-            return oauthinteg.actions.test.get.run(null, ctx);
+            return oauthinteg.actions.test.get(null, ctx);
           }
         })
       }
@@ -92,7 +92,7 @@ module.exports = new datafire.Project({
               access_token: 'expired',
               refresh_token: 'valid',
             }
-            return oauthinteg.actions.test.get.run(null, ctx);
+            return oauthinteg.actions.test.get(null, ctx);
           }
         })
       }

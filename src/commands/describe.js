@@ -17,14 +17,14 @@ module.exports = (args) => {
     logger.logDescription(integration.description);
     logger.log();
     function logAction(name, action) {
-      if (!(action instanceof datafire.Action)) {
+      if (!(action.action instanceof datafire.Action)) {
         for (let a in action) {
           let newName = name ? name + '.' + a : a;
           logAction(newName, action[a]);
         }
       } else {
-        if (args.query && !actionMatchesQuery(name, action, args.query)) return;
-        logger.logAction(name, action);
+        if (args.query && !actionMatchesQuery(name, action.action, args.query)) return;
+        logger.logAction(name, action.action);
         logger.log();
       }
     }
