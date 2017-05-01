@@ -66,6 +66,81 @@ var action = new datafire.Action({
 });
 ```
 
+## OAuth Clients
+If you want to add an OAuth client to your project (e.g. to allow users
+to log in with GitHub or Instagram), you can use the `oauth_callback`
+action for that integration. For example:
+
+```yaml
+paths:
+  /oauth_callback:
+    get:
+      action: ./github_callback.js
+      accounts:
+        github:
+          client_id: abcd
+          client_secret: xyz
+```
+
+```js
+let datafire = require('datafire');
+let github = require('@datafire/github');
+module.exports = new datafire.Action({
+  inputSchema: github.oauth_callback.inputSchema,
+  handler: (input, context) => {
+    return datafire.flow(context)
+      .then(_ =>  github.oauth_callback.run({code}, context))
+      .then(data => {
+        return mongodb.update({
+          table: 'users',
+          query: {
+            id: {$eq: context.user.id},
+          },
+          document: {
+            github_access_token: data.access_token,
+          }
+        })
+      })
+  }
+})
+```
+
+## Authorizers
+Use authorizers to populate `context.accounts` with the results of an action.
+
+For example:
+```yaml
+authorizers:
+  user:
+    action: ./getUserByAPIKey.js
+```
+
+```js
+module.exports = new datafire.Action({
+  handler: (input, context) => {
+    let auth = context.request.headers.authorization;
+    if (!auth) return new datafire.Response({statusCode: 401});
+    return mongodb.findOne({
+      query: {
+        apiKey: {$eq: auth}
+      }
+    });
+  }
+})
+```
+
+Authorizers in the top level will be run for every request. You can also specify
+authorizers for individual paths:
+```yaml
+paths:
+  /secrets:
+    get:
+      authorizers:
+        user:
+          action: ./getUserByAPIKey.js
+      action: ./getSecrets.js
+```
+
 ## Require Credentials
 You can declare a set of credentials that your Action expects using the
 `security` field. Each security item should specify an integration, or
@@ -146,8 +221,4 @@ then provide you with a URL to visit to log into your account.
 
 Once you've logged in, you'll be redirected to localhost:3333, where
 you should see your `access_token` and, if applicable, `refresh_token`.
-
-If the integration uses an `implict` flow, you'll need to copy these
-credentials into the DataFire prompt. Otherwise DataFire will save them
-automatically.
 
