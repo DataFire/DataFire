@@ -78,9 +78,7 @@ Action.prototype.clone = function(opts) {
 
 Action.prototype.run = function(input, ctx) {
   ctx = ctx || new Context();
-  if (input === undefined && this.inputSchema.type === 'object') {
-    input = {};
-  }
+  if (input === undefined) input = null;
   let valid = this.validateInput(input);
   if (!valid) {
     let error = new Error(ajv.errorsText(this.validateInput.errors));
