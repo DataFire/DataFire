@@ -48,12 +48,12 @@ Here's an example that creates a filesystem integration:
 ```js
 var datafire = require('datafire');
 var fs = require('fs');
-var Integration = module.exports = new Integration({
+var filesystem = module.exports = new Integration({
   title: "Filesystem",
   description: "Gives read access to the filesystem",
 });
 
-Integration.actions.readFile = new datafire.Action({
+filesystem.addAction('readFile', new datafire.Action({
   inputs: [{
     name: "filename",
     type: "string",
@@ -66,6 +66,6 @@ Integration.actions.readFile = new datafire.Action({
       });
     });
   }
-});
+}));
 ```
 
