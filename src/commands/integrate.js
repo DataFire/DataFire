@@ -48,12 +48,12 @@ const RSS_SCHEMA = {
 
 module.exports = (args) => {
   return new Promise((resolve, reject) => {
-    let callback = err => {
-      if (err) reject(err);
-      else resolve();
-    }
     let specFormat = SPEC_FORMATS.filter(f => args[f])[0];
     let directory = args.destination || path.join(process.cwd(), 'integrations');
+    let callback = err => {
+      if (err) reject(err);
+      else resolve(require(path.join(directory, args.name, 'openapi.json')));
+    }
     if (args.openapi) {
       integrateOpenAPI(directory, args.name, args.openapi, args.patch, callback);
     } else if (specFormat) {
@@ -61,14 +61,7 @@ module.exports = (args) => {
     } else if (args.rss) {
       integrateRSS(directory, args.name, args.rss, callback);
     } else {
-      let packageNames = args.integrations.map(i => PACKAGE_PREFIX + '/' + i);
-      let cmd = 'npm install ';
-      if (args.save) cmd += '--save ';
-      cmd += packageNames.join(' ');
-      proc.exec(cmd, (err, stdout, stderr) => {
-        if (err) return callback(err);
-        callback();
-      });
+      throw new Error("Must specify an API specification or RSS feed");
     }
   });
 }
