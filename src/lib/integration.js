@@ -57,6 +57,7 @@ Integration.prototype.mockAll = function() {
           }
           return jsf(schema);
         }
+        actions[id].action = action;
       } else {
         mockActions(actions[id]);
       }
