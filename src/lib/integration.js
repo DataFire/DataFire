@@ -1,6 +1,10 @@
 "use strict";
 
 var jsf = require('json-schema-faker');
+jsf.option({
+  failOnInvalidFormat: false,
+  failOnInvalidTypes: false,
+})
 
 let Action = require('./action');
 let Response = require('./response');
