@@ -2,6 +2,7 @@ const path = require('path');
 const chalk = require('chalk');
 const datafire = require('../index');
 const logger = require('../util/logger');
+const openapiUtil = require('../util/openapi');
 
 module.exports = (args) => {
   let integrationName = args.integration;
@@ -31,11 +32,13 @@ module.exports = (args) => {
     logAction('', integration.actions);
   } else {
     let action = integration.action(args.action);
+    let input = openapiUtil.dereferenceSchema(JSON.parse(JSON.stringify(action.inputSchema)));
+    let output = openapiUtil.dereferenceSchema(JSON.parse(JSON.stringify(action.outputSchema)));
     logger.logAction(args.action, action);
     logger.logHeading('\nInput');
-    logger.logSchema(action.inputSchema);
+    logger.logSchema(input);
     logger.logHeading('\nOutput');
-    logger.logSchema(action.outputSchema);
+    logger.logSchema(output);
     logger.log();
   }
   return Promise.resolve();
