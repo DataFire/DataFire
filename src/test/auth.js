@@ -48,6 +48,14 @@ describe('Authorization', () => {
     })
   });
 
+  it('should return 200 for public endpoint with no auth', done => {
+    request.get(PROJECT_URL + '/public', {json: true}, (err, resp, body) => {
+      expect(err).to.equal(null);
+      expect(resp.statusCode).to.equal(200);
+      done();
+    })
+  })
+
   it('should show user files from saas2', done => {
     request.get(PROJECT_URL + '/saas2/files', {json: true, headers: {Authorization: 'jack'}}, (err, resp, body) => {
       expect(err).to.equal(null);
