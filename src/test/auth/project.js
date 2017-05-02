@@ -19,7 +19,7 @@ const authorizer = new datafire.Action({
 module.exports = new datafire.Project({
   title: "SaaS #1",
   authorizers: {
-    user: authorizer
+    user: {action: authorizer},
   },
   openapi: {
     host: 'localhost:3333',

@@ -95,7 +95,7 @@ Action.prototype.run = function(input, ctx) {
   let promise = Promise.all(Object.keys(allAuthorizers).map(key => {
     let authorizer = allAuthorizers[key];
     if (authorizer === this) throw new Error("Action has itself as an authorizer");
-    return authorizer.run(input, ctx)
+    return authorizer.action.run(input, ctx)
       .then(acct => {
         if (acct instanceof Response) throw acct;
         if (acct) ctx.accounts[key] = acct;

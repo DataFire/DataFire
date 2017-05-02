@@ -26,7 +26,7 @@ module.exports = new datafire.Project({
     }
   },
   authorizers: {
-    user: authorizer
+    user: {action: authorizer},
   },
   paths: {
     '/me': {
