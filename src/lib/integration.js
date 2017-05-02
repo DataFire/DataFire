@@ -1,5 +1,7 @@
 "use strict";
 
+var jsf = require('json-schema-faker');
+
 let Action = require('./action');
 let Response = require('./response');
 let openapiUtil = require('../util/openapi');
@@ -35,6 +37,28 @@ Integration.fromName = function(name) {
     if (e.code === MODULE_NOT_FOUND) throw new Error("Couldn't find integration " + name);
     throw e;
   }
+}
+
+Integration.prototype.mockAll = function() {
+  let mockActions = (actions) => {
+    for (let id in actions) {
+      if (actions[id] instanceof Function) {
+        let action = actions[id].action;
+        actions[id] = (input, context) => {
+          let schema = action.outputSchema;
+          // FIXME: see https://github.com/BigstickCarpet/json-schema-ref-parser/issues/40
+          if (this.id === 'google_gmail' && id === 'send') {
+            schema = JSON.parse(JSON.stringify(schema));
+            schema.definitions.MessagePart = {};
+          }
+          return jsf(schema);
+        }
+      } else {
+        mockActions(actions[id]);
+      }
+    }
+  }
+  mockActions(this.actions);
 }
 
 Integration.prototype.action = function(id) {
@@ -77,7 +101,7 @@ Integration.prototype.addAction = function(id, action) {
 }
 
 Integration.fromOpenAPI = function(openapi, id) {
-  openapi = openapiUtil.initialize(openapi, false);
+  openapiUtil.initialize(openapi);
   id = id || openapi.host;
   let security = {};
   if (openapi.securityDefinitions) {
