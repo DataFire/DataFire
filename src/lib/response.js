@@ -4,6 +4,10 @@ let Response = module.exports = function(opts) {
   this.statusCode = opts.statusCode || 200;
   this.body = opts.body || '';
   this.headers = opts.headers || {};
+  if (opts.json !== undefined) {
+    this.headers['Content-Type'] = 'application/json';
+    this.body = JSON.stringify(this.json, null, 2);
+  }
 }
 
 Response.prototype.send = function(res) {
