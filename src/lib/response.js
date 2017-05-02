@@ -6,7 +6,7 @@ let Response = module.exports = function(opts) {
   this.headers = opts.headers || {};
   if (opts.json !== undefined) {
     this.headers['Content-Type'] = 'application/json';
-    this.body = JSON.stringify(this.json, null, 2);
+    this.body = JSON.stringify(opts.json, null, 2);
   }
 }
 
