@@ -87,3 +87,28 @@ var action = new datafire.Action({
 });
 ```
 
+## Testing
+When testing your actions, you can mock any integration by calling `mockAll()`.
+DataFire will use [json-schema-faker](https://github.com/json-schema-faker/json-schema-faker)
+to mock the response for all of that integration's actions.
+
+For example, say the `createUser` action sends a welcome message via Gmail.
+We want to test that `createUser` runs successfully, but don't want to send
+the welcome message.
+
+```js
+let gmailIntegration = require('@datafire/gmail');
+gmailIntegration.mockAll();
+
+let createUser = require('../actions/createUser.js');
+
+describe("createUser", () => {
+  it('should succeed', () => {
+    return createUser.run({
+      email: 'foo@bar.com',
+      password: '12345678',
+    });
+  })
+})
+```
+
