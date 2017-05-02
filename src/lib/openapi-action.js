@@ -17,15 +17,15 @@ const getActionFromOperation = module.exports = function(method, path, security,
     definitions: openapi.definitions,
   };
   params.forEach(param => {
-    let name = param.in === 'body' ? 'body' : param.name;
-    inputSchema.properties[name] = getSchemaFromParam(param);
+    inputSchema.properties[param.name] = getSchemaFromParam(param);
   });
   let response = getDefaultResponse(op);
+  let outputSchema = Object.assign({definitions: openapi.definitions}, response.schema);
   return new Action({
     title: op.operationId || (method.toUpperCase() + ' ' + path),
     description: op.description || op.summary,
     inputSchema: params.length ? inputSchema : {},
-    outputSchema: response.schema,
+    outputSchema: outputSchema,
     security,
     handler: function(input, ctx) {
       input = input || {};

@@ -113,5 +113,63 @@ describe('Integration', () => {
       expect(data.path).to.equal('/bye/foo');
       expect(data.body).to.deep.equal({bar: 'baz'});
     })
+  });
+
+  it('should handle circular refs', () => {
+    let openapi = {
+      host: 'api.acme.com',
+      swagger: '2.0',
+      info: {version: 'v1'},
+      definitions: {
+        Circle: {
+          type: 'object',
+          properties: {
+            circles: {
+              type: 'array',
+              items: {$ref: '#/definitions/Circle'},
+            }
+          }
+        }
+      },
+      parameters: {
+        CircleBody: {
+          in: 'body',
+          name: 'body',
+          required: true,
+          schema: {$ref: '#/definitions/Circle'},
+        }
+      },
+      paths: {
+        '/foo': {
+          get: {
+            parameters: [{
+              $ref: '#/parameters/CircleBody',
+            }],
+            responses: {
+              200: {
+                description: "OK",
+                schema: {$ref: '#/definitions/Circle'}
+              }
+            }
+          }
+        }
+      }
+    };
+    let integration = datafire.Integration.fromOpenAPI(JSON.parse(JSON.stringify(openapi)));
+    let action = integration.actions.foo.get.action;
+    expect(action.inputSchema).to.deep.equal({
+      type: 'object',
+      additionalProperties: false,
+      properties: {
+        body: {
+          $ref: '#/definitions/Circle',
+        }
+      },
+      definitions: openapi.definitions,
+    });
+    expect(action.outputSchema).to.deep.equal({
+      definitions: openapi.definitions,
+      $ref: '#/definitions/Circle',
+    })
   })
 })

@@ -9,22 +9,35 @@ openapi.PARAM_SCHEMA_FIELDS = [
   'multipleOf',
 ]
 
-openapi.initialize = function(spec, derefDefs=true) {
-  if (derefDefs) {
-    spec = dereference(spec, spec);
-  } else {
-    spec.paths = dereference(spec.paths, spec);
-  }
+openapi.initialize = function(spec) {
   for (let path in spec.paths) {
+    if (spec.paths[path].$ref) {
+      let ref = resolveReference(spec.paths[path].$ref, spec);
+      for (let key in ref) spec.paths[path][key] = ref[key];
+    }
     let pathParams = spec.paths[path].parameters || [];
     delete spec.paths[path].parameters;
     for (let method in spec.paths[path]) {
       let op = spec.paths[path][method];
       op.parameters = op.parameters || [];
       op.parameters = op.parameters.concat(pathParams);
+      op.parameters = op.parameters.map(param => {
+        if (param.$ref) return resolveReference(param.$ref, spec)
+        else return param;
+      })
+
+      for (let resp in op.responses) {
+        if (op.responses[resp].$ref) {
+          op.responses[resp] = resolveReference(op.responses[resp].$ref, spec);
+        }
+      }
     }
   }
   return spec;
+}
+
+openapi.dereferenceSchema = function(schema) {
+  return dereference(schema, {definitions: schema.definitions});
 }
 
 function resolveReference(ref, base, cache={}) {
