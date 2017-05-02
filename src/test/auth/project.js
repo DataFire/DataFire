@@ -19,7 +19,7 @@ const authorizer = new datafire.Action({
 module.exports = new datafire.Project({
   title: "SaaS #1",
   authorizers: {
-    user: {action: authorizer},
+    proj_user: {action: authorizer},
   },
   openapi: {
     host: 'localhost:3333',
@@ -37,9 +37,17 @@ module.exports = new datafire.Project({
         operationId: 'me',
         action: new datafire.Action({
           handler: (input, ctx) => {
-            return "You are logged in as " + ctx.accounts.user.name;
+            return "You are logged in as " + ctx.accounts.proj_user.name;
           }
         })
+      }
+    },
+    '/public': {
+      get: {
+        authorizers: {
+          proj_user: null,
+        },
+        action: {},
       }
     },
     '/saas1/secret': {
@@ -59,7 +67,7 @@ module.exports = new datafire.Project({
             saas2: saas2integ.securityDefinitions,
           },
           handler: (input, ctx) => {
-            ctx.accounts.saas2 = {api_key: ctx.accounts.user.saas2};
+            ctx.accounts.saas2 = {api_key: ctx.accounts.proj_user.saas2};
             return saas2integ.actions.files.get(null, ctx);
           }
         })

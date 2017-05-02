@@ -17,7 +17,6 @@ const DEFAULTS = {
   inputs: null,
   inputSchema: null,
   outputSchema: {},
-  authorizers: {},
   security: {},
 }
 
@@ -32,7 +31,6 @@ const DEFAULTS = {
  * @param {Array} options.inputs
  * @param {Object} options.inputs[] - JSON Schema
  * @param {Object} outputSchema - JSON Schema
- * @param {Object} authorizers
  */
 
 const Action = module.exports = function(opts) {
@@ -85,24 +83,8 @@ Action.prototype.run = function(input, ctx) {
     error.statusCode = 400;
     return Promise.reject(error);
   }
-  let allAuthorizers = {};
-  if (this.project) {
-    for (let key in this.project.authorizers) {
-      allAuthorizers[key] = this.project.authorizers[key];
-    }
-  }
-  for (let key in this.authorizers) allAuthorizers[key] = this.authorizers[key];
-  let promise = Promise.all(Object.keys(allAuthorizers).map(key => {
-    let authorizer = allAuthorizers[key];
-    if (authorizer === this) throw new Error("Action has itself as an authorizer");
-    return authorizer.action.run(input, ctx)
-      .then(acct => {
-        if (acct instanceof Response) throw acct;
-        if (acct) ctx.accounts[key] = acct;
-      });
-  }));
 
-  return promise.then(_ => {
+  return Promise.resolve().then(_ => {
     let ret = this.handler(input, ctx);
     if (ret === undefined) throw new Error("Handler must return a Promise, Response, or value");
     return ret;

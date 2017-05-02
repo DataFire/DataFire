@@ -106,7 +106,7 @@ module.exports = new datafire.Action({
 ```
 
 ## Authorizers
-Use authorizers to populate `context.accounts` with the results of an action.
+Use authorizers on HTTP endpoints to populate `context.accounts` with the results of an action.
 
 For example:
 ```yaml
@@ -115,6 +115,7 @@ authorizers:
     action: ./getUserByAPIKey.js
 ```
 
+#### ./getUserByAPIKey.js
 ```js
 module.exports = new datafire.Action({
   handler: (input, context) => {
@@ -129,16 +130,18 @@ module.exports = new datafire.Action({
 })
 ```
 
-Authorizers in the top level will be run for every request. You can also specify
+Authorizers in the top level will be run for every request. You can also override
 authorizers for individual paths:
 ```yaml
+authorizers:
+  user:
+    action: ./getUserByAPIKey.js
 paths:
-  /secrets:
+  /public/status:
     get:
       authorizers:
-        user:
-          action: ./getUserByAPIKey.js
-      action: ./getSecrets.js
+        user: null
+      action: ./getStatus.js
 ```
 
 ## Require Credentials

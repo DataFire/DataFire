@@ -128,9 +128,18 @@ Project.prototype.setup = function(app) {
     for (let method in this.paths[path]) {
       if (method === 'parameters') continue;
       let op = this.paths[path][method];
+      op.authorizers = op.authorizers || {};
+      for (let key in op.authorizers) {
+        let authorizer = op.authorizers[key];
+        if (authorizer && typeof authorizer.action === 'string') {
+          authorizer.action = Action.fromName(authorizer.action, this.directory);
+        }
+      }
+
+      let allAuthorizers = Object.assign({}, this.authorizers, op.authorizers);
+
       let expressPath = path.replace(openapiUtil.PATH_PARAM_REGEX, ':$1');
       let parameters = this.openapi.paths[path][method].parameters || [];
-
       app[method](expressPath, (req, res) => {
         let event = this.monitor.startEvent('http', {
           path, method,
@@ -170,15 +179,26 @@ Project.prototype.setup = function(app) {
             method: req.method,
           },
         });
-        op.action.run(input, context)
-          .then(result => {
-            respond(result);
-          }, result => {
-            if (!(result instanceof Error || result instanceof Response)) {
-              result = new Error(result);
-            }
-            respond(result);
-          })
+
+        Promise.all(Object.keys(allAuthorizers).map(key => {
+          let authorizer = allAuthorizers[key];
+          if (authorizer === null || context.accounts[key]) return Promise.resolve();
+          if (authorizer === this) throw new Error("Action has itself as an authorizer");
+          return authorizer.action.run(input, context)
+            .then(acct => {
+              if (acct instanceof Response) throw acct;
+              if (acct) context.accounts[key] = acct;
+            });
+        }))
+        .then(_ => op.action.run(input, context))
+        .then(result => {
+          respond(result);
+        }, result => {
+          if (!(result instanceof Error || result instanceof Response)) {
+            result = new Error(result);
+          }
+          respond(result);
+        })
       });
     }
   }
