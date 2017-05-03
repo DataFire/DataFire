@@ -6,7 +6,7 @@ let rssParser = require('rss-parser');
 
 const BODY_METHODS = ['put', 'patch', 'post'];
 
-const getActionFromOperation = module.exports = function(method, path, security, openapi) {
+const getActionFromOperation = module.exports = function(method, path, security, openapi, integrationId) {
   let op = openapi.paths[path][method];
   let params = op.parameters || [];
   let hasRequiredParam = !!params.filter(p => p.required).length;
@@ -21,12 +21,18 @@ const getActionFromOperation = module.exports = function(method, path, security,
   });
   let response = getDefaultResponse(op);
   let outputSchema = Object.assign({definitions: openapi.definitions}, response.schema);
+  let actionSecurity = {};
+  if (op.security && op.security.length) {
+    actionSecurity = security;
+  } else {
+    actionSecurity[integrationId] = false;
+  }
   return new Action({
     title: op.operationId || (method.toUpperCase() + ' ' + path),
     description: op.description || op.summary,
     inputSchema: params.length ? inputSchema : {},
     outputSchema: outputSchema,
-    security: op.security && op.security.length ? security : null,
+    security: actionSecurity,
     handler: function(input, ctx) {
       input = input || {};
       let reqOpts = {

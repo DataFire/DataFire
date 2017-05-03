@@ -10,17 +10,6 @@ const ajv = new Ajv({
 const Response = require('./response');
 const Context = require('./context');
 
-const DEFAULTS = {
-  handler: _ => Promise.resolve(null),
-  id: 'anonymous',
-  title: '',
-  description: '',
-  inputs: null,
-  inputSchema: null,
-  outputSchema: {},
-  security: {},
-}
-
 /**
  * Creates a new Action
  * @class Action
@@ -35,9 +24,13 @@ const DEFAULTS = {
  */
 const Action = module.exports = function(opts) {
   opts = opts || {};
-  for (let key in DEFAULTS) {
-    this[key] = opts[key] || DEFAULTS[key];
-  }
+  this.handler = opts.handler || (_ => Promise.resolve(null));
+  this.id = opts.id || 'anonymous';
+  this.title = opts.title || '';
+  this.description = opts.description || '';
+  this.outputSchema = opts.outputSchema || {};
+  this.inputSchema = opts.inputSchema || {};
+  this.security = opts.security || {};
 
   if (opts.inputs) {
     this.inputSchema = {type: 'object', properties: {}};
@@ -51,7 +44,6 @@ const Action = module.exports = function(opts) {
       this.inputSchema.properties[input.title] = input;
     });
   }
-  this.inputSchema = this.inputSchema || {};
   this.validateInput = ajv.compile(this.inputSchema);
 }
 
@@ -78,7 +70,7 @@ Action.prototype.run = function(input, ctx) {
 
   for (let key in this.security) {
     let sec = this.security[key];
-    if (!sec.optional && !ctx.accounts[key]) {
+    if (sec && !sec.optional && !ctx.accounts[key]) {
       return Promise.reject(new Error("Account " + key + " not specified for action " + this.id));
     }
   }
