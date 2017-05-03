@@ -77,6 +77,7 @@ Integration.prototype.action = function(id) {
 
 Integration.prototype.addAction = function(id, action) {
   if (!(action instanceof Action)) action = new Action(action);
+  action.id = this.id + '/' + id;
   let parts = id.split('.');
   let obj = this.actions;
   parts.forEach((part, idx) => {
@@ -84,7 +85,7 @@ Integration.prototype.addAction = function(id, action) {
       obj[part] = (input, ctx) => {
         return action.run(input, ctx)
           .catch(e => {
-            let message = "Action " + this.id + "/" + id + " failed";
+            let message = "Action " + action.id + " failed";
             if (e instanceof Response) {
               message += " with status code " + e.statusCode + ': ' + e.body;
             } else {

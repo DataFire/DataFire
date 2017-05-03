@@ -26,7 +26,7 @@ const getActionFromOperation = module.exports = function(method, path, security,
     description: op.description || op.summary,
     inputSchema: params.length ? inputSchema : {},
     outputSchema: outputSchema,
-    security,
+    security: op.security && op.security.length ? security : null,
     handler: function(input, ctx) {
       input = input || {};
       let reqOpts = {

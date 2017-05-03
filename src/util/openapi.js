@@ -19,6 +19,9 @@ openapi.initialize = function(spec) {
     delete spec.paths[path].parameters;
     for (let method in spec.paths[path]) {
       let op = spec.paths[path][method];
+      if (spec.security) {
+        op.security = op.security || spec.security;
+      }
       op.parameters = op.parameters || [];
       op.parameters = op.parameters.concat(pathParams);
       op.parameters = op.parameters.map(param => {
@@ -90,9 +93,11 @@ openapi.getOperation = (method, path, pathOp) => {
   let op = {
     parameters: pathOp.parameters || [],
     responses: pathOp.responses,
+    security: pathOp.security,
     operationId: pathOp.operationId || pathOp.action.title,
     description: pathOp.description || pathOp.action.description,
   }
+  if (!op.security) delete op.security;
   if (!op.operationId) delete op.operationId;
   if (!op.description) delete op.description;
   function maybeAddParam(param) {

@@ -1,7 +1,8 @@
 "use strict";
 
 const expect = require('chai').expect;
-const Action = require('../lib/action');
+const datafire = require('../lib');
+const Action = datafire.Action;
 
 describe('Action', () => {
   it('should have a default handler', () => {
@@ -126,4 +127,49 @@ describe('Action', () => {
     })
     return action.run();
   });
+
+  it('should allow thrown errors', () => {
+    let action = new Action({
+      handler: input => {
+        return Promise.resolve()
+          .then(_ => {throw new Error("err1")})
+          .then(_ => {throw new Error("shouldn't reach here")})
+          .catch(e => {
+            expect(e.message).to.equal('err1');
+          })
+      }
+    })
+    return action.run();
+  })
+
+  it('should require accounts', () => {
+    let action = new Action({
+      security: {
+        acct1: {},
+        acct2: {optional: true},
+      },
+      handler: _ => "Success",
+    })
+
+    let validContext = new datafire.Context({
+      accounts: {
+        acct1: {},
+      }
+    });
+    let invalidContext = new datafire.Context({
+      accounts: {
+        acct2: {},
+      }
+    })
+
+    return action.run()
+      .then(_ => {throw new Error("shouldn't reach here")})
+      .then(_ => action.run(null, invalidContext))
+      .catch(e => expect(e.message).to.contain('Account acct1 not specified'))
+      .then(_ => action.run(null, invalidContext))
+      .then(_ => {throw new Error("shouldn't reach here")})
+      .catch(e => expect(e.message).to.contain('Account acct1 not specified'))
+      .then(_ => action.run(null, validContext))
+      .then(msg => expect(msg).to.equal("Success"));
+  })
 })
