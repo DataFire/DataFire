@@ -17,12 +17,14 @@ const authorizer = new datafire.Action({
 })
 
 module.exports = new datafire.Project({
+  id: 'project',
   title: "SaaS #1",
   authorizers: {
     proj_user: {action: authorizer},
   },
   openapi: {
     host: 'localhost:3333',
+    security: [{api_key: []}],
     securityDefinitions: {
       api_key: {
         type: 'apiKey',
@@ -44,6 +46,7 @@ module.exports = new datafire.Project({
     },
     '/public': {
       get: {
+        security: [],
         authorizers: {
           proj_user: null,
         },

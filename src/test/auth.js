@@ -125,7 +125,7 @@ describe('Authorization', () => {
         throw new Error("shouldn't reach here")
       })
       .catch(e => {
-        expect(e.statusCode).to.equal(401);
+        expect(e.message).to.contain("Account project not specified");
       })
   })
 })

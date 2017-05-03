@@ -12,6 +12,7 @@ const Context = require('./context');
 
 const DEFAULTS = {
   handler: _ => Promise.resolve(null),
+  id: 'anonymous',
   title: '',
   description: '',
   inputs: null,
@@ -32,7 +33,6 @@ const DEFAULTS = {
  * @param {Object} options.inputs[] - JSON Schema
  * @param {Object} outputSchema - JSON Schema
  */
-
 const Action = module.exports = function(opts) {
   opts = opts || {};
   for (let key in DEFAULTS) {
@@ -66,14 +66,6 @@ Action.fromName = function(name, directory) {
   return action;
 }
 
-Action.prototype.clone = function(opts) {
-  opts = opts || {};
-  for (let key in DEFAULTS) {
-    opts[key] = opts[key] === undefined ? this[key] : opts[key];
-  }
-  return new Action(opts);
-}
-
 Action.prototype.run = function(input, ctx) {
   ctx = ctx || new Context();
   if (input === undefined) input = null;
@@ -82,6 +74,13 @@ Action.prototype.run = function(input, ctx) {
     let error = new Error(ajv.errorsText(this.validateInput.errors));
     error.statusCode = 400;
     return Promise.reject(error);
+  }
+
+  for (let key in this.security) {
+    let sec = this.security[key];
+    if (!sec.optional && !ctx.accounts[key]) {
+      return Promise.reject(new Error("Account " + key + " not specified for action " + this.id));
+    }
   }
 
   return Promise.resolve().then(_ => {
