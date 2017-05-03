@@ -30,10 +30,15 @@ const Action = module.exports = function(opts) {
   this.description = opts.description || '';
   this.outputSchema = opts.outputSchema || {};
   this.inputSchema = opts.inputSchema || {};
+  this.inputs = opts.inputs || null;
   this.security = opts.security || {};
 
   if (opts.inputs) {
-    this.inputSchema = {type: 'object', properties: {}};
+    let hasRequired = !!opts.inputs.filter(i => i.default === undefined).length;
+    this.inputSchema = {
+      type: hasRequired ? 'object' : ['object', 'null'],
+      properties: {}
+    };
     this.inputSchema.required = opts.inputs
       .filter(i => i.default === undefined)
       .map(i => i.title);
@@ -61,6 +66,7 @@ Action.fromName = function(name, directory) {
 Action.prototype.run = function(input, ctx) {
   ctx = ctx || new Context();
   if (input === undefined) input = null;
+  if (this.inputs && input === null) input = {};
   let valid = this.validateInput(input);
   if (!valid) {
     let error = new Error(ajv.errorsText(this.validateInput.errors));
