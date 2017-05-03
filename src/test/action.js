@@ -172,4 +172,17 @@ describe('Action', () => {
       .then(_ => action.run(null, validContext))
       .then(msg => expect(msg).to.equal("Success"));
   })
+
+  it('should allow null input if there are no required inputs', () => {
+    let action = new Action({
+      inputs: [{
+        title: 'foo',
+        type: 'string',
+        default: '',
+      }],
+      handler: input => input.foo,
+    });
+    return action.run(null)
+      .then(msg => expect(msg).to.equal(''))
+  })
 })
