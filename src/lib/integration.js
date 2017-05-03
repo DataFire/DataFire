@@ -78,6 +78,7 @@ Integration.prototype.action = function(id) {
 Integration.prototype.addAction = function(id, action) {
   if (!(action instanceof Action)) action = new Action(action);
   action.id = this.id + '/' + id;
+  action.security = Object.assign({}, this.security, action.security);
   let parts = id.split('.');
   let obj = this.actions;
   parts.forEach((part, idx) => {
@@ -88,13 +89,15 @@ Integration.prototype.addAction = function(id, action) {
             let message = "Action " + action.id + " failed";
             if (e instanceof Response) {
               message += " with status code " + e.statusCode + ': ' + e.body;
-            } else {
+            } else if (e.message) {
               message += ': ' + e.message;
             }
             let error = new Error(message);
             if (e instanceof Response) {
               error.statusCode = e.statusCode;
               error.body = e.body;
+            } else if (e instanceof Error) {
+              error.stack = e.stack;
             }
             throw error;
           })
@@ -123,7 +126,7 @@ Integration.fromOpenAPI = function(openapi, id) {
     for (let method in openapi.paths[path]) {
       let op = openapi.paths[path][method];
       let opID = openapiUtil.getOperationId(method, path, op);
-      integration.addAction(opID, openapiAction(method, path, security, openapi));
+      integration.addAction(opID, openapiAction(method, path, security, openapi, id));
     }
   }
   return integration;
