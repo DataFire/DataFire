@@ -73,15 +73,13 @@ let integration = datafire.Integration.fromOpenAPI({
 })
 
 describe('Integration', () => {
-  let server = null;
 
   before(() => {
     return project.serve(3333)
-      .then(df => server = df.server);
   })
 
   after(() => {
-    server.close();
+    project.server.close();
   })
 
   it("should build from OpenAPI", () => {

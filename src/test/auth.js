@@ -15,21 +15,22 @@ const OAUTH_URL = 'http://localhost:3336';
 const datafire = require('../index');
 
 describe('Authorization', () => {
-  let servers = null;
 
-  before(done => {
-    Promise.all([
+  before(() => {
+    return Promise.all([
       project.serve(3333),
       saas1.serve(3334),
       saas2.serve(3335),
       oauth.serve(3336),
-    ]).then(dfs => {
-      servers = dfs.map(df => df.server);
-      done();
-    });
+    ])
   })
 
-  after(() => servers.forEach(server => server.close()));
+  after(() => {
+    project.server.close();
+    saas1.server.close();
+    saas2.server.close();
+    oauth.server.close();
+  });
 
   it('should return 401 for no auth', done => {
     request.get(PROJECT_URL + '/me', {json: true}, (err, resp, body) => {

@@ -118,20 +118,16 @@ const paths = {
 const BASE_URL = 'http://localhost:3333';
 
 describe("Project", () => {
-  let server = null;
   let project = null;
-  before(done => {
+  before(() => {
     project = new lib.Project({
       paths,
       openapi: {host: 'localhost:3333'},
     });
-    project.serve().then(df => {
-      server = df.server;
-      done();
-    });
+    return project.serve(3333);
   });
 
-  after(() => server.close());
+  after(() => project.server.close());
 
   it('should serve ping', (done) => {
     request.get(BASE_URL + '/ping', {json: true}, (err, resp, body) => {

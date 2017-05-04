@@ -1,7 +1,5 @@
 "use strict";
 
-const express = require('express');
-const swaggerMiddleware = require('swagger-express-middleware');
 const nodepath = require('path');
 const fs = require('fs');
 const YAML = require('yamljs');
@@ -9,6 +7,7 @@ const CronJob = require('cron').CronJob;
 
 const openapiUtil = require('../util/openapi');
 const schedule = require('../util/schedule');
+const ProjectServer = require('./project-server');
 const Integration = require('./integration');
 const Action = require('./action');
 const Response = require('./response');
@@ -63,10 +62,17 @@ Project.prototype.aggregateActions = function() {
     if (!(action instanceof Action)) {
       action = new Action(action);
     }
-    this.actions.push(action);
+    if (this.actions.indexOf(action) === -1) {
+      this.actions.push(action);
+    }
     return action;
   }
 
+  for (let authID in this.authorizers) {
+    let authorizer = this.authorizers[authID];
+    if (!authorizer.action) throw new Error(`No action specified for authorizer ${authID}`);
+    authorizer.action = addAction(authorizer.action);
+  }
   for (let taskID in this.tasks) {
     let task = this.tasks[taskID];
     if (!task.action) throw new Error(`No action specified for task ${taskID}`);
@@ -77,6 +83,13 @@ Project.prototype.aggregateActions = function() {
       let op = this.paths[path][method];
       if (!op.action) throw new Error(`No action specified for ${method.toUpperCase()} ${path}`);
       op.action = addAction(op.action);
+
+      for (let authID in op.authorizers) {
+        let authorizer = op.authorizers[authID];
+        if (!authorizer) continue;
+        if (!authorizer.action) throw new Error(`No action specified for authorizer ${authID} in operation ${method.toUpperCase()} ${path}`);
+        authorizer.action = addAction(authorizer.action);
+      }
     }
   }
   this.actions.forEach(a => a.project = this);
@@ -108,102 +121,6 @@ Project.prototype.initializeOpenAPI = function(openapi) {
   return this.openapi;
 }
 
-function defaultResponse(body) {
-  let statusCode = 200;
-  if (body instanceof Error) {
-    statusCode = body.statusCode || 500;
-    body = {error: body.message};
-  }
-  return new Response({
-    statusCode,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body, null, 2),
-  })
-}
-
-Project.prototype.setup = function(app) {
-  for (let path in this.paths) {
-    for (let method in this.paths[path]) {
-      if (method === 'parameters') continue;
-      let op = this.paths[path][method];
-      op.authorizers = op.authorizers || {};
-      for (let key in op.authorizers) {
-        let authorizer = op.authorizers[key];
-        if (authorizer && typeof authorizer.action === 'string') {
-          authorizer.action = Action.fromName(authorizer.action, this.directory);
-        }
-      }
-
-      let allAuthorizers = Object.assign({}, this.authorizers, op.authorizers);
-
-      let expressPath = path.replace(openapiUtil.PATH_PARAM_REGEX, ':$1');
-      let parameters = this.openapi.paths[path][method].parameters || [];
-      app[method](expressPath, (req, res) => {
-        let event = this.monitor.startEvent('http', {
-          path, method,
-          id: method.toUpperCase() + ' ' + path,
-        })
-        let respond = (result) => {
-          this.monitor.endEvent(event);
-          if (!(result instanceof Response)) {
-            result = defaultResponse(result);
-          }
-          result.send(res);
-        }
-        let input = op.input;
-        if (op.input === undefined) {
-          input = {};
-          parameters.forEach(param => {
-            if (param.in === 'body') {
-              Object.assign(input, req.body, input);
-            } else {
-              let val = null;
-              if (param.in === 'query') val = req.query[param.name];
-              else if (param.in === 'header') val = req.get(param.name);
-              else if (param.in === 'path') val = req.params[param.name];
-              else if (param.in === 'formData') val = req.body[param.name];
-              input[param.name] = val;
-            }
-          });
-        }
-        const context = new Context({
-          type: 'http',
-          accounts: Object.assign({}, this.accounts, op.accounts),
-          request: {
-            query: req.query,
-            headers: req.headers,
-            body: req.body,
-            path: req.path,
-            method: req.method,
-          },
-        });
-
-        Promise.all(Object.keys(allAuthorizers).map(key => {
-          let authorizer = allAuthorizers[key];
-          if (authorizer === null || context.accounts[key]) return Promise.resolve();
-          if (authorizer === this) throw new Error("Action has itself as an authorizer");
-          return authorizer.action.run(input, context)
-            .then(acct => {
-              if (acct instanceof Response) throw acct;
-              if (acct) context.accounts[key] = acct;
-            });
-        }))
-        .then(_ => op.action.run(input, context))
-        .then(result => {
-          respond(result);
-        }, result => {
-          if (!(result instanceof Error || result instanceof Response)) {
-            result = new Error(result);
-          }
-          respond(result);
-        })
-      });
-    }
-  }
-}
-
 Project.prototype.serve = function(opts) {
   opts = opts || {};
   if (typeof opts === 'number') opts = {port: opts};
@@ -213,27 +130,17 @@ Project.prototype.serve = function(opts) {
     this.startTasks();
     console.log("DataFire running " + numTasks + " task" + (numTasks > 1 ? 's' : ''));
   }
-  if (opts.nohttp || !Object.keys(this.paths).length) return Promise.resolve();
+  if (opts.nohttp || !Object.keys(this.paths).length) {
+    return Promise.resolve();
+  } else {
+    return this.startServer(opts.port);
+  }
+}
 
-  return new Promise((resolve, reject) => {
-    let app = express();
-    app.set('json spaces', 2);
-    app.use('/openapi.json', (req, res) => res.json(this.openapi));
-    let middleware = new swaggerMiddleware.Middleware(app);
-    middleware.init(this.openapi, err => {
-      if (err) return reject(err);
-      app.use(middleware.metadata(), middleware.parseRequest({json: {strict: false}}), middleware.validateRequest());
-      app.use((err, req, res, next) => {
-        res.status(err.status || 500);
-        res.json({error: err.message || "Unknown Error"});
-      })
-      this.setup(app);
-      let server = app.listen(opts.port, function(err) {
-        if (err) return reject(err);
-        console.log('DataFire listening on port ' + opts.port);
-        resolve({server, app});
-      })
-    })
+Project.prototype.startServer = function(port) {
+  this.server = new ProjectServer(this);
+  return this.server.start(port).then(_ => {
+    console.log('DataFire listening on port ' + port);
   });
 }
 
