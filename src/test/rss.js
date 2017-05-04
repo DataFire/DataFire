@@ -46,13 +46,11 @@ let project = new datafire.Project({
 })
 
 describe('RSS', () => {
-  let server = null;
   before(() => {
     return project.serve(PORT)
-      .then(df => server = df.server);
   })
   after(() => {
-    server.close();
+    project.server.close();
   })
   it('should return a JS object', () => {
     return project.integration.actions.rss.get()
