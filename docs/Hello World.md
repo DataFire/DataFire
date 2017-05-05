@@ -6,6 +6,9 @@ that action to an HTTP endpoint and a scheduled task.
 ## Action
 We'll create our action in `hello.js`.
 
+> You can also return a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+> from your action if you want to perform asynchronous operations.
+
 #### hello.js
 ```js
 var datafire = require('datafire');
