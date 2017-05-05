@@ -34,8 +34,7 @@ Instagram &bull; Gmail &bull; Google Analytics &bull; YouTube
 Each integration provides a set of composable actions. New actions can be built by
 combining existing actions, NodeJS, and external libraries.
 
-Actions are driven by JavaScript
-[Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise),
+Actions are driven by JavaScript Promises,
 and can be triggered by an HTTP endpoint, on a schedule, or manually.
 
 ## Installation
