@@ -172,3 +172,6 @@ datafire run github/search.repositories.get --input.q java
 datafire run github/user.get --accounts.github.access_token "abcde"
 ```
 
+## Cookbook
+Check out the [cookbook](docs/Cookbook.md) for common patterns, including
+paginated responses and mocking/testing.
