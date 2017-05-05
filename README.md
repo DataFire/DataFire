@@ -50,12 +50,11 @@ npm install --save datafire
 
 #### ./hello.js
 ```js
-var datafire = require('datafire');
-module.exports = new datafire.Action({
+module.exports = {
   handler: function(input) {
     return "Hello, world!";
-  },
-});
+  }
+};
 ```
 
 #### ./DataFire.yml
