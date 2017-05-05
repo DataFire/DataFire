@@ -76,6 +76,10 @@ const COMMANDS = [{
   examples: ["datafire authenticate github"],
   description: "Store a set of credentials for a given integration",
   runner: require('./commands/authenticate'),
+  check: argv => {
+    if (!argv.alias) return true;
+    return /^\w+$/.test(argv.alias) || "Alias can only contain letters, numbers, and _";
+  },
   options: [{
     name: 'alias',
     alias: 'a',
@@ -116,7 +120,11 @@ COMMANDS.forEach(cmd => {
         cmd.description,
         (yargs) => {
           cmd.options.forEach(o => {
-            yargs.option(o.name, {alias: o.alias, describe: o.description, demand: o.required})
+            yargs.option(o.name, {
+              alias: o.alias,
+              describe: o.description,
+              demand: o.required,
+            })
           })
         },
         (args) => {
@@ -141,6 +149,7 @@ COMMANDS.forEach(cmd => {
               process.exit(1);
             })
         });
+  if (cmd.check) args = args.check(cmd.check);
   cmd.examples.forEach(ex => {
     args = args.example(cmd.name, ex);
   });
