@@ -54,7 +54,11 @@ const Action = module.exports = function(opts) {
 
 Action.fromName = function(name, directory) {
   let isFile = /^\.?\//.test(name);
-  if (isFile) return require(nodepath.join(directory, name));
+  if (isFile) {
+    let action = require(nodepath.join(directory, name));
+    if (!(action instanceof Action)) action = new Action(action);
+    return action;
+  }
   let slash = name.indexOf('/');
   if (slash === -1) throw new Error("Could not find action " + name);
   const Integration = require('./integration');
