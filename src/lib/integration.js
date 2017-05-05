@@ -22,6 +22,7 @@ let Integration = module.exports = function(opts) {
   this.security = opts.security || {};
 
   this.actions = {};
+  this.allActions = [];
   for (let key in (opts.actions || {})) {
     this.addAction(key, opts.actions[key]);
   }
@@ -77,6 +78,7 @@ Integration.prototype.action = function(id) {
 
 Integration.prototype.addAction = function(id, action) {
   if (!(action instanceof Action)) action = new Action(action);
+  this.allActions.push(action);
   action.id = this.id + '/' + id;
   action.security = Object.assign({}, this.security, action.security);
   let parts = id.split('.');
