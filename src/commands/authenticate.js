@@ -27,6 +27,7 @@ module.exports = (args) => {
     type: 'input',
     name: 'alias',
     message: "Choose an alias for this account:",
+    validate: alias => /^\w+$/.test(alias) || "Alias can only contain letters, numbers, and _",
   }];
   if (args.alias) {
     aliasQuestion = [];
