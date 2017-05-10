@@ -17,11 +17,7 @@ let Flow = module.exports = function(context) {
           ++nextResultIdx;
         }
         if (fn) {
-          let nextResult = fn(result);
-          if (!(nextResult instanceof Promise)) {
-            context.results[nextResultIdx] = nextResult;
-          }
-          return nextResult;
+          return fn(result);
         }
       }
       let newPromise = then(fnWrapper, reject);
