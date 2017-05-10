@@ -1,186 +1,362 @@
-18f.gov
-  Discovery Market Research
-  This API drives the Discovery Market Research Tool.
+6_dot_authentiqio_appspot
+  Authentiq
 
-apis.guru
-  APIs.guru
-  Wikipedia for Web APIs. Repository of API specs in OpenAPI(fka Swagger) 2.0 format.
+amadeus
+  Amadeus Travel Innovation Sandbox
 
-apitransformer
+apacta
+  Apacta
+  API for a tool to craftsmen used to register working hours, material usage and quality assurance.
+
+apimatic
   APIMATIC API Transformer
   Transform API Descriptions from/to various formats
 
-audiosear.ch
-  Audiosear.ch
-  The Audiosear.ch API requires OAuth, which you can manage at OAuth Applications.API SDK clients a...
+apis_guru
+  APIs.guru
+  Wikipedia for Web APIs. Repository of API specs in OpenAPI(fka Swagger) 2.0 format.
 
-azure-arm-analysisservices
+apitore_2chmatomefeedsapis
+  2ch matome feeds APIs
+  Various 2ch matome feeds.[Endpoint] https://api.apitore.com/api/29
+
+apitore_certificatefeedsapis
+  Certificate feeds APIs
+  Various certificate feeds.[Endpoint] https://api.apitore.com/api/31
+
+apitore_designfeedsapis
+  Design feeds APIs
+  Various design feeds.[Endpoint] https://api.apitore.com/api/32
+
+apitore_documentfrequencyapis
+  Document frequency APIs
+  Document frequency of Wikipedia.[Endpoint] https://api.apitore.com/api/16
+
+apitore_gamefeedsapis
+  Game feeds APIs
+  Various game feeds.[Endpoint] https://api.apitore.com/api/33
+
+apitore_kuromojiapis
+  Kuromoji APIs
+  Kuromoji: japanese morphological analyzer.[Endpoint] https://api.apitore.com/api/7
+
+apitore_languagedetectionapis
+  Language Detection APIs
+  Language detection.[Endpoint] https://api.apitore.com/api/22
+
+apitore_newsfeedsapis
+  News feeds APIs
+  Various news feeds.[Endpoint] https://api.apitore.com/api/34
+
+apitore_pioneerblogfeedsapis
+  Pioneer blog feeds APIs
+  Various blog feeds.[Endpoint] https://api.apitore.com/api/30
+
+apitore_rss2jsonapis
+  RSS2JSON APIs
+  Rss to Json.[Endpoint] https://api.apitore.com/api/28
+
+apitore_sentencepieceapis_wikipedia_
+  SentencePiece APIs (wikipedia)
+  SentencePiece tokenizer (wikipedia).[Endpoint] https://api.apitore.com/api/37
+
+apitore_sentenceseparatorapis
+  Sentence separator APIs
+  Simple sentence separator.[Endpoint] https://api.apitore.com/api/17
+
+apitore_sentimentapis
+  Sentiment APIs
+  Japanese sentiment analyzer.[Endpoint] https://api.apitore.com/api/11
+
+apitore_synonymapis
+  Synonym APIs
+  Return synonymous words. (equal to "word2vec distance")[Endpoint] https://api.apitore.com/api/9
+
+apitore_techfeedsapis
+  Tech feeds APIs
+  Various tech feeds.[Endpoint] https://api.apitore.com/api/35
+
+apitore_text2labelbytfidfapis
+  Text2Label by tfidf APIs
+  Text to label by tfidf of contents.[Endpoint] https://api.apitore.com/api/18
+
+apitore_text2labelbywordvectorapis
+  Text2Label by word vector APIs
+  Text to label by word2vec of contents.[Endpoint] https://api.apitore.com/api/19
+
+apitore_travelfeedsapis
+  Travel feeds APIs
+  Various travel feeds.[Endpoint] https://api.apitore.com/api/36
+
+apitore_tweetsummarizationapis
+  Tweet summarization APIs
+  Tweet summarization.[Endpoint] https://api.apitore.com/api/27
+
+apitore_twitterapis
+  Twitter APIs
+  Call Twitter APIs.[Endpoint] https://api.apitore.com/api/23
+
+apitore_twitterapiswithword2vecqueryexpansion
+  Twitter APIs with Word2Vec query expansion
+  Call Twitter APIs with word2vec query expansion.[Endpoint] https://api.apitore.com/api/24
+
+apitore_url2hrefapis
+  Url2Href APIs
+  Url to Href links.[Endpoint] https://api.apitore.com/api/14
+
+apitore_url2htmlapis
+  Url2Html APIs
+  Url to Html.[Endpoint] https://api.apitore.com/api/12
+
+apitore_url2labelbytfidfapis
+  Url2Label by tfidf APIs
+  Url to label by tfidf of contents.[Endpoint] https://api.apitore.com/api/20
+
+apitore_url2labelbywordvectorapis
+  Url2Label by word vector APIs
+  Url to label by word2vec of contents.[Endpoint] https://api.apitore.com/api/21
+
+apitore_url2srcapis
+  Url2Src APIs
+  Url to Image src urls.[Endpoint] https://api.apitore.com/api/15
+
+apitore_url2textapis
+  Url2Text APIs
+  Url to Text.[Endpoint] https://api.apitore.com/api/13
+
+apitore_word2vecapis
+  Word2Vec APIs
+  Word2Vec.[Endpoint] https://api.apitore.com/api/8
+
+apitore_wordstovectorsapis
+  Words to Vectors APIs
+  Word to vectors.[Endpoint] https://api.apitore.com/api/10
+
+appveyor
+  AppVeyor
+  AppVeyor is a hosted continuous integration service which runs on Microsoft
+
+authentiq
+  Authentiq Connect
+  Authentiq Connect OAuth 2.0 and OpenID Connect API reference.
+
+azure_arm_advisor
+  AdvisorManagementClient
+  REST APIs for Azure Advisor
+
+azure_arm_analysisservices
   AzureAnalysisServices
   The Azure Analysis Services Web API provides a RESTful set of web services that enables users to ...
 
-azure-arm-apimanagement-apimdeployment
-  ApiManagementClient
-  Use these REST APIs to manage Azure API Management deployment.
-
-azure-arm-apimanagement-apimmanagement
+azure_arm_apimanagement
   ApiManagementClient
   Use these REST APIs for performing operations on entities like API, Product, and Subscription ass...
 
-azure-arm-authorization
+azure_arm_appinsights
+  AppInsightsManagementClient
+  Azure Application Insights client for web test based alerting.
+
+azure_arm_authorization
   AuthorizationManagementClient
   Role based access control provides you a way to apply granular level policy administration down t...
 
-azure-arm-batch
+azure_arm_batch
   BatchManagement
 
-azure-arm-cdn
+azure_arm_billing
+  BillingClient
+  Billing client provides access to billing resources for Azure Web-Direct subscriptions. Other sub...
+
+azure_arm_cdn
   CdnManagementClient
   Use these APIs to manage Azure CDN resources through the Azure Resource Manager. You must make su...
 
-azure-arm-cognitiveservices
+azure_arm_cognitiveservices
   CognitiveServicesManagementClient
   Cognitive Services Management Client
 
-azure-arm-commerce
+azure_arm_commerce
   UsageManagementClient
 
-azure-arm-compute
+azure_arm_compute
   ComputeManagementClient
   The Compute Management Client.
 
-azure-arm-compute-containerservice
+azure_arm_compute_containerservice
   ContainerServiceClient
   The Container Service Client.
 
-azure-arm-containerregistry
+azure_arm_compute_disk
+  DiskResourceProviderClient
+  The Disk Resource Provider Client.
+
+azure_arm_consumption
+  ConsumptionManagementClient
+  Consumption management client provides access to consumption resources for Azure Web-Direct subsc...
+
+azure_arm_containerregistry
   ContainerRegistryManagementClient
 
-azure-arm-devtestlabs
+azure_arm_devtestlabs
   DevTestLabsClient
   Azure DevTest Labs REST API.
 
-azure-arm-dns
+azure_arm_dns
   DnsManagementClient
   The DNS Management Client.
 
-azure-arm-documentdb
+azure_arm_documentdb
   DocumentDB
   Azure DocumentDB Database Service Resource Provider REST API
 
-azure-arm-eventhub
+azure_arm_eventhub
   EventHubManagementClient
   Azure Event Hubs client
 
-azure-arm-insights
+azure_arm_insights
   InsightsManagementClient
 
-azure-arm-intune
+azure_arm_intune
   IntuneResourceManagementClient
   Microsoft.Intune Resource provider Api features in the swagger-2.0 specification
 
-azure-arm-iothub
+azure_arm_iothub
   iotHubClient
-  API for using the IoT Hub Features.
+  Use this API to manage the IoT hubs in your subscription.
 
-azure-arm-keyvault
+azure_arm_keyvault
   KeyVaultManagementClient
   The Azure management API provides a RESTful set of web services that interact with Azure Key Vault.
 
-azure-arm-logic
+azure_arm_logic
   LogicManagementClient
   REST API for Azure Logic Apps.
 
-azure-arm-machinelearning-commitmentplans
+azure_arm_machinelearning_commitmentplans
   Azure ML Commitment Plans Management Client
   These APIs allow end users to operate on Azure Machine Learning Commitment Plans resources and th...
 
-azure-arm-machinelearning-webservices
+azure_arm_machinelearning_webservices
   Azure ML Web Services Management Client
   These APIs allow end users to operate on Azure Machine Learning Web Services resources. They supp...
 
-azure-arm-mediaservices
+azure_arm_mediaservices
   MediaServicesManagementClient
   Media Services resource management APIs.
 
-azure-arm-mobileengagement
+azure_arm_mobileengagement
   Engagement.ManagementClient
   Microsoft Azure Mobile Engagement REST APIs.
 
-azure-arm-network
+azure_arm_monitor
+  MonitorManagementClient
+
+azure_arm_network
   NetworkManagementClient
   The Microsoft Azure Network management API provides a RESTful set of web services that interact w...
 
-azure-arm-notificationhubs
+azure_arm_notificationhubs
   NotificationHubsManagementClient
   Azure NotificationHub client
 
-azure-arm-powerbiembedded
+azure_arm_operationalinsights
+  Azure Log Analytics
+  Azure Log Analytics API reference for LinkTargets, StorageInsightConfigs and SavedSearches.
+
+azure_arm_powerbiembedded
   Power BI Embedded Management Client
   Client to manage your Power BI Embedded workspace collections and retrieve workspaces.
 
-azure-arm-recoveryservices
-  RecoveryServicesClient
-
-azure-arm-recoveryservicesbackup
+azure_arm_recoveryservicesbackup
   RecoveryServicesBackupClient
 
-azure-arm-redis
+azure_arm_redis
   RedisManagementClient
   REST API for Azure Redis Cache Service.
 
-azure-arm-scheduler
+azure_arm_relay
+  Relay
+  Use these API to manage Azure Relay resources through Azure Resources Manager.
+
+azure_arm_resourcehealth
+  Microsoft.ResourceHealth
+  The Resource Health Client.
+
+azure_arm_scheduler
   SchedulerManagementClient
 
-azure-arm-search
+azure_arm_search
   SearchManagementClient
   Client that can be used to manage Azure Search services and API keys.
 
-azure-arm-servermanagement
+azure_arm_servermanagement
   ServerManagement
   REST API for Azure Server Management Service.
 
-azure-arm-servicebus
+azure_arm_service_map
+  Service Map
+  Service Map API Reference
+
+azure_arm_servicebus
   ServiceBusManagementClient
   Azure Service Bus client
 
-azure-arm-sql
-  Azure SQL Database API spec
-  Provides create, read, update and delete functionality for Azure SQL resources including servers,...
+azure_arm_servicefabric
+  ServiceFabricManagementClient
 
-azure-arm-storage
-  StorageManagementClient
-  The Storage Management Client.
+azure_arm_sql
+  Azure SQL Database
+  Provides create, read, update and delete functionality for Azure SQL Database resources including...
 
-azure-arm-trafficmanager
+azure_arm_storage
+  StorageManagement
+  The Azure Storage Management API.
+
+azure_arm_storageimportexport
+  StorageImportExport
+  The Microsoft Azure Storage Import/Export Resource Provider API.
+
+azure_arm_storsimple8000series
+  StorSimpleSeries8000ManagementClient
+
+azure_arm_trafficmanager
   TrafficManagerManagementClient
 
-azure-arm-web
+azure_arm_web
   WebSite Management Client
   Use these APIs to manage Azure Websites resources through the Azure Resource Manager. All task op...
 
-azure-insights
+azure_insights
   InsightsClient
 
-backupify
-  Backupify
-  The Backupify API allows you to integrate the leading SaaS backup solution into your software, ma...
+azure_monitor
+  MonitorClient
 
 bbc
   BBC Nitro
   BBC Nitro is the BBC's application programming interface (API) for BBC Programmes Metadata.
 
-bbc-rss
+bbc_rss
+  feeds.bbci.co.uk
 
 bbci
   BBC iPlayer Business Layer
   The definitive iPlayer API.
 
+bclaws_ca_bclaws
+  BC Laws
+  BC Laws is an electronic library providing free public access to the laws of British Columbia. BC...
+
 beanstream
   Beanstream Payments
   https://www.beanstream.com/api/v1
 
+beezup
+  Marketplaces - Orders
+  This API will gives you the ability to manage your orders.
+
 bigoven
-  350,000+ Recipe and Grocery List API (v2)
+  BigOven
   #Documentation
 
 bikewise
@@ -191,6 +367,10 @@ bitbucket
   Bitbucket
   Code against the Bitbucket API to automate simple tasks, embed Bitbucket data into your own site,...
 
+bluemix_containers
+  IBM Containers
+  Containers are virtual software objects that include all the elements that an app needs to run. A...
+
 botify
   Botify
   Botify Saas API
@@ -198,6 +378,10 @@ botify
 brandlovers
   BrandLovers Marketplace API V1
   Allows sellers to: 1) Load products definitions to the BrandLovers marktplace. 2) Receive and upd...
+
+browshot
+  Browshot
+  Take screenshots of any website in real time
 
 bufferapp
   Bufferapp
@@ -215,29 +399,33 @@ channel4
   Channel 4
   This is the place to come for all the technical details you need to power your applications with ...
 
+circleci
+  CircleCI
+  The CircleCI API is a RESTful, fully-featured API that allows you to do almost anything in CircleCI.
+
 cisco
   Cisco PSIRT openVuln
   The Cisco Product Security Incident Response Team (PSIRT) openVuln API is a RESTful API that allo...
 
-citrix-gotoassistseeit
+citrix_gotoassistseeit
   GoToAssist Seeit
   Allows you to integrate GoToAssist Seeit into your own solutions.General notes:GoToAssist Seeit s...
 
-citrix-gotomeeting
+citrix_gotomeeting
   GoToMeeting
-  The Citrix GoToMeeting API provides seamless integration of GoToMeeting provisioning and meeting ...
+  The GoToMeeting API provides seamless integration of GoToMeeting provisioning and meeting managem...
 
-citrix-gototraining
+citrix_gototraining
   GoToTraining
-  The Citrix GoToTraining API enables developers to use the stable and robust GoToTraining function...
+  The GoToTraining API enables developers to use the stable and robust GoToTraining functionality a...
 
-citrix-gotowebinar
+citrix_gotowebinar
   GoToWebinar
-  The Citrix GoToWebinar API provides seamless integration of webinar registrant and attendee data ...
+  The GoToWebinar API provides seamless integration of webinar registrant and attendee data into yo...
 
-citrix-scim
+citrix_scim
   SCIM
-  The SCIM API lets you manage users in your Citrix organization. You can then automate the provisi...
+  The SCIM API lets you manage users in your organization. You can then automate the provisioning o...
 
 citycontext
   City Context
@@ -251,31 +439,36 @@ clickmeter
   ClickMeter
   Api dashboard for ClickMeter API
 
-cnn-rss
+cloud_gov
+  Discovery Market Research
+  This API drives the Discovery Market Research Tool.
 
-consumerfinance.gov
+cnab_online_herokuapp
+  Cnab Online
+  Processe arquivos de retorno CNAB
+
+cnn_rss
+  rss.cnn.com
+
+consumerfinance_gov
   The Consumer Financial Protection Bureau
   Learn more about home mortgage data, download the data yourself, or build new tools using our API.
 
-core.ac.uk
+core_ac_uk
   CORE API v2
   You can use the CORE API to access the
 
-cybertaxonomy.eu
+cybertaxonomy_eu
   EU BON UTIS
   The Unified Taxonomic Information Service (UTIS) is the taxonomic backbone for the EU-BON project
-
-daisycon
-  Daisycon
-  The Daisycon API allows you to retrieve statistics and link materials, update transactions, subsc...
-
-data.gov
-  Regulations.gov
-  Provides public users access to federal regulatory content.
 
 data2crm
   Data2CRM.API
   Make use of our in-depth documentation to get more information about the various functions of the...
+
+data_gov
+  Regulations.gov
+  Provides public users access to federal regulatory content.
 
 datumbox
   DatumBox
@@ -285,13 +478,41 @@ dweet
   dweet.io
   Dweet.io allows users to share data from mobile, tablets, and pcs, and them to other devices and ...
 
-eriomem
-  MassiveRand TRNG Web Service
-  This is the experimental API documentation for MassiveRand TRNG Web Service. Serving true random ...
+epa_gov_air
+  U.S. EPA Enforcement and Compliance History Online (ECHO) - Clean Air Act
+  Enforcement and Compliance History Online (ECHO) is a tool developed and maintained by EPA's Offi...
 
-europeana.eu
+epa_gov_case
+  U.S. EPA Enforcement and Compliance History Online (ECHO) - Enforcement Case Search
+  Enforcement and Compliance History Online (ECHO) is a tool developed and maintained by EPA's Offi...
+
+epa_gov_cwa
+  U.S. EPA Enforcement and Compliance History Online (ECHO) - Clean Water Act (CWA) Rest Services
+  Enforcement and Compliance History Online (ECHO) is a tool developed and maintained by EPA's Offi...
+
+epa_gov_dfr
+  U.S. EPA Enforcement and Compliance History Online (ECHO) - Detailed Facility Report (DFR)
+  Enforcement and Compliance History Online (ECHO) is a tool developed and maintained by EPA's Offi...
+
+epa_gov_echo
+  U.S. EPA Enforcement and Compliance History Online (ECHO) - All Data
+  Enforcement and Compliance History Online (ECHO) is a tool developed and maintained by EPA's Offi...
+
+epa_gov_eff
+  U.S. EPA Enforcement and Compliance History Online (ECHO) - Effluent Charting and Reporting
+  Enforcement and Compliance History Online (ECHO) is a tool developed and maintained by EPA's Offi...
+
+epa_gov_rcra
+  U.S. EPA Enforcement and Compliance History Online (ECHO) - Resource Conservation and Recovery Act 
+  Enforcement and Compliance History Online (ECHO) is a tool developed and maintained by EPA's Offi...
+
+epa_gov_sdw
+  U.S. EPA Enforcement and Compliance History Online (ECHO) - Safe Drinking Water Act
+  Enforcement and Compliance History Online (ECHO) is a tool developed and maintained by EPA's Offi...
+
+europeana_eu
   Europeana
-  This Swagger API console provides an overview of and interface to the Europeana REST API. You can...
+  This Swagger API console provides an overview of an interface to the Europeana REST API. You can ...
 
 exavault
   ExaVault
@@ -301,13 +522,13 @@ firebrowse
   FireBrowse Beta API
   A simple and elegant way to explore cancer data
 
+flat
+  Flat
+  The Flat API allows you to easily extend the abilities of the [Flat Platform](https://flat.io), w...
+
 furkot
   Furkot Trips
   Furkot provides Rest API to access user trip data.
-
-gavagai.se
-  Gavagai
-  Let us do the job and read your documents for you. We will bring you executive summaries and tona...
 
 geneea
   Geneea Natural Language Processing
@@ -328,472 +549,543 @@ github
   GitHub
   Powerful collaboration, code review, and code management for open source and private projects.
 
-glugbot
-  Glugbot
-  Text Processing API for Creative Writing
+gitlab
+  Gitlab
+  The platform for modern developers
 
-google-acceleratedmobilepageurl
+google_acceleratedmobilepageurl
   Accelerated Mobile Pages (AMP) URL
   This API contains a single method, batchGet. Call this method to retrieve the AMP URL (and equiva...
 
-google-adexchangebuyer
+google_adexchangebuyer
   Ad Exchange Buyer
   Accesses your bidding-account information, submits creatives for validation, finds available dire...
 
-google-adexchangebuyer2
+google_adexchangebuyer2
   Ad Exchange Buyer API II
   Accesses the latest features for managing Ad Exchange accounts, Real-Time Bidding configurations ...
 
-google-adexchangeseller
+google_adexchangeseller
   Ad Exchange Seller
   Accesses the inventory of Ad Exchange seller users and generates reports.
 
-google-admin
+google_admin
   Admin Reports
-  Fetches reports for the administrators of Google Apps customers about the usage, collaboration, s...
+  Fetches reports for the administrators of G Suite customers about the usage, collaboration, secur...
 
-google-adsense
+google_adsense
   AdSense Management
   Accesses AdSense publishers' inventory and generates performance reports.
 
-google-adsensehost
+google_adsensehost
   AdSense Host
   Generates performance reports, generates ad codes, and provides publisher management capabilities...
 
-google-analytics
+google_analytics
   Google Analytics
   Views and manages your Google Analytics data.
 
-google-analyticsreporting
+google_analyticsreporting
   Google Analytics Reporting
   Accesses Analytics report data.
 
-google-androidenterprise
+google_androiddeviceprovisioning
+  Android Device Provisioning Partner
+  Android Device Provisioning Partner API
+
+google_androidenterprise
   Google Play EMM
   Manages the deployment of apps to Android for Work users.
 
-google-androidpublisher
+google_androidpublisher
   Google Play Developer
   Lets Android application developers access their Google Play accounts.
 
-google-appengine
+google_appengine
   Google App Engine Admin
-  Provisions and manages App Engine applications.
+  The App Engine Admin API enables developers to provision and manage their App Engine applications.
 
-google-appsactivity
-  Google Apps Activity
+google_appsactivity
+  G Suite Activity
   Provides a historical view of activity.
 
-google-appstate
+google_appstate
   Google App State
   The Google App State API.
 
-google-bigquery
+google_bigquery
   BigQuery
   A data platform for customers to create, manage, share and query data.
 
-google-blogger
+google_blogger
   Blogger
   API for access to the data within Blogger.
 
-google-books
+google_books
   Books
   Searches for books and manages your Google Books library.
 
-google-calendar
+google_calendar
   Calendar
   Manipulates events and other calendar data.
 
-google-civicinfo
+google_civicinfo
   Google Civic Information
   Provides polling places, early vote locations, contest data, election officials, and government r...
 
-google-classroom
+google_classroom
   Google Classroom
   Manages classes, rosters, and invitations in Google Classroom.
 
-google-cloudbilling
+google_cloudbilling
   Google Cloud Billing
-  Retrieves Google Developers Console billing accounts and associates them with projects.
+  Allows developers to manage billing for their Google Cloud Platform projects
 
-google-cloudbuild
+google_cloudbuild
   Google Cloud Container Builder
   Builds container images in the cloud.
 
-google-clouddebugger
+google_clouddebugger
   Stackdriver Debugger
   Examines the call stack and variables of a running application without stopping or slowing it down.
 
-google-clouderrorreporting
+google_clouderrorreporting
   Stackdriver Error Reporting
   Stackdriver Error Reporting groups and counts similar errors from cloud services. The Stackdriver...
 
-google-cloudmonitoring
+google_cloudfunctions
+  Google Cloud Functions
+  API for managing lightweight user-provided functions executed in response to events.
+
+google_cloudkms
+  Google Cloud Key Management Service (KMS)
+  Manages encryption for your cloud services the same way you do on-premise. You can generate, use,...
+
+google_cloudmonitoring
   Cloud Monitoring
   Accesses Google Cloud Monitoring data.
 
-google-cloudresourcemanager
+google_cloudresourcemanager
   Google Cloud Resource Manager
   The Google Cloud Resource Manager API provides methods for creating, reading, and updating projec...
 
-google-cloudtrace
-  Google Cloud Trace
-  Send and retrieve trace data from Google Cloud Trace. Data is generated and available by default ...
+google_cloudtrace
+  Stackdriver Trace
+  Send and retrieve trace data from Stackdriver Trace. Data is generated and available by default f...
 
-google-clouduseraccounts
+google_clouduseraccounts
   Cloud User Accounts
   Creates and manages users and groups for accessing Google Compute Engine virtual machines.
 
-google-compute
+google_compute
   Compute Engine
   Creates and runs virtual machines on Google Cloud Platform.
 
-google-consumersurveys
+google_consumersurveys
   Consumer Surveys
   Creates and conducts surveys, lists the surveys that an authenticated user owns, and retrieves su...
 
-google-container
+google_container
   Google Container Engine
-  Builds and manages clusters that run container-based applications, powered by open source Kuberne...
+  The Google Container Engine API is used for building and managing container based applications, p...
 
-google-content
+google_content
   Content API for Shopping
   Manages product items, inventory, and Merchant Center accounts for Google Shopping.
 
-google-customsearch
+google_customsearch
   CustomSearch
   Lets you search over a website or collection of websites
 
-google-dataflow
+google_dataflow
   Google Dataflow
-  Develops and executes data processing patterns like ETL, batch computation, and continuous comput...
+  Manages Google Cloud Dataflow projects on Google Cloud Platform.
 
-google-dataproc
+google_dataproc
   Google Cloud Dataproc
-  An API for managing Hadoop-based clusters and jobs on Google Cloud Platform.
+  Manages Hadoop-based clusters and jobs on Google Cloud Platform.
 
-google-datastore
+google_datastore
   Google Cloud Datastore
   Accesses the schemaless NoSQL database to provide fully managed, robust, scalable storage for you...
 
-google-deploymentmanager
+google_deploymentmanager
   Google Cloud Deployment Manager
   Declares, configures, and deploys complex solutions on Google Cloud Platform.
 
-google-dfareporting
+google_dfareporting
   DCM/DFA Reporting And Trafficking
   Manages your DoubleClick Campaign Manager ad campaigns and reports.
 
-google-discovery
+google_discovery
   APIs Discovery Service
   Provides information about other Google APIs, such as what APIs are available, the resource, and ...
 
-google-dns
+google_dlp
+  DLP
+  The Google Data Loss Prevention API provides methods for detection of privacy-sensitive fragments...
+
+google_dns
   Google Cloud DNS
   Configures and serves authoritative DNS records.
 
-google-doubleclickbidmanager
+google_doubleclickbidmanager
   DoubleClick Bid Manager
   API for viewing and managing your reports in DoubleClick Bid Manager.
 
-google-doubleclicksearch
+google_doubleclicksearch
   DoubleClick Search
   Reports and modifies your advertising data in DoubleClick Search (for example, campaigns, ad grou...
 
-google-drive
+google_drive
   Drive
   Manages files in Drive including uploading, downloading, searching, detecting changes, and updati...
 
-google-firebasedynamiclinks
+google_firebasedynamiclinks
   Firebase Dynamic Links
   Firebase Dynamic Links API enables third party developers to programmatically create and manage D...
 
-google-firebaserules
+google_firebaserules
   Firebase Rules
   Creates and manages rules that determine when a Firebase Rules-enabled service should permit a re...
 
-google-fitness
+google_fitness
   Fitness
   Stores and accesses user data in the fitness store from apps on any platform.
 
-google-fusiontables
+google_fusiontables
   Fusion Tables
   API for working with Fusion Tables data.
 
-google-games
+google_games
   Google Play Game Services
   The API for Google Play Game Services.
 
-google-gamesconfiguration
+google_gamesconfiguration
   Google Play Game Services Publishing
   The Publishing API for Google Play Game Services.
 
-google-gamesmanagement
+google_gamesmanagement
   Google Play Game Services Management
   The Management API for Google Play Game Services.
 
-google-genomics
+google_genomics
   Genomics
-  Stores, processes, explores and shares genomic data.
+  Upload, process, query, and search Genomics data in the cloud.
 
-google-gmail
+google_gmail
   Gmail
   Access Gmail mailboxes including sending user email.
 
-google-groupsmigration
+google_groupsmigration
   Groups Migration
   Groups Migration Api.
 
-google-groupssettings
+google_groupssettings
   Groups Settings
   Lets you manage permission levels and related settings of a group.
 
-google-iam
+google_iam
   Google Identity and Access Management (IAM)
   Manages identity and access control for Google Cloud Platform resources, including the creation o...
 
-google-identitytoolkit
+google_identitytoolkit
   Google Identity Toolkit
   Help the third party sites to implement federated login.
 
-google-kgsearch
+google_kgsearch
   Knowledge Graph Search
-  Knowledge Graph Search API allows developers to search the Google Knowledge Graph for entities.
+  Searches the Google Knowledge Graph for entities.
 
-google-language
+google_language
   Google Cloud Natural Language
   Google Cloud Natural Language API provides natural language understanding technologies to develop...
 
-google-licensing
+google_licensing
   Enterprise License Manager
-  Licensing API to view and manage license for your domain.
+  Views and manages licenses for your domain.
 
-google-logging
+google_logging
   Stackdriver Logging
   Writes log entries and manages your Stackdriver Logging configuration.
 
-google-manufacturers
+google_manufacturers
   Manufacturer Center
   Public API for managing Manufacturer Center related data.
 
-google-mirror
+google_mirror
   Google Mirror
   Interacts with Glass users via the timeline.
 
-google-ml
-  Google Cloud Machine Learning
+google_ml
+  Google Cloud Machine Learning Engine
   An API to enable creating and using machine learning models.
 
-google-monitoring
+google_monitoring
   Stackdriver Monitoring
   Manages your Stackdriver Monitoring data and configurations. Most projects must be associated wit...
 
-google-oauth2
+google_oauth2
   Google OAuth2
   Obtains end-user authorization grants for use with other Google APIs.
 
-google-pagespeedonline
+google_pagespeedonline
   PageSpeed Insights
   Analyzes the performance of a web page and provides tailored suggestions to make that page faster.
 
-google-partners
+google_partners
   Google Partners
-  Lets advertisers search certified companies and create contact leads with them, and also audits t...
+  Searches certified companies and creates contact leads with them, and also audits the usage of cl...
 
-google-people
+google_people
   Google People
-  The Google People API service gives access to information about profiles and contacts.
+  Provides access to information about profiles and contacts.
 
-google-playmoviespartner
+google_playmoviespartner
   Google Play Movies Partner
   Gets the delivery status of titles for Google Play Movies Partners.
 
-google-plus
+google_plus
   Google+
   Builds on top of the Google+ platform.
 
-google-plusdomains
+google_plusdomains
   Google+ Domains
   Builds on top of the Google+ platform for Google Apps Domains.
 
-google-prediction
+google_prediction
   Prediction
   Lets you access a cloud hosted machine learning service that makes it easy to build smart apps
 
-google-proximitybeacon
+google_proximitybeacon
   Google Proximity Beacon
   Registers, manages, indexes, and searches beacons.
 
-google-pubsub
+google_pubsub
   Google Cloud Pub/Sub
   Provides reliable, many-to-many, asynchronous messaging between applications.
 
-google-qpxexpress
+google_qpxexpress
   QPX Express
   Finds the least expensive flights between an origin and a destination.
 
-google-replicapool
+google_replicapool
   Google Compute Engine Instance Group Manager
   [Deprecated. Please use Instance Group Manager in Compute API] Provides groups of homogenous Comp...
 
-google-replicapoolupdater
+google_replicapoolupdater
   Google Compute Engine Instance Group Updater
   [Deprecated. Please use compute.instanceGroupManagers.update method. replicapoolupdater API will ...
 
-google-reseller
+google_reseller
   Enterprise Apps Reseller
   Creates and manages your customers and their subscriptions.
 
-google-resourceviews
+google_resourceviews
   Google Compute Engine Instance Groups
   The Resource View API allows users to create and manage logical sets of Google Compute Engine ins...
 
-google-runtimeconfig
+google_runtimeconfig
   Google Cloud RuntimeConfig
   Provides capabilities for dynamic configuration and coordination for applications running on Goog...
 
-google-safebrowsing
-  Safe Browsing APIs
-  Enables client applications to check web resources (most commonly URLs) against Google-generated ...
+google_safebrowsing
+  Google Safe Browsing
+  The Safe Browsing API is an experimental API that allows client applications to check URLs agains...
 
-google-script
+google_script
   Google Apps Script Execution
   Executes Google Apps Script projects.
 
-google-servicecontrol
+google_searchconsole
+  Google Search Console URL Testing Tools
+  Provides tools for running validation tests against single URLs
+
+google_servicecontrol
   Google Service Control
   Google Service Control provides control plane functionality to managed services, such as logging,...
 
-google-servicemanagement
+google_servicemanagement
   Google Service Management
   Google Service Management allows service producers to publish their services on Google Cloud Plat...
 
-google-sheets
+google_serviceuser
+  Google Service User
+  Enables services that service consumers want to use on Google Cloud Platform, lists the available...
+
+google_sheets
   Google Sheets
   Reads and writes Google Sheets.
 
-google-siteverification
+google_siteverification
   Google Site Verification
   Verifies ownership of websites or domains with Google.
 
-google-slides
+google_slides
   Google Slides
   An API for creating and editing Google Slides presentations.
 
-google-spectrum
+google_sourcerepo
+  Cloud Source Repositories
+  Access source code repositories hosted by Google.
+
+google_spanner
+  Cloud Spanner
+  Cloud Spanner is a managed, mission-critical, globally consistent and scalable relational databas...
+
+google_spectrum
   Google Spectrum Database
   API for spectrum-management functions.
 
-google-speech
+google_speech
   Google Cloud Speech
   Google Cloud Speech API.
 
-google-sqladmin
+google_sqladmin
   Cloud SQL Administration
   Creates and configures Cloud SQL instances, which provide fully-managed MySQL databases.
 
-google-storage
+google_storage
   Cloud Storage
   Stores and retrieves potentially large, immutable data objects.
 
-google-storagetransfer
+google_storagetransfer
   Google Storage Transfer
   Transfers data from external data sources to a Google Cloud Storage bucket or between Google Clou...
 
-google-surveys
+google_supportcases
+  Google Support Cases Private
+  Support Cases API
+
+google_surveys
   Surveys
   Creates and conducts surveys, lists the surveys that an authenticated user owns, and retrieves su...
 
-google-tagmanager
+google_tagmanager
   Tag Manager
   Accesses Tag Manager accounts and containers.
 
-google-taskqueue
+google_taskqueue
   TaskQueue
   Accesses a Google App Engine Pull Task Queue over REST.
 
-google-tasks
+google_tasks
   Tasks
   Lets you manage your tasks and task lists.
 
-google-toolresults
+google_toolresults
   Cloud Tool Results
-  Reads and publishes results from Cloud Test Lab.
+  Reads and publishes results from Firebase Test Lab.
 
-google-translate
+google_tracing
+  Google Tracing
+  Send and retrieve trace data from Google Stackdriver Trace.
+
+google_translate
   Translate
   Translates text from one language to another.
 
-google-urlshortener
+google_urlshortener
   URL Shortener
   Lets you create, inspect, and manage goo.gl short URLs
 
-google-vision
+google_vision
   Google Cloud Vision
   Integrates Google Vision features, including image labeling, face, logo, and landmark detection, ...
 
-google-webfonts
+google_webfonts
   Google Fonts Developer
   Accesses the metadata for all families served by Google Fonts, providing a list of families curre...
 
-google-webmasters
+google_webmasters
   Search Console
   View Google Search Console data for your verified sites.
 
-google-youtube
+google_youtube
   YouTube Data
   Supports core YouTube features, such as uploading videos, creating and managing playlists, search...
 
-google-youtubeanalytics
+google_youtubeanalytics
   YouTube Analytics
   Retrieves your YouTube Analytics data.
 
-google-youtubereporting
+google_youtubereporting
   YouTube Reporting
   Schedules reporting jobs containing your YouTube Analytics data and downloads the resulting bulk ...
+
+gov_bc_ca_bcdc
+  BC Data Catalogue
+  This API provides live access to the BC Data Catalogue. Further documentation on the API is avail...
+
+gov_bc_ca_bcgnws
+  BC Geographical Names Web Service -
+  This REST API provides searchable access to information about geographical names in the province ...
+
+gov_bc_ca_geocoder
+  Gated Geocoder
+  This gated API computes the physical locations (i.e., latitude and longitude) and correct, standa...
+
+gov_bc_ca_geomark
+  GeoMark Web Service
+  The Geomark Web Service allows you to create and share geographic areas of interest over the web ...
+
+gov_bc_ca_jobposting
+  WorkBC Job Posting
+  This API allows you to receive a feed of jobs from WorkBC's Job Board. Please see our data collec...
+
+gov_bc_ca_open511
+  DriveBC's Open511
+  This API is DriveBC's implementation of the Open511 specification.  It provides information about...
+
+gov_bc_ca_router
+  BC Route Planner
+  Finds shortest/fastest route between a start point and one or more stop points on British Columbi...
 
 graphhopper
   Route Optimization
   Our Route Optimization API solves the so called vehicle routing problem fast. It calculates an op...
 
-hacker-news
+hacker_news
   Hacker News
   Hacker News is a social news website focusing on computer science and entrepreneurship
 
-healthcare.gov
+healthcare_gov
   Healthcare
 
-heroku
-  Heroku
-  Manage your Heroku apps, configs, collaborators & resources
-
-hetras-certification-booking
+hetras_certification_booking
   hetras Booking API Version 0
 
-hetras-certification-hotel
+hetras_certification_hotel
   hetras Hotel API Version 0
 
-hhs.gov
+hhs_gov
   HHS Media Services
-
-iamreal.me
-  I Am Real
-  Use I Am Real's patented technology to perform social, video, and SMS validation on your users.
 
 idtbeyond
   Active Documentation for /v1
   Our active docs provide the ability to test out your account and to see the responses to your que...
 
-import
+ijenko
+  IoE² IoT API - to create end-user applications
+
+import_data
   import.io
-  ## Introduction
+
+import_extraction
+  import.io
+
+import_rss
+  import.io
+
+import_run
+  import.io
+
+import_schedule
+  import.io
 
 inboxroute
   Mailsquad
   MailSquad offers an affordable and super easy way to create, send and track delightful emails.
-
-indix
-  Indix
 
 infermedica
   Infermedica
@@ -807,22 +1099,14 @@ jirafe
   Jirafe Events
   API endpoins for sending Jirafe events
 
-kaltura
-  Kaltura
-  The Kaltura API
-
 learnifier
   Learnifier
 
-likefolio
-  Likefolio Api Endpoints
-  Create a session to start to use it
+lyft
+  Lyft
+  Drive your app to success with Lyft's API
 
-magento
-  Magento Community
-  Magento Commerce is the leading provider of open omnichannel innovation.
-
-magick.nu
+magick_nu
   Tradeworks
   Authentication is required to access all methods of the API. Enter username and password.
 
@@ -831,16 +1115,8 @@ mandrillapp
   Mandrill is a reliable, scalable, and secure delivery API for transactional emails from websites ...
 
 medium
-  Medium.com - Unofficial API Spec
+  Medium.com
   Medium’s unofficial API documentation using OpenAPI specification.
-
-mondiamedia
-  Queen
-  This is the API for building Mondia-Media-Products, like Tops.Every call need a valid client or u...
-
-mongodb
-  MongoDB
-  Access to MongoDB
 
 moonmoonmoonmoon
   Moon by Ai Weiwei & Olafur Eliasson
@@ -850,9 +1126,16 @@ motaword
   MotaWord
   Use MotaWord API to post and track your translation projects.
 
+mozilla_kinto
+  kinto
+
 nativeads
   Native Ads Publisher
   This is a Native Ads Publisher API it provides same functionality as Native Ads Publisher Account...
+
+nba
+  NBA Stats
+  The destination for current and historic NBA statistics.
 
 neowsapp
   NeoWs - (Near Earth Object Web Service)
@@ -866,16 +1149,18 @@ netlicensing
   Labs64 NetLicensing RESTful API Test Center
   The Labs64 NetLicensing RESTful API gives you access to NetLicensing’s core features.Authenticati...
 
-netlify
-  Netlify's API definition
+neutrinoapi
+  NeutrinoAPI
+  The general-purpose API
 
-npr-rss
+npr_rss
+  www.npr.org
 
-nrel-building-case-studies
+nrel_building_case_studies
   High Performance Building Database
   The Buildings Database is a shared resource for the building industry. The Database, developed by...
 
-nrel-transportation-incentives-laws
+nrel_transportation_incentives_laws
   Transportation Laws and Incentives
   Query our database of State and Federal Laws and Incentives for Alternative Fuels
 
@@ -883,59 +1168,48 @@ nsidc
   NSIDC Web Service Documentation Index
   This API allows programmers to build National Snow and Ice Data Center data and metadata services...
 
-nytimes-archive_api
-  Archive API V1
-  Alpha.  The Archive API provides JSON lists of NYT articles by month.
-
-nytimes-article_search
+nytimes_article_search
   Article Search
   With the Article Search API, you can search New York Times articles from Sept. 18, 1851 to today,...
 
-nytimes-books_api
+nytimes_books_api
   Books
   The Books API provides information about book reviews and The New York Times bestsellers lists.
 
-nytimes-community
+nytimes_community
   Community
   Get access to comments from registered users on New York Times articles.
 
-nytimes-congress_api
-  Congress
-  Deprecated. Now provided by ProPublica (https://propublica.github.io/congress-api-docs/).
-
-nytimes-event_listings
-  Event Listings
-  Deprecated.  With the Event Listings API, you can search the New York Times listing of noteworthy...
-
-nytimes-geo_api
+nytimes_geo_api
   Geographic
   The Geographic API extends the Semantic API, using a linked data approach to enhance location con...
 
-nytimes-most_popular_api
+nytimes_most_popular_api
   Most Popular
   Get lists of NYT Articles based on shares, emails, and views.
 
-nytimes-movie_reviews
+nytimes_movie_reviews
   Movie Reviews
   With the Movie Reviews API, you can search New York Times movie reviews by keyword and get lists ...
 
-nytimes-rss
+nytimes_rss
+  rss.nytimes.com
 
-nytimes-semantic_api
+nytimes_semantic_api
   Semantic
   The Semantic API complements the Articles API. With the Semantic API, you get access to the long ...
 
-nytimes-times_tags
+nytimes_times_tags
   TimesTags
   With the TimesTags API, you can mine the riches of the New York Times tag set. The TimesTags serv...
 
-nytimes-timeswire
+nytimes_timeswire
   Times Newswire
   With the Times Newswire API, you can get links and metadata for Times articles and blog posts as ...
 
-nytimes-top_stories
-  Top Stories V2
-  The Top Stories API provides JSON and JSONP lists of articles and associated images by section.
+nytimes_top_stories
+  Top Stories
+  The Top Stories API provides lists of articles and associated images by section.
 
 oceandrivers
   ODWeather
@@ -945,9 +1219,9 @@ omdbapi
   OMDb
   The Open Movie Database. The OMDb API is a free web service to obtain movie information, all cont...
 
-ontraport
-  ONTRAPORT
-  Enter your App ID and API Key above. If you do not have an App ID or API Key login to your ONTRAP...
+openapi_converter_herokuapp
+  Swagger2OpenAPI Converter
+  Converter and validator for Swagger 2.0 to OpenAPI 3.0.x definitions
 
 opencagedata
   OpenCage Geocoder
@@ -976,39 +1250,24 @@ patientview
   PatientView
   The recommended REST API endpoints to be used when integrating with PatientView
 
-peel-ci
+peel_ci
   Peel Tune-in API
   The machine learning service APIs utilize hashtags from Twitter to find related, trending shows, ...
-
-plenigo
-  Plenigo
-  This is the API Documentation for the public plenigo server interfaces
 
 posty
   posty_API
   The posty_API is the core element of the posty softwarestack. It is developed to administrate a m...
 
-prd-prsn
-  EPS APIs
-  Access to the Pearson OpenClass API
-
-pushpay
-  Pushpay
-  Pushpay® improves sales and business processes by making payments simple.
-
-rbaskets.in
+rbaskets_in
   Request Baskets
   RESTful API of Request Baskets service
-
-reactome
-  Pathway Analysis Service
-  Provides an API for pathway over-representation and expression analysis as well as species compar...
 
 rebilly
   Rebilly
   # Introduction
 
-reddit-rss
+reddit_rss
+  www.reddit.com
 
 refugerestrooms
   Refuge Restrooms
@@ -1018,6 +1277,10 @@ reverb
   reverb
   reverb
 
+ritc
+  Ritc
+  Rules in the Cloud
+
 rottentomatoes
   Rotten Tomatoes
   Test our API services using I/O Docs.
@@ -1026,7 +1289,11 @@ rummblelabs
   Seldon
   Seldon is an Open Predictive Platform that currently allows item recommendations and general pred...
 
-scrapewebsite.email
+schooldigger
+  SchoolDigger API V1
+  Get detailed data on over 120,000 schools and 18,500 districts in the U.S.
+
+scrapewebsite_email
   Scrape Website Email API
   ScrapeWebsiteEmail is a service that exposes an api to fetch e-mails from a website.
 
@@ -1049,7 +1316,7 @@ slideroom
   SlideRoom API V2
   SlideRoom provides a RESTful API for exporting data out of your organization's SlideRoom account.
 
-smart-me
+smart_me
   smart-me
   With the smart-me REST API you get Access to all your devices in the smart-me Cloud and you can a...
 
@@ -1066,6 +1333,7 @@ spotify
 
 squareup
   Square Connect
+  Client library for accessing the Square Connect APIs
 
 stackexchange
   StackExchange
@@ -1075,13 +1343,25 @@ statsocial
   StatSocial Platform
   API Reference:  The StatSocial API is organized around REST. Our API is designed to have predicta...
 
-swagger-generator
+swagger_generator
   Swagger Generator
   This is an online swagger codegen server.  You can find out more at https://github.com/swagger-ap...
+
+swaggerhub
+  SwaggerHub Registry
+  The registry API for SwaggerHub
+
+t213_vg
+  Magento Enterprise
+  Magento Commerce is the leading provider of open omnichannel innovation.
 
 taxamo
   Taxamo
   Taxamo’s elegant suite of APIs and comprehensive reporting dashboard enables digital merchants to...
+
+tfl_gov_uk
+  Transport for London Unified
+  Our unified API brings together data across all modes of transport into a single RESTful API. Thi...
 
 thenounproject
   The Noun Project
@@ -1091,6 +1371,10 @@ thetvdb
   TheTVDB API v2
   API v2 targets v1 functionality with a few minor additions. The API is accessible via https://api...
 
+traccar
+  traccar
+  Open Source GPS Tracking Platform
+
 trello
   Trello
   This document describes the REST API of Trello as published by Trello.com.
@@ -1099,27 +1383,31 @@ twilio
   Twilio
   Enabling phones, VoIP, and messaging to be embedded into web, desktop, and mobile software.
 
-uploady
-  Uploady
-  The Uploady API allows you to connect to the Uploady free online storage platform.
+uebermaps
+  uebermaps API endpoints
+  Enable people to store spots on public and private maps
 
 vatapi
   VAT API
   A developer friendly API to help your business achieve VAT compliance
 
 versioneye
-  VersionEye
+  Available API endpoints
   VersionEye is a cross-platform search engine for free/libre/open source software libraries.
 
 vestorly
   Vestorly
   Vestorly Developers API
 
+visagecloud
+  VisageCloud
+  Face search, recognition & classification API. Just make a call to our REST API each time your ap...
+
 waag
   CitySDK Linked Data
   An API for the distribution and annotation of open data, for small cities and big metropolitan ar...
 
-watchful.li
+watchful_li
   watchful.li
 
 wavecell
@@ -1128,17 +1416,17 @@ wavecell
 
 wikimedia
   Wikimedia
-  This API aims to provide coherent and low-latency access to Wikimedia content and services. It is...
+  This API provides cacheable and straightforward access to Wikimedia content and data, in machine-...
 
-windows-arm-graphrbac
+windows_arm_graphrbac
   GraphRbacManagementClient
   The Graph RBAC Management Client
 
-windows-batch
+windows_batch
   BatchService
   A client for issuing REST requests to the Azure Batch service.
 
-winning.email
+winning_email
   Winning Email
   The Winning Email API allows you to access our services from your applications. Contact us if you...
 
@@ -1154,7 +1442,19 @@ yunbi
   Yunbi
   Professional Cloud Trading Platform for Digital Assets
 
+zappiti
+  Zappiti Player
+  Move your app forward with the Zappiti Player API. Use http://your-player-ip:8990/ as base URL fo...
+
 zoomconnect
   Zoom Connect
   The world's greatest SMS API
+
+http
+  HTTP
+  Make HTTP calls
+
+mongodb
+  MongoDB
+  Interact with MongoDB
 

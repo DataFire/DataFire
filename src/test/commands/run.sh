@@ -5,7 +5,7 @@ echo "Version..."
 echo "Integrate..."
 DATAFIRE_LOCATION="../../src" \
   ./bin/datafire integrate --name hacker_news \
-  --openapi "https://raw.githubusercontent.com/DataFire/Integrations/master/integrations/hacker-news/integration.json" \
+  --openapi "https://raw.githubusercontent.com/DataFire/Integrations/master/integrations/generated/hacker_news/openapi.json" \
   > ./src/test/commands/integrate.txt
 
 echo "List..."

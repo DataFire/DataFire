@@ -11,7 +11,7 @@ const INTEGRATION_LOCATIONS = [
   '@datafire',
 ];
 
-const INTEGRATION_LIST_URL = "https://raw.githubusercontent.com/DataFire/Integrations/master/list.json";
+const INTEGRATION_LIST_URL = "https://raw.githubusercontent.com/DataFire/Integrations/master/json/list.json";
 const getAllIntegrations =  (callback) => {
   if (process.env.DATAFIRE_REGISTRY_DIR) {
     let list = require(process.env.DATAFIRE_REGISTRY_DIR + '/list.json');
