@@ -1,5 +1,5 @@
 # DataFire
-> The DataFire API is changing! Check out [the latest preview](https://github.com/DataFire/DataFire/tree/v2)
+> This is a preview of the upcoming v2 release. See [v2.md](v2.md) for installation and gotchas
 
 [![Travis][travis-image]][travis-link]
 [![Code Climate][climate-image]][climate-link]
@@ -92,45 +92,61 @@ directly, or wrap them with your own actions.
 For example, you can create an API call that returns your Hacker News profile
 just by adding a path in DataFire.yml:
 
-First, let's create a new folder and add the Hacker News integration:
-```
-mkdir hacker_news_flow && cd hacker_news_flow
-npm install datafire
-datafire integrate hacker-news
+```js
+paths:
+  /hacker_news:
+    get:
+      action: hacker_news/getUser
+      input:
+        username: 'norvig'
 ```
 
 You can also run actions in JavaScript - the `run()` method will return a Promise:
 ```js
-const datafire = require('datafire');
-const fs = require('fs');
-const hackerNews = datafire.Integration.new('hacker-news');
+var hackerNews = require('@datafire/hacker-news').actions;
 
-const flow = module.exports =
-        new datafire.Flow('Top HN Story', 'Copies the top HN story to a local file');
-
-flow
-  .step('stories', {
-    do: hackerNews.getStories(),
-    params: {storyType: 'top'},
-  })
-
-  .step('story_details', {
-    do: hackerNews.getItem(),
-    params: data => {
-      return {itemID: data.stories[0]}
-    }
-  })
-
-  .step('write_file', {
-    do: data => {
-      fs.writeFileSync('./story.json', JSON.stringify(data.story_details, null, 2));
-    }
-  });
+hackerNews.getUser.run({
+  userID: 'norvig',
+}).then(user => {
+  console.log(user);
+}).catch(e => {
+  console.log('error', e);
+})
 ```
 
-Now let's run it:
+## Tasks
+You can schedule tasks in DataFire.yml by specifying a
+[rate or cron expression](http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#RateExpressions).
+```yaml
+tasks:
+  send_database_report:
+    action: ./send-db-report.js
+    schedule: rate(1 day) // or cron(0 0 * * * *)
+    accounts:
+      google_gmail: lucy
+      mongodb: mongo_read_only
 ```
-datafire run ./getTopStory.js
+
+Start running tasks with:
+```
+datafire serve --tasks
+```
+
+## Authentication
+> [Read more about authentication](docs/Authentication.md)
+
+You can use the `datafire authenticate` command to add credentials to your project.
+You can also specify credentials in YAML, or programmatically (e.g. in environment variable).
+
+For example, in DataFire.yml:
+```yml
+paths:
+  /github_profile:
+    get:
+      action: github/user.get
+      accounts:
+        github:
+          access_token: "abcde"
 ```
 
 ## Flows
