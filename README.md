@@ -94,6 +94,10 @@ Each integration comes with a set of actions. For example, the `hacker_news` int
 contains the `getStories`, `getItem`, and `getUser` actions. You can use these actions
 directly, or wrap them with your own actions.
 
+```bash
+datafire run hacker_news/getUser -i.username norvig
+```
+
 For example, you can create an API call that returns your Hacker News profile
 just by adding a path in DataFire.yml:
 
