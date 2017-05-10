@@ -158,7 +158,6 @@ let startOAuthServer = (project, integration, secDef, accountToEdit, clientAccou
           accountToEdit.client_id = clientAccount.client_id;
           accountToEdit.client_secret = clientAccount.client_secret;
           saveAccounts(project);
-          resolve();
         })
       } else {
         fs.readFile(CALLBACK_HTML_FILE, 'utf8', (err, data) => {
