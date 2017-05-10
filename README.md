@@ -1,5 +1,4 @@
 # DataFire
-> This is a preview of the upcoming v2 release. See [v2.md](v2.md) for installation and gotchas
 
 [![Travis][travis-image]][travis-link]
 [![Code Climate][climate-image]][climate-link]
