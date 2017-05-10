@@ -28,33 +28,11 @@ let Integration = module.exports = function(opts) {
   }
 }
 
-  static new(name) {
-    let RESTIntegration = require('./rest-integration');
-    let RSSIntegration = require('./rss-integration');
-    let tryOpen = (baseDir) => {
-      let filename = path.join(baseDir, name);
-      if (baseDir !== '@datafire') filename = path.join(filename, 'integration');
-      let spec = null;
-      try {
-        spec = require(filename);
-      } catch (e) {
-        if (e.code !== 'MODULE_NOT_FOUND') throw e;
-        return
-      }
-      if (spec.prototype instanceof Integration) {
-        return new spec(name, spec.spec);
-      } else if (spec.info['x-datafire'].type === 'rss') {
-        return new RSSIntegration(name, spec);
-      } else {
-        return new RESTIntegration(name, spec);
-      }
-    }
-    let integration = null;
-    locations.integrations.forEach(loc => {
-      integration = integration || tryOpen(loc);
-    });
-    if (!integration) throw new Error("Integration " + name + " not found. Please run:\ndatafire integrate " + name);
-    return integration;
+const MODULE_NOT_FOUND = "MODULE_NOT_FOUND";
+Integration.fromName = function(name) {
+  const localLocation = path.join(process.cwd(), 'integrations', name);
+  if (fs.existsSync(localLocation)) {
+    return require(localLocation);
   }
   const datafireLocation = path.join(process.cwd(), 'node_modules', '@datafire', name);
   try {
