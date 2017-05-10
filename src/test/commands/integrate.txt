@@ -1,0 +1,1 @@
+Created integration hacker_news in ./integrations/hacker_news

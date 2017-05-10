@@ -1,0 +1,13 @@
+by:     sketerpot
+id:     444
+kids: 
+  - 454878
+parent: 388
+text: 
+  """
+    It's possible to make a site simpler and more straightforward for users by making it prettier. Really good web design is very subtle; things like giving small but definite visual cues for where posts begin and end, or making the &#34;reply&#34; link a slightly different color from the post so it doesn't look like part of the post -- these small changes do more than look pretty, they also lower the cognitive load on the user and make it feel simpler.
+    
+    A lot of what Reddit has been doing to their interface has been tiny changes that make it feel simpler. Good web design is something to be appreciated; great web design makes you forget that it's even there.
+  """
+time:   1172111685
+type:   comment

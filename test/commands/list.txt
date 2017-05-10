@@ -1,4 +1,0 @@
-hacker_news
-google-gmail
-hacker-news
-mongodb

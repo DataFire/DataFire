@@ -1,0 +1,26 @@
+
+getItem
+Get details for a given item
+
+Input
+object
+  itemID:       integer
+  The ID of the item to retrieve
+
+
+Output
+object
+  id:           integer
+  title:        string
+  deleted:      boolean
+  by:           string
+  time:         string
+  text:         string
+  dead:         boolean
+  parent:       integer
+  kids:         array[integer]
+  url:          string
+  score:        integer
+  parts:        array[integer]
+  descendants:  array[integer]
+

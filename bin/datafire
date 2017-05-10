@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 if (process.version > 'v6') {
-  module.exports = require('../cmd');
+  module.exports = require('../src/cmd');
 } else {
   module.exports = require('../distribution/cmd');
 }

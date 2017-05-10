@@ -1,0 +1,13 @@
+
+Hacker News
+Hacker News is a social news website focusing on computer science and entrepreneurship
+
+getStories
+Get an up-to-date list of stories for the given type
+
+getItem
+Get details for a given item
+
+getUser
+Get details for a given user
+

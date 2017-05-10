@@ -1,0 +1,248 @@
+{
+  "swagger": "2.0",
+  "schemes": [
+    "http"
+  ],
+  "host": "localhost:3333",
+  "info": {
+    "title": "",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/ping": {
+      "get": {
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {}
+          },
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unknown error",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/hello": {
+      "get": {
+        "parameters": [
+          {
+            "name": "name",
+            "type": "string",
+            "in": "query",
+            "required": true,
+            "maxLength": 10
+          },
+          {
+            "name": "uppercase",
+            "type": "boolean",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {}
+          },
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unknown error",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/hello_world": {
+      "get": {
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {}
+          },
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unknown error",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/respond": {
+      "get": {
+        "parameters": [
+          {
+            "name": "statusCode",
+            "in": "query",
+            "type": "integer"
+          },
+          {
+            "name": "message",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {}
+          },
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unknown error",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/player/{id}": {
+      "post": {
+        "parameters": [
+          {
+            "in": "query",
+            "name": "insert",
+            "type": "boolean"
+          },
+          {
+            "in": "path",
+            "required": true,
+            "name": "id",
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "aliases": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "aliases": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unknown error",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "consumes": [
+          "application/json"
+        ]
+      }
+    }
+  }
+}
