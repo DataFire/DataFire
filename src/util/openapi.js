@@ -151,7 +151,7 @@ openapi.getOperation = (method, path, pathOp) => {
     op.responses = {
       200: {
         description: 'Success',
-        schema: pathOp.action.outputSchema,
+        //schema: pathOp.action.outputSchema,  // FIXME: outputSchema parsing fails if it contains $refs to an integration
       },
       400: {
         description: 'Invalid request',

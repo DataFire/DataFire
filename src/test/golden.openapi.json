@@ -18,8 +18,7 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "Success",
-            "schema": {}
+            "description": "Success"
           },
           "400": {
             "description": "Invalid request",
@@ -62,8 +61,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success",
-            "schema": {}
+            "description": "Success"
           },
           "400": {
             "description": "Invalid request",
@@ -93,8 +91,7 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "Success",
-            "schema": {}
+            "description": "Success"
           },
           "400": {
             "description": "Invalid request",
@@ -135,8 +132,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success",
-            "schema": {}
+            "description": "Success"
           },
           "400": {
             "description": "Invalid request",
@@ -199,24 +195,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Success",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "integer"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "aliases": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
+            "description": "Success"
           },
           "400": {
             "description": "Invalid request",
