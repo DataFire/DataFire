@@ -1,3 +1,5 @@
+"use strict";
+
 let schedule = module.exports = {};
 
 schedule.parse = function(sched) {

@@ -1,6 +1,7 @@
+"use strict";
 let expect = require('chai').expect;
 
-let datafire = require('../lib');
+let datafire = require('../entry');
 
 describe("Response", () => {
   it('should allow json option', () => {

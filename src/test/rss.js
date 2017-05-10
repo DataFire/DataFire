@@ -1,5 +1,6 @@
+"use strict";
 let expect = require('chai').expect;
-let datafire = require('../');
+let datafire = require('../entry');
 
 const PORT = 3333;
 

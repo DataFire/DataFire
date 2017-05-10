@@ -1,7 +1,9 @@
 language: node_js
 node_js:
   - "6"
+  - "4.2"
 script:
   - npm link
   - npm link datafire
-  - npm test
+  - npm run build
+  - mocha ./src/test --recursive

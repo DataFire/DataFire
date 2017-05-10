@@ -1,4 +1,5 @@
-const datafire = require('../../lib');
+"use strict";
+const datafire = require('../../entry');
 
 const saas1integ = require('./saas1').integration;
 const saas2integ = require('./saas2').integration;

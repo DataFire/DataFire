@@ -1,3 +1,4 @@
+"use strict";
 let expect = require('chai').expect;
 let schedule = require('../util/schedule');
 

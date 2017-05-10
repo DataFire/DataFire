@@ -1,3 +1,5 @@
+"use strict";
+
 let openapi = module.exports = {};
 
 openapi.PATH_PARAM_REGEX = /\{([^\}]+)\}/g;
@@ -43,7 +45,8 @@ openapi.dereferenceSchema = function(schema) {
   return dereference(schema, {definitions: schema.definitions});
 }
 
-function resolveReference(ref, base, cache={}) {
+function resolveReference(ref, base, cache) {
+  cache = cache || {};
   if (cache[ref]) return cache[ref];
   var keys = ref.split('/');
   keys.shift();
@@ -52,7 +55,8 @@ function resolveReference(ref, base, cache={}) {
   return cache[ref] = cur;
 }
 
-function dereference(obj, base, cache={}) {
+function dereference(obj, base, cache) {
+  cache = cache || {};
   if (typeof obj !== 'object') return obj;
   if (Array.isArray(obj)) {
     for (var i = 0; i < obj.length; ++i) {

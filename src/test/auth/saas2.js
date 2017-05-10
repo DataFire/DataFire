@@ -1,4 +1,5 @@
-const datafire = require('../../lib');
+"use strict";
+let datafire = require('../../entry');
 
 const authorizer = new datafire.Action({
   handler: (input, context) => {

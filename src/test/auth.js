@@ -1,3 +1,4 @@
+"use strict";
 
 const request = require('request');
 const expect = require('chai').expect;
@@ -12,7 +13,7 @@ const SAAS1_URL = 'http://localhost:3334';
 const SAAS2_URL = 'http://localhost:3335';
 const OAUTH_URL = 'http://localhost:3336';
 
-const datafire = require('../index');
+const datafire = require('../entry');
 
 describe('Authorization', () => {
 

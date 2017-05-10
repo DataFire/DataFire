@@ -1,10 +1,11 @@
+"use strict";
 let expect = require('chai').expect;
-let datafire = require('../lib');
+const datafire = require('../entry');
 
 describe('Flow', () => {
   it('should keep track of results', done => {
     let context = new datafire.Context();
-    let resultSet = ['result0', ['foo', 'bar'], null];
+    let resultSet = ['result0', ['foo', 'bar'], 23];
     let results = {
       0: resultSet[0],
       1: resultSet[1],
@@ -16,6 +17,7 @@ describe('Flow', () => {
       return datafire.flow(context)
         .then(_ => results[0])
         .then(r0 => {
+          console.log('r0', r0);
           expect(r0).to.equal(results[0]);
           expect(r0).to.equal(results.r0);
           return new Promise((resolve, reject) => {
@@ -23,6 +25,7 @@ describe('Flow', () => {
           })
         })
         .then(r1 => {
+          console.log('r1', r1);
           expect(r1).to.equal(results[1]);
           expect(r1).to.equal(results.r1);
           return results[2];

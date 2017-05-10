@@ -1,7 +1,7 @@
 "use strict";
 
 const expect = require('chai').expect;
-const datafire = require('../lib');
+const datafire = require('../entry');
 const Action = datafire.Action;
 
 describe('Action', () => {

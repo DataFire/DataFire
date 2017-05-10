@@ -1,4 +1,5 @@
-let datafire = require('../../lib');
+"use strict";
+let datafire = require('../../entry');
 
 const VALID_TOKEN = 'abcde';
 

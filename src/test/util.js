@@ -1,3 +1,4 @@
+"use strict";
 let expect = require('chai').expect;
 let openapiUtil = require('../util/openapi');
 let getOpId = openapiUtil.getOperationId

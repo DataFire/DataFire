@@ -4,7 +4,7 @@ const fs = require('fs');
 const expect = require('chai').expect;
 const request = require('request');
 const swaggerParser = require('swagger-parser');
-const lib = require('../lib');
+const lib = require('../entry');
 
 const ping = new lib.Action({
   handler: _ => Promise.resolve('pong'),
