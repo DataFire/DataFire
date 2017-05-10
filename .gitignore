@@ -2,3 +2,4 @@ DataFire-accounts.yml
 node_modules/
 distribution/
 integrations/
+.npmignore
