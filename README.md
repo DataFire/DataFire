@@ -111,7 +111,7 @@ paths:
 
 You can also run actions in JavaScript - the action will return a Promise:
 ```js
-var hackerNews = require('@datafire/hacker-news').actions;
+var hackerNews = require('@datafire/hacker_news').actions;
 
 hackerNews.getUser({
   userID: 'norvig',
