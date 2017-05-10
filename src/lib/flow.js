@@ -16,7 +16,13 @@ let Flow = module.exports = function(context) {
         } else {
           ++nextResultIdx;
         }
-        if (fn) return fn(result);
+        if (fn) {
+          let nextResult = fn(result);
+          if (!(nextResult instanceof Promise)) {
+            context.results[nextResultIdx] = nextResult;
+          }
+          return nextResult;
+        }
       }
       let newPromise = then(fnWrapper, reject);
       return wrapPromise(newPromise);
