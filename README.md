@@ -114,7 +114,7 @@ You can also run actions in JavaScript - the action will return a Promise:
 var hackerNews = require('@datafire/hacker_news').actions;
 
 hackerNews.getUser({
-  userID: 'norvig',
+  username: 'norvig',
 }).then(user => {
   console.log(user);
 }).catch(e => {
