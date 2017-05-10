@@ -1,5 +1,1 @@
-hacker-news
-hacker-news_firebaseio
 hacker_news
-instagram
-medium
