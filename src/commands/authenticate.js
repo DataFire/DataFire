@@ -114,7 +114,13 @@ let getOAuthURL = (integration, secDef, clientAccount, scopes) => {
   url += '?response_type=' + (flow === 'implicit' ? 'token' : 'code');
   url += '&redirect_uri=' + encodeURIComponent(clientAccount.redirect_uri || DEFAULT_REDIRECT_URI);
   url += '&client_id=' + encodeURIComponent(clientAccount.client_id);
-  if (flow === 'accessCode') url += '&access_type=offline';
+
+  // FIXME: google hack - no refresh token unless these parameters are included
+  if (secDef.authorizationUrl.match(/accounts\.google\.com/)) {
+    if (flow === 'accessCode') url += '&access_type=offline';
+    url += '&approval_prompt=force';
+  }
+
   if (scopes.length > 0) {
     url += '&scope=' + encodeURIComponent(scopes.join(' '));
   }
