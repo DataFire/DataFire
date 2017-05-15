@@ -28,6 +28,7 @@ module.exports = (args) => {
     name: 'alias',
     message: "Choose an alias for this account:",
     validate: alias => /^\w+$/.test(alias) || "Alias can only contain letters, numbers, and _",
+    default: integration.id,
   }];
   if (args.alias) {
     aliasQuestion = [];

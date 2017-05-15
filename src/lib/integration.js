@@ -138,7 +138,9 @@ function buildSecurityFromSecurityDefs(id, defs) {
   for (let key in defs) {
     let def = defs[key];
     if (def.type === 'oauth2') {
-      security.oauth = def;
+      if (!security.oauth || security.oauth.flow === 'implicit') {
+        security.oauth = def;
+      }
       security.fields = Object.assign(security.fields, {
         access_token: 'An OAuth access token',
         refresh_token: 'An OAuth refresh token (optional)',

@@ -80,7 +80,9 @@ const getActionFromOperation = module.exports = function(method, path, security,
             addParam(def.in, def.name, account[key]);
           } else if (def.type === 'oauth2' && account.access_token) {
             hasRefreshToken = !!account.refresh_token;
-            oauthDef = def;
+            if (!oauthDef || oauthDef.flow === 'implicit') {
+              oauthDef = def;
+            }
             addParam('header', 'Authorization', "Bearer " + account.access_token);
           }
         }
