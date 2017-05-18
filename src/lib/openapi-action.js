@@ -22,7 +22,7 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
   let response = getDefaultResponse(op);
   let outputSchema = Object.assign({definitions: openapi.definitions}, response.schema);
   let actionSecurity = {};
-  if (op.security && op.security.length) {
+  if (!op.security || op.security.length) {
     actionSecurity = integration.security;
   } else {
     actionSecurity[integration.id] = false;
