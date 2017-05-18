@@ -97,16 +97,27 @@ contains the `getStories`, `getItem`, and `getUser` actions.
 datafire run hacker_news/getUser -i.username norvig
 ```
 
-You can also create an API call that returns your Hacker News profile
+You can create an API call that runs any of these actions
 by adding a path in DataFire.yml:
 
-```js
+```yaml
 paths:
-  /hacker_news:
+  /hn/profile:
     get:
       action: hacker_news/getUser
       input:
         username: 'norvig'
+```
+
+```bash
+datafire serve --port 3000 &
+curl http://localhost:3000/hn/profile
+# {
+#   "about": "http://norvig.com",
+#   "created": 1190398535,
+#   "id": "norvig",
+#   "karma": 640
+# }
 ```
 
 You can also run actions in JavaScript - the action will return a Promise:
@@ -121,6 +132,13 @@ hackerNews.getUser({
   console.log('error', e);
 })
 ```
+
+## Flows
+> [Read more about flows](docs/Flows.md)
+
+Flows allow you to chain actions together to make a series of calls to different
+APIs and services. Flows keep track of results at each step so you can reference them
+at any step.
 
 ## Tasks
 You can schedule tasks in DataFire.yml by specifying a
@@ -156,13 +174,6 @@ paths:
         github:
           access_token: "abcde"
 ```
-
-## Flows
-> [Read more about flows](docs/Flows.md)
-
-Flows allow you to create complex actions that make a series of calls to different
-APIs and services. They keep track of results at each step so you can reference them
-at any step in the flow.
 
 ## Commands
 > Run `datafire --help` or `datafire <command> --help` for more info
