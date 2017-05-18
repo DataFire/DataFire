@@ -2,11 +2,6 @@
 
 const nodepath = require('path');
 const Ajv = require('ajv');
-const ajv = new Ajv({
-  useDefaults: true,
-  format: false,
-  extendRefs: true,
-});
 const Response = require('./response');
 const Context = require('./context');
 
@@ -49,7 +44,12 @@ const Action = module.exports = function(opts) {
       this.inputSchema.properties[input.title] = input;
     });
   }
-  this.validateInput = ajv.compile(this.inputSchema);
+  this.ajv = opts.ajv || new Ajv({
+    useDefaults: true,
+    format: false,
+    extendRefs: true,
+  })
+  this.validateInput = this.ajv.compile(this.inputSchema);
 }
 
 Action.fromName = function(name, directory) {
@@ -73,7 +73,7 @@ Action.prototype.run = function(input, ctx) {
   if (this.inputs && input === null) input = {};
   let valid = this.validateInput(input);
   if (!valid) {
-    let error = new Error(ajv.errorsText(this.validateInput.errors));
+    let error = new Error(this.ajv.errorsText(this.validateInput.errors));
     error.statusCode = 400;
     return Promise.reject(error);
   }

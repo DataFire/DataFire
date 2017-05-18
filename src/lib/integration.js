@@ -1,5 +1,6 @@
 "use strict";
 
+const Ajv = require('ajv');
 var jsf = require('json-schema-faker');
 jsf.option({
   failOnInvalidFormat: false,
@@ -20,6 +21,7 @@ let Integration = module.exports = function(opts) {
   this.title = opts.title || '';
   this.description = opts.description || '';
   this.security = opts.security || {};
+  this.ajv = opts.ajv;
 
   this.actions = {};
   this.allActions = [];
@@ -122,12 +124,17 @@ Integration.fromOpenAPI = function(openapi, id) {
     security,
     title: openapi.info.title || openapi.host,
     description: openapi.info.summary || openapi.info.description,
+    ajv: new Ajv({
+      useDefaults: true,
+      format: false,
+      extendRefs: true,
+    }),
   });
   for (let path in openapi.paths) {
     for (let method in openapi.paths[path]) {
       let op = openapi.paths[path][method];
       let opID = openapiUtil.getOperationId(method, path, op);
-      integration.addAction(opID, openapiAction(method, path, security, openapi, id));
+      integration.addAction(opID, openapiAction(method, path, openapi, integration));
     }
   }
   return integration;

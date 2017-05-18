@@ -6,7 +6,7 @@ let rssParser = require('rss-parser');
 
 const BODY_METHODS = ['put', 'patch', 'post'];
 
-const getActionFromOperation = module.exports = function(method, path, security, openapi, integrationId) {
+const getActionFromOperation = module.exports = function(method, path, openapi, integration) {
   let op = openapi.paths[path][method];
   let params = op.parameters || [];
   let hasRequiredParam = !!params.filter(p => p.required).length;
@@ -23,9 +23,9 @@ const getActionFromOperation = module.exports = function(method, path, security,
   let outputSchema = Object.assign({definitions: openapi.definitions}, response.schema);
   let actionSecurity = {};
   if (op.security && op.security.length) {
-    actionSecurity = security;
+    actionSecurity = integration.security;
   } else {
-    actionSecurity[integrationId] = false;
+    actionSecurity[integration.id] = false;
   }
   return new Action({
     title: op.operationId || (method.toUpperCase() + ' ' + path),
@@ -33,6 +33,7 @@ const getActionFromOperation = module.exports = function(method, path, security,
     inputSchema: params.length ? inputSchema : {},
     outputSchema: outputSchema,
     security: actionSecurity,
+    ajv: integration.ajv,
     handler: function(input, ctx) {
       input = input || {};
       let reqOpts = {
@@ -66,7 +67,7 @@ const getActionFromOperation = module.exports = function(method, path, security,
         addParam(param.in, param.name, val);
       });
 
-      let accountName = Object.keys(security)[0];
+      let accountName = Object.keys(integration.security)[0];
       let account = ctx.accounts[accountName];
       let hasRefreshToken = false;
       let oauthDef = null;
