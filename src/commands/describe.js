@@ -18,7 +18,7 @@ module.exports = (args) => {
     logger.logDescription(integration.description);
     logger.log();
     function logAction(name, action) {
-      if (!(action.action instanceof datafire.Action)) {
+      if (typeof action === 'object') {
         for (let a in action) {
           let newName = name ? name + '.' + a : a;
           logAction(newName, action[a]);
