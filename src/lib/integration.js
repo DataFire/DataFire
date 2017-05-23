@@ -22,7 +22,7 @@ let Integration = module.exports = function(opts) {
   this.description = opts.description || '';
   this.security = opts.security || {};
   this.ajv = opts.ajv;
-  this.logoURL = opts.logoURL;
+  this.logo = opts.logo;
 
   this.actions = {};
   this.allActions = [];
@@ -125,7 +125,7 @@ Integration.fromOpenAPI = function(openapi, id) {
     security,
     title: openapi.info.title || openapi.host,
     description: openapi.info.summary || openapi.info.description,
-    logoURL: openapi.info['x-logo'] ? openapi.info['x-logo'].url : undefined,
+    logo: openapi.info['x-logo'],
     ajv: new Ajv({
       useDefaults: true,
       format: false,
