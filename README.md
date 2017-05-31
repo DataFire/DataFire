@@ -31,7 +31,7 @@ MongoDB &bull; Slack &bull; GitHub &bull; Twilio &bull; Trello &bull; Spotify &b
 Instagram &bull; Gmail &bull; Google Analytics &bull; YouTube
 
 Each integration provides a set of composable actions. New actions can be built by
-combining existing actions, NodeJS, and external libraries.
+combining existing actions, JavaScript, and external libraries.
 
 Actions are driven by JavaScript Promises,
 and can be triggered by an HTTP endpoint, on a schedule, or manually.
