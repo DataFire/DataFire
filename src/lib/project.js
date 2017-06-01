@@ -27,6 +27,7 @@ let Project = module.exports = function(opts) {
   this.authorizers = opts.authorizers || {};
   this.accounts = opts.accounts || {};
   this.directory = opts.directory || process.cwd();
+  this.options = opts.options || {};
   this.monitor = new Monitor();
 
   this.aggregateActions();

@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const swaggerMiddleware = require('swagger-express-middleware');
 const openapiUtil = require('../util/openapi');
 const Response = require('./response');
@@ -33,7 +34,11 @@ class ProjectServer {
       let middleware = new swaggerMiddleware.Middleware(this.app);
       middleware.init(this.project.openapi, err => {
         if (err) return reject(err);
-        this.app.use(middleware.metadata(), middleware.parseRequest({json: {strict: false}}), middleware.validateRequest());
+        this.app.use(middleware.metadata());
+        if (this.project.options.cors) {
+          this.app.use(middleware.CORS());
+        }
+        this.app.use(middleware.parseRequest({json: {strict: false}}), middleware.validateRequest());
         this.app.use((err, req, res, next) => {
           res.status(err.status || 500);
           res.json({error: err.message || "Unknown Error"});

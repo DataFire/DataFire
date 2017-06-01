@@ -1,6 +1,18 @@
 # Cookbook
 Some common patterns
 
+## CORS
+To allow cross-origin requests, add the `cors` option to `DataFire.yml`:
+
+```yaml
+options:
+  cors: true
+paths:
+  /hello:
+    get:
+      action: ./hello.js
+```
+
 ## Pagination
 The GitHub action `repos.owner.repo.issues.get` returns an array of
 issues for a particular repository, but it only returns 30 issues at
