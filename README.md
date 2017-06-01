@@ -36,6 +36,12 @@ combining existing actions, NodeJS, and external libraries.
 Actions are driven by JavaScript Promises,
 and can be triggered by an HTTP endpoint, on a schedule, or manually.
 
+## Sample Projects
+* [Create an API backed by Google Sheets](https://github.com/DataFire-flows/sheets-api)
+* [E-mail yourself news headlines](https://github.com/DataFire-flows/headlines)
+* [Sync GitHub issues to a Trello board](https://github.com/DataFire-flows/github-issues-to-trello)
+* [Create a Spotify playlist from r/listentothis](https://github.com/DataFire-flows/listen-to-this)
+
 ## Installation
 > Be sure to install DataFire both globally and as a project dependency.
 
@@ -43,12 +49,6 @@ and can be triggered by an HTTP endpoint, on a schedule, or manually.
 npm install -g datafire
 npm install --save datafire
 ```
-
-## Sample Projects
-* [Create an API backed by Google Sheets](https://github.com/DataFire-flows/sheets-api)
-* [E-mail yourself news headlines](https://github.com/DataFire-flows/headlines)
-* [Sync GitHub issues to a Trello board](https://github.com/DataFire-flows/github-issues-to-trello)
-* [Create a Spotify playlist from r/listentothis](https://github.com/DataFire-flows/listen-to-this)
 
 ## Hello World
 > View the [full example](docs/Hello%20World.md) to learn about input validation,
