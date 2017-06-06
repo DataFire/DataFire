@@ -42,15 +42,20 @@ Project.main = function() {
 
 Project.fromDirectory = function(dir) {
   let directory = dir || process.cwd();
-  let dfFile = nodepath.join(directory, 'DataFire.yml');
-  let acctFile = nodepath.join(directory, 'DataFire-accounts.yml');
   let opts = {};
-  if (fs.existsSync(dfFile)) {
-    Object.assign(opts, YAML.load(dfFile));
+  function assignFromFile(f) {
+    let content = null;
+    if (!fs.existsSync(f)) return;
+    try {
+      content = YAML.load(f);
+    } catch (e) {
+      console.log('While loading', f);
+      throw e;
+    }
+    Object.assign(opts, content);
   }
-  if (fs.existsSync(acctFile)) {
-    Object.assign(opts, YAML.load(acctFile));
-  }
+  assignFromFile(nodepath.join(directory, 'DataFire.yml'));
+  assignFromFile(nodepath.join(directory, 'DataFire-accounts.yml'));
   opts.directory = directory;
   return new Project(opts);
 }
