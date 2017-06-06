@@ -110,20 +110,31 @@ openapi.getOperation = (method, path, pathOp) => {
     op.parameters.push(param);
   }
   let pathParams = path.match(openapi.PATH_PARAM_REGEX) || [];
+  pathParams = pathParams.map(p => p.substring(1, p.length - 1));
   pathParams.map(p => ({
     in: 'path',
     required: true,
-    name: p.substring(1, p.length - 1),
+    name: p,
     type: 'string',
   })).forEach(maybeAddParam);
 
   let needsBody = method === 'post' || method === 'patch' || method === 'put';
   let hasBody = !!op.parameters.filter(p => p.in === 'formData' || p.in === 'body').length;
   if (needsBody && !hasBody) {
+    let bodySchema = JSON.parse(JSON.stringify(pathOp.action.inputSchema));
+    pathParams.forEach(p => {
+      if (bodySchema.properties) {
+        delete bodySchema.properties[p];
+      }
+      if (bodySchema.required) {
+        bodySchema.required = bodySchema.required.filter(name => name !== p);
+        if (!bodySchema.required.length) delete bodySchema.required;
+      }
+    })
     op.parameters.push({
       in: 'body',
       name: 'body',
-      schema: pathOp.action.inputSchema,
+      schema: bodySchema,
     })
   }
   let requiredProps = pathOp.action.inputSchema.required || [];
