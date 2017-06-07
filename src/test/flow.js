@@ -37,11 +37,47 @@ describe('Flow', () => {
     })
   });
 
-  it('should allow nested promises', done => {
-    let context = new datafire.Context();
-    Promise.resolve()
+  it('should allow nested flows', () => {
+    let action1 = new datafire.Action({
+      handler: (input, context) => {
+        return datafire.flow(context)
+          .then(_ => "action1")
+          .then(a1 => {
+            expect(context.results.a1).to.equal("action1")
+            return "result1"
+          });
+      }
+    })
+    let action2 = new datafire.Action({
+      handler: (input, context) => {
+        return datafire.flow(context)
+          .then(_ => "action2")
+          .then(a2 => {
+            expect(context.results.a1).to.equal(undefined)
+            expect(context.results.a2).to.equal("action2")
+            return "result2"
+          });
+      }
+    })
+    let mainContext = new datafire.Context();
+    return datafire.flow(mainContext)
+      .then(_ => action1.run(null, mainContext))
+      .then(_ => "result1.5")
+      .then(_ => action2.run(null, mainContext))
       .then(_ => {
-        datafire.flow(context)
+        expect(mainContext.results[0]).to.equal('result1')
+        expect(mainContext.results[1]).to.equal('result1.5')
+        expect(mainContext.results[2]).to.equal('result2')
+        expect(mainContext.results.a1).to.equal(undefined);
+        expect(mainContext.results.a2).to.equal(undefined);
+      })
+  })
+
+  it('should allow nested promises', () => {
+    let context = new datafire.Context();
+    return Promise.resolve()
+      .then(_ => {
+        return datafire.flow(context)
           .then(_ => {
             return new Promise(resolve => {
               setTimeout(_ => resolve(0), 10);
@@ -57,8 +93,6 @@ describe('Flow', () => {
             })
           })
       })
-      .catch(e => done(e))
-      .then(_ => done());
   })
 
   it('should allow error handling', () => {

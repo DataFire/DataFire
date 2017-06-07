@@ -4,6 +4,7 @@ let Context = require('./context');
 let Flow = module.exports = function(context) {
   context = context || new Context();
   let nextResultIdx = -1;
+  let results = {};
 
   function wrapPromise(promise, resultName) {
     let then = promise.then.bind(promise);
@@ -11,11 +12,12 @@ let Flow = module.exports = function(context) {
       let params = fn ? getParameterNames(fn) : [];
       let fnWrapper = function(result) {
         if (nextResultIdx >= 0) {
-          context.results[nextResultIdx++] = result;
-          if (params[0]) context.results[params[0]] = result;
+          results[nextResultIdx++] = result;
+          if (params[0]) results[params[0]] = result;
         } else {
           ++nextResultIdx;
         }
+        context.results = results;
         if (fn) {
           return fn(result);
         }
