@@ -78,6 +78,7 @@ custom response codes, content types, and bodies in your Action.
 
 ```js
 module.exports = new datafire.Action({
+  inputs: [{title: 'name'}],
   handler: input => {
     if (input.name === 'Voldemort') {
       return new datafire.Response({
