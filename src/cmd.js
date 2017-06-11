@@ -54,9 +54,7 @@ const COMMANDS = [{
   }, {
     name: 'name',
     description: "An alias to use for the integration in this project",
-  }, {
-    name: 'save',
-    description: "Save to package.json as a dependency",
+    required: true,
   }]
 }, {
   name: 'describe <action_or_integration>',
