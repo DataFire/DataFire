@@ -13,6 +13,19 @@ paths:
       action: ./hello.js
 ```
 
+## Open API
+
+If you want to add documentation to your DataFire API, or add it to
+[DataFire/Integrations](https://github.com/DataFire/Integrations),
+you can access an Open API specification for your API at `/openapi.json`.
+
+For example:
+
+```bash
+datafire serve --port 3000 &
+curl "http://localhost:3000/openapi.json" > openapi.json
+```
+
 ## Pagination
 The GitHub action `repos.owner.repo.issues.get` returns an array of
 issues for a particular repository, but it only returns 30 issues at
