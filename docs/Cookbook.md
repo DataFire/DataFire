@@ -26,6 +26,18 @@ datafire serve --port 3000 &
 curl "http://localhost:3000/openapi.json" > openapi.json
 ```
 
+You can also use DataFire.yml to specify top-level fields in your Open API,
+such as `host`, `schemes`, and `info`:
+
+```yaml
+openapi:
+  host: api.example.com:3000
+  schemes:
+    -https
+  info:
+    version: 2.0
+```
+
 ## Pagination
 The GitHub action `repos.owner.repo.issues.get` returns an array of
 issues for a particular repository, but it only returns 30 issues at
