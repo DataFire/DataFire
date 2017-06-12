@@ -28,32 +28,45 @@ class ProjectServer {
 
   start(port) {
     if (this.close) this.close();
-    return new Promise((resolve, reject) => {
-      this.app.set('json spaces', 2);
-      this.app.use('/openapi.json', (req, res) => res.json(this.project.openapi));
-      let middleware = new swaggerMiddleware.Middleware(this.app);
-      middleware.init(this.project.openapi, err => {
-        if (err) return reject(err);
-        this.app.use(middleware.metadata());
-        if (this.project.options.cors) {
-          this.app.use(middleware.CORS());
-        }
-        this.app.use(middleware.parseRequest({json: {strict: false}}), middleware.validateRequest());
-        this.app.use((err, req, res, next) => {
-          res.status(err.status || 500);
-          res.json({error: err.message || "Unknown Error"});
-        })
-        this.setPaths();
+    return this.getRouter().then(r => {
+      this.app.use(r);
+      return new Promise((resolve, reject) => {
         let server = this.app.listen(port, err => {
           if (err) return reject(err);
           resolve();
         })
         this.close = server.close.bind(server);
+      });
+    });
+  }
+
+  getRouter() {
+    return new Promise((resolve, reject) => {
+      let router = express.Router();
+      router.use('/openapi.json', (req, res) => {
+        res.set("Content-type", "application/json; charset=utf-8");
+        res.send(JSON.stringify(this.project.openapi, null, 2));
+      });
+      let middleware = new swaggerMiddleware.Middleware(this.router);
+      middleware.init(this.project.openapi, err => {
+        if (err) return reject(err);
+        router.use(middleware.metadata());
+        if (this.project.options.cors) {
+          router.use(middleware.CORS());
+        }
+        router.use(middleware.parseRequest(router, {json: {strict: false}}), middleware.validateRequest());
+        router.use((err, req, res, next) => {
+          res.set("Content-type", "application/json; charset=utf-8");
+          res.status(err.status || 500);
+          res.send(JSON.stringify({error: err.message || "Unknown Error"}, null, 2));
+        })
+        this.setPaths(router);
+        resolve(router);
       })
     });
   }
 
-  setPaths() {
+  setPaths(router) {
     for (let path in this.project.paths) {
       for (let method in this.project.paths[path]) {
         if (method === 'parameters') continue;
@@ -61,7 +74,7 @@ class ProjectServer {
         let allAuthorizers = Object.assign({}, this.project.authorizers || {}, op.authorizers || {});
         let expressPath = path.replace(openapiUtil.PATH_PARAM_REGEX, ':$1');
         let parameters = this.project.openapi.paths[path][method].parameters || [];
-        this.app[method](expressPath, this.requestHandler(method, path, op, parameters, allAuthorizers));
+        router[method](expressPath, this.requestHandler(method, path, op, parameters, allAuthorizers));
       }
     }
   }
@@ -106,7 +119,6 @@ class ProjectServer {
           method: req.method,
         },
       });
-
       Promise.all(Object.keys(authorizers).map(key => {
         let authorizer = authorizers[key];
         if (authorizer === null || context.accounts[key]) return Promise.resolve();

@@ -13,13 +13,31 @@ paths:
       action: ./hello.js
 ```
 
+## NodeJS Express
+DataFire uses [Express](https://github.com/expressjs/express) with
+[Swagger Middleware](https://github.com/BigstickCarpet/swagger-express-middleware)
+to handle and validate requests. You can incorporate DataFire into your current Express
+server using `ProjectServer.getRouter()`:
+
+```js
+let datafire = require('datafire');
+let project = datafire.Project.fromDirectory(__dirname); // Dir containing DataFire.yml
+let projectServer = new datafire.ProjectServer(project);
+
+let express = require('express');
+let app = express();
+
+app.get('/hello', (req, res) => {
+  res.send('hello world');
+})
+
+projectServer.getRouter().then(router => {
+  app.use('/api', router);
+});
+```
+
 ## Open API
-
-If you want to add documentation to your DataFire API, or add it to
-[DataFire/Integrations](https://github.com/DataFire/Integrations),
-you can access an Open API specification for your API at `/openapi.json`.
-
-For example:
+You can access an Open API specification for your API at `/openapi.json`. For example:
 
 ```bash
 datafire serve --port 3000 &
