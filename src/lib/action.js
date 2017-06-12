@@ -81,7 +81,7 @@ Action.prototype.run = function(input, ctx) {
   for (let key in this.security) {
     let sec = this.security[key];
     if (sec && !sec.optional && !ctx.accounts[key]) {
-      return Promise.reject(new Error("Account " + key + " not specified for action " + this.id));
+      return Promise.reject(new Error("Account " + key + " not specified for action " + this.id + ". Did you remember to pass in the 'context' object?"));
     }
   }
 
