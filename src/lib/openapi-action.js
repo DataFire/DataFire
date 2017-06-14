@@ -16,8 +16,14 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
     additionalProperties: false,
     definitions: openapi.definitions,
   };
-  params.forEach(param => {
-    inputSchema.properties[param.name] = getSchemaFromParam(param);
+  let names = openapiUtil.getUniqueNames(params);
+  params.forEach((param, idx) => {
+    let name = names[idx];
+    inputSchema.properties[name] = getSchemaFromParam(param);
+    if (param.required) {
+      inputSchema.required = inputSchema.required || [];
+      inputSchema.required.push(name);
+    }
   });
   let response = getDefaultResponse(op);
   let outputSchema = Object.assign({definitions: openapi.definitions}, response.schema);
@@ -55,8 +61,9 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
         else if (loc === 'formData') reqOpts.form[name] = val;
         else if (loc === 'body') reqOpts.body = JSON.stringify(val);
       }
-      params.forEach(param => {
-        let val = input[param.name];
+      let names = openapiUtil.getUniqueNames(params);
+      params.forEach((param, idx) => {
+        let val = input[names[idx]];
         if (param.collectionFormat && Array.isArray(val)) {
           if (param.collectionFormat === 'multi') {
             reqOpts.qsStringifyOptions.arrayFormat = 'repeat';

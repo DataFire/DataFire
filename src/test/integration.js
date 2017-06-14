@@ -19,6 +19,11 @@ let project = new datafire.Project({
       post: {
         action: echo,
       }
+    },
+    '/dupeParam/{foo}': {
+      get: {
+        action: echo,
+      }
     }
   }
 })
@@ -69,6 +74,26 @@ let integration = datafire.Integration.fromOpenAPI({
           }
         }]
       }
+    },
+    '/dupeParam/{foo}': {
+      parameters: [{
+        name: 'foo',
+        in: 'path',
+        type: 'string',
+        required: true,
+      }],
+      get: {
+        parameters: [{
+          name: 'foo',
+          in: 'query',
+          type: 'string',
+        }],
+        responses: {
+          200: {
+            description: "OK",
+          }
+        }
+      }
     }
   }
 })
@@ -85,7 +110,7 @@ describe('Integration', () => {
 
   it("should build from OpenAPI", () => {
     expect(integration instanceof datafire.Integration).to.equal(true);
-    expect(Object.keys(integration.actions).length).to.equal(2);
+    expect(Object.keys(integration.actions).length).to.equal(3);
     let action = integration.actions.hello.get.action;
     expect(action instanceof datafire.Action).to.equal(true);
   });
@@ -113,6 +138,18 @@ describe('Integration', () => {
       expect(data.body).to.deep.equal({bar: 'baz'});
     })
   });
+
+  it('should handle duplicate parameter names', () => {
+    let action = integration.actions.dupeParam.foo.get.action;
+    expect(Object.keys(action.inputSchema.properties)).to.deep.equal(['foo_query', 'foo']);
+    return action.run({
+      foo_query: 'a',
+      foo: 'b',
+    }).then(data => {
+      expect(data.path).to.equal('/dupeParam/b');
+      expect(data.query).to.deep.equal({foo: 'a'});
+    })
+  })
 
   it('should handle circular refs', () => {
     let openapi = {
@@ -159,6 +196,7 @@ describe('Integration', () => {
     expect(action.inputSchema).to.deep.equal({
       type: 'object',
       additionalProperties: false,
+      required: ['body'],
       properties: {
         body: {
           $ref: '#/definitions/Circle',

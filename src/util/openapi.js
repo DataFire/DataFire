@@ -30,6 +30,12 @@ openapi.initialize = function(spec) {
         if (param.$ref) return resolveReference(param.$ref, spec)
         else return param;
       })
+      op.parameters = op.parameters.filter((param, idx) => {
+        let matching = op.parameters.filter((p, idx2) => {
+          return idx2 > idx && p.name === param.name && p.in === param.in
+        });
+        if (!matching.length) return true;
+      })
 
       for (let resp in op.responses) {
         if (op.responses[resp].$ref) {
@@ -91,6 +97,18 @@ openapi.getOperationId = (method, path, op) => {
       .replace(/[^\w\.]+/g, '_')
   opId += '.' + method;
   return opId;
+}
+
+openapi.getUniqueNames = (params) => {
+  let names = params.map(p => p.name);
+  return names.map((name, idx) => {
+    let sameName = params.filter(p => p.name === name);
+    if (sameName.length === 1) return name;
+    let best = sameName.filter(p => p.required)[0] || sameName.pop();
+    let param = params[idx];
+    if (param === best) return name;
+    return name + '_' + param.in;
+  })
 }
 
 openapi.getOperation = (method, path, pathOp) => {
