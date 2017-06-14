@@ -12,6 +12,7 @@ let Response = require('./response');
 let openapiUtil = require('../util/openapi');
 let path = require('path');
 let fs = require('fs');
+let request = require('request');
 let rssParser = require('rss-parser');
 let openapiAction = require('./openapi-action');
 
@@ -26,6 +27,7 @@ let Integration = module.exports = function(opts) {
 
   this.actions = {};
   this.allActions = [];
+  this.addOAuthActions();
   for (let key in (opts.actions || {})) {
     this.addAction(key, opts.actions[key]);
   }
@@ -113,6 +115,68 @@ Integration.prototype.addAction = function(id, action) {
   })
 }
 
+Integration.prototype.addOAuthActions = function() {
+  let sec = this.security[this.id] || {};
+  if (!sec || !sec.oauth || sec.oauth.flow === 'implicit') return;
+
+  let integID = this.id;
+  function getToken(grantType, input, context) {
+    return new Promise((resolve, reject) => {
+      let acct = context.accounts[integID];
+      let form = {
+        client_id: acct.client_id,
+        client_secret: acct.client_secret,
+        redirect_uri: acct.redirect_uri,
+        grant_type: grantType,
+      }
+      if (grantType === 'authorization_code') {
+        form.code = input.code;
+      } else {
+        form.access_token = context.accounts[this.id].access_token;
+      }
+      request.post({
+        url: sec.oauth.tokenUrl,
+        headers: {'Accept': 'application/json'},
+        form,
+      }, (err, resp, body) => {
+        if (err) return reject(err);
+        if (resp.statusCode >= 300) return reject({statusCode: resp.statusCode, body: body});
+        resolve(JSON.parse(body));
+      })
+    })
+  }
+  let security = Object.assign({}, this.security);
+  let outputSchema = {
+    properties: {
+      access_token: {type: 'string'},
+      refresh_token: {type: 'string'},
+      token_type: {type: 'string'},
+      scope: {type: 'string'},
+      expiration: {type: 'string'},
+    }
+  };
+
+  this.addAction('oauthCallback', new Action({
+    security,
+    outputSchema,
+    inputs: [{
+      title: 'code',
+      type: 'string',
+    }],
+    handler: (input, context) => {
+      return getToken('authorization_code', input, context);
+    }
+  }));
+
+  this.addAction('oauthRefresh', new Action({
+    security,
+    outputSchema,
+    handler: (input, context) => {
+      return getToken('refresh_token', input, context);
+    }
+  }))
+}
+
 Integration.fromOpenAPI = function(openapi, id) {
   openapiUtil.initialize(openapi);
   id = id || openapi.host;
@@ -154,7 +218,8 @@ function buildSecurityFromSecurityDefs(id, defs) {
         access_token: 'An OAuth access token',
         refresh_token: 'An OAuth refresh token (optional)',
         client_id: 'An OAuth client ID (optional)',
-        client_secret: 'An OAuth client secret (optional)'
+        client_secret: 'An OAuth client secret (optional)',
+        redirect_uri: 'The callback URL for your application',
       });
     } else if (def.type === 'basic') {
       security.fields.username = "Your username";
