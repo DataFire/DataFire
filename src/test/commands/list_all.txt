@@ -1,3 +1,7 @@
+1forge
+  1Forge Finance APIs
+  API Program description
+
 6_dot_authentiqio_appspot
   Authentiq
 
@@ -15,6 +19,10 @@ amazonaws_apigateway
 amazonaws_appstream2
   Amazon AppStream
   Amazon AppStream 2.0 API documentation for Amazon AppStream 2.0.
+
+amazonaws_athena
+  Amazon Athena
+  Amazon Athena is an interactive query service that lets you use standard SQL to analyze data dire...
 
 amazonaws_autoscaling
   Application Auto Scaling
@@ -755,6 +763,22 @@ botify
   Botify
   Botify Saas API
 
+box_authorization
+  Box 2.0 Authorization
+  The Box Authorization API gives you access to authenticate and authorize an application to work w...
+
+box_content
+  Box 2.0
+  The Box Content API gives you access to secure content management and content experience features...
+
+box_token
+  Box 2.0 OAuth2 Token
+  The Box Token API provides methods to retrieve an access token and revoke an access token. An acc...
+
+box_upload
+  Box 2.0 Uploads
+  The Box Uploads API allows users to add a new file or add a new file version in the same way as u...
+
 brandlovers
   BrandLovers Marketplace API V1
   Allows sellers to: 1) Load products definitions to the BrandLovers marktplace. 2) Receive and upd...
@@ -981,6 +1005,10 @@ google_adexchangeseller
   Ad Exchange Seller
   Accesses the inventory of Ad Exchange seller users and generates reports.
 
+google_adexperiencereport
+  Google Ad Experience Report
+  View Ad Experience Report data, and get a list of sites that have a significant number of annoyin...
+
 google_admin
   Admin Reports
   Fetches reports for the administrators of G Suite customers about the usage, collaboration, secur...
@@ -1028,6 +1056,10 @@ google_appstate
 google_bigquery
   BigQuery
   A data platform for customers to create, manage, share and query data.
+
+google_bigquerydatatransfer
+  BigQuery Data Transfer Service
+  Transfers data from partner SaaS applications to Google BigQuery on a scheduled, managed basis.
 
 google_blogger
   Blogger
@@ -1401,6 +1433,10 @@ google_urlshortener
   URL Shortener
   Lets you create, inspect, and manage goo.gl short URLs
 
+google_videointelligence
+  Google Cloud Video Intelligence
+  Google Cloud Video Intelligence API.
+
 google_vision
   Google Cloud Vision
   Integrates Google Vision features, including image labeling, face, logo, and landmark detection, ...
@@ -1767,6 +1803,10 @@ swaggerhub
   SwaggerHub Registry
   The registry API for SwaggerHub
 
+synq_fm
+  SYNQ Video
+  * [Sign up for a developer API key!](https://www.synq.fm/register)
+
 t213_vg
   Magento Enterprise
   Magento Commerce is the leading provider of open omnichannel innovation.
@@ -1815,6 +1855,10 @@ vestorly
   Vestorly
   Vestorly Developers API
 
+victorops
+  VictorOps
+  This API allows you to interact with the VictorOps platform in various ways. Your account may be ...
+
 visagecloud
   VisageCloud
   Face search, recognition & classification API. Just make a call to our REST API each time your ap...
@@ -1829,6 +1873,10 @@ watchful_li
 wavecell
   Wavecell.Sms.Api
   This API allows Wavecell customers to originate request to send SMS messages anywhere in the Worl...
+
+wealthport
+  Wealthport
+  Wealthport provides a simple, lightweight and open Web API based on the Open API 2.0 standard (ht...
 
 wikimedia
   Wikimedia
