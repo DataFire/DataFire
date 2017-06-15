@@ -132,7 +132,7 @@ Integration.prototype.addOAuthActions = function() {
       if (grantType === 'authorization_code') {
         form.code = input.code;
       } else {
-        form.access_token = context.accounts[this.id].access_token;
+        form.refresh_token = acct.refresh_token;
       }
       request.post({
         url: sec.oauth.tokenUrl,
