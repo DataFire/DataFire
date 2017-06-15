@@ -49,6 +49,7 @@ Here's an example that creates a filesystem integration:
 var datafire = require('datafire');
 var fs = require('fs');
 var filesystem = module.exports = new Integration({
+  id: "filesystem",
   title: "Filesystem",
   description: "Gives read access to the filesystem",
 });
@@ -57,10 +58,11 @@ filesystem.addAction('readFile', new datafire.Action({
   inputs: [{
     name: "filename",
     type: "string",
+    maxLength: 100,
   }],
   handler: input => {
     return new Promise((resolve, reject) => {
-      fs.readFile(input.name, (err, contents) => {
+      fs.readFile(input.filename, (err, contents) => {
         if (err) reject(err);
         else resolve(contents)
       });

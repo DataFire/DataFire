@@ -186,8 +186,8 @@ datafire list             # View installed integrations
 datafire list -a          # View all available integrations
 datafire list -a -q news  # Search for integrations by keyword
 
-datafire integrate --openapi http://petstore.swagger.io/v2/swagger.json
-datafire integrate --rss http://www.reddit.com/.rss
+datafire integrate --name petstore --openapi http://petstore.swagger.io/v2/swagger.json
+datafire integrate --name reddit --rss http://www.reddit.com/.rss
 
 datafire describe hacker_news           # Show info and actions
 datafire describe hacker_news/getItem   # Show action details
