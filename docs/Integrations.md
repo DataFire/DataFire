@@ -50,7 +50,7 @@ var datafire = require('datafire');
 var fs = require('fs');
 var filesystem = module.exports = new Integration({
   id: "filesystem",
-  title: "Filesystem"
+  title: "Filesystem",
   description: "Gives read access to the filesystem",
 });
 
