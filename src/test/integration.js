@@ -81,6 +81,10 @@ let integration = datafire.Integration.fromOpenAPI({
         in: 'path',
         type: 'string',
         required: true,
+      }, {
+        name: 'foo',
+        in: 'header',
+        type: 'string',
       }],
       get: {
         parameters: [{
@@ -141,13 +145,15 @@ describe('Integration', () => {
 
   it('should handle duplicate parameter names', () => {
     let action = integration.actions.dupeParam.foo.get.action;
-    expect(Object.keys(action.inputSchema.properties)).to.deep.equal(['foo_query', 'foo']);
+    expect(Object.keys(action.inputSchema.properties)).to.deep.equal(['foo_query', 'foo', 'foo_header']);
     return action.run({
-      foo_query: 'a',
-      foo: 'b',
+      foo: 'a',
+      foo_query: 'b',
+      foo_header: 'c',
     }).then(data => {
-      expect(data.path).to.equal('/dupeParam/b');
-      expect(data.query).to.deep.equal({foo: 'a'});
+      expect(data.path).to.equal('/dupeParam/a');
+      expect(data.query).to.deep.equal({foo: 'b'});
+      expect(data.headers.foo).to.equal('c');
     })
   })
 
