@@ -102,6 +102,14 @@ const COMMANDS = [{
   }, {
     name: 'accounts',
     description: "Pass in credentials"
+  }, {
+    name: 'inputFile',
+    alias: 'f',
+    description: "JSON or YAML file containing input",
+  }, {
+    name: 'outputFile',
+    alias: 'o',
+    description: "Where to output the result (otherwise STDOUT)",
   }]
 }]
 
