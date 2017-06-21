@@ -85,7 +85,8 @@ class ProjectServer {
         path, method,
         id: method.toUpperCase() + ' ' + path,
       })
-      let respond = (result) => {
+      let respond = (result, success) => {
+        event.success = success;
         this.project.monitor.endEvent(event);
         if (!(result instanceof Response)) {
           result = defaultResponse(result);
@@ -130,12 +131,12 @@ class ProjectServer {
       }))
       .then(_ => op.action.run(input, context))
       .then(result => {
-        respond(result);
+        respond(result, true);
       }, result => {
         if (!(result instanceof Error || result instanceof Response)) {
           result = new Error(result);
         }
-        respond(result);
+        respond(result, false);
       })
     }
   }
