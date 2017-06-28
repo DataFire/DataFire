@@ -4,6 +4,7 @@ const nodepath = require('path');
 const Ajv = require('ajv');
 const Response = require('./response');
 const Context = require('./context');
+const util = require('../util');
 
 /**
  * Creates a new Action
@@ -29,20 +30,7 @@ const Action = module.exports = function(opts) {
   this.security = opts.security || {};
 
   if (opts.inputs) {
-    let hasRequired = !!opts.inputs.filter(i => i.default === undefined).length;
-    this.inputSchema = {
-      type: hasRequired ? 'object' : ['object', 'null'],
-      properties: {}
-    };
-    this.inputSchema.required = opts.inputs
-      .filter(i => i.default === undefined)
-      .map(i => i.title);
-    if (!this.inputSchema.required.length) {
-      delete this.inputSchema.required;
-    }
-    opts.inputs.forEach(input => {
-      this.inputSchema.properties[input.title] = input;
-    });
+    this.inputSchema = util.schemas.getSchemaFromArray(opts.inputs);
   }
   this.ajv = opts.ajv || new Ajv({
     useDefaults: true,
