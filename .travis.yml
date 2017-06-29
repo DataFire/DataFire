@@ -7,3 +7,10 @@ script:
   - npm link datafire
   - npm run build
   - mocha ./src/test --recursive
+notifications:
+ email:
+    recipients:
+      - bobby@datafire.io
+    on_success: change
+    on_failure: always
+
