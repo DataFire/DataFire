@@ -1,3 +1,4 @@
+'use strict';
 let datafire = require('../index');
 let expect = require('chai').expect;
 
