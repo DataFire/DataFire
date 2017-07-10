@@ -1,5 +1,5 @@
 'use strict';
-let datafire = require('../../../../index');
+let datafire = require('../../../../entry');
 
 module.exports = new datafire.Integration({
   title: "hello"

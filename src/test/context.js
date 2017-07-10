@@ -1,5 +1,5 @@
 'use strict';
-let datafire = require('../index');
+let datafire = require('../entry');
 let expect = require('chai').expect;
 
 describe('Context', function() {
