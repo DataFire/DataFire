@@ -22,7 +22,7 @@ let Project = module.exports = function(opts) {
   this.description = opts.description || '';
   this.paths = opts.paths || {};
   this.tasks = opts.tasks || {};
-  this.actions = opts.actions || [];
+  this.actions = opts.actions || {};
   this.integrations = opts.integrations || {};
   this.authorizers = opts.authorizers || {};
   this.accounts = opts.accounts || {};
@@ -61,15 +61,25 @@ Project.fromDirectory = function(dir) {
 }
 
 Project.prototype.aggregateActions = function() {
-  let addAction = (action) => {
+  for (let integID in this.integrations) {
+    let loc = this.integrations[integID];
+    this.integrations[integID] = require(nodepath.join(this.directory, loc));
+  }
+
+  for (let actionID in this.actions) {
+    this.actions[actionID] = Action.fromName(this.actions[actionID], this.directory, this.integrations);
+  }
+
+  let resolveAction = (action) => {
     if (typeof action === 'string') {
-      action = Action.fromName(action, this.directory);
+      if (this.actions[action]) {
+        action = this.actions[action];
+      } else {
+        action = this.actions[action] = Action.fromName(action, this.directory, this.integrations);
+      }
     }
     if (!(action instanceof Action)) {
       action = new Action(action);
-    }
-    if (this.actions.indexOf(action) === -1) {
-      this.actions.push(action);
     }
     return action;
   }
@@ -77,28 +87,27 @@ Project.prototype.aggregateActions = function() {
   for (let authID in this.authorizers) {
     let authorizer = this.authorizers[authID];
     if (!authorizer.action) throw new Error(`No action specified for authorizer ${authID}`);
-    authorizer.action = addAction(authorizer.action);
+    authorizer.action = resolveAction(authorizer.action);
   }
   for (let taskID in this.tasks) {
     let task = this.tasks[taskID];
     if (!task.action) throw new Error(`No action specified for task ${taskID}`);
-    task.action = addAction(task.action);
+    task.action = resolveAction(task.action);
   }
   for (let path in this.paths) {
     for (let method in this.paths[path]) {
       let op = this.paths[path][method];
       if (!op.action) throw new Error(`No action specified for ${method.toUpperCase()} ${path}`);
-      op.action = addAction(op.action);
+      op.action = resolveAction(op.action);
 
       for (let authID in op.authorizers) {
         let authorizer = op.authorizers[authID];
         if (!authorizer) continue;
         if (!authorizer.action) throw new Error(`No action specified for authorizer ${authID} in operation ${method.toUpperCase()} ${path}`);
-        authorizer.action = addAction(authorizer.action);
+        authorizer.action = resolveAction(authorizer.action);
       }
     }
   }
-  this.actions.forEach(a => a.project = this);
 }
 
 Project.prototype.initializeOpenAPI = function(openapi) {

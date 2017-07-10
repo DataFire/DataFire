@@ -1,0 +1,14 @@
+
+paths:
+  /hello:
+    get:
+      action: hello/sayHi
+  /bye:
+    get:
+      action: bye
+
+integrations:
+  hello: ./custom_integs/hello
+
+actions:
+  bye: ./custom_actions/bye

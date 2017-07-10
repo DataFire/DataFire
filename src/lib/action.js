@@ -40,7 +40,7 @@ const Action = module.exports = function(opts) {
   this.validateInput = this.ajv.compile(this.inputSchema);
 }
 
-Action.fromName = function(name, directory) {
+Action.fromName = function(name, directory, integrations={}) {
   let isFile = /^\.?\//.test(name);
   if (isFile) {
     let action = require(nodepath.join(directory, name));
@@ -49,8 +49,9 @@ Action.fromName = function(name, directory) {
   }
   let slash = name.indexOf('/');
   if (slash === -1) throw new Error("Could not find action " + name);
+  let integrationName = name.substring(0, slash);
   const Integration = require('./integration');
-  let integration = Integration.fromName(name.substring(0, slash));
+  let integration = integrations[integrationName] || Integration.fromName(name.substring(0, slash));
   let action = integration.action(name.substring(slash + 1, name.length));
   return action;
 }
