@@ -9,7 +9,10 @@ class Context {
   constructor(opts={}) {
     this.results = {};
     this.type = opts.type || 'unknown';
-    this.accounts = opts.accounts || {};
+    this.accounts = {};
+    for (let key in opts.accounts || {}) {
+      this.accounts[key] = opts.accounts[key];
+    }
     for (let key in this.accounts) {
       if (typeof this.accounts[key] === 'string') {
         this.accounts[key] = this.accounts[this.accounts[key]];
