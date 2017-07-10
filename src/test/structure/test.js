@@ -1,3 +1,5 @@
+'use strict';
+
 let expect = require('chai').expect
 let request = require('request-promise');
 let datafire = require('../../index');
