@@ -112,6 +112,10 @@ amazonaws_datapipeline
   AWS Data Pipeline
   AWS Data Pipeline configures and manages a data-driven workflow called a pipeline. AWS Data Pipel...
 
+amazonaws_dax
+  Amazon DynamoDB Accelerator (DAX)
+  DAX is a managed caching service engineered for Amazon DynamoDB. DAX dramatically speeds up datab...
+
 amazonaws_devicefarm
   AWS Device Farm
   AWS Device Farm is a service that enables mobile app developers to test Android, iOS, and Fire OS...
@@ -199,6 +203,10 @@ amazonaws_gamelift
 amazonaws_glacier
   Amazon Glacier
   Amazon Glacier is a storage solution for "cold data." Amazon Glacier is an extremely low-cost sto...
+
+amazonaws_greengrass
+  AWS Greengrass
+  AWS Greengrass seamlessly extends AWS onto physical devices so they can act locally on the data t...
 
 amazonaws_health
   AWS Health APIs and Notifications
@@ -946,6 +954,10 @@ exavault
   ExaVault
   ExaVault's API allows you to incorporate ExaVault's suite of file transfer and user management to...
 
+figshare
+  Figshare
+  Figshare apiv2. Using Swagger 2.0
+
 firebrowse
   FireBrowse Beta API
   A simple and elegant way to explore cancer data
@@ -1554,6 +1566,10 @@ lyft
   Lyft
   Drive your app to success with Lyft's API
 
+magento
+  Magento Enterprise
+  Magento Commerce is the leading provider of open omnichannel innovation.
+
 magick_nu
   Tradeworks
   Authentication is required to access all methods of the API. Enter username and password.
@@ -1565,6 +1581,9 @@ mandrillapp
 medium
   Medium.com
   Medium’s unofficial API documentation using OpenAPI specification.
+
+microsoft_security_updates
+  Microsoft Security Updates
 
 moonmoonmoonmoon
   Moon by Ai Weiwei & Olafur Eliasson
