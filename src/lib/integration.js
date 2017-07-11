@@ -180,7 +180,7 @@ Integration.fromOpenAPI = function(openapi, id) {
   openapiUtil.initialize(openapi);
   id = id || openapi.host;
   let security = {};
-  if (openapi.securityDefinitions) {
+  if (openapi.securityDefinitions && Object.keys(openapi.securityDefinitions).length) {
     security[id] = buildSecurityFromSecurityDefs(id, openapi.securityDefinitions);
   }
   let integration = new Integration({
