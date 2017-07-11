@@ -13,7 +13,6 @@ let openapiUtil = require('../util/openapi');
 let path = require('path');
 let fs = require('fs');
 let request = require('request');
-let rssParser = require('rss-parser');
 let openapiAction = require('./openapi-action');
 
 let Integration = module.exports = function(opts) {
