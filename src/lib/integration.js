@@ -38,11 +38,12 @@ Integration.fromName = function(name) {
   if (fs.existsSync(localLocation)) {
     return require(localLocation);
   }
-  const datafireLocation = path.join(process.cwd(), 'node_modules', '@datafire', name);
+  let packageName = '@datafire/' + name;
+  const datafireLocation = path.join(process.cwd(), 'node_modules', packageName);
   try {
     return require(datafireLocation);
   } catch (e) {
-    if (e.code === MODULE_NOT_FOUND) throw new Error("Couldn't find integration " + name);
+    if (e.code === MODULE_NOT_FOUND && e.message.indexOf(packageName) !== -1) throw new Error("Couldn't find integration " + name);
     throw e;
   }
 }
