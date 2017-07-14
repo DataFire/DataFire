@@ -1,6 +1,6 @@
 1forge
   1Forge Finance APIs
-  API Program description
+  Stock and Forex Data and Realtime Quotes
 
 6_dot_authentiqio_appspot
   Authentiq
@@ -74,7 +74,7 @@ amazonaws_codecommit
 
 amazonaws_codedeploy
   AWS CodeDeploy
-  AWS CodeDeploy  Overview  This reference guide provides descriptions of the AWS CodeDeploy APIs. ...
+  AWS CodeDeploy AWS CodeDeploy is a deployment service that automates application deployments to A...
 
 amazonaws_codepipeline
   AWS CodePipeline
@@ -90,7 +90,7 @@ amazonaws_cognito_identity
 
 amazonaws_cognito_idp
   Amazon Cognito Identity Provider
-  Using the Amazon Cognito Your User Pools API, you can create a user pool to manage directories an...
+  Using the Amazon Cognito User Pools API, you can create a user pool to manage directories and use...
 
 amazonaws_cognito_sync
   Amazon Cognito Sync
@@ -595,7 +595,7 @@ azure_arm_containerregistry
 
 azure_arm_devtestlabs
   DevTestLabsClient
-  Azure DevTest Labs REST API.
+  The DevTest Labs Client.
 
 azure_arm_dns
   DnsManagementClient
@@ -618,7 +618,7 @@ azure_arm_intune
 
 azure_arm_iothub
   iotHubClient
-  Use this API to manage the IoT hubs in your subscription.
+  Use this API to manage the IoT hubs in your Azure subscription.
 
 azure_arm_keyvault
   KeyVaultManagementClient
@@ -701,8 +701,8 @@ azure_arm_servicefabric
   ServiceFabricManagementClient
 
 azure_arm_sql
-  Azure SQL Database
-  Provides create, read, update and delete functionality for Azure SQL Database resources including...
+  Azure SQL Database Backup
+  Provides read functionality for Azure SQL Database Backups
 
 azure_arm_storage
   StorageManagement
@@ -713,7 +713,7 @@ azure_arm_storageimportexport
   The Microsoft Azure Storage Import/Export Resource Provider API.
 
 azure_arm_storsimple8000series
-  StorSimpleSeries8000ManagementClient
+  StorSimple8000SeriesManagementClient
 
 azure_arm_trafficmanager
   TrafficManagerManagementClient
@@ -729,8 +729,8 @@ azure_monitor
   MonitorClient
 
 bbc
-  BBC Nitro
-  BBC Nitro is the BBC's application programming interface (API) for BBC Programmes Metadata.
+  Radio & Music Services
+  We encapsulate Radio & Music business logic for iPlayer Radio and BBC Music products on all platf...
 
 bbc_rss
   feeds.bbci.co.uk
@@ -748,8 +748,8 @@ beanstream
   https://www.beanstream.com/api/v1
 
 beezup
-  Marketplaces - Orders
-  This API will gives you the ability to manage your orders.
+  BeezUP
+  # The REST API of BeezUP system
 
 bigoven
   BigOven
@@ -1003,7 +1003,7 @@ gitlab
 
 google_acceleratedmobilepageurl
   Accelerated Mobile Pages (AMP) URL
-  This API contains a single method, batchGet. Call this method to retrieve the AMP URL (and equiva...
+  Retrieves the list of AMP URL (and equivalent AMP Cache URL) for a given list of public URL(s).
 
 google_adexchangebuyer
   Ad Exchange Buyer
@@ -1107,7 +1107,7 @@ google_clouddebugger
 
 google_clouderrorreporting
   Stackdriver Error Reporting
-  Stackdriver Error Reporting groups and counts similar errors from cloud services. The Stackdriver...
+  Groups and counts similar errors from cloud services and applications, reports new errors, and pr...
 
 google_cloudfunctions
   Google Cloud Functions
@@ -1115,7 +1115,7 @@ google_cloudfunctions
 
 google_cloudkms
   Google Cloud Key Management Service (KMS)
-  Manages encryption for your cloud services the same way you do on-premise. You can generate, use,...
+  Manages encryption for your cloud services the same way you do on-premises. You can generate, use...
 
 google_cloudmonitoring
   Cloud Monitoring
@@ -1151,7 +1151,7 @@ google_content
 
 google_customsearch
   CustomSearch
-  Lets you search over a website or collection of websites
+  Searches over a website or collection of websites
 
 google_dataflow
   Google Dataflow
@@ -1199,7 +1199,7 @@ google_drive
 
 google_firebasedynamiclinks
   Firebase Dynamic Links
-  Firebase Dynamic Links API enables third party developers to programmatically create and manage D...
+  Programmatically creates and manages Firebase Dynamic Links.
 
 google_firebaserules
   Firebase Rules
@@ -1255,7 +1255,7 @@ google_kgsearch
 
 google_language
   Google Cloud Natural Language
-  Google Cloud Natural Language API provides natural language understanding technologies to develop...
+  Provides natural language understanding technologies to developers. Examples include sentiment an...
 
 google_licensing
   Enterprise License Manager
@@ -1342,8 +1342,8 @@ google_resourceviews
   The Resource View API allows users to create and manage logical sets of Google Compute Engine ins...
 
 google_runtimeconfig
-  Google Cloud RuntimeConfig
-  Provides capabilities for dynamic configuration and coordination for applications running on Goog...
+  Google Cloud Runtime Configuration
+  The Runtime Configurator allows you to dynamically configure and expose variables through Google ...
 
 google_safebrowsing
   Google Safe Browsing
@@ -1395,7 +1395,7 @@ google_spectrum
 
 google_speech
   Google Cloud Speech
-  Google Cloud Speech API.
+  Converts audio to text by applying powerful neural network models.
 
 google_sqladmin
   Cloud SQL Administration
@@ -1434,12 +1434,12 @@ google_toolresults
   Reads and publishes results from Firebase Test Lab.
 
 google_tracing
-  Google Tracing
-  Send and retrieve trace data from Google Stackdriver Trace.
+  Stackdriver Trace
+  Send and retrieve trace data from Stackdriver Trace. Data is generated and available by default f...
 
 google_translate
-  Translate
-  Translates text from one language to another.
+  Google Cloud Translation
+  The Google Cloud Translation API lets websites and programs integrate with
 
 google_urlshortener
   URL Shortener
@@ -1645,7 +1645,7 @@ nytimes_books_api
 
 nytimes_community
   Community
-  Get access to comments from registered users on New York Times articles.
+  Get access to comments from registered users on New York Times articles.  NOTE: This API is depre...
 
 nytimes_geo_api
   Geographic
@@ -1774,6 +1774,7 @@ semantria
 
 sendgrid
   SendGrid v3
+  # The SendGrid Web API V3 Documentation
 
 simplyrets
   SimplyRETS
@@ -1820,7 +1821,7 @@ swagger_generator
 
 swaggerhub
   SwaggerHub Registry
-  The registry API for SwaggerHub
+  # Introduction
 
 synq_fm
   SYNQ Video
@@ -1940,4 +1941,8 @@ http
 mongodb
   MongoDB
   Interact with MongoDB
+
+swaggerui
+  Swagger UI
+  Display Swagger UI for your DataFire API
 
