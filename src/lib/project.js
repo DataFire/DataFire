@@ -131,6 +131,13 @@ Project.prototype.initializeOpenAPI = function(openapi) {
       this.openapi.paths[path] = this.openapi.paths[path] || {};
       let op = this.openapi.paths[path][method] = openapiUtil.getOperation(method, path, pathOp);
       if (pathOp.input !== undefined) op.parameters = [];
+      if (pathOp.extendPath) {
+        for (let i = 0; i < pathOp.extendPath; ++i) {
+          path += '/{' + openapiUtil.EXTENDED_PATH_PARAM_NAME + i + '}';
+          this.openapi.paths[path] = this.openapi.paths[path] || {};
+          this.openapi.paths[path][method] = openapiUtil.getOperation(method, path, pathOp);
+        }
+      }
     }
   }
   return this.openapi;

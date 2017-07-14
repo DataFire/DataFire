@@ -219,6 +219,153 @@
           "application/json"
         ]
       }
+    },
+    "/files": {
+      "get": {
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unknown error",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/files/{_extendedPathPart0}": {
+      "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "required": true,
+            "name": "_extendedPathPart0",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unknown error",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/directory/{filename}": {
+      "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "required": true,
+            "name": "filename",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unknown error",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/directory/{filename}/{_extendedPathPart0}": {
+      "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "required": true,
+            "name": "filename",
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "required": true,
+            "name": "_extendedPathPart0",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unknown error",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

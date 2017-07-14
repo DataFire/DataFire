@@ -1,6 +1,9 @@
 "use strict";
 
 let openapi = module.exports = {};
+openapi.EXTENDED_PATH_PARAM_NAME = '_extendedPathPart';
+openapi.EXTENDED_PATH_PARAM_REGEX = new RegExp('^' + openapi.EXTENDED_PATH_PARAM_NAME + '(\\d+)$');
+openapi.EXTENDED_PATH_FINAL_PARAM_REGEX = new RegExp('\\{([^\\/]+)\\}/\\{' + openapi.EXTENDED_PATH_PARAM_NAME + '0\\}');
 
 openapi.PATH_PARAM_REGEX = /\{([^\}]+)\}/g;
 openapi.PARAM_SCHEMA_FIELDS = [

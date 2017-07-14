@@ -10,6 +10,10 @@ const ping = new lib.Action({
   handler: _ => Promise.resolve('pong'),
 })
 
+const echoInputs = new lib.Action({
+  handler: input => input,
+})
+
 const hello = new lib.Action({
   inputs: [{
     title: 'name',
@@ -111,6 +115,20 @@ const paths = {
           name: 'insert',
           type: 'boolean',
         }]
+      }
+    },
+
+    '/files': {
+      get: {
+        extendPath: 1,
+        action: echoInputs,
+      }
+    },
+
+    '/directory/{filename}': {
+      get: {
+        extendPath: 1,
+        action: echoInputs,
       }
     },
 }
@@ -221,6 +239,27 @@ describe("Project", () => {
     request.get(BASE_URL + '/hello', {qs: {name}, json: true}, (err, resp, body) => {
       expect(resp.statusCode).to.equal(400);
       expect(resp.body).to.deep.equal({error: 'The "name" query parameter is invalid ("1234567890abcd") \nJSON Schema validation error. \nString is too long (14 chars), maximum 10'});
+      done();
+    })
+  });
+
+  it('should extend path', (done) => {
+    request.get(BASE_URL + '/files/foo.txt', {json: true}, (err, resp, body) => {
+      expect(body.extendedPath).to.equal('foo.txt');
+      done();
+    })
+  })
+
+  it('should not extend path too far', (done) => {
+    request.get(BASE_URL + '/files/foo/bar.txt', {json: true}, (err, resp, body) => {
+      expect(resp.statusCode).to.equal(404);
+      done();
+    })
+  })
+
+  it('should extend existing path param when possible', (done) => {
+    request.get(BASE_URL + '/directory/foo.txt', {json: true}, (err, resp, body) => {
+      expect(body.filename).to.equal('foo.txt');
       done();
     })
   })

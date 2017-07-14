@@ -73,13 +73,22 @@ class ProjectServer {
         let op = this.project.paths[path][method];
         let allAuthorizers = Object.assign({}, this.project.authorizers || {}, op.authorizers || {});
         let expressPath = path.replace(openapiUtil.PATH_PARAM_REGEX, ':$1');
-        let parameters = this.project.openapi.paths[path][method].parameters || [];
-        router[method](expressPath, this.requestHandler(method, path, op, parameters, allAuthorizers));
+        let swaggerOp = this.project.openapi.paths[path][method];
+        router[method](expressPath, this.requestHandler(method, path, op, swaggerOp, allAuthorizers));
+        if (op.extendPath) {
+          for (let i = 0; i < op.extendPath; ++i) {
+            path += '/{' + openapiUtil.EXTENDED_PATH_PARAM_NAME + i + '}';
+            expressPath += '/:' + openapiUtil.EXTENDED_PATH_PARAM_NAME + i;
+            swaggerOp = this.project.openapi.paths[path][method];
+            router[method](expressPath, this.requestHandler(method, path, op, swaggerOp, allAuthorizers));
+          }
+        }
       }
     }
   }
 
-  requestHandler(method, path, op, parameters, authorizers) {
+  requestHandler(method, path, op, swaggerOp, authorizers) {
+    let parameters = swaggerOp.parameters || [];
     return (req, res) => {
       let event = this.project.monitor.startEvent('http', {
         path, method,
@@ -96,6 +105,7 @@ class ProjectServer {
       let input = op.input;
       if (op.input === undefined) {
         input = {};
+        let extendedPathParts = [];
         parameters.forEach(param => {
           if (param.in === 'body') {
             Object.assign(input, req.body, input);
@@ -105,9 +115,27 @@ class ProjectServer {
             else if (param.in === 'header') val = req.get(param.name);
             else if (param.in === 'path') val = req.params[param.name];
             else if (param.in === 'formData') val = req.body[param.name];
-            input[param.name] = val;
+
+            let pathPartMatch = param.name.match(openapiUtil.EXTENDED_PATH_PARAM_REGEX);
+            if (param.in === 'path' && pathPartMatch) {
+              extendedPathParts[+pathPartMatch[1]] = val;
+            } else {
+              input[param.name] = val;
+            }
           }
         });
+        if (extendedPathParts.length) {
+          let extendedPath = extendedPathParts.join('/');
+          let paramToEdit = null;
+          let finalParamMatch = path.match(openapiUtil.EXTENDED_PATH_FINAL_PARAM_REGEX);
+          if (finalParamMatch) {
+            paramToEdit = parameters.filter(p => p.name === finalParamMatch[1])[0];
+            if (!paramToEdit) throw new Error("Parameter " + finalParamMatch[1] + " not found");
+            input[paramToEdit.name] += '/' + extendedPath;
+          } else {
+            input.extendedPath = extendedPath;
+          }
+        }
       }
       const context = new Context({
         type: 'http',
