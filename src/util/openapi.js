@@ -114,13 +114,13 @@ openapi.getUniqueNames = (params) => {
   })
 }
 
-openapi.getOperation = (method, path, pathOp) => {
+openapi.getOperation = (method, path, trigger) => {
   let op = {
-    parameters: pathOp.parameters || [],
-    responses: pathOp.responses,
-    security: pathOp.security,
-    operationId: pathOp.operationId || pathOp.action.title,
-    description: pathOp.description || pathOp.action.description,
+    parameters: trigger.parameters || [],
+    responses: trigger.responses,
+    security: trigger.security,
+    operationId: trigger.operationId || trigger.action.title,
+    description: trigger.description || trigger.action.description,
   }
   if (!op.security) delete op.security;
   if (!op.operationId) delete op.operationId;
@@ -142,7 +142,7 @@ openapi.getOperation = (method, path, pathOp) => {
   let needsBody = method === 'post' || method === 'patch' || method === 'put';
   let hasBody = !!op.parameters.filter(p => p.in === 'formData' || p.in === 'body').length;
   if (needsBody && !hasBody) {
-    let bodySchema = JSON.parse(JSON.stringify(pathOp.action.inputSchema));
+    let bodySchema = JSON.parse(JSON.stringify(trigger.action.inputSchema));
     pathParams.forEach(p => {
       if (bodySchema.properties) {
         delete bodySchema.properties[p];
@@ -158,15 +158,15 @@ openapi.getOperation = (method, path, pathOp) => {
       schema: bodySchema,
     })
   }
-  let requiredProps = pathOp.action.inputSchema.required || [];
-  Object.keys(pathOp.action.inputSchema.properties || {}).forEach(prop => {
+  let requiredProps = trigger.action.inputSchema.required || [];
+  Object.keys(trigger.action.inputSchema.properties || {}).forEach(prop => {
     let param = op.parameters.filter(p => p.name === prop)[0];
     if (!param && !needsBody) {
       param = {in: 'query', name: prop};
       op.parameters.push(param);
     }
     if (param) {
-      let schema = pathOp.action.inputSchema.properties[prop];
+      let schema = trigger.action.inputSchema.properties[prop];
       param.type = schema.type;
       openapi.PARAM_SCHEMA_FIELDS
           .filter(f => param[f] === undefined)
@@ -183,7 +183,7 @@ openapi.getOperation = (method, path, pathOp) => {
     op.responses = {
       200: {
         description: 'Success',
-        //schema: pathOp.action.outputSchema,  // FIXME: outputSchema parsing fails if it contains $refs to an integration
+        //schema: trigger.action.outputSchema,  // FIXME: outputSchema parsing fails if it contains $refs to an integration
       },
       400: {
         description: 'Invalid request',
