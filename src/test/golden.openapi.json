@@ -40,6 +40,9 @@
               }
             }
           }
+        },
+        "x-datafire": {
+          "action": "anonymous"
         }
       }
     },
@@ -83,6 +86,9 @@
               }
             }
           }
+        },
+        "x-datafire": {
+          "action": "anonymous"
         }
       }
     },
@@ -113,6 +119,9 @@
               }
             }
           }
+        },
+        "x-datafire": {
+          "action": "anonymous"
         }
       }
     },
@@ -154,6 +163,9 @@
               }
             }
           }
+        },
+        "x-datafire": {
+          "action": "anonymous"
         }
       }
     },
@@ -215,6 +227,9 @@
             }
           }
         },
+        "x-datafire": {
+          "action": "anonymous"
+        },
         "consumes": [
           "application/json"
         ]
@@ -247,6 +262,9 @@
               }
             }
           }
+        },
+        "x-datafire": {
+          "action": "anonymous"
         }
       }
     },
@@ -284,6 +302,9 @@
               }
             }
           }
+        },
+        "x-datafire": {
+          "action": "anonymous"
         }
       }
     },
@@ -321,6 +342,9 @@
               }
             }
           }
+        },
+        "x-datafire": {
+          "action": "anonymous"
         }
       }
     },
@@ -364,6 +388,9 @@
               }
             }
           }
+        },
+        "x-datafire": {
+          "action": "anonymous"
         }
       }
     }

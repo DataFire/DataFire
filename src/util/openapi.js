@@ -121,6 +121,9 @@ openapi.getOperation = (method, path, trigger) => {
     security: trigger.security,
     operationId: trigger.operationId || trigger.action.title,
     description: trigger.description || trigger.action.description,
+    'x-datafire': {
+      action: trigger.action.id,
+    }
   }
   if (!op.security) delete op.security;
   if (!op.operationId) delete op.operationId;
