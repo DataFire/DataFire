@@ -1934,9 +1934,16 @@ zoomconnect
   Zoom Connect
   The world's greatest SMS API
 
+fileserver
+  File Server
+  Serve static files, such as HTML, CSS, JavaScript, and images
+
 http
   HTTP
   Make HTTP calls
+
+lucybot_docs
+  LucyBot API Documentation
 
 mongodb
   MongoDB

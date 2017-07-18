@@ -1,1 +1,1 @@
-DataFire v2.6.0
+DataFire v2.7.0
