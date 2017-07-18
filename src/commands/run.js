@@ -38,8 +38,14 @@ module.exports = function(args) {
         logger.logJSON(result);
       }
     }, e => {
-      if (e instanceof datafire.Response) {
-        e = new Error(e.statusCode + ": " + e.body);
+      if (!(e instanceof Error)) {
+        if (e.statusCode) {
+          e = new Error(e.statusCode + ": " + e.body);
+        } else if (e.toString) {
+          e = new Error(e.toString())
+        } else {
+          e = new Error("Unknown error");
+        }
       }
       return Promise.reject(e);
     })
