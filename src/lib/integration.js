@@ -206,12 +206,23 @@ Integration.fromOpenAPI = function(openapi, id) {
   return integration;
 }
 
+const FLOW_PREFERENCES = [
+  'implicit',
+  'password',
+  'application',
+  'accessCode',
+]
+function isBetterFlow(toCheck, base) {
+  if (!base) return true;
+  return FLOW_PREFERENCES.indexOf(toCheck) > FLOW_PREFERENCES.indexOf(base);
+}
+
 function buildSecurityFromSecurityDefs(id, defs) {
   let security = {integration: id, fields: {}};
   for (let key in defs) {
     let def = defs[key];
     if (def.type === 'oauth2') {
-      if (!security.oauth || security.oauth.flow === 'implicit') {
+      if (!security.oauth || isBetterFlow(def.flow, security.oauth.flow)) {
         security.oauth = def;
       }
       security.fields = Object.assign(security.fields, {
