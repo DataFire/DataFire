@@ -145,7 +145,7 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
             if (encoding === 'gzip') {
               body = zlib.gunzipSync(body, ZLIB_OPTIONS).toString('utf8');
             } else if (encoding === 'deflate') {
-              body = zlib.deflateSync(body, ZLIB_OPTIONS).toString('utf8');
+              body = zlib.inflateSync(body, ZLIB_OPTIONS).toString('utf8');
             } else {
               body = body.toString('utf8');
             }
@@ -159,7 +159,8 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
           } else if (resp.statusCode >= 300) {
             return reject(new Response({statusCode: resp.statusCode, body}));
           }
-          if (resp.headers['content-type'].indexOf('application/json') !== -1) {  // TODO: more permissive check for JSON
+          let ctype = resp.headers['content-type'] || '';
+          if (ctype.indexOf('application/json') !== -1) {
             body = JSON.parse(body);
             resolve(body);
           } else if (openapi.info['x-datafire'] && openapi.info['x-datafire'].type === 'rss') {

@@ -1,10 +1,36 @@
 "use strict";
 let expect = require('chai').expect;
+let zlib = require('zlib');
 let datafire = require('../entry');
 
 let echo = new datafire.Action({
   handler: (input, context) => {
     return context.request;
+  }
+})
+
+let encode = new datafire.Action({
+  inputs: [{
+    title: 'encoding',
+    type: 'string',
+    enum: ['gzip', 'deflate'],
+  }, {
+    title: 'message',
+    type: 'string',
+  }],
+  handler: (input) => {
+    let message = null;
+    if (input.encoding === 'gzip') {
+      message = zlib.gzipSync(input.message);
+    } else if (input.encoding === 'deflate') {
+      message = zlib.deflateSync(input.message);
+    }
+    return new datafire.Response({
+      headers: {
+        'Content-Encoding': input.encoding,
+      },
+      body: message,
+    })
   }
 })
 
@@ -23,6 +49,11 @@ let project = new datafire.Project({
     '/dupeParam/{foo}': {
       get: {
         action: echo,
+      }
+    },
+    '/encode': {
+      get: {
+        action: encode,
       }
     }
   }
@@ -75,6 +106,22 @@ let integration = datafire.Integration.fromOpenAPI({
         }]
       }
     },
+    '/encode': {
+      get: {
+        parameters: [{
+          name: 'encoding',
+          type: 'string',
+          in: 'query',
+        }, {
+          name: 'message',
+          type: 'string',
+          in: 'query',
+        }],
+        responses: {
+          200: {description: 'OK'},
+        }
+      }
+    },
     '/dupeParam/{foo}': {
       parameters: [{
         name: 'foo',
@@ -114,7 +161,7 @@ describe('Integration', () => {
 
   it("should build from OpenAPI", () => {
     expect(integration instanceof datafire.Integration).to.equal(true);
-    expect(Object.keys(integration.actions).length).to.equal(3);
+    expect(Object.keys(integration.actions).length).to.equal(4);
     let action = integration.actions.hello.get.action;
     expect(action instanceof datafire.Action).to.equal(true);
   });
@@ -154,6 +201,26 @@ describe('Integration', () => {
       expect(data.path).to.equal('/dupeParam/a');
       expect(data.query).to.deep.equal({foo: 'b'});
       expect(data.headers.foo).to.equal('c');
+    })
+  })
+
+  it('should decode gzip', () => {
+    let action = integration.actions.encode.get.action;
+    return action.run({
+      encoding: 'gzip',
+      message: 'hello',
+    }).then(data => {
+      expect(data).to.equal('hello');
+    })
+  })
+
+  it('should decode deflate', () => {
+    let action = integration.actions.encode.get.action;
+    return action.run({
+      encoding: 'deflate',
+      message: 'hello',
+    }).then(data => {
+      expect(data).to.equal('hello');
     })
   })
 
