@@ -3,6 +3,11 @@ let request = require('request');
 let Action = require('./action');
 let Response = require('./response');
 let rssParser = require('rss-parser');
+let zlib = require('zlib');
+const ZLIB_OPTIONS = {
+  flush: zlib.Z_SYNC_FLUSH,
+  finishFlush: zlib.Z_SYNC_FLUSH
+}
 
 const BODY_METHODS = ['put', 'patch', 'post'];
 
@@ -50,6 +55,7 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
         headers: {},
         form: {},
         body: null,
+        encoding: null,
       }
       if (openapi.basePath && openapi.basePath !== '/') reqOpts.url += openapi.basePath;
       reqOpts.url += path;
@@ -132,8 +138,19 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
       let sendRequest = (resolve, reject, isRetry) => {
         request(reqOpts, (err, resp, body) => {
           if (err) {
-            throw err;
-          } else if (!isRetry && resp.statusCode === 401 && hasRefreshToken) {
+            return reject(err);
+          }
+          if (body) {
+            let encoding = resp.headers['content-encoding'];
+            if (encoding === 'gzip') {
+              body = zlib.gunzipSync(body, ZLIB_OPTIONS).toString('utf8');
+            } else if (encoding === 'deflate') {
+              body = zlib.deflateSync(body, ZLIB_OPTIONS).toString('utf8');
+            } else {
+              body = body.toString('utf8');
+            }
+          }
+          if (!isRetry && resp.statusCode === 401 && hasRefreshToken) {
             refreshOAuthToken(err => {
               if (err) reject(new Response({statusCode: 401}));
               else sendRequest(resolve, reject, true);
