@@ -91,7 +91,11 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
             if (!oauthDef || oauthDef.flow === 'implicit') {
               oauthDef = def;
             }
-            addParam('header', 'Authorization', "Bearer " + account.access_token);
+            if (def.in) {
+              addParam(def.in, def.name, account.access_token);
+            } else {
+              addParam('header', 'Authorization', "Bearer " + account.access_token);
+            }
           }
         }
       }

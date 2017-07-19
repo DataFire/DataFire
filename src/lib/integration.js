@@ -224,6 +224,11 @@ function buildSecurityFromSecurityDefs(id, defs) {
     if (def.type === 'oauth2') {
       if (!security.oauth || isBetterFlow(def.flow, security.oauth.flow)) {
         security.oauth = def;
+        if (security.oauth['x-location']) {
+          security.oauth.name = security.oauth['x-location'].name;
+          security.oauth.in = security.oauth['x-location'].in;
+          delete security.oauth['x-location'];
+        }
       }
       security.fields = Object.assign(security.fields, {
         access_token: 'An OAuth access token',
