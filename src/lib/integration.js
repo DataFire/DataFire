@@ -13,7 +13,6 @@ let openapiUtil = require('../util/openapi');
 let path = require('path');
 let fs = require('fs');
 let request = require('request');
-let openapiAction = require('./openapi-action');
 
 let Integration = module.exports = function(opts) {
   this.account = opts.account || undefined;
@@ -200,7 +199,7 @@ Integration.fromOpenAPI = function(openapi, id) {
     for (let method in openapi.paths[path]) {
       let op = openapi.paths[path][method];
       let opID = openapiUtil.getOperationId(method, path, op);
-      integration.addAction(opID, openapiAction(method, path, openapi, integration));
+      integration.addAction(opID, Action.fromOpenAPI(method, path, openapi, integration));
     }
   }
   return integration;

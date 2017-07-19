@@ -80,3 +80,5 @@ Action.prototype.run = function(input, ctx) {
     return ret;
   });
 }
+
+Action.fromOpenAPI = require('./openapi-action');
