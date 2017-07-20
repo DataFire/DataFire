@@ -25,10 +25,10 @@ let Integration = module.exports = function(opts) {
 
   this.actions = {};
   this.allActions = [];
-  this.addOAuthActions();
   for (let key in (opts.actions || {})) {
     this.addAction(key, opts.actions[key]);
   }
+  this.addOAuthActions();
 }
 
 const MODULE_NOT_FOUND = "MODULE_NOT_FOUND";
