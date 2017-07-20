@@ -156,6 +156,7 @@ Integration.prototype.addOAuthActions = function() {
   };
 
   this.addAction('oauthCallback', new Action({
+    description: "Exchange the code passed to your redirect URI for an access_token",
     security,
     outputSchema,
     inputs: [{
@@ -168,6 +169,7 @@ Integration.prototype.addOAuthActions = function() {
   }));
 
   this.addAction('oauthRefresh', new Action({
+    description: "Exchange a refresh_token for an access_token",
     security,
     outputSchema,
     handler: (input, context) => {
