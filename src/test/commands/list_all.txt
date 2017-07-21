@@ -946,6 +946,10 @@ epa_gov_sdw
   U.S. EPA Enforcement and Compliance History Online (ECHO) - Safe Drinking Water Act
   Enforcement and Compliance History Online (ECHO) is a tool developed and maintained by EPA's Offi...
 
+etsy
+  Etsy
+  Bring Etsy's handmade marketplace and community into your apps.
+
 europeana_eu
   Europeana
   This Swagger API console provides an overview of an interface to the Europeana REST API. You can ...
@@ -954,6 +958,10 @@ exavault
   ExaVault
   ExaVault's API allows you to incorporate ExaVault's suite of file transfer and user management to...
 
+facebook
+  Facebook
+  Connect to the social network with the Graph API.
+
 figshare
   Figshare
   Figshare apiv2. Using Swagger 2.0
@@ -961,6 +969,10 @@ figshare
 firebrowse
   FireBrowse Beta API
   A simple and elegant way to explore cancer data
+
+fitbit
+  Fitbit
+  Bring Fitbit health data into your apps, including user activities, sleep, heart, glucose and blo...
 
 flat
   Flat
@@ -1505,12 +1517,20 @@ graphhopper
   Route Optimization
   Our Route Optimization API solves the so called vehicle routing problem fast. It calculates an op...
 
+groupon
+  Groupon API2
+  Put all those great ideas for Groupon improvements, extensions, and multiple-platform interfaces ...
+
 hacker_news
   Hacker News
   Hacker News is a social news website focusing on computer science and entrepreneurship
 
 healthcare_gov
   Healthcare
+
+heroku
+  Heroku
+  Manage your Heroku apps, configs, collaborators & resources
 
 hetras_certification_booking
   hetras Booking API Version 0
@@ -1551,6 +1571,10 @@ infermedica
   Infermedica
   Empower your healthcare services with intelligent diagnostic insights of Infermedica API.
 
+infoconnect
+  Infoconnect
+  Search our rich and robust data on companies and people. Utilize our fuzzy matching to power your...
+
 instagram
   Instagram
   Description of Instagram RESTful API.
@@ -1559,8 +1583,16 @@ jirafe
   Jirafe Events
   API endpoins for sending Jirafe events
 
+kaltura
+  Kaltura VPaaS
+  The Kaltura VPaaS API
+
 learnifier
   Learnifier
+
+linkedin
+  LinkedIn
+  Bring user profiles and professional networks to your apps.
 
 lyft
   Lyft
@@ -1573,6 +1605,10 @@ magento
 magick_nu
   Tradeworks
   Authentication is required to access all methods of the API. Enter username and password.
+
+mailchimp
+  MailChimp
+  Create plugins that connect MailChimp to your CMS, your blog, your e-commerce shopping cart, and ...
 
 mandrillapp
   Mandrill
@@ -1595,6 +1631,10 @@ motaword
 
 mozilla_kinto
   kinto
+
+myspace
+  MySpace
+  Create apps and games within the MySpace platform. Monetize through advertising and virtual goods.
 
 nativeads
   Native Ads Publisher
@@ -1619,6 +1659,10 @@ netlicensing
 neutrinoapi
   NeutrinoAPI
   The general-purpose API
+
+nextcaller
+  Next Caller
+  Advanced Caller ID. Obtain name, address, and email of your inbound callers.
 
 npr_rss
   www.npr.org
@@ -1686,6 +1730,10 @@ omdbapi
   OMDb
   The Open Movie Database. The OMDb API is a free web service to obtain movie information, all cont...
 
+onenote
+  OneNote
+  Easily capture content into OneNote with this REST API.
+
 openapi_converter_herokuapp
   Swagger2OpenAPI Converter
   Converter and validator for Swagger 2.0 to OpenAPI 3.0.x definitions
@@ -1717,13 +1765,40 @@ patientview
   PatientView
   The recommended REST API endpoints to be used when integrating with PatientView
 
+paypal
+  PayPal (Sandbox)
+  Bring payments to apps, mobile and social with Adaptive Payments (Sandbox API).
+
 peel_ci
   Peel Tune-in API
   The machine learning service APIs utilize hashtags from Twitter to find related, trending shows, ...
 
+picasa
+  Picasa
+  Create buttons to export images from Picasa into other apps and services. (Active but deprecated ...
+
+pinboard
+  Pinboard
+  Store, manage and share bookmarks on Pinboard
+
+pivotaltracker
+  Pivotal Tracker
+  Access and manipulate agile project management data including projects, stories and tasks.
+
+postmark
+  Postmark
+  Send emails, retrieve bounces and start accepting inbound emails, all via an easy-to-use HTTP API.
+
 posty
   posty_API
   The posty_API is the core element of the posty softwarestack. It is developed to administrate a m...
+
+producthunt
+  Product Hunt
+
+quandl
+  Quandl API
+  The Quandl API
 
 rbaskets_in
   Request Baskets
@@ -1732,6 +1807,10 @@ rbaskets_in
 rebilly
   Rebilly
   # Introduction
+
+reddit
+  Reddit
+  Reddit API
 
 reddit_rss
   www.reddit.com
@@ -1744,6 +1823,10 @@ reverb
   reverb
   reverb
 
+rhapsody
+  Rhapsody
+  Access Rhapsody technologies and content, including metadeta, search and music player.
+
 ritc
   Ritc
   Rules in the Cloud
@@ -1752,6 +1835,10 @@ rottentomatoes
   Rotten Tomatoes
   Test our API services using I/O Docs.
 
+rubygems
+  Ruby Gems
+  Interact with RubyGems.org to query and create gems, mange owners and more.
+
 rummblelabs
   Seldon
   Seldon is an Open Predictive Platform that currently allows item recommendations and general pred...
@@ -1759,6 +1846,14 @@ rummblelabs
 runscope
   Runscope
   Manage Runscope programmatically.
+
+salesforce
+  Salesforce
+  Explore the beta Salesforce REST API to integrate CRM.
+
+salesforcechatter
+  Salesforce Chatter
+  Create applications for the social enterprise with Salesforce's collaboration platform
 
 schooldigger
   SchoolDigger API V1
@@ -1776,9 +1871,17 @@ sendgrid
   SendGrid v3
   # The SendGrid Web API V3 Documentation
 
+shopping_com
+  Shopping.com
+  Shopping.com offers Publishers rich content via the Shopping.com's API.
+
 simplyrets
   SimplyRETS
   The SimplyRETS API is an exciting step towards making it easier for
+
+skyrock
+  Skyrock
+  Interact with Skyrock.com features: blogs, profiles, messaging, 'what's new', friends & activities!
 
 slack
   Slack
@@ -1795,6 +1898,10 @@ smart_me
 solarvps
   Solar VPS
   This is the Solar VPS Public API. You can find more at http://www.solarvps.com
+
+soundcloud
+  SoundCloud
+  Access, host, upload, and comment on audio.
 
 spectrocoin
   SpectroCoin Merchant
@@ -1855,6 +1962,9 @@ trello
   Trello
   This document describes the REST API of Trello as published by Trello.com.
 
+tumblr
+  Tumblr
+
 twilio
   Twilio
   Enabling phones, VoIP, and messaging to be embedded into web, desktop, and mobile software.
@@ -1862,6 +1972,10 @@ twilio
 uebermaps
   uebermaps API endpoints
   Enable people to store spots on public and private maps
+
+urbanairship
+  Urban Airship
+  The Urban Airship's API powers mobile applications with push, rich push, in-app purchases and sub...
 
 vatapi
   VAT API
@@ -1921,6 +2035,14 @@ wordnik
 xkcd
   XKCD
   Webcomic of romance, sarcasm, math, and language.
+
+yellowpages
+  Yellow Pages
+  Use YP Places API to power your web and mobile apps with business listings, reviews, maps and muc...
+
+youphoric
+  Youphoric
+  Youphoric SMS API allows you to create and launch SMS-based apps quickly to reach Smart subscribe...
 
 yunbi
   Yunbi
