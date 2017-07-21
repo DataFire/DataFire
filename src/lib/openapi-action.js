@@ -61,6 +61,7 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
       reqOpts.url += path;
 
       let addParam = (loc, name, val) => {
+        if (val === undefined) return;
         if (loc === 'query') reqOpts.qs[name] = val;
         else if (loc === 'header') reqOpts.headers[name] = val;
         else if (loc === 'path') reqOpts.url = reqOpts.url.replace('{' + name + '}', val);
