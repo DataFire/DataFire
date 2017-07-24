@@ -28,16 +28,15 @@ class Logger {
   }
 
   static chalkType(type) {
+    if (!type) return '';
     if (typeof type !== 'string') {
-      if (type.properties) type = 'object';
-      else if (type.items) type = 'array';
-      else type = type.type;
+      return type.map(t => Logger.chalkType(t)).join('|');
     }
-    type = type || 'string';
     if (type === 'string') return chalk.green(type);
     if (type === 'integer' || type === 'number') return chalk.blue(type);
     if (type === 'boolean') return chalk.cyan(type);
     if (type === 'array' || type === 'object') return chalk.yellow(type);
+    if (type === 'null') return chalk.red(type);
     return type;
   }
 
@@ -68,29 +67,33 @@ class Logger {
     Logger.log(prettyjson.render(json, {keysColor: 'white', stringColor: 'green', dashColor: 'white'}));
   }
 
-  static logSchema(schema, indent, name) {
+  static logSchema(schema, indent, name, hideType) {
     indent = indent || '';
-    if (indent.length > 12) return Logger.log('...\n\n')
+    if (indent.length > 12) return Logger.log('...\n')
     let toLog = indent;
     if (name) toLog += chalk.white(Logger.padString(name + ': ', 14));
-    toLog += Logger.chalkType(schema);
+    toLog += Logger.chalkType(schema.type);
     if (schema.items) {
-      toLog += '[' + Logger.chalkType(schema.items) + ']';
+      toLog += '[' + Logger.chalkType(schema.items.type) + ']';
     }
     if (schema.description) {
       let desc = chalk.gray(Logger.truncate(schema.description, 60, true));
       toLog += '\n' + indent + desc + '\n';
     }
+    if (hideType) toLog = '';
     if (schema.properties) {
       if (toLog) Logger.log(toLog);
       for (let propName in schema.properties) {
         let prop = schema.properties[propName];
+        if (schema.required && schema.required.indexOf(propName) !== -1) {
+          propName += '*'
+        }
         Logger.logSchema(prop, indent + '  ', propName);
       }
     } else if (schema.items) {
       if (schema.items.properties || schema.items.items) {
         if (toLog) Logger.log(toLog);
-        Logger.logSchema(schema.items, indent + '  ', 'items')
+        Logger.logSchema(schema.items, indent, '', true)
       } else {
         toLog = toLog || indent + Logger.chalkType('array');
         Logger.log(toLog);
@@ -98,6 +101,10 @@ class Logger {
     } else {
       if (toLog) Logger.log(toLog);
     }
+    if (schema.allOf) {
+      schema.allOf.forEach(subschema => Logger.logSchema(subschema, indent, '', true));
+    }
+    // TODO: anyOf, oneOf
   }
 
   static logIntegration(name, spec) {
@@ -137,7 +144,7 @@ class Logger {
     let requestSchema = null;
     let paramDescriptions = parameters.map(p => {
       let ret = {parameter: p.name};
-      ret.type = Logger.chalkType(p.in === 'body' ? 'object': p.type);
+      ret.type = Logger.chalkType(p.type);
       ret.required = p.required ? chalk.red('required') : '';
       if (p.description) {
         ret.description = chalk.gray(p.description);
