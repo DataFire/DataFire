@@ -60,6 +60,9 @@ Action.prototype.run = function(input, ctx) {
   ctx = ctx || new Context();
   if (input === undefined) input = null;
   if (this.inputs && input === null) input = {};
+  if (!input && this.inputSchema.type === 'object' && !this.inputSchema.required) {
+    input = {};
+  }
   let valid = this.validateInput(input);
   if (!valid) {
     let error = new Error(this.ajv.errorsText(this.validateInput.errors));
