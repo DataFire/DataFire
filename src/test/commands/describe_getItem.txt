@@ -4,7 +4,7 @@ Get details for a given item
 
 Input
 object
-  itemID:       integer
+  itemID*:      integer
   The ID of the item to retrieve
 
 
