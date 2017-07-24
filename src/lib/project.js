@@ -22,6 +22,7 @@ let Project = module.exports = function(opts) {
   this.description = opts.description || '';
   this.paths = opts.paths || {};
   this.tasks = opts.tasks || {};
+  this.tests = opts.tests || {};
   this.actions = opts.actions || {};
   this.integrations = opts.integrations || {};
   this.authorizers = opts.authorizers || {};

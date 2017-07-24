@@ -111,6 +111,10 @@ const COMMANDS = [{
     alias: 'o',
     description: "Where to output the result (otherwise STDOUT)",
   }]
+}, {
+  name: 'test <test>',
+  description: "Run a test stored in DataFire.yml",
+  runner: require('./commands/test'),
 }]
 
 let args = require('yargs')
