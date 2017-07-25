@@ -79,6 +79,7 @@ const addIntegration = (directory, name, type, spec, callback) => {
   let baseDir = path.join(directory, name);
   let openapiFilename = path.join(baseDir, 'openapi.json');
   let integFilename = path.join(baseDir, 'index.js');
+  let detailsFilename = path.join(baseDir, 'details.json');
   spec.info['x-datafire'] = {name, type};
   fs.mkdir(directory, (err) => {
     if (err && err.code !== 'EEXIST') return callback(err);
@@ -87,8 +88,13 @@ const addIntegration = (directory, name, type, spec, callback) => {
       fs.writeFile(openapiFilename, JSON.stringify(spec, null, 2), e => {
         if (e) return callback(e);
         fs.writeFile(integFilename, integrationCode(name), e => {
-          logger.log('Created integration ' + name + ' in ' + baseDir.replace(process.cwd(), '.'));
-          callback(null, spec);
+          if (e) return callback(e);
+          let integ = require(integFilename);
+          fs.writeFile(detailsFilename, JSON.stringify(integ.getDetails(true), null, 2), e => {
+            if (e) return callback(e);
+            logger.log('Created integration ' + name + ' in ' + baseDir.replace(process.cwd(), '.'));
+            callback(null, spec);
+          })
         });
       });
     })

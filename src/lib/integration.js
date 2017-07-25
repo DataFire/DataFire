@@ -47,6 +47,36 @@ Integration.fromName = function(name) {
   }
 }
 
+Integration.prototype.getDetails = function(withActions=false) {
+  let details = {
+    id: this.id,
+    title: this.title,
+    description: this.description,
+    security: this.security,
+    logo: this.logo,
+    actionCount: this.allActions.length,
+  };
+  if (!withActions) return details;
+  details.actions = this.allActions.map(action => {
+    details.definitions = details.definitions || action.inputSchema.definitions;
+    let actionDetails = {
+      id: action.id.split('/')[1],
+      title: action.title,
+      description: action.description,
+      inputSchema: Object.assign({definitions: null}, action.inputSchema),
+      outputSchema: Object.assign({definitions: null}, action.outputSchema),
+    }
+    if (action.security && action.security[this.id]) {
+      actionDetails.security = {};
+      actionDetails.security[this.id] = {integration: this.id};
+    }
+    delete actionDetails.inputSchema.definitions;
+    delete actionDetails.outputSchema.definitions;
+    return actionDetails;
+  });
+  return details;
+}
+
 Integration.prototype.mockAll = function() {
   let mockActions = (actions) => {
     for (let id in actions) {
