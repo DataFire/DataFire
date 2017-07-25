@@ -68,6 +68,7 @@ module.exports = (args) => {
 
 const DATAFIRE_LOCATION = process.env.DATAFIRE_LOCATION || 'datafire';
 const integrationCode = name => `
+"use strict";
 let datafire = require('${DATAFIRE_LOCATION}');
 let openapi = require('./openapi.json');
 module.exports = datafire.Integration.fromOpenAPI(openapi, "${name}");
