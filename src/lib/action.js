@@ -1,7 +1,6 @@
 "use strict";
 
 const nodepath = require('path');
-const Ajv = require('ajv');
 const Response = require('./response');
 const Context = require('./context');
 const util = require('../util');
@@ -32,11 +31,7 @@ const Action = module.exports = function(opts) {
   if (opts.inputs) {
     this.inputSchema = util.schemas.getSchemaFromArray(opts.inputs);
   }
-  this.ajv = opts.ajv || new Ajv({
-    useDefaults: true,
-    format: false,
-    extendRefs: true,
-  })
+  this.ajv = opts.ajv || util.ajv.getInstance();
   this.validateInput = this.ajv.compile(this.inputSchema);
 }
 

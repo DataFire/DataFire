@@ -3,4 +3,5 @@ module.exports = {
   openapi: require('./openapi'),
   logger: require('./logger'),
   schedule: require('./schedule'),
+  ajv: require('./ajv'),
 }

@@ -1,6 +1,6 @@
 "use strict";
 
-const Ajv = require('ajv');
+const util = require('../util');
 var jsf = require('json-schema-faker');
 jsf.option({
   failOnInvalidFormat: false,
@@ -221,11 +221,7 @@ Integration.fromOpenAPI = function(openapi, id) {
     title: openapi.info.title || openapi.host,
     description: openapi.info.summary || openapi.info.description,
     logo: openapi.info['x-logo'],
-    ajv: new Ajv({
-      useDefaults: true,
-      format: false,
-      extendRefs: true,
-    }),
+    ajv: util.ajv.getInstance(),
   });
   for (let path in openapi.paths) {
     for (let method in openapi.paths[path]) {
