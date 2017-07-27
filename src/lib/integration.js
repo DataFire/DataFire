@@ -58,7 +58,7 @@ Integration.prototype.getDetails = function(withActions=false) {
   };
   if (!withActions) return details;
   details.actions = this.allActions.map(action => {
-    details.definitions = details.definitions || action.inputSchema.definitions;
+    details.definitions = details.definitions || action.inputSchema.definitions || action.outputSchema.definitions;
     let actionDetails = {
       id: action.id.split('/')[1],
       title: action.title,
