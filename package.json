@@ -23,6 +23,7 @@
     "express": "^4.15.2",
     "inquirer": "^3.0.6",
     "json-schema-faker": "^0.5.0-rc1",
+    "memory-cache": "^0.2.0",
     "prettyjson": "^1.2.1",
     "request": "^2.81.0",
     "rss-parser": "^2.7.0",

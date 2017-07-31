@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const swaggerMiddleware = require('swagger-express-middleware');
 const openapiUtil = require('../util/openapi');
+const memCache = require('memory-cache');
 const Response = require('./response');
 const Context = require('./context');
 
@@ -59,7 +60,7 @@ class ProjectServer {
           res.set("Content-type", "application/json; charset=utf-8");
           res.status(err.status || 500);
           res.send(JSON.stringify({error: err.message || "Unknown Error"}, null, 2));
-        })
+        });
         this.setPaths(router);
         resolve(router);
       })
@@ -74,6 +75,25 @@ class ProjectServer {
         let allAuthorizers = Object.assign({}, this.project.authorizers || {}, op.authorizers || {});
         let expressPath = path.replace(openapiUtil.PATH_PARAM_REGEX, ':$1');
         let swaggerOp = this.project.openapi.paths[path][method];
+        let cacheTime = op.cache || this.project.options.cache;
+        if (cacheTime && op.cache !== false) {
+          router[method](expressPath, (req, res, next) => {
+            req.cacheKey = JSON.stringify({method:req.method, url:req.url, query:req.query, body:req.body, headers:req.headers});
+            let cached = memCache.get(req.cacheKey);
+            if (cached) {
+              res.header(cached.headers);
+              res.send(cached.body);
+              return;
+            }
+            let origEnd = res.end.bind(res);
+            res.end = (body, encoding) => {
+              let toCache = {body, headers:res.header()._headers};
+              memCache.put(req.cacheKey, toCache, cacheTime)
+              return origEnd(body, encoding);
+            }
+            next();
+          })
+        }
         router[method](expressPath, this.requestHandler(method, path, op, swaggerOp, allAuthorizers));
         if (op.extendPath) {
           for (let i = 0; i < op.extendPath; ++i) {
