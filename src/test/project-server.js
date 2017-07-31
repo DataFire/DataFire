@@ -33,7 +33,8 @@ const paths = {
 }
 const BASE_URL = 'http://localhost:3333';
 
-function req(path, opts={}) {
+function req(path, opts) {
+  opts = opts || {};
   opts.json = true;
   return new Promise((resolve, reject) => {
     request.get(BASE_URL + path, opts, (err, resp, body) => {
