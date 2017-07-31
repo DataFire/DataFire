@@ -64,6 +64,8 @@ module.exports = {
 ```
 
 #### ./DataFire.yml
+> [Read more about DataFire.yml](docs/DataFire_yml.md)
+
 ```yaml
 paths:
   /hello:
