@@ -117,7 +117,7 @@ class ProjectServer {
       let respond = (result, success) => {
         event.success = success;
         this.project.monitor.endEvent(event);
-        if (!(result instanceof Response)) {
+        if (!(Response.isResponse(result))) {
           result = defaultResponse(result);
         }
         result.send(res);
@@ -173,7 +173,7 @@ class ProjectServer {
         if (authorizer === null || context.accounts[key]) return Promise.resolve();
         return authorizer.action.run(input, context)
           .then(acct => {
-            if (acct instanceof Response) throw acct;
+            if (Response.isResponse(acct)) throw acct;
             if (acct) context.accounts[key] = acct;
           });
       }))
@@ -181,7 +181,7 @@ class ProjectServer {
       .then(result => {
         respond(result, true);
       }, result => {
-        if (!(result instanceof Error || result instanceof Response)) {
+        if (!(result instanceof Error || Response.isResponse(result))) {
           result = new Error(result);
         }
         respond(result, false);

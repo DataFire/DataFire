@@ -122,13 +122,13 @@ Integration.prototype.addAction = function(id, action) {
         return action.run(input, ctx)
           .catch(e => {
             let message = "Action " + action.id + " failed";
-            if (e instanceof Response) {
+            if (Response.isResponse(e)) {
               message += " with status code " + e.statusCode + ': ' + e.body;
             } else if (e.message) {
               message += ': ' + e.message;
             }
             let error = new Error(message);
-            if (e instanceof Response) {
+            if (Response.isResponse(e)) {
               error.statusCode = e.statusCode;
               error.body = e.body;
             } else if (e instanceof Error) {
