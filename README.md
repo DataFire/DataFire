@@ -54,6 +54,7 @@ npm install --save datafire
 > View the [full example](docs/Hello%20World.md) to learn about input validation,
 > custom HTTP responses, scheduled tasks, and more.
 
+First we create a new action:
 #### ./hello.js
 ```js
 module.exports = {
@@ -63,6 +64,8 @@ module.exports = {
 };
 ```
 
+Next we set up a trigger - here we create a "path" trigger, which will
+allow our action to be triggered by a URL
 #### ./DataFire.yml
 > [Read more about DataFire.yml](docs/DataFire_yml.md)
 
