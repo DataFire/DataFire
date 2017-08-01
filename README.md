@@ -105,13 +105,12 @@ npm install @datafire/hacker_news
 Each integration comes with a set of actions. For example, the `hacker_news` integration
 contains the `getStories`, `getItem`, and `getUser` actions.
 
+You can run these actions manually:
 ```bash
 datafire run hacker_news/getUser -i.username norvig
 ```
 
-You can create an API call that runs any of these actions
-by adding a path in DataFire.yml:
-
+Or create triggers for them:
 ```yaml
 paths:
   /hn/profile:
@@ -121,21 +120,11 @@ paths:
         username: 'norvig'
 ```
 
-```bash
-datafire serve --port 3000 &
-curl http://localhost:3000/hn/profile
-# {
-#   "about": "http://norvig.com",
-#   "created": 1190398535,
-#   "id": "norvig",
-#   "karma": 640
-# }
-```
-
-You can also run actions in JavaScript - the action will return a Promise:
+Or run them in JavaScript:
 ```js
 var hackerNews = require('@datafire/hacker_news').actions;
 
+// You can use promises:
 hackerNews.getUser({
   username: 'norvig',
 }).then(user => {
@@ -143,6 +132,10 @@ hackerNews.getUser({
 }).catch(e => {
   console.log('error', e);
 })
+
+// or await:
+var user = await hackerNews.getUser({username: 'norvig'});
+console.log(user);
 ```
 
 ## Flows
