@@ -76,8 +76,6 @@ Next we set up a trigger in DataFire.yml. There are three kinds of triggers:
 
 Here we create a `path` trigger:
 ###### ./DataFire.yml
-> [Read more about DataFire.yml](docs/DataFire_yml.md)
-
 ```yaml
 paths:
   /hello:
