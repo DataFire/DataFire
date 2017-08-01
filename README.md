@@ -54,8 +54,7 @@ npm install --save datafire
 > View the [full example](docs/Hello%20World.md) to learn about input validation,
 > custom HTTP responses, scheduled tasks, and more.
 
-Let's set up a simple DataFire project that exposes a single URL, `GET /hello`,
-which returns the text `"Hello, world!"`
+Let's set up a simple DataFire project that has a single URL, `GET /hello`.
 
 ### Action
 First we create a new action - the logic that will be run when the URL is loaded:
