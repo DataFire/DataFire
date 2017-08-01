@@ -54,8 +54,12 @@ npm install --save datafire
 > View the [full example](docs/Hello%20World.md) to learn about input validation,
 > custom HTTP responses, scheduled tasks, and more.
 
-First we create a new action:
-#### ./hello.js
+Let's set up a simple DataFire project that exposes a single URL, `GET /hello`,
+which returns the text `"Hello, world!"`
+
+### Action
+First we create a new action - the logic that will be run when the URL is loaded:
+###### ./hello.js
 ```js
 module.exports = {
   handler: function(input) {
@@ -64,9 +68,14 @@ module.exports = {
 };
 ```
 
-Next we set up a trigger - here we create a "path" trigger, which will
-allow our action to be triggered by a URL
-#### ./DataFire.yml
+### Trigger
+Next we set up a trigger in DataFire.yml. There are three kinds of triggers:
+* `paths` - URLs like `GET /hello` or `POST /pets/{id}`
+* `tasks` - Jobs that run on a schedule, like "every hour", or "every tuesday at 3pm"
+* `tests` - Jobs that can be run manually using the `datafire` command line tool
+
+Here we create a `path` trigger:
+###### ./DataFire.yml
 > [Read more about DataFire.yml](docs/DataFire_yml.md)
 
 ```yaml
