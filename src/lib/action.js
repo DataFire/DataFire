@@ -32,7 +32,6 @@ const Action = module.exports = function(opts) {
     this.inputSchema = util.schemas.getSchemaFromArray(opts.inputs);
   }
   this.ajv = opts.ajv || util.ajv.getInstance();
-  this.validateInput = this.ajv.compile(this.inputSchema);
 }
 
 Action.fromName = function(name, directory, integrations={}) {
@@ -57,6 +56,9 @@ Action.prototype.run = function(input, ctx) {
   if (this.inputs && input === null) input = {};
   if (!input && this.inputSchema.type === 'object' && !this.inputSchema.required) {
     input = {};
+  }
+  if (!this.validateInput) {
+    this.validateInput = this.ajv.compile(this.inputSchema);
   }
   let valid = this.validateInput(input);
   if (!valid) {
