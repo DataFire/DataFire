@@ -733,7 +733,7 @@ bbc
   We encapsulate Radio & Music business logic for iPlayer Radio and BBC Music products on all platf...
 
 bbc_rss
-  feeds.bbci.co.uk
+  BBC RSS
 
 bbci
   BBC iPlayer Business Layer
@@ -860,7 +860,7 @@ cnab_online_herokuapp
   Processe arquivos de retorno CNAB
 
 cnn_rss
-  rss.cnn.com
+  CNN RSS
 
 consumerfinance_gov
   The Consumer Financial Protection Bureau
@@ -959,7 +959,7 @@ exavault
   ExaVault's API allows you to incorporate ExaVault's suite of file transfer and user management to...
 
 facebook
-  Facebook
+  Facebook Graph
   Connect to the social network with the Graph API.
 
 figshare
@@ -1518,7 +1518,7 @@ graphhopper
   Our Route Optimization API solves the so called vehicle routing problem fast. It calculates an op...
 
 groupon
-  Groupon API2
+  Groupon
   Put all those great ideas for Groupon improvements, extensions, and multiple-platform interfaces ...
 
 hacker_news
@@ -1579,10 +1579,6 @@ instagram
   Instagram
   Description of Instagram RESTful API.
 
-jirafe
-  Jirafe Events
-  API endpoins for sending Jirafe events
-
 kaltura
   Kaltura VPaaS
   The Kaltura VPaaS API
@@ -1633,7 +1629,7 @@ mozilla_kinto
   kinto
 
 myspace
-  MySpace
+  Myspace
   Create apps and games within the MySpace platform. Monetize through advertising and virtual goods.
 
 nativeads
@@ -1665,7 +1661,7 @@ nextcaller
   Advanced Caller ID. Obtain name, address, and email of your inbound callers.
 
 npr_rss
-  www.npr.org
+  NPR RSS
 
 nrel_building_case_studies
   High Performance Building Database
@@ -1704,7 +1700,7 @@ nytimes_movie_reviews
   With the Movie Reviews API, you can search New York Times movie reviews by keyword and get lists ...
 
 nytimes_rss
-  rss.nytimes.com
+  New York Times RSS
 
 nytimes_semantic_api
   Semantic
@@ -1731,7 +1727,7 @@ omdbapi
   The Open Movie Database. The OMDb API is a free web service to obtain movie information, all cont...
 
 onenote
-  OneNote
+  Microsoft OneNote
   Easily capture content into OneNote with this REST API.
 
 openapi_converter_herokuapp
@@ -1766,7 +1762,7 @@ patientview
   The recommended REST API endpoints to be used when integrating with PatientView
 
 paypal
-  PayPal (Sandbox)
+  PayPal Sandbox
   Bring payments to apps, mobile and social with Adaptive Payments (Sandbox API).
 
 peel_ci
@@ -1797,7 +1793,7 @@ producthunt
   Product Hunt
 
 quandl
-  Quandl API
+  Quandl
   The Quandl API
 
 rbaskets_in
@@ -1813,7 +1809,7 @@ reddit
   Reddit API
 
 reddit_rss
-  www.reddit.com
+  Reddit RSS
 
 refugerestrooms
   Refuge Restrooms
@@ -1836,7 +1832,7 @@ rottentomatoes
   Test our API services using I/O Docs.
 
 rubygems
-  Ruby Gems
+  RubyGems
   Interact with RubyGems.org to query and create gems, mange owners and more.
 
 rummblelabs
