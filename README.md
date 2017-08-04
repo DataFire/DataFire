@@ -96,7 +96,8 @@ kill $! # Stop the server
 ## Integrations
 > See [Integrations.md](./docs/Integrations.md) for the full documentation
 
-Integrations are available in the `@datafire` scope in npm. For example, to install `hacker_news`:
+Over 500 integrations are available on npm, under the `@datafire` scope.
+For example, to install the `hacker_news` integration:
 ```bash
 npm install @datafire/hacker_news
 ```
@@ -104,7 +105,19 @@ npm install @datafire/hacker_news
 Each integration comes with a set of actions. For example, the `hacker_news` integration
 contains the `getStories`, `getItem`, and `getUser` actions.
 
-You can run these actions manually:
+### Authentication
+> [Read more about authentication](docs/Authentication.md)
+
+You can use the `datafire authenticate` command to add credentials to your project.
+You can also specify credentials in YAML, or programmatically (e.g. in environment variable).
+
+
+## Actions
+Actions come in two varieties:
+* actions you build yourself in JavaScript, e.g. `./actions/hello.js`
+* and actions that are part of an integration e.g. `hacker_news/getUser`
+
+You can run actions on the command line:
 ```bash
 datafire run hacker_news/getUser -i.username norvig
 ```
@@ -123,7 +136,11 @@ Or run them in JavaScript:
 ```js
 var hackerNews = require('@datafire/hacker_news').actions;
 
-// You can use promises:
+// Using await (requires NodeJS >= v7.10):
+var user = await hackerNews.getUser({username: 'norvig'});
+console.log(user);
+
+// Or with promises:
 hackerNews.getUser({
   username: 'norvig',
 }).then(user => {
@@ -131,17 +148,7 @@ hackerNews.getUser({
 }).catch(e => {
   console.log('error', e);
 })
-
-// or await:
-var user = await hackerNews.getUser({username: 'norvig'});
-console.log(user);
 ```
-
-### Authentication
-> [Read more about authentication](docs/Authentication.md)
-
-You can use the `datafire authenticate` command to add credentials to your project.
-You can also specify credentials in YAML, or programmatically (e.g. in environment variable).
 
 ## Triggers
 In DataFire, actions are run by triggers. There are three different types of triggers:
