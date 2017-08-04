@@ -108,13 +108,3 @@ module.exports = new datafire.Action({
 })
 ```
 
-## Tasks
-We can also define a Task in `DataFire.yml` to run our action on a schedule:
-```js
-tasks:
-  hello:
-    action: ./hello.js
-    schedule: rate(2 hours)
-    input:
-      name: world
-```
