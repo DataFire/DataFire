@@ -25,7 +25,7 @@
 [devdeps-link]: https://david-dm.org/DataFire/DataFire#info=devDependencies
 
 DataFire is an open source framework for building and integrating APIs. It
-provides over [350 pre-built integrations](https://github.com/DataFire/Integrations), including:
+provides over [500 pre-built integrations](https://github.com/DataFire/Integrations), including:
 
 MongoDB &bull; Slack &bull; GitHub &bull; Twilio &bull; Trello &bull; Spotify &bull;
 Instagram &bull; Gmail &bull; Google Analytics &bull; YouTube
