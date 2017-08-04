@@ -52,7 +52,7 @@ npm install --save datafire
 
 ## Hello World
 > View the [full example](docs/Hello%20World.md) to learn about input validation,
-> custom HTTP responses, scheduled tasks, and more.
+> custom HTTP responses, and more.
 
 Let's set up a simple DataFire project that has a single URL, `GET /hello`.
 
@@ -140,15 +140,20 @@ var hackerNews = require('@datafire/hacker_news').actions;
 var user = await hackerNews.getUser({username: 'norvig'});
 console.log(user);
 
-// Or with promises:
+// Or with Promises:
 hackerNews.getUser({
   username: 'norvig',
 }).then(user => {
   console.log(user);
-}).catch(e => {
-  console.log('error', e);
-})
+});
 ```
+
+### Building Actions
+> Learn more about [building actions](docs/Hello%20World.md) 
+
+Every action has a `handler`, which must return a value or a Promise. Actions can also
+specify their inputs and outputs (using JSON schema).
+Input (but not output) will be validated each time the action is run.
 
 ## Triggers
 In DataFire, actions are run by triggers. There are three different types of triggers:
