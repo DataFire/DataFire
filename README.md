@@ -51,7 +51,7 @@ npm install --save datafire
 ```
 
 ## Hello World
-> View the [full example](docs/Hello%20World.md) to learn about input validation,
+> [See the full example](docs/Hello%20World.md) to learn about input validation,
 > custom HTTP responses, and more.
 
 Let's set up a simple DataFire project that has a single URL, `GET /hello`.
@@ -95,7 +95,7 @@ kill $! # Stop the server
 ```
 
 ## Integrations
-> See [Integrations.md](./docs/Integrations.md) for the full documentation
+> [Learn more about integrations](./docs/Integrations.md)
 
 Over 500 integrations are available on npm, under the `@datafire` scope.
 For example, to install the `hacker_news` integration:
@@ -107,7 +107,7 @@ Each integration comes with a set of actions. For example, the `hacker_news` int
 contains the `getStories`, `getItem`, and `getUser` actions.
 
 ### Authentication
-> [Read more about authentication](docs/Authentication.md)
+> [Learn more about authentication](docs/Authentication.md)
 
 Run `datafire authenticate <integration_id>` add credentials for a given integration.
 You can also specify credentials in YAML, or programmatically (e.g. in environment variable).
@@ -149,7 +149,7 @@ hackerNews.getUser({
 ```
 
 ### Building Actions
-> Learn more about [building actions](docs/Hello%20World.md) 
+> [Learn more about building actions](docs/Hello%20World.md) 
 
 Every action has a `handler`, which must return a value or a Promise. Actions can also
 specify their inputs and outputs (using JSON schema).
@@ -226,7 +226,7 @@ datafire test <test_id>
 ```
 
 ## Flows
-> [Read more about flows](docs/Flows.md)
+> [Learn more about flows](docs/Flows.md)
 
 Flows allow you to chain actions together to make a series of calls to different
 APIs and services. Flows keep track of results at each step so you can reference them
