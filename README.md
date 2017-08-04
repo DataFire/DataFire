@@ -82,6 +82,7 @@ paths:
       action: ./hello.js
 ```
 
+### Running
 Now we can run:
 ```bash
 datafire serve --port 3000 &
