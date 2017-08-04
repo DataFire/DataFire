@@ -137,14 +137,44 @@ var user = await hackerNews.getUser({username: 'norvig'});
 console.log(user);
 ```
 
-## Flows
-> [Read more about flows](docs/Flows.md)
+### Authentication
+> [Read more about authentication](docs/Authentication.md)
 
-Flows allow you to chain actions together to make a series of calls to different
-APIs and services. Flows keep track of results at each step so you can reference them
-at any step.
+You can use the `datafire authenticate` command to add credentials to your project.
+You can also specify credentials in YAML, or programmatically (e.g. in environment variable).
 
-## Tasks
+## Triggers
+In DataFire, actions are run by triggers. There are three different types of triggers:
+
+* `paths` - URLs like `GET /hello` or `POST /pets/{id}`
+* `tasks` - Jobs that run on a schedule, like "every hour", or "every tuesday at 3pm"
+* `tests` - Jobs that can be run manually using the `datafire` command line tool
+
+Each trigger must have an `action`, and can also specify the `input` and `accounts` to pass
+to that action.
+
+### Paths
+Paths create URLs that trigger your actions. For example, you can create a URL that returns
+your GitHub profile:
+```
+paths:
+  /github_profile:
+    get:
+      action: github/users.username.get
+      input:
+        username: 'torvalds'
+```
+
+If you don't specify the `input` field, DataFire will automatically pass either query parameters
+(for GET/DELETE/HEAD/OPTIONS) or the JSON body (for POST/PATCH/PUT) from the request to the
+action.
+
+Start serving your paths with:
+```bash
+datafire serve --port 3000
+```
+
+### Tasks
 You can schedule tasks in DataFire.yml by specifying a
 [rate or cron expression](http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#RateExpressions).
 ```yaml
@@ -162,22 +192,33 @@ Start running tasks with:
 datafire serve --tasks
 ```
 
-## Authentication
-> [Read more about authentication](docs/Authentication.md)
+### Tests
+Tests allow you to save a particular set of inputs and accounts for a given action, so that
+the action can be run manually with the DataFire command-line tool.
 
-You can use the `datafire authenticate` command to add credentials to your project.
-You can also specify credentials in YAML, or programmatically (e.g. in environment variable).
-
-For example, in DataFire.yml:
-```yml
-paths:
-  /github_profile:
-    get:
-      action: github/user.get
-      accounts:
-        github:
-          access_token: "abcde"
+```yaml
+tests:
+  get_torvalds:
+    action: github/users.username.get
+    input:
+      username: torvalds
+  get_norvig:
+    action: github/users.username.get
+    input:
+      username: norvig
 ```
+
+Run a test with:
+```
+datafire test <test_id>
+```
+
+## Flows
+> [Read more about flows](docs/Flows.md)
+
+Flows allow you to chain actions together to make a series of calls to different
+APIs and services. Flows keep track of results at each step so you can reference them
+at any step.
 
 ## Commands
 > Run `datafire --help` or `datafire <command> --help` for more info
