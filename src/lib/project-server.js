@@ -157,9 +157,9 @@ class ProjectServer {
           }
         }
       }
-      const context = new Context({
+      const context = this.project.getContext({
         type: 'http',
-        accounts: Object.assign({}, this.project.accounts, op.accounts),
+        accounts: op.accounts,
         request: {
           query: req.query,
           headers: req.headers,

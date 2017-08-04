@@ -27,6 +27,7 @@ let Project = module.exports = function(opts) {
   this.integrations = opts.integrations || {};
   this.authorizers = opts.authorizers || {};
   this.accounts = opts.accounts || {};
+  this.variables = opts.variables || {};
   this.directory = opts.directory || process.cwd();
   this.options = opts.options || {};
   this.monitor = new Monitor();
@@ -59,6 +60,12 @@ Project.fromDirectory = function(dir) {
   assignFromFile(nodepath.join(directory, 'DataFire-accounts.yml'));
   opts.directory = directory;
   return new Project(opts);
+}
+
+Project.prototype.getContext = function(options={}) {
+  options.accounts = Object.assign({}, this.accounts, options.accounts || {});
+  options.variables = Object.assign({}, this.variables, options.variables || {});
+  return new Context(options);
 }
 
 Project.prototype.aggregateActions = function() {
@@ -175,10 +182,7 @@ Project.prototype.startTasks = function() {
     cron = schedule.cronToNodeCron(cron);
     let job = new CronJob(cron, () => {
       let event = this.monitor.startEvent('task', {id: taskID});
-      return task.action.run(task.input, new Context({
-        type: 'task',
-        accounts: Object.assign({}, this.accounts, task.accounts),
-      }))
+      return task.action.run(task.input, this.getContext({type: 'task', accounts: task.accounts}))
         .then(data => {
           event.success = true;
           event.output = data;

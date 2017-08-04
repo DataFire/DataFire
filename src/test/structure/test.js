@@ -21,5 +21,9 @@ describe('Project Structure', function() {
   it('should allow action aliases', function() {
     request.get('http://localhost:' + PORT + '/bye', {json: true})
       .then(data => expect(data).to.equal("Bye!"));
+  });
+
+  it('should add variables in DataFire.yml to context', function() {
+    expect(project.getContext().variables.custom_id).to.equal('foo');
   })
 })

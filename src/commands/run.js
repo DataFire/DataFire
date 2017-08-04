@@ -20,9 +20,9 @@ module.exports = function(args) {
     }
   }
   let project = datafire.Project.main();
-  let context = new datafire.Context({
-    accounts: Object.assign({}, project.accounts, args.accounts),
-    type: 'command'
+  let context = project.getContext({
+    type: 'command',
+    accounts: args.accounts,
   });
   return action.run(args.input, context)
     .then(result => {

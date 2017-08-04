@@ -12,3 +12,6 @@ integrations:
 
 actions:
   bye: ./custom_actions/bye
+
+variables:
+  custom_id: foo
