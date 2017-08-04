@@ -109,9 +109,8 @@ contains the `getStories`, `getItem`, and `getUser` actions.
 ### Authentication
 > [Read more about authentication](docs/Authentication.md)
 
-You can use the `datafire authenticate` command to add credentials to your project.
+Run `datafire authenticate <integration_id>` add credentials for a given integration.
 You can also specify credentials in YAML, or programmatically (e.g. in environment variable).
-
 
 ## Actions
 Actions come in two varieties:
