@@ -34,7 +34,7 @@ Each integration provides a set of composable actions. New actions can be built 
 combining existing actions, JavaScript, and external libraries.
 
 Actions are driven by JavaScript Promises,
-and can be triggered by an HTTP endpoint, on a schedule, or manually.
+and can be triggered by a URL, on a schedule, or manually.
 
 ## Sample Projects
 * [Create an API backed by Google Sheets](https://github.com/DataFire-flows/sheets-api)
