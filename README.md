@@ -232,6 +232,10 @@ Flows allow you to chain actions together to make a series of calls to different
 APIs and services. Flows keep track of results at each step so you can reference them
 at any step.
 
+## Cookbook
+Check out the [cookbook](docs/Cookbook.md) for common patterns, including
+paginated responses and mocking/testing.
+
 ## Commands
 > Run `datafire --help` or `datafire <command> --help` for more info
 
@@ -263,7 +267,3 @@ datafire run github/search.repositories.get --input.q java
 # Use credentials with --accounts
 datafire run github/user.get --accounts.github.access_token "abcde"
 ```
-
-## Cookbook
-Check out the [cookbook](docs/Cookbook.md) for common patterns, including
-paginated responses and mocking/testing.
