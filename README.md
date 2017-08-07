@@ -25,7 +25,7 @@
 [devdeps-link]: https://david-dm.org/DataFire/DataFire#info=devDependencies
 
 DataFire is an open source framework for building and integrating APIs. It
-provides over [350 pre-built integrations](https://github.com/DataFire/Integrations), including:
+provides over [500 pre-built integrations](https://github.com/DataFire/Integrations), including:
 
 MongoDB &bull; Slack &bull; GitHub &bull; Twilio &bull; Trello &bull; Spotify &bull;
 Instagram &bull; Gmail &bull; Google Analytics &bull; YouTube
@@ -34,7 +34,7 @@ Each integration provides a set of composable actions. New actions can be built 
 combining existing actions, JavaScript, and external libraries.
 
 Actions are driven by JavaScript Promises,
-and can be triggered by an HTTP endpoint, on a schedule, or manually.
+and can be triggered by a URL, on a schedule, or manually.
 
 ## Sample Projects
 * [Create an API backed by Google Sheets](https://github.com/DataFire-flows/sheets-api)
@@ -51,8 +51,8 @@ npm install --save datafire
 ```
 
 ## Hello World
-> View the [full example](docs/Hello%20World.md) to learn about input validation,
-> custom HTTP responses, scheduled tasks, and more.
+> [See the full example](docs/Hello%20World.md) to learn about input validation,
+> custom HTTP responses, and more.
 
 Let's set up a simple DataFire project that has a single URL, `GET /hello`.
 
@@ -82,6 +82,7 @@ paths:
       action: ./hello.js
 ```
 
+### Running
 Now we can run:
 ```bash
 datafire serve --port 3000 &
@@ -94,9 +95,10 @@ kill $! # Stop the server
 ```
 
 ## Integrations
-> See [Integrations.md](./docs/Integrations.md) for the full documentation
+> [Learn more about integrations](./docs/Integrations.md)
 
-Integrations are available in the `@datafire` scope in npm. For example, to install `hacker_news`:
+Over 500 integrations are available on npm, under the `@datafire` scope.
+For example, to install the `hacker_news` integration:
 ```bash
 npm install @datafire/hacker_news
 ```
@@ -104,7 +106,18 @@ npm install @datafire/hacker_news
 Each integration comes with a set of actions. For example, the `hacker_news` integration
 contains the `getStories`, `getItem`, and `getUser` actions.
 
-You can run these actions manually:
+### Authentication
+> [Learn more about authentication](docs/Authentication.md)
+
+Run `datafire authenticate <integration_id>` add credentials for a given integration.
+You can also specify credentials in YAML, or programmatically (e.g. in environment variable).
+
+## Actions
+Actions come in two varieties:
+* actions you build yourself in JavaScript, e.g. `./actions/hello.js`
+* and actions that are part of an integration e.g. `hacker_news/getUser`
+
+You can run actions on the command line:
 ```bash
 datafire run hacker_news/getUser -i.username norvig
 ```
@@ -123,28 +136,57 @@ Or run them in JavaScript:
 ```js
 var hackerNews = require('@datafire/hacker_news').actions;
 
-// You can use promises:
+// Using await (requires NodeJS >= v7.10):
+var user = await hackerNews.getUser({username: 'norvig'});
+console.log(user);
+
+// Or with Promises:
 hackerNews.getUser({
   username: 'norvig',
 }).then(user => {
   console.log(user);
-}).catch(e => {
-  console.log('error', e);
-})
-
-// or await:
-var user = await hackerNews.getUser({username: 'norvig'});
-console.log(user);
+});
 ```
 
-## Flows
-> [Read more about flows](docs/Flows.md)
+### Building Actions
+> [Learn more about building actions](docs/Hello%20World.md) 
 
-Flows allow you to chain actions together to make a series of calls to different
-APIs and services. Flows keep track of results at each step so you can reference them
-at any step.
+Every action has a `handler`, which must return a value or a Promise. Actions can also
+specify their inputs and outputs (using JSON schema).
+Input (but not output) will be validated each time the action is run.
 
-## Tasks
+## Triggers
+In DataFire, actions are run by triggers. There are three different types of triggers:
+
+* `paths` - URLs like `GET /hello` or `POST /pets/{id}`
+* `tasks` - Jobs that run on a schedule, like "every hour", or "every tuesday at 3pm"
+* `tests` - Jobs that can be run manually using the `datafire` command line tool
+
+Each trigger must have an `action`, and can also specify the `input` and `accounts` to pass
+to that action.
+
+### Paths
+Paths create URLs that trigger your actions. For example, you can create a URL that returns
+your GitHub profile:
+```
+paths:
+  /github_profile:
+    get:
+      action: github/users.username.get
+      input:
+        username: 'torvalds'
+```
+
+If you don't specify the `input` field, DataFire will automatically pass either query parameters
+(for GET/DELETE/HEAD/OPTIONS) or the JSON body (for POST/PATCH/PUT) from the request to the
+action.
+
+Start serving your paths with:
+```bash
+datafire serve --port 3000
+```
+
+### Tasks
 You can schedule tasks in DataFire.yml by specifying a
 [rate or cron expression](http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#RateExpressions).
 ```yaml
@@ -162,22 +204,37 @@ Start running tasks with:
 datafire serve --tasks
 ```
 
-## Authentication
-> [Read more about authentication](docs/Authentication.md)
+### Tests
+Tests allow you to save a particular set of inputs and accounts for a given action, so that
+the action can be run manually with the DataFire command-line tool.
 
-You can use the `datafire authenticate` command to add credentials to your project.
-You can also specify credentials in YAML, or programmatically (e.g. in environment variable).
-
-For example, in DataFire.yml:
-```yml
-paths:
-  /github_profile:
-    get:
-      action: github/user.get
-      accounts:
-        github:
-          access_token: "abcde"
+```yaml
+tests:
+  get_torvalds:
+    action: github/users.username.get
+    input:
+      username: torvalds
+  get_norvig:
+    action: github/users.username.get
+    input:
+      username: norvig
 ```
+
+Run a test with:
+```
+datafire test <test_id>
+```
+
+## Flows
+> [Learn more about flows](docs/Flows.md)
+
+Flows allow you to chain actions together to make a series of calls to different
+APIs and services. Flows keep track of results at each step so you can reference them
+at any step.
+
+## Cookbook
+Check out the [cookbook](docs/Cookbook.md) for common patterns, including
+paginated responses and mocking/testing.
 
 ## Commands
 > Run `datafire --help` or `datafire <command> --help` for more info
@@ -210,7 +267,3 @@ datafire run github/search.repositories.get --input.q java
 # Use credentials with --accounts
 datafire run github/user.get --accounts.github.access_token "abcde"
 ```
-
-## Cookbook
-Check out the [cookbook](docs/Cookbook.md) for common patterns, including
-paginated responses and mocking/testing.
