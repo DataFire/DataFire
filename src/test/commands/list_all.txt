@@ -908,11 +908,23 @@ deutschebahn_reisezentren
 
 deutschebahn_stada
   Stationsdatenbereitstellung
-  The API provides station data for german railway stations managed by DB Station&Service AG as des...
+  An API providing master data for german railway stations by DB Station&Service AG.
 
 dweet
   dweet.io
   Dweet.io allows users to share data from mobile, tablets, and pcs, and them to other devices and ...
+
+ebay_buy_browse
+  Buy Browse
+  The Buy Browse API lets shoppers search for specific items by keyword, category, product, or item...
+
+ebay_buy_marketing
+  Buy Marketing
+  The Buy Marketing API lets shoppers discover the best selling products and assists shoppers with ...
+
+ebay_commerce_taxonomy
+  Commerce Taxonomy
+  The Commerce Taxonomy API helps sellers determine the best eBay category when listing their inven...
 
 epa_gov_air
   U.S. EPA Enforcement and Compliance History Online (ECHO) - Clean Air Act
@@ -1015,7 +1027,7 @@ gitlab
 
 google_acceleratedmobilepageurl
   Accelerated Mobile Pages (AMP) URL
-  Retrieves the list of AMP URL (and equivalent AMP Cache URL) for a given list of public URL(s).
+  Retrieves the list of AMP URLs (and equivalent AMP Cache URLs) for a given list of public URL(s).
 
 google_adexchangebuyer
   Ad Exchange Buyer
@@ -1734,6 +1746,10 @@ openapi_converter_herokuapp
   Swagger2OpenAPI Converter
   Converter and validator for Swagger 2.0 to OpenAPI 3.0.x definitions
 
+openbanking_org_uk
+  Open Data
+  Latest Swagger specification for OpenData
+
 opencagedata
   OpenCage Geocoder
   Worldwide forward and reverse geocoding
@@ -1798,7 +1814,7 @@ quandl
 
 rbaskets_in
   Request Baskets
-  RESTful API of Request Baskets service
+  RESTful API of [Request Baskets](https://rbaskets.in) service.
 
 rebilly
   Rebilly
