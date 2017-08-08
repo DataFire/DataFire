@@ -10,15 +10,15 @@ amadeus
 
 amazonaws_acm
   AWS Certificate Manager
-  AWS Certificate Manager Welcome to the AWS Certificate Manager (ACM) API documentation. You can u...
+  AWS Certificate Manager
 
 amazonaws_apigateway
   Amazon API Gateway
-  Amazon API Gateway Amazon API Gateway helps developers deliver robust, secure, and scalable mobil...
+  Amazon API Gateway
 
 amazonaws_appstream2
   Amazon AppStream
-  Amazon AppStream 2.0 API documentation for Amazon AppStream 2.0.
+  Amazon AppStream 2.0
 
 amazonaws_athena
   Amazon Athena
@@ -38,15 +38,15 @@ amazonaws_budgets
 
 amazonaws_clouddirectory
   Amazon CloudDirectory
-  Amazon Cloud Directory Amazon Cloud Directory is a component of the AWS Directory Service that si...
+  Amazon Cloud Directory
 
 amazonaws_cloudformation
   AWS CloudFormation
-  AWS CloudFormation AWS CloudFormation allows you to create and manage AWS infrastructure deployme...
+  AWS CloudFormation
 
 amazonaws_cloudfront
   Amazon CloudFront
-  Amazon CloudFront This is the Amazon CloudFront API Reference. This guide is for developers who n...
+  Amazon CloudFront
 
 amazonaws_cloudhsm
   Amazon CloudHSM
@@ -54,7 +54,7 @@ amazonaws_cloudhsm
 
 amazonaws_cloudsearch
   Amazon CloudSearch
-  Amazon CloudSearch Configuration Service You use the Amazon CloudSearch configuration service to ...
+  Amazon CloudSearch Configuration Service
 
 amazonaws_cloudsearchdomain
   Amazon CloudSearch Domain
@@ -62,31 +62,31 @@ amazonaws_cloudsearchdomain
 
 amazonaws_cloudtrail
   AWS CloudTrail
-  AWS CloudTrail This is the CloudTrail API Reference. It provides descriptions of actions, data ty...
+  AWS CloudTrail
 
 amazonaws_codebuild
   AWS CodeBuild
-  AWS CodeBuild AWS CodeBuild is a fully managed build service in the cloud. AWS CodeBuild compiles...
+  AWS CodeBuild
 
 amazonaws_codecommit
   AWS CodeCommit
-  AWS CodeCommit This is the AWS CodeCommit API Reference. This reference provides descriptions of ...
+  AWS CodeCommit
 
 amazonaws_codedeploy
   AWS CodeDeploy
-  AWS CodeDeploy AWS CodeDeploy is a deployment service that automates application deployments to A...
+  AWS CodeDeploy
 
 amazonaws_codepipeline
   AWS CodePipeline
-  AWS CodePipeline  Overview  This is the AWS CodePipeline API Reference. This guide provides descr...
+  AWS CodePipeline
 
 amazonaws_codestar
   AWS CodeStar
-  AWS CodeStar This is the API reference for AWS CodeStar. This reference provides descriptions of ...
+  AWS CodeStar
 
 amazonaws_cognito_identity
   Amazon Cognito Identity
-  Amazon Cognito Amazon Cognito is a web service that delivers scoped temporary credentials to mobi...
+  Amazon Cognito
 
 amazonaws_cognito_idp
   Amazon Cognito Identity Provider
@@ -94,11 +94,11 @@ amazonaws_cognito_idp
 
 amazonaws_cognito_sync
   Amazon Cognito Sync
-  Amazon Cognito Sync Amazon Cognito Sync provides an AWS service and client library that enable cr...
+  Amazon Cognito Sync
 
 amazonaws_config
   AWS Config
-  AWS Config AWS Config provides a way to keep track of the configurations of all the AWS resources...
+  AWS Config
 
 amazonaws_cur
   AWS Cost and Usage Report Service
@@ -106,7 +106,7 @@ amazonaws_cur
 
 amazonaws_data_iot
   AWS IoT Data Plane
-  AWS IoT AWS IoT-Data enables secure, bi-directional communication between Internet-connected thin...
+  AWS IoT
 
 amazonaws_datapipeline
   AWS Data Pipeline
@@ -126,23 +126,23 @@ amazonaws_directconnect
 
 amazonaws_discovery
   AWS Application Discovery Service
-  AWS Application Discovery Service AWS Application Discovery Service helps you plan application mi...
+  AWS Application Discovery Service
 
 amazonaws_dms
   AWS Database Migration Service
-  AWS Database Migration Service AWS Database Migration Service (AWS DMS) can migrate your data to ...
+  AWS Database Migration Service
 
 amazonaws_ds
   AWS Directory Service
-  AWS Directory Service AWS Directory Service is a web service that makes it easy for you to setup ...
+  AWS Directory Service
 
 amazonaws_dynamodb
   Amazon DynamoDB
-  Amazon DynamoDB Amazon DynamoDB is a fully managed NoSQL database service that provides fast and ...
+  Amazon DynamoDB
 
 amazonaws_ec2
   Amazon Elastic Compute Cloud
-  Amazon Elastic Compute Cloud Amazon Elastic Compute Cloud (Amazon EC2) provides resizable computi...
+  Amazon Elastic Compute Cloud
 
 amazonaws_ecr
   Amazon EC2 Container Registry
@@ -154,19 +154,19 @@ amazonaws_ecs
 
 amazonaws_elasticache
   Amazon ElastiCache
-  Amazon ElastiCache Amazon ElastiCache is a web service that makes it easier to set up, operate, a...
+  Amazon ElastiCache
 
 amazonaws_elasticbeanstalk
   AWS Elastic Beanstalk
-  AWS Elastic Beanstalk AWS Elastic Beanstalk makes it easy for you to create, deploy, and manage s...
+  AWS Elastic Beanstalk
 
 amazonaws_elasticfilesystem
   Amazon Elastic File System
-  Amazon Elastic File System Amazon Elastic File System (Amazon EFS) provides simple, scalable file...
+  Amazon Elastic File System
 
 amazonaws_elasticloadbalancing
   Elastic Load Balancing
-  Elastic Load Balancing A load balancer distributes incoming traffic across targets, such as your ...
+  Elastic Load Balancing
 
 amazonaws_elasticmapreduce
   Amazon Elastic MapReduce
@@ -174,19 +174,19 @@ amazonaws_elasticmapreduce
 
 amazonaws_elastictranscoder
   Amazon Elastic Transcoder
-  AWS Elastic Transcoder Service The AWS Elastic Transcoder Service.
+  AWS Elastic Transcoder Service
 
 amazonaws_email
   Amazon Simple Email Service
-  Amazon Simple Email Service  This is the API Reference for Amazon Simple Email Service (Amazon SE...
+  Amazon Simple Email Service
 
 amazonaws_entitlement_marketplace
   AWS Marketplace Entitlement Service
-  AWS Marketplace Entitlement Service This reference provides descriptions of the AWS Marketplace E...
+  AWS Marketplace Entitlement Service
 
 amazonaws_es
   Amazon Elasticsearch Service
-  Amazon Elasticsearch Configuration Service Use the Amazon Elasticsearch configuration API to crea...
+  Amazon Elasticsearch Configuration Service
 
 amazonaws_events
   Amazon CloudWatch Events
@@ -194,15 +194,15 @@ amazonaws_events
 
 amazonaws_firehose
   Amazon Kinesis Firehose
-  Amazon Kinesis Firehose API Reference Amazon Kinesis Firehose is a fully-managed service that del...
+  Amazon Kinesis Firehose API Reference
 
 amazonaws_gamelift
   Amazon GameLift
-  Amazon GameLift Service  Amazon GameLift is a managed service for developers who need a scalable,...
+  Amazon GameLift Service
 
 amazonaws_glacier
   Amazon Glacier
-  Amazon Glacier is a storage solution for "cold data." Amazon Glacier is an extremely low-cost sto...
+  Amazon Glacier is a storage solution for "cold data."
 
 amazonaws_greengrass
   AWS Greengrass
@@ -210,11 +210,11 @@ amazonaws_greengrass
 
 amazonaws_health
   AWS Health APIs and Notifications
-  AWS Health The AWS Health API provides programmatic access to the AWS Health information that is ...
+  AWS Health
 
 amazonaws_iam
   AWS Identity and Access Management
-  AWS Identity and Access Management AWS Identity and Access Management (IAM) is a web service that...
+  AWS Identity and Access Management
 
 amazonaws_importexport
   AWS Import/Export
@@ -222,26 +222,26 @@ amazonaws_importexport
 
 amazonaws_inspector
   Amazon Inspector
-  Amazon Inspector Amazon Inspector enables you to analyze the behavior of your AWS resources and t...
+  Amazon Inspector
 
 amazonaws_iot
   AWS IoT
-  AWS IoT AWS IoT provides secure, bi-directional communication between Internet-connected things (...
+  AWS IoT
 
 amazonaws_kinesis
   Amazon Kinesis
-  Amazon Kinesis Streams Service API Reference Amazon Kinesis Streams is a managed service that sca...
+  Amazon Kinesis Streams Service API Reference
 
 amazonaws_kinesisanalytics
   Amazon Kinesis Analytics
 
 amazonaws_kms
   AWS Key Management Service
-  AWS Key Management Service AWS Key Management Service (AWS KMS) is an encryption and key manageme...
+  AWS Key Management Service
 
 amazonaws_lambda
   AWS Lambda
-  AWS Lambda  Overview  This is the AWS Lambda API Reference. The AWS Lambda Developer Guide provid...
+  AWS Lambda
 
 amazonaws_lightsail
   Amazon Lightsail
@@ -257,7 +257,7 @@ amazonaws_marketplacecommerceanalytics
 
 amazonaws_metering_marketplace
   AWSMarketplace Metering
-  AWS Marketplace Metering Service This reference provides descriptions of the low-level AWS Market...
+  AWS Marketplace Metering Service
 
 amazonaws_mobileanalytics
   Amazon Mobile Analytics
@@ -265,7 +265,7 @@ amazonaws_mobileanalytics
 
 amazonaws_models_lex
   Amazon Lex Model Building Service
-  Amazon Lex Build-Time Actions  Amazon Lex is an AWS service for building conversational voice and...
+  Amazon Lex Build-Time Actions
 
 amazonaws_monitoring
   Amazon CloudWatch
@@ -277,30 +277,30 @@ amazonaws_mturk_requester
 
 amazonaws_opsworks
   AWS OpsWorks
-  AWS OpsWorks Welcome to the AWS OpsWorks Stacks API Reference. This guide provides descriptions, ...
+  AWS OpsWorks
 
 amazonaws_opsworks_cm
   AWS OpsWorks for Chef Automate
-  AWS OpsWorks for Chef Automate  AWS OpsWorks for Chef Automate is a service that runs and manages...
+  AWS OpsWorks for Chef Automate
 
 amazonaws_organizations
   AWS Organizations
-  AWS Organizations API Reference AWS Organizations is a web service that enables you to consolidat...
+  AWS Organizations API Reference
 
 amazonaws_pinpoint
   Amazon Pinpoint
 
 amazonaws_polly
   Amazon Polly
-  Amazon Polly is a web service that makes it easy to synthesize speech from text. The Amazon Polly...
+  Amazon Polly is a web service that makes it easy to synthesize speech from text.
 
 amazonaws_rds
   Amazon Relational Database Service
-  Amazon Relational Database Service   Amazon Relational Database Service (Amazon RDS) is a web ser...
+  Amazon Relational Database Service
 
 amazonaws_redshift
   Amazon Redshift
-  Amazon Redshift  Overview  This is an interface reference for Amazon Redshift. It contains docume...
+  Amazon Redshift
 
 amazonaws_rekognition
   Amazon Rekognition
@@ -326,11 +326,11 @@ amazonaws_sdb
 
 amazonaws_servicecatalog
   AWS Service Catalog
-  AWS Service Catalog  Overview   AWS Service Catalog allows organizations to create and manage cat...
+  AWS Service Catalog
 
 amazonaws_shield
   AWS Shield
-  AWS Shield Advanced This is the AWS Shield Advanced API Reference. This guide is for developers w...
+  AWS Shield Advanced
 
 amazonaws_sms
   AWS Server Migration Service
@@ -342,59 +342,59 @@ amazonaws_snowball
 
 amazonaws_sns
   Amazon Simple Notification Service
-  Amazon Simple Notification Service Amazon Simple Notification Service (Amazon SNS) is a web servi...
+  Amazon Simple Notification Service
 
 amazonaws_sqs
   Amazon Simple Queue Service
-  Welcome to the Amazon Simple Queue Service API Reference. Amazon Simple Queue Service (Amazon SQS...
+  Welcome to the _Amazon Simple Queue Service API Reference_.
 
 amazonaws_ssm
   Amazon Simple Systems Manager (SSM)
-  Amazon EC2 Systems Manager Amazon EC2 Systems Manager is a collection of capabilities that helps ...
+  Amazon EC2 Systems Manager
 
 amazonaws_states
   AWS Step Functions
-  AWS Step Functions AWS Step Functions is a web service that enables you to coordinate the compone...
+  AWS Step Functions
 
 amazonaws_storagegateway
   AWS Storage Gateway
-  AWS Storage Gateway Service AWS Storage Gateway is the service that connects an on-premises softw...
+  AWS Storage Gateway Service
 
 amazonaws_streams_dynamodb
   Amazon DynamoDB Streams
-  Amazon DynamoDB Amazon DynamoDB Streams provides API actions for accessing streams and processing...
+  Amazon DynamoDB
 
 amazonaws_sts
   AWS Security Token Service
-  AWS Security Token Service The AWS Security Token Service (STS) is a web service that enables you...
+  AWS Security Token Service
 
 amazonaws_support
   AWS Support
-  AWS Support The AWS Support API reference is intended for programmers who need detailed informati...
+  AWS Support
 
 amazonaws_swf
   Amazon Simple Workflow Service
-  Amazon Simple Workflow Service The Amazon Simple Workflow Service (Amazon SWF) makes it easy to b...
+  Amazon Simple Workflow Service
 
 amazonaws_tagging
   AWS Resource Groups Tagging API
-  Resource Groups Tagging API This guide describes the API operations for the resource groups taggi...
+  Resource Groups Tagging API
 
 amazonaws_waf
   AWS WAF
-  This is the AWS WAF API Reference for using AWS WAF with Amazon CloudFront. The AWS WAF actions a...
+  This is the _AWS WAF API Reference_ for using AWS WAF with Amazon CloudFront. The AWS WAF actions...
 
 amazonaws_waf_regional
   AWS WAF Regional
-  This is the AWS WAF Regional API Reference for using AWS WAF with Elastic Load Balancing (ELB) Ap...
+  This is the _AWS WAF Regional API Reference_ for using AWS WAF with Elastic Load Balancing (ELB) ...
 
 amazonaws_workdocs
   Amazon WorkDocs
-  The WorkDocs API is designed for the following use cases:   File Migration: File migration applic...
+  The WorkDocs API is designed for the following use cases:
 
 amazonaws_workspaces
   Amazon WorkSpaces
-  Amazon WorkSpaces Service This reference provides detailed information about the Amazon WorkSpace...
+  Amazon WorkSpaces Service
 
 amazonaws_xray
   AWS X-Ray
@@ -821,7 +821,7 @@ cisco
 
 citrix_gotoassistseeit
   GoToAssist Seeit
-  Allows you to integrate GoToAssist Seeit into your own solutions.General notes:GoToAssist Seeit s...
+  Allows you to integrate GoToAssist Seeit into your own solutions.
 
 citrix_gotomeeting
   GoToMeeting
@@ -853,7 +853,7 @@ clickmeter
 
 cloud_gov
   Discovery Market Research
-  This API drives the Discovery Market Research Tool.
+  This API drives the [Discovery Market Research Tool](https://discovery.gsa.gov). It contains info...
 
 cnab_online_herokuapp
   Cnab Online
@@ -868,7 +868,7 @@ consumerfinance_gov
 
 core_ac_uk
   CORE API v2
-  You can use the CORE API to access the
+  You can use the CORE API to access the resources harvested and enriched by CORE. If you encounter...
 
 cybertaxonomy_eu
   EU BON UTIS
@@ -1515,7 +1515,7 @@ gov_bc_ca_geomark
 
 gov_bc_ca_jobposting
   WorkBC Job Posting
-  This API allows you to receive a feed of jobs from WorkBC's Job Board. Please see our data collec...
+  This API allows you to receive a feed of jobs from WorkBC's Job Board. Please see our [data colle...
 
 gov_bc_ca_open511
   DriveBC's Open511
@@ -1654,15 +1654,15 @@ nba
 
 neowsapp
   NeoWs - (Near Earth Object Web Service)
-  A web service for near earth objects. All the data is from the  NASA JPL Asteroid team.
+  A web service for near earth objects. All the data is from the [NASA JPL Asteroid team](http://ne...
 
 netatmo
   Netatmo
-  Welcome to the Netatmo swagger on-line documentation !This site is a complement to the official N...
+  ### Welcome to the Netatmo swagger on-line documentation !
 
 netlicensing
   Labs64 NetLicensing RESTful API Test Center
-  The Labs64 NetLicensing RESTful API gives you access to NetLicensing’s core features.Authenticati...
+  The Labs64 [NetLicensing RESTful API](https://www.labs64.de/confluence/x/pwCo) gives you access t...
 
 neutrinoapi
   NeutrinoAPI
@@ -1779,7 +1779,7 @@ patientview
 
 paypal
   PayPal Sandbox
-  Bring payments to apps, mobile and social with Adaptive Payments (Sandbox API).
+  Bring payments to apps, mobile and social with Adaptive Payments **(Sandbox API).**
 
 peel_ci
   Peel Tune-in API
@@ -1972,7 +1972,7 @@ traccar
 
 trello
   Trello
-  This document describes the REST API of Trello as published by Trello.com.
+  This document describes the REST API of Trello as published by Trello.com. - [Official Documentat...
 
 tumblr
   Tumblr
@@ -2022,7 +2022,7 @@ wavecell
 
 wealthport
   Wealthport
-  Wealthport provides a simple, lightweight and open Web API based on the Open API 2.0 standard (ht...
+  Wealthport provides a simple, lightweight and open Web API based on the Open API 2.0 standard ([h...
 
 wikimedia
   Wikimedia
