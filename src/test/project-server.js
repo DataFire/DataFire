@@ -12,6 +12,61 @@ const getTime = new lib.Action({
   handler: _ => Promise.resolve(Date.now()),
 })
 
+const getPerson = new lib.Action({
+  inputs: [{
+    title: 'name',
+    type: 'string',
+    minLength: 1,
+  }, {
+    title: 'age',
+    type: 'integer',
+    default: -1,
+  }]
+})
+
+const makePerson = new lib.Action({
+  inputSchema: {
+    type: 'object',
+    required: ['name', 'age'],
+    properties: {
+      name: {
+        type: 'string',
+        maxLength: 100,
+        minLength: 1,
+      },
+      age: {
+        type: 'integer',
+        minimum: 0,
+      },
+      nicknames: {
+        type: 'array',
+        minItems: 1,
+        items: {
+          type: 'string',
+          minLength: 1,
+        }
+      },
+      address: {
+        type: 'object',
+        required: ['street', 'city'],
+        properties: {
+          street: {
+            type: 'object',
+            required: ['number', 'name'],
+            properties: {
+              number: {type: 'integer'},
+              name: {type: 'string'},
+            }
+          },
+          city: {type: 'string', minLength: 1},
+          zip: {type: 'integer'},
+        }
+      }
+    }
+  },
+  handler: _ => "Success",
+})
+
 const paths = {
     '/time': {
       get: {
@@ -29,6 +84,14 @@ const paths = {
         action: getTime,
         cache: false,
       }
+    },
+    '/person': {
+      get: {
+        action: getPerson,
+      },
+      post: {
+        action: makePerson,
+      }
     }
 }
 const BASE_URL = 'http://localhost:3333';
@@ -36,9 +99,11 @@ const BASE_URL = 'http://localhost:3333';
 function req(path, opts) {
   opts = opts || {};
   opts.json = true;
+  opts.method = opts.method || 'get';
   return new Promise((resolve, reject) => {
-    request.get(BASE_URL + path, opts, (err, resp, body) => {
+    request(BASE_URL + path, opts, (err, resp, body) => {
       if (err) reject(err);
+      else if (resp.statusCode >= 300) reject({statusCode: resp.statusCode, body});
       else resolve(body);
     })
   })
@@ -115,5 +180,43 @@ describe("Project Server", () => {
         expect(time).to.be.a('number');
         expect(time).to.not.equal(firstTime);
       })
+  });
+
+  it('should return pretty errors for bad query param', () => {
+    function checkError(qs, expected) {
+      return req('/person', {qs})
+        .then(_ => {throw new Error("Shouldn't reach here")})
+        .catch(e => {
+          expect(e.statusCode).to.equal(400);
+          expect(e.body.error).to.equal(expected);
+        })
+    }
+    return Promise.all([
+      checkError({}, "Missing required query parameter \"name\""),
+      checkError({name: ''}, "name: String is too short (0 chars), minimum 1"),
+    ])
+  })
+
+  it('should return pretty errors for bad body param', () => {
+    function checkError(person, expected) {
+      let opts = {method: 'post', body: person};
+      return req('/person', opts)
+        .then(_ => {throw new Error("Shouldn't reach here")})
+        .catch(e => {
+          expect(e.statusCode).to.equal(400);
+          expect(e.body.error).to.equal(expected);
+        })
+    }
+
+    return Promise.all([
+      checkError({name: "Morty"}, "body: Missing required property: age"),
+      checkError({name: "Morty", age: -1}, "age: Value -1 is less than minimum 0"),
+      checkError({name: "Morty", age: 'Rick'}, "age: Invalid type: string (expected integer)"),
+      checkError({name: "Morty", age: 14, nicknames: []}, 'nicknames: Array is too short (0), minimum 1'),
+      checkError({name: "Morty", age: 14, nicknames: ['foo', '']}, 'nicknames.1: String is too short (0 chars), minimum 1'),
+      checkError({name: "Morty", age: 14, address: {}}, 'address: Missing required property: street'),
+      checkError({name: "Morty", age: 14, address: {street: {}, city: 'NYC'}}, 'address.street: Missing required property: number'),
+      checkError({name: "Morty", age: 14, address: {street: {name: '', number: 0}, city: ''}}, 'address.city: String is too short (0 chars), minimum 1'),
+    ]);
   })
 });

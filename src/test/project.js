@@ -169,7 +169,8 @@ describe("Project", () => {
     request.get(BASE_URL + '/hello?name=reallylongname', {json: true}, (err, resp, body) => {
       if (err) throw err;
       expect(resp.statusCode).to.equal(400);
-      expect(body.error).to.contain('query parameter is invalid')
+      console.log(body.error);
+      expect(body.error).to.equal('name: String is too long (14 chars), maximum 10')
       done();
     })
   });
@@ -220,7 +221,7 @@ describe("Project", () => {
     };
     request.post(BASE_URL + '/player/MIKE', {json: true, body: obj}, (err, resp, body) => {
       expect(resp.statusCode).to.equal(400);
-      expect(body).to.deep.equal({error: 'The "id" path parameter is invalid ("MIKE") \n"MIKE" is not a properly-formatted whole number'});
+      expect(body).to.deep.equal({error: 'id: "MIKE" is not a properly-formatted whole number'});
       done();
     })
   });
@@ -238,7 +239,7 @@ describe("Project", () => {
     let name = '1234567890abcd';  // max is 10 for param but 20 for inputSchema
     request.get(BASE_URL + '/hello', {qs: {name}, json: true}, (err, resp, body) => {
       expect(resp.statusCode).to.equal(400);
-      expect(resp.body).to.deep.equal({error: 'The "name" query parameter is invalid ("1234567890abcd") \nJSON Schema validation error. \nString is too long (14 chars), maximum 10'});
+      expect(resp.body).to.deep.equal({error: 'name: String is too long (14 chars), maximum 10'});
       done();
     })
   });

@@ -57,9 +57,18 @@ class ProjectServer {
         }
         router.use(middleware.parseRequest(router, {json: {strict: false}}), middleware.validateRequest());
         router.use((err, req, res, next) => {
+          let message = err.message || "Unknown Error";
+          let errorPath = message.match(/Data path: "\/([^"]*)"/);
+          let paramPath = message.match(/The "([^"]*)" (\w+) parameter is invalid/);
+          message = message.split('\n').pop();
+          if (errorPath) {
+            message = errorPath[1].replace(/\//g, '.') + ': ' + message;
+          } else if (paramPath) {
+            message = paramPath[1] + ': ' + message;
+          }
           res.set("Content-type", "application/json; charset=utf-8");
           res.status(err.status || 500);
-          res.send(JSON.stringify({error: err.message || "Unknown Error"}, null, 2));
+          res.send(JSON.stringify({error: message}, null, 2));
         });
         this.setPaths(router);
         resolve(router);
