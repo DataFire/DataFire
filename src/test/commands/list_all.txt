@@ -729,8 +729,8 @@ azure_monitor
   MonitorClient
 
 bbc
-  Radio & Music Services
-  We encapsulate Radio & Music business logic for iPlayer Radio and BBC Music products on all platf...
+  BBC Nitro
+  BBC Nitro is the BBC's application programming interface (API) for BBC Programmes Metadata.
 
 bbc_rss
   BBC RSS
