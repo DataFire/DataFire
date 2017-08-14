@@ -47,10 +47,28 @@ const COMMANDS = [{
   runner: require('./commands/integrate'),
   options: [{
     name: 'openapi',
-    description: "The URL of an Open API JSON specification",
+    description: "The URL of an Open API specification",
   }, {
     name: 'rss',
     description: "The URL of an RSS feed",
+  }, {
+    name: 'raml',
+    description: "The URL of a RAML file",
+  }, {
+    name: 'wadl',
+    description: "The URL of a WADL file",
+  }, {
+    name: 'swagger_1',
+    description: "The URL of a Swagger 1.x file",
+  }, {
+    name: 'api_blueprint',
+    description: "The URL of an API Blueprint file",
+  }, {
+    name: 'io_docs',
+    description: "The URL of an I/O docs file",
+  }, {
+    name: 'google',
+    description: "The URL of a Google API specification",
   }, {
     name: 'name',
     description: "An alias to use for the integration in this project",
