@@ -1,12 +1,16 @@
 # Cookbook
 Some common patterns
 
-## CORS
-To allow cross-origin requests, add the `cors` option to `DataFire.yml`:
+## Server Options
+You can set the following options in DataFire.yml:
+
+* `cors` - enable cross-origin requests
+* `cache` - time to cache requests (in millisecons)
 
 ```yaml
 options:
   cors: true
+  cache: 5000
 paths:
   /hello:
     get:
