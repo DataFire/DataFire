@@ -159,7 +159,8 @@ openapi.getOperation = (method, path, trigger) => {
       in: 'body',
       name: 'body',
       schema: bodySchema,
-    })
+    });
+    op.consumes = ['application/json', 'application/x-www-form-urlencoded'];
   }
   let requiredProps = trigger.action.inputSchema.required || [];
   Object.keys(trigger.action.inputSchema.properties || {}).forEach(prop => {
@@ -178,10 +179,12 @@ openapi.getOperation = (method, path, trigger) => {
       if (requiredProps.indexOf(param.name) !== -1) param.required = true;
     }
   });
-  op.parameters.forEach(p => {
-    if (p.in === 'body') op.consumes = ['application/json'];
-    else if (p.in === 'formData') op.consumes = ['application/x-www-form-urlencoded'];
-  })
+  if (!op.consumes) {
+    op.parameters.forEach(p => {
+      if (p.in === 'body')          op.consumes = ['application/json'];
+      else if (p.in === 'formData') op.consumes = ['application/x-www-form-urlencoded'];
+    })
+  }
   if (!op.responses) {
     op.responses = {
       200: {

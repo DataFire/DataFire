@@ -8,6 +8,10 @@ const lib = require('../entry');
 
 const DEFAULT_CACHE_TIME = 100;
 
+const echo = new lib.Action({
+  handler: input => input,
+})
+
 const getTime = new lib.Action({
   handler: _ => Promise.resolve(Date.now()),
 })
@@ -92,13 +96,18 @@ const paths = {
       post: {
         action: makePerson,
       }
+    },
+    '/echo': {
+      post: {
+        action: echo,
+      }
     }
 }
 const BASE_URL = 'http://localhost:3333';
 
 function req(path, opts) {
   opts = opts || {};
-  opts.json = true;
+  if (opts.json === undefined) opts.json = true;
   opts.method = opts.method || 'get';
   return new Promise((resolve, reject) => {
     request(BASE_URL + path, opts, (err, resp, body) => {
@@ -218,5 +227,21 @@ describe("Project Server", () => {
       checkError({name: "Morty", age: 14, address: {street: {}, city: 'NYC'}}, 'address.street: Missing required property: number'),
       checkError({name: "Morty", age: 14, address: {street: {name: '', number: 0}, city: ''}}, 'address.city: String is too short (0 chars), minimum 1'),
     ]);
+  })
+
+  it('should allow JSON input for POST operation', () => {
+    let body = {name: 'foo'};
+    return req('/echo', {method: 'post', body})
+      .then(input => {
+        expect(input).to.deep.equal(body);
+      })
+  })
+
+  it('should allow form-encoded input for POST operation', () => {
+    let form = {name: 'foo'};
+    req('/echo', {method: 'post', json: false, form})
+      .then(input => {
+        expect(input).to.deep.equal(form);
+      })
   })
 });
