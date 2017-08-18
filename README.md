@@ -267,3 +267,20 @@ datafire run github/search.repositories.get --input.q java
 # Use credentials with --accounts
 datafire run github/user.get --accounts.github.access_token "abcde"
 ```
+
+## Contributing
+Contributions are welcome!
+
+### Getting Started
+```bash
+git clone https://github.com/DataFire/DataFire && cd DataFire
+npm install
+```
+
+### Running tests
+Tests are run with `npm test` and require ports 3333-3336 to be open.
+
+If you make changes that alter a project's Open API spec, run:
+```
+WRITE_GOLDEN=true npm test
+```
