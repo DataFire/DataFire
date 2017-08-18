@@ -221,13 +221,10 @@ Project.prototype.startTasks = function() {
       let event = this.monitor.startEvent('task', {id: taskID});
       return task.action.run(task.input, this.getContext({type: 'task', accounts: task.accounts}))
         .then(data => {
-          event.success = true;
           event.output = data;
-          this.monitor.endEvent(event);
+          event.end();
         }, error => {
-          event.success = false;
-          event.error = error;
-          this.monitor.endEvent(event);
+          event.end(error);
         });
     }, null, true, this.timezone);
   }

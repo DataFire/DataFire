@@ -124,8 +124,7 @@ class ProjectServer {
         id: method.toUpperCase() + ' ' + path,
       })
       let respond = (result, success) => {
-        event.success = success;
-        this.project.monitor.endEvent(event);
+        event.end();
         if (!(Response.isResponse(result))) {
           result = defaultResponse(result);
         }
