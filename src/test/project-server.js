@@ -239,7 +239,7 @@ describe("Project Server", () => {
 
   it('should allow form-encoded input for POST operation', () => {
     let form = {name: 'foo'};
-    req('/echo', {method: 'post', json: false, form})
+    return req('/echo', {method: 'post', form})
       .then(input => {
         expect(input).to.deep.equal(form);
       })
