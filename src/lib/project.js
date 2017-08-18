@@ -14,6 +14,10 @@ const Response = require('./response');
 const Context = require('./context');
 const Monitor = require('./monitor');
 
+/**
+ * @class Project
+ * @param {Object} opts - passed in from DataFire.yml
+ */
 let Project = module.exports = function(opts) {
   this.id = opts.id || '';
   this.title = opts.title || '';
@@ -37,11 +41,18 @@ let Project = module.exports = function(opts) {
   this.integration = Integration.fromOpenAPI(this.openapi, this.id);
 }
 
+/**
+ * This is the project defined by the DataFire.yml in cwd.
+ */
 Project.main = function() {
   if (Project.mainProject) return Project.mainProject;
   else return Project.mainProject = Project.fromDirectory(process.cwd());
 }
 
+/**
+ * Loads the project defined by the DataFire.yml in the input directory
+ * @returns {Project}
+ */
 Project.fromDirectory = function(dir) {
   let directory = dir || process.cwd();
   let opts = {};
@@ -62,12 +73,21 @@ Project.fromDirectory = function(dir) {
   return new Project(opts);
 }
 
+/**
+ * Gets the default context for the Project
+ * @param [options]
+ * @param [options.accounts] - override project-level accounts
+ * @param [options.varaibles] - override project-level variables
+ */
 Project.prototype.getContext = function(options={}) {
   options.accounts = Object.assign({}, this.accounts, options.accounts || {});
   options.variables = Object.assign({}, this.variables, options.variables || {});
   return new Context(options);
 }
 
+/**
+ * Called during constructor to initialize all actions from DataFire.yml
+ */
 Project.prototype.aggregateActions = function() {
   for (let integID in this.integrations) {
     let loc = this.integrations[integID];
@@ -118,6 +138,9 @@ Project.prototype.aggregateActions = function() {
   }
 }
 
+/**
+ * Called during constructor to create an Open API schema.
+ */
 Project.prototype.initializeOpenAPI = function(openapi) {
   this.openapi = Object.assign({
     swagger: '2.0',
@@ -151,6 +174,13 @@ Project.prototype.initializeOpenAPI = function(openapi) {
   return this.openapi;
 }
 
+/**
+ * Starts the server and (optionally) tasks
+ * @param {Object|number} [opts] - port to serve on, or options
+ * @param {number} [opts.port] - port to serve on
+ * @param {boolean} [opts.tasks] - if true, start tasks
+ * @param {boolean} [opts.nohttp] - if true, don't start the server
+ */
 Project.prototype.serve = function(opts) {
   opts = opts || {};
   if (typeof opts === 'number') opts = {port: opts};
@@ -167,6 +197,10 @@ Project.prototype.serve = function(opts) {
   }
 }
 
+/**
+ * Starts an express server
+ * @param {number} port - the port to use
+ */
 Project.prototype.startServer = function(port) {
   this.server = new ProjectServer(this);
   return this.server.start(port).then(_ => {
@@ -174,6 +208,9 @@ Project.prototype.startServer = function(port) {
   });
 }
 
+/**
+ * Start running tasks
+ */
 Project.prototype.startTasks = function() {
   for (let taskID in this.tasks) {
     let task = this.tasks[taskID];
