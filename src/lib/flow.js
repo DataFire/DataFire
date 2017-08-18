@@ -1,6 +1,12 @@
 let getParameterNames = require('@captemulation/get-parameter-names');
 let Context = require('./context');
 
+/**
+ * Returns a Promise. Each time .then() is called on the resulting
+ * promise, the flow will record the result in 'context'.
+ *
+ * @param {Context} context
+ */
 let Flow = module.exports = function(context) {
   context = context || new Context();
   let nextResultIdx = -1;

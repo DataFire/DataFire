@@ -6,27 +6,23 @@ const memCache = require('memory-cache');
 const Response = require('./response');
 const Context = require('./context');
 
-function defaultResponse(body) {
-  let statusCode = 200;
-  if (body instanceof Error) {
-    statusCode = body.statusCode || 500;
-    body = {error: body.message};
-  }
-  return new Response({
-    statusCode,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body, null, 2),
-  })
-}
-
+/**
+ * @class
+ * Creates an Express server or router for a given DataFire project
+ */
 class ProjectServer {
+  /**
+   * @param {Project} project
+   */
   constructor(project) {
     this.project = project;
     this.app = express();
   }
 
+  /**
+   * Initializes and starts the server
+   * @returns {Promise}
+   */
   start(port) {
     if (this.close) this.close();
     return this.getRouter().then(r => {
@@ -41,6 +37,12 @@ class ProjectServer {
     });
   }
 
+  /**
+   * Builds an Express Router that can be used in another Express server, e.g.
+   * app.use('/api/v1', projectServer.getRouter());
+   *
+   * @returns {Promise<Router>}
+   */
   getRouter() {
     return new Promise((resolve, reject) => {
       let router = express.Router();
@@ -76,6 +78,9 @@ class ProjectServer {
     });
   }
 
+  /**
+   * Internal method to set each path on the router
+   */
   setPaths(router) {
     for (let path in this.project.paths) {
       for (let method in this.project.paths[path]) {
@@ -116,6 +121,9 @@ class ProjectServer {
     }
   }
 
+  /**
+   * Internal method that builds the express middleware to pass to the router.
+   */
   requestHandler(method, path, op, swaggerOp, authorizers) {
     let parameters = swaggerOp.parameters || [];
     return (req, res) => {
@@ -126,7 +134,7 @@ class ProjectServer {
       let respond = (result, success) => {
         event.end();
         if (!(Response.isResponse(result))) {
-          result = defaultResponse(result);
+          result = Response.default(result);
         }
         result.send(res);
       }

@@ -14,8 +14,17 @@ let path = require('path');
 let fs = require('fs');
 let request = require('request');
 
+/**
+ * Represents a set of related actions
+ * @class Integration
+ * @param {Object} opts
+ * @param {string} [opts.id] - This integration's id
+ * @param {string} [opts.description]
+ * @param {Object} [opts.security] - security object
+ * @param {Object} [opts.security[id].fields] - List of fields that are expected in an account. Values are descriptions.
+ * @param {Ajv} [opts.ajv] - An Ajv instance to use for compiling schemas
+ */
 let Integration = module.exports = function(opts) {
-  this.account = opts.account || undefined;
   this.id = opts.id || '';
   this.title = opts.title || '';
   this.description = opts.description || '';
@@ -32,6 +41,9 @@ let Integration = module.exports = function(opts) {
 }
 
 const MODULE_NOT_FOUND = "MODULE_NOT_FOUND";
+/**
+ * Gets an integration by its common name, e.g. github
+ */
 Integration.fromName = function(name) {
   const localLocation = path.join(process.cwd(), 'integrations', name);
   if (fs.existsSync(localLocation)) {
@@ -47,6 +59,9 @@ Integration.fromName = function(name) {
   }
 }
 
+/**
+ * Gets JSON-serializable details
+ */
 Integration.prototype.getDetails = function(withActions=false) {
   let details = {
     id: this.id,
@@ -77,6 +92,9 @@ Integration.prototype.getDetails = function(withActions=false) {
   return details;
 }
 
+/**
+ * Replaces all actions with mock output
+ */
 Integration.prototype.mockAll = function() {
   let mockActions = (actions) => {
     for (let id in actions) {
@@ -100,6 +118,10 @@ Integration.prototype.mockAll = function() {
   mockActions(this.actions);
 }
 
+/**
+ * Gets action by id, e.g. 'users.get'
+ * @param {string} id - Action ID
+ */
 Integration.prototype.action = function(id) {
   let parts = id.split('.');
   let obj = this.actions;
@@ -109,6 +131,11 @@ Integration.prototype.action = function(id) {
   return obj.action;
 }
 
+/**
+ * Adds a new action to the integration
+ * @param {string} id - Action ID
+ * @param {Action|Object} - The action to add
+ */
 Integration.prototype.addAction = function(id, action) {
   if (!(action instanceof Action)) action = new Action(action);
   this.allActions.push(action);
@@ -144,6 +171,10 @@ Integration.prototype.addAction = function(id, action) {
   })
 }
 
+/**
+ * Auto-generate actions for responding to OAuth callbacks and
+ * and getting tokens, if applicable.
+ */
 Integration.prototype.addOAuthActions = function() {
   let sec = this.security[this.id] || {};
   if (!sec || !sec.oauth || sec.oauth.flow === 'implicit') return;
@@ -208,6 +239,9 @@ Integration.prototype.addOAuthActions = function() {
   }))
 }
 
+/**
+ * Builds an integration from an Open API specification.
+ */
 Integration.fromOpenAPI = function(openapi, id) {
   openapiUtil.initialize(openapi);
   id = id || openapi.host;
@@ -244,6 +278,9 @@ function isBetterFlow(toCheck, base) {
   return FLOW_PREFERENCES.indexOf(toCheck) > FLOW_PREFERENCES.indexOf(base);
 }
 
+/**
+ * Picks the best Open API security definition to use for this integration
+ */
 function buildSecurityFromSecurityDefs(id, defs) {
   let security = {integration: id, fields: {}};
   for (let key in defs) {
