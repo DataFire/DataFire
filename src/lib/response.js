@@ -4,7 +4,7 @@
  * @class
  * An HTTP response from ProjectServer
  *
- * @param {Object} [opts];
+ * @param {Object} [opts]
  * @param {number} [opts.statusCode]
  * @param {*} [opts.json] - JSON-serializable object to pass as body
  * @param {string} [opts.body] - body to send
