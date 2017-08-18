@@ -34,6 +34,16 @@ const Action = module.exports = function(opts) {
   this.ajv = opts.ajv || util.ajv.getInstance();
 }
 
+/**
+ * Creates a new action by its common name, i.e. how it's referenced
+ * in DataFire.yml. Names starting with './' will be treated as local
+ * files, and opened relative to 'directory'. Names in the format
+ * integration/action will be retrieved from the named integration.
+ *
+ * @param {string} name - Action common name, e.g. ./actions/foo.js or github/users.get
+ * @param {string} directory - the directory relative to which local actions are referenced
+ * @param {Object} integrations - a list of Integration objects, keyed by ID
+ */
 Action.fromName = function(name, directory, integrations={}) {
   let isFile = /^\.?\//.test(name);
   if (isFile) {
@@ -50,6 +60,21 @@ Action.fromName = function(name, directory, integrations={}) {
   return action;
 }
 
+/**
+ * Creates a new action from an openapi definition
+ * @param {string} method
+ * @param {string} path
+ * @param {Object} openapi - Open API specification
+ * @param {Integration} integration - the integration this action is being added to
+ */
+Action.fromOpenAPI = require('./openapi-action');
+
+/**
+ * Runs the action's handler for the given input and context.
+ *
+ * @param {*} input - Input to pass to the handler
+ * @param {Context} [context] - The context to pass to the handler
+ */
 Action.prototype.run = function(input, ctx) {
   ctx = ctx || new Context();
   if (input === undefined) input = null;
@@ -58,6 +83,7 @@ Action.prototype.run = function(input, ctx) {
     input = {};
   }
   if (!this.validateInput) {
+    // We defer schema compilation until the action is used.
     this.validateInput = this.ajv.compile(this.inputSchema);
   }
   let valid = this.validateInput(input);
@@ -81,4 +107,3 @@ Action.prototype.run = function(input, ctx) {
   });
 }
 
-Action.fromOpenAPI = require('./openapi-action');
