@@ -47,9 +47,10 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
     ajv: integration.ajv,
     handler: function(input, ctx) {
       input = input || {};
+      let scheme = openapiUtil.getBestScheme(openapi.schemes);
       let reqOpts = {
         method,
-        url: openapi.schemes[0] + '://' + openapi.host,
+        url: scheme + '://' + openapi.host,
         qs: {},
         qsStringifyOptions: {},
         headers: {},
@@ -71,11 +72,11 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
       let names = openapiUtil.getUniqueNames(params);
       params.forEach((param, idx) => {
         let val = input[names[idx]];
-        if (param.collectionFormat && Array.isArray(val)) {
+        if (param.in === 'query' && Array.isArray(val)) {
           if (param.collectionFormat === 'multi') {
             reqOpts.qsStringifyOptions.arrayFormat = 'repeat';
           } else {
-            reqOpts.qsStringifyOptions.sep = getCollectionFormatSeparator(param.collectionFormat);
+            reqOpts.qsStringifyOptions.sep = openapiUtil.getCollectionFormatSeparator(param.collectionFormat);
           }
         }
         addParam(param.in, param.name, val);

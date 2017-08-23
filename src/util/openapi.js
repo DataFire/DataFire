@@ -212,4 +212,19 @@ openapi.getOperation = (method, path, trigger) => {
   return op;
 }
 
+const SEPARATORS = {
+  csv: ',',
+  tsv: '\t',
+  ssv: ' ',
+  pipes: '|',
+}
+module.exports.getCollectionFormatSeparator = function(type) {
+  type = type || 'csv';
+  return SEPARATORS[type];
+}
 
+module.exports.getBestScheme = function(schemes) {
+  if (!schemes) return 'http';
+  if (schemes.indexOf('https') !== -1) return 'https';
+  return schemes[0];
+}
