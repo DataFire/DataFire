@@ -47,10 +47,15 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
     ajv: integration.ajv,
     handler: function(input, ctx) {
       input = input || {};
+      let account = ctx.accounts[integration.id];
       let scheme = openapiUtil.getBestScheme(openapi.schemes);
+      if (!openapi.host && (!account || !account.host)) {
+        throw new Error("The 'host' field must be specified in the " + integration.id + " account");
+      }
+      let url = (account && account.host) || (scheme + '://' + openapi.host);
       let reqOpts = {
         method,
-        url: scheme + '://' + openapi.host,
+        url,
         qs: {},
         qsStringifyOptions: {},
         headers: {},
@@ -82,8 +87,6 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
         addParam(param.in, param.name, val);
       });
 
-      let accountName = Object.keys(integration.security)[0];
-      let account = ctx.accounts[accountName];
       let hasRefreshToken = false;
       let oauthDef = null;
       if (account) {

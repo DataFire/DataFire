@@ -41,7 +41,6 @@ describe('Open API', () => {
     let router = express.Router();
     let middleware = new swaggerMiddleware.Middleware(router);
     middleware.init(OPENAPI, err => {
-      console.log(err);
       if (err) return done(err);
       router.use(middleware.metadata());
       router.use(middleware.parseRequest(router, {json: {strict: false}}), middleware.validateRequest());

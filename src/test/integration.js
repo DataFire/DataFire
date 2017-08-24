@@ -35,6 +35,7 @@ let encode = new datafire.Action({
 })
 
 let project = new datafire.Project({
+  id: 'test_project',
   paths: {
     '/hello': {
       get: {
@@ -147,7 +148,7 @@ let integration = datafire.Integration.fromOpenAPI({
       }
     }
   }
-})
+}, 'test_integration')
 
 describe('Integration', () => {
 
@@ -189,6 +190,19 @@ describe('Integration', () => {
       expect(data.body).to.deep.equal({bar: 'baz'});
     })
   });
+
+  it('should allow overriding the host', () => {
+    let ctx = new datafire.Context({
+      accounts: {
+        test_integration: {
+          host: 'http://localhost:3334',
+        }
+      }
+    });
+    return integration.actions.hello.get({name: 'world'}, ctx)
+        .then(_ => {throw new Error("shouldn't reach here")})
+        .catch(e => expect(e.message).to.contain('ECONNREFUSED 127.0.0.1:3334'));
+  })
 
   it('should handle duplicate parameter names', () => {
     let action = integration.actions.dupeParam.foo.get.action;
