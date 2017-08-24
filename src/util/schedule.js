@@ -34,8 +34,13 @@ schedule.cronRate = function(num, unit) {
 
 schedule.cronToNodeCron = function(cron) {
   let times = cron.split(/\s+/);
-  let year = times.pop(); // remove year
-  if (year !== '*') throw new Error("DataFire does not support year in cron schedule");
+  if (times.length === 6) {
+    let year = times.pop(); // remove year
+    if (year !== '*') throw new Error("Cron expressions with six pieces should use '*' for the year");
+  }
+  if (times.length !== 5) {
+    throw new Error("Cron expressions should have exactly five pieces");
+  }
   times.unshift('0'); // add seconds;
   return times.join(' ');
 }

@@ -18,5 +18,10 @@ describe('Schedule', () => {
   it('should convert to node-cron', () => {
     let sched = 'rate(4 months)';
     expect(schedule.cronToNodeCron(schedule.parse(sched))).to.equal('0 0 0 0 */4 *');
+  });
+
+  it('should allow 5-part expression', () => {
+    let sched = 'cron(0 12 * * 1,3,5)';
+    expect(schedule.cronToNodeCron(schedule.parse(sched))).to.equal('0 0 12 * * 1,3,5');
   })
 })
