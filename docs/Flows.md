@@ -16,19 +16,20 @@ For example, here's a Flow that sends the top Hacker News stories to your e-mail
 ```js
 var datafire = require('datafire');
 var fs = require('fs');
-var hackerNews = require('@datafire/hacker_news').actions;
-var gmail = require('@datafire/google_gmail').actions;
+var hackerNews = require('@datafire/hacker_news').create();
+var gmail = require('@datafire/google_gmail').create({
+  access_token: process.env.GMAIL_TOKEN,
+});
 
 module.exports = new datafire.Action({
   title: "Top HN Story",
   description: "Copies the top HN story to a local file",
-  accounts: gmail.me.security,
   handler: (input, context) => {
     return datafire.flow(context)
       .then(_ => hackerNews.getStories({storyType: 'top'}))
       .then(stories => {
         return Promise.all(stories.map(itemID => {
-          return hackerNews.actions.getItem({itemID})
+          return hackerNews.getItem({itemID})
         }));
       })
       .then(storyDetails => {
@@ -38,15 +39,15 @@ module.exports = new datafire.Action({
         }).join('\n');
         return message;
       })
-      .then(message => {
-        return gmail.me({}, context);
+      .then(message => gmail.users.getProfile({
+        userId: 'me',
       })
       .then(user => {
         return gmail.sendMessage({
           to: user.email,
           from: user.email,
           subject: "Latest Hacker News Stories",
-          message: atob(context.results.message),
+          message: context.results.message,
         }, context);
       })
   }

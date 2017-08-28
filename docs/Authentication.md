@@ -22,19 +22,16 @@ paths:
 
 
 ### Programmatically
-
 You can add your credentials at runtime:
 
 ```js
-var github = require('@datafire/github');
-var action = new datafire.Action({
-  handler: (input, context) => {
-    context.accounts.github = {
-      access_token: process.env.GITHUB_OAUTH_TOKEN,
-    }
-    return github.user.get({}, context);
-  },
+var github = require('@datafire/github').create({
+  access_token: process.env.GITHUB_TOKEN,
 });
+
+github.user.get().then(user => {
+  console.log('Logged in user is ' + user.login);
+})
 ```
 
 ### Aliases
@@ -43,9 +40,21 @@ DataFire-accounts.yml, along with an alias you can reference elsewhere.
 
 > Be sure to add DataFire-accounts.yml to your .gitignore
 
-For example, if we've added an account with alias `lucy`, we can
-reference it in YAML:
+For example, let's add a GitHub account named `lucy`:
 
+```bash
+datafire authenticate github --alias lucy
+```
+
+This will write your credentials to DataFire-accounts.yml:
+```yaml
+accounts:
+    lucy:
+        integration: github
+        access_token: abcde
+```
+
+Now we can reference the `lucy` account in triggers or in our code:
 ```yml
 paths:
   /github_profile:
@@ -57,18 +66,16 @@ paths:
 
 or in NodeJS:
 ```js
-var github = require('@datafire/github');
-var action = new datafire.Action({
-  handler: (input, context) => {
-    context.accounts.github = context.accounts.lucy;
-    return github.user.get({}, context);
-  },
+var project = require('datafire').Project.main();
+var github = require('@datafire/github').create(project.accounts.lucy);
+github.user.get().then(user => {
+  console.log(user.login);
 });
 ```
 
 ## OAuth Clients
 If you want to add an OAuth client to your project (e.g. to allow users
-to log in with GitHub or Instagram), you can use the `oauth_callback`
+to log in with GitHub or Instagram), you can use the `oauthCallback`
 action for that integration. For example:
 
 ```yaml
@@ -86,10 +93,10 @@ paths:
 let datafire = require('datafire');
 let github = require('@datafire/github');
 module.exports = new datafire.Action({
-  inputSchema: github.oauth_callback.inputSchema,
+  inputSchema: github.oauthCallback.inputSchema,
   handler: (input, context) => {
     return datafire.flow(context)
-      .then(_ =>  github.oauth_callback.run({code}, context))
+      .then(_ =>  github.oauthCallback.run({code}, context))
       .then(data => {
         return mongodb.update({
           table: 'users',

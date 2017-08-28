@@ -134,7 +134,7 @@ paths:
 
 Or run them in JavaScript:
 ```js
-var hackerNews = require('@datafire/hacker_news').actions;
+var hackerNews = require('@datafire/hacker_news').create();
 
 // Using await (requires NodeJS >= v7.10):
 var user = await hackerNews.getUser({username: 'norvig'});

@@ -9,6 +9,7 @@ jsf.option({
 
 let Action = require('./action');
 let Response = require('./response');
+let IntegrationInstance = require('./integration-instance');
 let openapiUtil = require('../util/openapi');
 let path = require('path');
 let fs = require('fs');
@@ -57,6 +58,10 @@ Integration.fromName = function(name) {
     if (e.code === MODULE_NOT_FOUND && e.message.indexOf(packageName) !== -1) throw new Error("Couldn't find integration " + name);
     throw e;
   }
+}
+
+Integration.prototype.create = function(account) {
+  return new IntegrationInstance(this, account);
 }
 
 /**
