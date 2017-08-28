@@ -1,5 +1,9 @@
 # Flows
 
+> Using NodeJS v7 or above? You can use
+> [async/await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await)
+> instead of Flows.
+
 Flows allow you to create complex actions that make a series of calls to different
 APIs and services. They keep track of results at each step so you can reference them
 at any step in the flow.
@@ -12,7 +16,7 @@ For example, here's a Flow that sends the top Hacker News stories to your e-mail
 ```js
 var datafire = require('datafire');
 var fs = require('fs');
-var hackerNews = require('@datafire/hacker-news').actions;
+var hackerNews = require('@datafire/hacker_news').actions;
 var gmail = require('@datafire/google_gmail').actions;
 
 module.exports = new datafire.Action({
