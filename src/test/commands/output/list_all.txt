@@ -2087,3 +2087,7 @@ swaggerui
   Swagger UI
   Display Swagger UI for your DataFire API
 
+redmine
+  Redmine API
+  Redmine exposes some of its data through a REST API. This API provides
+
