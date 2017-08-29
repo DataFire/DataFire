@@ -185,7 +185,7 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
 }
 
 const getSchemaFromParam = function(param) {
-  if (param.in === 'body') return param.schema;
+  if (param.in === 'body' && param.schema) return param.schema;
   let schema = {};
   schema.type = param.type === 'file' ? 'string' : param.type; // FIXME: handle file inputs
   openapiUtil.PARAM_SCHEMA_FIELDS.forEach(f => {
