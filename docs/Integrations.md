@@ -10,8 +10,59 @@ To add an integration to your project, run:
 npm install @datafire/$integration
 ```
 
-If you'd like to add your API to the DataFire registry, submit a
-[pull request](https://github.com/DataFire/Integrations).
+## Using Integrations
+Add an integration to your NodeJS project using `create()`:
+
+```js
+let hn = require('@datafire/hacker_news').create();
+```
+
+### Authentication
+You can set the account to use for that instance of the integration by passing it to `create()`:
+```js
+let github = require('@datafire/github').create({
+  access_token: process.env.GITHUB_TOKEN,
+})
+```
+
+### Actions
+Each integration offers a set of actions - each action returns a Promise.
+
+#### With async/await
+We recommend using NodeJS 7.10 or above, which includes support for `await`.
+
+```js
+let hn = require('@datafire/hacker_news').create();
+
+(async () => {
+
+  let storyIDs = await hn.getStories({storyType: 'top'});
+  for (let itemID of storyIDs) {
+    let story = await hn.getItem({itemID});
+    console.log(story.title, story.url);
+  }
+
+})();
+```
+
+#### With Promises
+If you're using an older version of Node, you can use Promises:
+```js
+let hn = require('@datafire/hacker_news').create();
+
+hn.getStories({storyType: 'top'})
+  .then(storyIDs => {
+    return Promise.all(storyIDs.map(itemID => {
+      return hn.getItem({itemID});
+    }))
+  })
+  .then(stories => {
+    stories.forEach(story => {
+      console.log(story.title, story.url);
+    })
+  })
+
+```
 
 ## Versioning
 DataFire integrations use [semver](http://semver.org/) after version 0.1.0. Specifically:
@@ -19,7 +70,13 @@ DataFire integrations use [semver](http://semver.org/) after version 0.1.0. Spec
 * MINOR changes will occur when new functionality is added
 * MAJOR changes will occur if breaking changes are made
 
-## Add Integrations by URL
+
+## Custom Integrations
+
+> If you'd like to add your API to the DataFire registry, submit a
+> [pull request](https://github.com/DataFire/Integrations).
+
+### Add Integrations by URL
 New integrations can be added by the URL of an Open API (Swagger) specification or an RSS feed:
 ```
 datafire integrate --rss https://www.reddit.com/.rss
@@ -33,7 +90,7 @@ reference this integration in NodeJS with:
 var acme = require('./integrations/acme');
 ```
 
-### API Specification Formats
+#### API Specification Formats
 You can also specify `--raml`, `--io_docs`, `--wadl`, or `--api_blueprint`, though you'll need to install
 api-spec-converter:
 ```
@@ -41,7 +98,7 @@ npm install -g api-spec-converter
 datafire integrate --raml https://raw.githubusercontent.com/raml-apis/Bufferapp/master/api.raml
 ```
 
-# Custom Integrations
+### Write Integrations in JavaScript
 You can greate custom integrations using the `datafire.Integration` class.
 Here's an example that creates a filesystem integration:
 

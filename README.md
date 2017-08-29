@@ -106,6 +106,8 @@ npm install @datafire/hacker_news
 Each integration comes with a set of actions. For example, the `hacker_news` integration
 contains the `getStories`, `getItem`, and `getUser` actions.
 
+Check out the [usage](docs/Integrations.md) and [authentication](docs/Authentication.md) documentation to learn more.
+
 ### Authentication
 > [Learn more about authentication](docs/Authentication.md)
 
