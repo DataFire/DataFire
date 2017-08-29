@@ -1,3 +1,5 @@
+'use strict';
+
 let datafire = require('../entry');
 let expect = require('chai').expect;
 
