@@ -27,8 +27,9 @@
 DataFire is an open source framework for building and integrating APIs. It
 provides over [500 pre-built integrations](https://github.com/DataFire/Integrations), including:
 
-MongoDB &bull; Slack &bull; GitHub &bull; Twilio &bull; Trello &bull; Spotify &bull;
-Instagram &bull; Gmail &bull; Google Analytics &bull; YouTube
+AWS &bull; Azure &bull; MongoDB &bull; Slack &bull; GitHub &bull;
+Twilio &bull; Trello &bull; Square &bull;
+Google Sheets &bull; Gmail &bull; Heroku
 
 Each integration provides a set of composable actions. New actions can be built by
 combining existing actions, JavaScript, and external libraries.
