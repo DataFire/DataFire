@@ -3,13 +3,13 @@
 const nodepath = require('path');
 const fs = require('fs');
 const YAML = require('yamljs');
-const CronJob = require('cron').CronJob;
 
+const util = require('../util');
 const openapiUtil = require('../util/openapi');
-const schedule = require('../util/schedule');
 const ProjectServer = require('./project-server');
 const Integration = require('./integration');
 const Action = require('./action');
+const Task = require('./task');
 const Response = require('./response');
 const Context = require('./context');
 const Monitor = require('./monitor');
@@ -121,6 +121,10 @@ Project.prototype.aggregateActions = function() {
     let task = this.tasks[taskID];
     if (!task.action) throw new Error(`No action specified for task ${taskID}`);
     task.action = resolveAction(task.action);
+    if (task.monitor) {
+      if (!task.monitor.action) throw new Error(`monitor.action not specified for task ${taskID}`);
+      task.monitor.action = resolveAction(task.monitor.action);
+    }
   }
   for (let path in this.paths) {
     for (let method in this.paths[path]) {
@@ -213,19 +217,12 @@ Project.prototype.startServer = function(port) {
  */
 Project.prototype.startTasks = function() {
   for (let taskID in this.tasks) {
-    let task = this.tasks[taskID];
-    if (!task.schedule) continue;
-    let cron = schedule.parse(task.schedule);
-    cron = schedule.cronToNodeCron(cron);
-    let job = new CronJob(cron, () => {
-      let event = this.monitor.startEvent('task', {id: taskID});
-      return task.action.run(task.input, this.getContext({type: 'task', accounts: task.accounts}))
-        .then(data => {
-          event.output = data;
-          event.end();
-        }, error => {
-          event.end(error);
-        });
-    }, null, true, this.timezone);
+    let opts = Object.assign({
+      id: taskID,
+      timezone: this.timezone,
+      project: this,
+    }, this.tasks[taskID]);
+    let task = new Task(opts);
+    task.start();
   }
 }

@@ -4,4 +4,5 @@ module.exports = {
   logger: require('./logger'),
   schedule: require('./schedule'),
   ajv: require('./ajv'),
+  followKey: require('./follow-key'),
 }

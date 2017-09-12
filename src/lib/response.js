@@ -45,6 +45,17 @@ Response.prototype.send = function(res) {
   res.end(this.body, this.encoding);
 }
 
+Response.prototype.toString = function() {
+  return "Status code " + this.statusCode + ":\n" + this.body
+}
+
+/**
+ * Responses (particularly with statusCode >= 300) can be thrown.
+ */
+Response.prototype.toError = function() {
+  return new Error(this.toString());
+}
+
 /**
  * Get the default response.
  * If 'body' is an Error, sends 500, otherwise 200.
