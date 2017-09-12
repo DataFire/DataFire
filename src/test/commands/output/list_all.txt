@@ -52,6 +52,10 @@ amazonaws_cloudhsm
   Amazon CloudHSM
   AWS CloudHSM Service
 
+amazonaws_cloudhsmv2
+  AWS CloudHSM V2
+  For more information about AWS CloudHSM, see [AWS CloudHSM](http://aws.amazon.com/cloudhsm/) and ...
+
 amazonaws_cloudsearch
   Amazon CloudSearch
   Amazon CloudSearch Configuration Service
@@ -204,6 +208,10 @@ amazonaws_glacier
   Amazon Glacier
   Amazon Glacier is a storage solution for "cold data."
 
+amazonaws_glue
+  AWS Glue
+  Defines service operations used by the GlueFrontendService
+
 amazonaws_greengrass
   AWS Greengrass
   AWS Greengrass seamlessly extends AWS onto physical devices so they can act locally on the data t...
@@ -258,6 +266,13 @@ amazonaws_marketplacecommerceanalytics
 amazonaws_metering_marketplace
   AWSMarketplace Metering
   AWS Marketplace Metering Service
+
+amazonaws_mgh
+  AWS Migration Hub
+
+amazonaws_mobile
+  AWS Mobile
+  AWS Mobile Service provides mobile app and website developers with capabilities required to confi...
 
 amazonaws_mobileanalytics
   Amazon Mobile Analytics
@@ -532,6 +547,14 @@ appveyor
   AppVeyor
   AppVeyor is a hosted continuous integration service which runs on Microsoft
 
+ato_gov_au
+  Business Registries
+  # Introduction The Business Registries API is built on HTTP. The API is RESTful. It has predictab...
+
+aucklandmuseum
+  Auckland Museum
+  This is technical documentation for the Auckland Museum API
+
 authentiq
   Authentiq Connect
   Authentiq Connect OAuth 2.0 and OpenID Connect API reference.
@@ -799,9 +822,21 @@ bufferapp
   Bufferapp
   Social media management for marketers and agencies
 
+bungie
+  Bungie.Net
+  These endpoints constitute the functionality exposed by Bungie.net, both for more traditional web...
+
+callfire
+  CallFire
+  CallFire
+
 cambase
   Cambase.io
   Cambase.io is a project by Evercam.io in order to make it easier for software developers to have ...
+
+ccp_is
+  EVE Swagger Interface
+  An OpenAPI for EVE Online
 
 cenit
   Cenit IO - REST API Specification
@@ -814,6 +849,10 @@ channel4
 circleci
   CircleCI
   The CircleCI API is a RESTful, fully-featured API that allows you to do almost anything in CircleCI.
+
+circuitsandbox
+  REST API Version 2
+  Circuit REST API to interact with the Circuit system.
 
 cisco
   Cisco PSIRT openVuln
@@ -882,6 +921,10 @@ data_gov
   Regulations.gov
   Provides public users access to federal regulatory content.
 
+dataatwork
+  Open Skills
+  A complete and standard data store for canonical and emerging skills, knowledge, abilities, tools...
+
 datumbox
   DatumBox
   Datumbox offers a Machine Learning platform composed of 14 classifiers and Natural Language proce...
@@ -909,6 +952,14 @@ deutschebahn_reisezentren
 deutschebahn_stada
   Stationsdatenbereitstellung
   An API providing master data for german railway stations by DB Station&Service AG.
+
+docusign
+  DocuSign
+  The DocuSign REST API provides you with a powerful, convenient, and simple Web services API for i...
+
+dropx
+  DropX
+  dropX.io API provides programmatic access to the e-commerce intelligence data.
 
 dweet
   dweet.io
@@ -1016,6 +1067,14 @@ getsandbox
 gettyimages
   Getty Images
   Build applications using the world's most powerful imagery
+
+giphy
+  Giphy
+  Giphy API
+
+gisgraphy
+  Gisgraphy webservices
+  Since 2006, [Gisgraphy](http://www.gisgraphy.com) is a free, open source framework that offers th...
 
 github
   GitHub
@@ -1602,6 +1661,16 @@ linkedin
   LinkedIn
   Bring user profiles and professional networks to your apps.
 
+lotadata
+  LotaData
+  Access the most exhaustive, accurate and up-to-date collection of global and hyper-local geocoded...
+
+lufthansa_partner
+  Lufthansa Partner
+
+lufthansa_public
+  Lufthansa Public
+
 lyft
   Lyft
   Drive your app to success with Lyft's API
@@ -1672,6 +1741,10 @@ nextcaller
   Next Caller
   Advanced Caller ID. Obtain name, address, and email of your inbound callers.
 
+npr
+  NPR One API Reference
+  NPR One is a smart application that brings the best of NPR and Member Station programming, newsca...
+
 npr_rss
   NPR RSS
 
@@ -1730,6 +1803,14 @@ nytimes_top_stories
   Top Stories
   The Top Stories API provides lists of articles and associated images by section.
 
+o2_cz_mobility
+  O2 Mobility
+  Transit API can be used to obtain time-aggregated data representing moving the people between var...
+
+o2_cz_sociodemo
+  O2 Socio-demo
+  Socio-demo API can be used to obtain time-aggregated data representing groups of people on the gi...
+
 oceandrivers
   ODWeather
   This is the api to access the ODWeather API information
@@ -1757,6 +1838,10 @@ opencagedata
 orghunter
   OrgHunter
   Get the latest IRS data and most up to date charity information for your website or application
+
+osisoft
+  PI Web API 2017 Swagger Spec
+  Swagger Spec file that describes PI Web API
 
 owler
   Owler
@@ -1801,12 +1886,24 @@ postmark
   Postmark
   Send emails, retrieve bounces and start accepting inbound emails, all via an easy-to-use HTTP API.
 
+postmarkapp_account
+  Postmark Account-level
+  Postmark makes sending and receiving email
+
+postmarkapp_server
+  Postmark Server
+  Postmark makes sending and receiving email
+
 posty
   posty_API
   The posty_API is the core element of the posty softwarestack. It is developed to administrate a m...
 
 producthunt
   Product Hunt
+
+ptv_vic_gov_au
+  PTV Timetable API
+  The PTV Timetable API provides direct access to Public Transport Victoria’s public transport time...
 
 quandl
   Quandl
@@ -1827,6 +1924,10 @@ reddit
 reddit_rss
   Reddit RSS
 
+redmine
+  Redmine API
+  Redmine exposes some of its data through a REST API. This API provides
+
 refugerestrooms
   Refuge Restrooms
   REFUGE is a web application that seeks to provide safe restroom access for transgender, intersex,...
@@ -1842,6 +1943,10 @@ rhapsody
 ritc
   Ritc
   Rules in the Cloud
+
+ritekit
+  RiteKit
+  RiteKit API is based on REST principles.
 
 rottentomatoes
   Rotten Tomatoes
@@ -1934,6 +2039,10 @@ statsocial
   StatSocial Platform
   API Reference:  The StatSocial API is organized around REST. Our API is designed to have predicta...
 
+storecove
+  Storecove
+  Storecove API
+
 swagger_generator
   Swagger Generator
   This is an online swagger codegen server.  You can find out more at https://github.com/swagger-ap...
@@ -1972,10 +2081,14 @@ traccar
 
 trello
   Trello
-  This document describes the REST API of Trello as published by Trello.com. - [Official Documentat...
+  Trello’s boards, lists, and cards enable you to organize and prioritize your projects in a fun, f...
 
 tumblr
   Tumblr
+
+tvmaze
+  TVmaze
+  Access to the user API is only possible for users with a [premium](http://www.tvmaze.com/premium)...
 
 twilio
   Twilio
@@ -2040,6 +2153,26 @@ winning_email
   Winning Email
   The Winning Email API allows you to access our services from your applications. Contact us if you...
 
+wmata_bus_realtime
+  Real-Time Bus Predictions
+  Real-time bus prediction methods.
+
+wmata_bus_route
+  Bus Route and Stop Methods
+  Bus stop information, route and schedule data, and bus positions.
+
+wmata_incidents
+  WMATA Incidents
+  Rail, bus, and elevator disruptions/outages.
+
+wmata_rail_realtime
+  Real-Time Rail Predictions
+  Real-time rail prediction methods.
+
+wmata_rail_station
+  Rail Station Information
+  Rail line and station information, including locations, fares, times, and parking.
+
 wordnik
   Wordnik
   Wordnik is the world's biggest online English dictionary, by number of words
@@ -2059,6 +2192,10 @@ youphoric
 yunbi
   Yunbi
   Professional Cloud Trading Platform for Digital Assets
+
+zalando
+  Zalando Shop
+  The shop API empowers developers to build amazing new apps or websites using Zalando shop data an...
 
 zappiti
   Zappiti Player
@@ -2086,8 +2223,4 @@ mongodb
 swaggerui
   Swagger UI
   Display Swagger UI for your DataFire API
-
-redmine
-  Redmine API
-  Redmine exposes some of its data through a REST API. This API provides
 
