@@ -59,7 +59,8 @@
           {
             "name": "uppercase",
             "type": "boolean",
-            "in": "query"
+            "in": "query",
+            "default": false
           }
         ],
         "responses": {

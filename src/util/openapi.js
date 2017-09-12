@@ -12,6 +12,7 @@ openapi.PARAM_SCHEMA_FIELDS = [
   'maxLength', 'minLength',
   'maxItems', 'minItems', 'uniqueItems',
   'multipleOf',
+  'default',
 ]
 
 openapi.initialize = function(spec) {
