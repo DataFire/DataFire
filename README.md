@@ -202,6 +202,23 @@ tasks:
       mongodb: mongo_read_only
 ```
 
+#### Monitors
+A monitor will poll a particular resource for new items,
+and only run your action if a new item is found. For instance, we can
+check for new items on Reddit's front page every 5 minutes:
+
+```yaml
+tasks:
+  watch_reddit:
+    schedule: rate(5 minutes)
+    monitor:
+      action: reddit_rss/frontPage
+      array: feed.entries
+      trackBy: link
+    action: ./post-story-to-slack.js
+```
+
+
 Start running tasks with:
 ```
 datafire serve --tasks
