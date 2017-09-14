@@ -23,7 +23,7 @@
 [devdeps-link]: https://david-dm.org/DataFire/DataFire#info=devDependencies
 [blog-image]: https://img.shields.io/badge/Blog-on%20Medium-blue.svg
 [blog-link]: https://medium.com/datafire-io
-[mail-image]: https://img.shields.io/badge/Subscribe-via%20MailChimp-blue.svg
+[mail-image]: https://img.shields.io/badge/Subscribe-on%20MailChimp-blue.svg
 [mail-link]: http://eepurl.com/c3t10T
 
 DataFire is an open source framework for building and integrating APIs. It
