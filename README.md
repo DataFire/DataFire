@@ -175,7 +175,7 @@ to that action.
 ### Paths
 Paths create URLs that trigger your actions. For example, you can create a URL that returns
 your GitHub profile:
-```
+```yaml
 paths:
   /github_profile:
     get:
