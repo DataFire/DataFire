@@ -9,7 +9,7 @@
 
 [twitter-image]: https://img.shields.io/badge/Share-on%20Twitter-blue.svg
 [twitter-link]: https://twitter.com/intent/tweet?text=DataFire%20-%20open+source+integration+framework:&url=http%3A%2F%2Fgithub.com%2FDataFire%2FDataFire
-[gitter-image]: https://badges.gitter.im/DataFire/DataFire.png
+[gitter-image]: https://img.shields.io/badge/Chat-on%20Gitter-blue.svg
 [gitter-link]: https://gitter.im/DataFire/Lobby
 [npm-image]: https://img.shields.io/npm/v/datafire.svg
 [npm-link]: https://npmjs.org/package/datafire
@@ -23,7 +23,7 @@
 [devdeps-link]: https://david-dm.org/DataFire/DataFire#info=devDependencies
 [blog-image]: https://img.shields.io/badge/Blog-on%20Medium-blue.svg
 [blog-link]: https://medium.com/datafire-io
-[mail-image]: https://img.shields.io/badge/E--mail-via%20MailChimp-blue.svg
+[mail-image]: https://img.shields.io/badge/Subscribe-via%20MailChimp-blue.svg
 [mail-link]: http://eepurl.com/c3t10T
 
 DataFire is an open source framework for building and integrating APIs. It
