@@ -7,7 +7,7 @@
 <!--[![Dependency status][deps-image]][deps-link]
 [![devDependency status][devdeps-image]][devdeps-link]-->
 
-[twitter-image]: https://img.shields.io/twitter/url/http/github.com/DataFire/DataFire.svg?style=social
+[twitter-image]: https://img.shields.io/badge/Share-on%20Twitter-blue.svg
 [twitter-link]: https://twitter.com/intent/tweet?text=DataFire%20-%20open+source+integration+framework:&url=http%3A%2F%2Fgithub.com%2FDataFire%2FDataFire
 [gitter-image]: https://badges.gitter.im/DataFire/DataFire.png
 [gitter-link]: https://gitter.im/DataFire/Lobby
