@@ -6,8 +6,6 @@
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://www.npmjs.com/package/datafire)
 <!--[![Dependency status][deps-image]][deps-link]
 [![devDependency status][devdeps-image]][devdeps-link]-->
-[![Share on Twitter][twitter-image]][twitter-link]
-[![Chat on gitter][gitter-image]][gitter-link]
 
 [twitter-image]: https://img.shields.io/twitter/url/http/github.com/DataFire/DataFire.svg?style=social
 [twitter-link]: https://twitter.com/intent/tweet?text=DataFire%20-%20open+source+integration+framework:&url=http%3A%2F%2Fgithub.com%2FDataFire%2FDataFire
@@ -23,6 +21,10 @@
 [deps-link]: https://david-dm.org/DataFire/DataFire
 [devdeps-image]: https://img.shields.io/david/dev/DataFire/DataFire.svg
 [devdeps-link]: https://david-dm.org/DataFire/DataFire#info=devDependencies
+[blog-image]: https://img.shields.io/badge/Blog-on%20Medium-blue.svg
+[blog-link]: https://medium.com/datafire-io
+[mail-image]: https://img.shields.io/badge/E--mail-via%20MailChimp-blue.svg
+[mail-link]: http://eepurl.com/c3t10T
 
 DataFire is an open source framework for building and integrating APIs. It
 provides over [500 pre-built integrations](https://app.datafire.io/integrations), including:
@@ -32,10 +34,16 @@ Twilio &bull; Trello &bull; Square &bull;
 Google Sheets &bull; Gmail &bull; Heroku
 
 Each integration provides a set of composable actions. New actions can be built by
-combining existing actions, JavaScript, and external libraries.
-
-Actions are driven by JavaScript Promises,
+combining existing actions, JavaScript, and external libraries. They are driven by JavaScript Promises,
 and can be triggered by a URL, on a schedule, or manually.
+
+Want more? [DataFire.io](https://datafire.io) provides a simple interface for building,
+managing, and hosting DataFire projects.
+
+[![Chat on gitter][gitter-image]][gitter-link]
+[![Read the blog][blog-image]][blog-link]
+[![Join the mailing list][mail-image]][mail-link]
+[![Share on Twitter][twitter-image]][twitter-link]
 
 ## Sample Projects
 * [Create an API backed by Google Sheets](https://github.com/DataFire-flows/sheets-api)
@@ -56,6 +64,7 @@ npm install --save datafire
 > custom HTTP responses, and more.
 
 Let's set up a simple DataFire project that has a single URL, `GET /hello`.
+We'll need two things: an **action**, and a **trigger**.
 
 ### Action
 First we create a new action - the logic that will be run when the URL is loaded:
@@ -108,12 +117,6 @@ Each integration comes with a set of actions. For example, the `hacker_news` int
 contains the `getStories`, `getItem`, and `getUser` actions.
 
 Check out the [usage](docs/Integrations.md) and [authentication](docs/Authentication.md) documentation to learn more.
-
-### Authentication
-> [Learn more about authentication](docs/Authentication.md)
-
-Run `datafire authenticate <integration_id>` add credentials for a given integration.
-You can also specify credentials in YAML, or programmatically (e.g. in environment variable).
 
 ## Actions
 Actions come in two varieties:
