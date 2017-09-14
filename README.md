@@ -40,10 +40,11 @@ and can be triggered by a URL, on a schedule, or manually.
 Want more? [DataFire.io](https://datafire.io) provides a simple interface for building,
 managing, and hosting DataFire projects.
 
-[![Chat on gitter][gitter-image]][gitter-link]
-[![Read the blog][blog-image]][blog-link]
-[![Join the mailing list][mail-image]][mail-link]
 [![Share on Twitter][twitter-image]][twitter-link]
+[![Blog on Medium][blog-image]][blog-link]
+[![Chat on Gitter][gitter-image]][gitter-link]
+[![Subscribe on MailChimp][mail-image]][mail-link]
+
 
 ## Sample Projects
 * [Create an API backed by Google Sheets](https://github.com/DataFire-flows/sheets-api)
