@@ -67,8 +67,14 @@ Project.fromDirectory = function(dir) {
     }
     Object.assign(opts, content);
   }
-  assignFromFile(nodepath.join(directory, 'DataFire.yml'));
-  assignFromFile(nodepath.join(directory, 'DataFire-accounts.yml'));
+  let configFile = nodepath.join(directory, 'DataFire.yml');
+  let accountsFile = nodepath.join(directory, 'DataFire-accounts.yml');
+  if (!fs.existsSync(configFile)) {
+    // TODO: throw an error in v3
+    util.logger.logWarning("DataFire.yml not found in directory " + directory);
+  }
+  assignFromFile(configFile);
+  assignFromFile(accountsFile);
   opts.directory = directory;
   return new Project(opts);
 }

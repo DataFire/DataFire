@@ -204,6 +204,9 @@ class Logger {
     str = str || 'Error';
     Logger.log(chalk.red(str));
   }
+  static logWarning(str) {
+    Logger.log(chalk.yellow(str));
+  }
 
   static log(str) {
     if (Logger.silent) return;
