@@ -40,6 +40,31 @@ projectServer.getRouter().then(router => {
 });
 ```
 
+### Custom Routing and Other Frameworks
+If you want to handle routing yourself or via another framework, you can still use DataFire actions.
+You can skip creating a DataFire project (i.e. no need for DataFire.yml), and use actions for input
+validation and promise-based integrations:
+
+```js
+let datafire = require('datafire');
+let express = require('express');
+
+let action = new datafire.Action({
+  inputs: [{
+    title: 'name',
+    type: 'string',
+    default: 'world',
+    minLength: 3,
+  }],
+  handler: input => "Hello, " + input.name,
+})
+
+app.get('/hello', (req, res) => {
+  action.run(req.query)
+      .then(result => res.json(result));
+})
+```
+
 ## Open API
 You can access an Open API specification for your API at `/openapi.json`. For example:
 
