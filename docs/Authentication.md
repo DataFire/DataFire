@@ -2,13 +2,31 @@
 > If you want to try these examples, you can generate a GitHub
 > access token [on the settings page](https://github.com/settings/tokens)
 
-## Passing Credentials
-
-If a particular integration needs auth, it will look in `context.accounts.integration_name`.
+## Passing Credentials to Integrations
 You can populate accounts programmatically, or using YAML configurations.
 
 ### YAML
-Use the `accounts` field to specify credentials:
+
+#### Project-level credentials
+You can specify the project-level credentials in DataFire.yml or DataFire-accounts.yml.
+We suggest adding DataFire-accounts.yml to your .gitignore.
+
+You can also use the `datafire authenticate` command to populate DataFire-accounts.yml.
+
+```yml
+accounts:
+  github: # the default account
+    access_token: "abcde"
+  github_alice:
+    access_token: "fghij"
+  github_bob:
+    access_token: "klmno"
+```
+
+These accounts will be available in `context.accounts` in all of this project's actions.
+
+#### Trigger-level credentials
+You can override or add accounts for any trigger:
 
 ```yml
 paths:
@@ -17,60 +35,60 @@ paths:
       action: github/user.get
       accounts:
         github:
-          access_token: "abcde"
+          access_token: "12345"
 ```
-
 
 ### Programmatically
-You can add your credentials at runtime:
+When using an integration, you can `.create()` an instance that will always use the same credentials,
+or change accounts on the fly using `.actions`;
+
+#### .create()
+When you use `.create()`, you create an instance of the integration using the given account.
 
 ```js
-var github = require('@datafire/github').create({
-  access_token: process.env.GITHUB_TOKEN,
+let datafire = require('datafire');
+let project = datafire.Project.main();
+let github = require('@datafire/github').create(project.accounts.github_alice);
+// or
+github = require('@datafire/github').create({
+  access_token: "abcde",
 });
 
-github.user.get().then(user => {
+(async () => {
+
+  let user = await github.user.get();
   console.log('Logged in user is ' + user.login);
-})
+
+})();
 ```
 
-### Aliases
-The `datafire authenticate` command will store each account in
-DataFire-accounts.yml, along with an alias you can reference elsewhere.
+#### .actions
+When you use `.actions`, you can specify the context each time an action is run.
 
-> Be sure to add DataFire-accounts.yml to your .gitignore
-
-For example, let's add a GitHub account named `lucy`:
-
-```bash
-datafire authenticate github --alias lucy
-```
-
-This will write your credentials to DataFire-accounts.yml:
-```yaml
-accounts:
-    lucy:
-        integration: github
-        access_token: abcde
-```
-
-Now we can reference the `lucy` account in triggers or in our code:
-```yml
-paths:
-  /github_profile:
-    get:
-      action: github/user.get
-      accounts:
-        github: lucy
-```
-
-or in NodeJS:
 ```js
-var project = require('datafire').Project.main();
-var github = require('@datafire/github').create(project.accounts.lucy);
-github.user.get().then(user => {
-  console.log(user.login);
+let datafire = require('datafire');
+let project = datafire.Project.main();
+let github = require('@datafire/github').actions;
+
+let aliceContext = new datafire.Context({
+  accounts: {
+    github: project.accounts.github_alice,
+  }
 });
+
+let bobContext = new datafire.Context({
+  accounts: {
+    github: project.accounts.github_bob,
+  }
+});
+
+(async () => {
+
+  let alice = await github.user.get(null, aliceContext);
+  let bob = await github.user.get(null, bobContext);
+  console.log(alice, bob);
+
+})();
 ```
 
 ## OAuth Clients
@@ -84,36 +102,44 @@ paths:
     get:
       action: ./github_callback.js
       accounts:
-        github:
+        github_oauth_provider:
           client_id: abcd
           client_secret: xyz
 ```
 
 ```js
 let datafire = require('datafire');
-let github = require('@datafire/github');
+let project = datafire.Project.main();
+let github = require('@datafire/github').actions;
+let mongodb = require('@datafire/mongodb').create(project.accounts.mongodb);
+
 module.exports = new datafire.Action({
   inputSchema: github.oauthCallback.inputSchema,
-  handler: (input, context) => {
-    return datafire.flow(context)
-      .then(_ =>  github.oauthCallback.run({code}, context))
-      .then(data => {
-        return mongodb.update({
-          table: 'users',
-          query: {
-            id: {$eq: context.user.id},
-          },
-          document: {
-            github_access_token: data.access_token,
-          }
-        })
-      })
+  handler: async (input, context) => {
+    context.accounts.github = project.accounts.github_oauth_provider;
+    let authData = await github.oauthCallback.run({code: input.code}, context);
+
+    context.accounts.github = authData;
+    let githubProfile = await github.user.get({}, context);
+
+    let update = await mongodb.update({
+      table: 'users',
+      query: {
+        id: {$eq: context.user.id},
+      },
+      document: {
+        github_access_token: authData.access_token,
+        email: githubProfile.email,
+      }
+    });
+
+    return "Success";
   }
-})
+});
 ```
 
 ## Authorizers
-Use authorizers on HTTP endpoints to populate `context.accounts` with the results of an action.
+Path triggers can use authorizers to populate `context.accounts` with the results of an action.
 
 For example:
 ```yaml
@@ -134,11 +160,11 @@ module.exports = new datafire.Action({
       }
     });
   }
-})
+});
 ```
 
 Authorizers in the top level will be run for every request. You can also override
-authorizers for individual paths:
+authorizers for individual paths, or disable them by setting them to `null`.
 ```yaml
 authorizers:
   user:
@@ -146,21 +172,21 @@ authorizers:
 paths:
   /public/status:
     get:
+      action: ./getStatus.js
       authorizers:
         user: null
-      action: ./getStatus.js
 ```
 
 ## Require Credentials
-You can declare a set of credentials that your Action expects using the
+You can declare a set of credentials that your Action or Integration expects using the
 `security` field. Each security item should specify an integration, or
 a set of expected fields.
 
 ```js
 let scrape = new datafire.Action({
   security: {
-    github_account_to_scrape: {
-      description: "The github account to scrape",
+    github_account: {
+      description: "The github account to read from",
       integration: 'github'
     },
     database: {
