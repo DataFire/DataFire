@@ -249,13 +249,6 @@ Run a test with:
 datafire test <test_id>
 ```
 
-## Flows
-> [Learn more about flows](docs/Flows.md)
-
-Flows allow you to chain actions together to make a series of calls to different
-APIs and services. Flows keep track of results at each step so you can reference them
-at any step.
-
 ## Cookbook
 Check out the [cookbook](docs/Cookbook.md) for common patterns, including
 paginated responses and mocking/testing.
