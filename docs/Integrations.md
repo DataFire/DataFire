@@ -1,9 +1,5 @@
 # Integrations
-Integrations are in the `@datafire` npm namespace. You can view available integrations by
-visiting datafire.io/integrations or running
-```
-datafire list -a
-```
+Integrations are in the `@datafire` npm namespace. You can view a list of available integrations on [DataFire.io](https://app.datafire.io/integrations)
 
 To add an integration to your project, run:
 ```
@@ -18,12 +14,29 @@ let hn = require('@datafire/hacker_news').create();
 ```
 
 ### Authentication
-You can set the account to use for that instance of the integration by passing it to `create()`:
+> See [Authentication.md](./Authentication.md) for the full documentation
+
+You can pass an account to  `create()`:
+
 ```js
-let github = require('@datafire/github').create({
-  access_token: process.env.GITHUB_TOKEN,
-})
+let datafire = require('datafire');
+let project = datafire.Project.main();
+
+let github = require('@datafire/github').create(project.accounts.github_alice);
+// or
+github = require('@datafire/github').create({
+  access_token: "abcde",
+});
+
+(async () => {
+
+  let user = await github.user.get();
+  console.log('Logged in user is ' + user.login);
+
+})();
 ```
+
+
 
 ### Actions
 Each integration offers a set of actions - each action returns a Promise.
