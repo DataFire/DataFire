@@ -209,7 +209,7 @@ tasks:
 #### Monitors
 A monitor will poll a particular resource for new items,
 and only run your action if a new item is found. For instance, we can
-check for new items on Reddit's front page every 5 minutes:
+check for new items on Reddit every 5 minutes:
 
 ```yaml
 tasks:
@@ -219,9 +219,10 @@ tasks:
       action: reddit_rss/frontPage
       array: feed.entries
       trackBy: link
+      input:
+        subreddit: sports
     action: ./post-story-to-slack.js
 ```
-
 
 Start running tasks with:
 ```
