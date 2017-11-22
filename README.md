@@ -21,7 +21,7 @@
 [deps-link]: https://david-dm.org/DataFire/DataFire
 [devdeps-image]: https://img.shields.io/david/dev/DataFire/DataFire.svg
 [devdeps-link]: https://david-dm.org/DataFire/DataFire#info=devDependencies
-[blog-image]: https://img.shields.io/badge/Blog-on%20Medium-blue.svg
+[blog-image]: https://img.shields.io/badge/Read-on%20Medium-blue.svg
 [blog-link]: https://medium.com/datafire-io
 [mail-image]: https://img.shields.io/badge/Subscribe-on%20MailChimp-blue.svg
 [mail-link]: http://eepurl.com/c3t10T
