@@ -41,7 +41,7 @@ Want more? [DataFire.io](https://datafire.io) provides a simple interface for bu
 managing, and hosting DataFire projects.
 
 [![Share on Twitter][twitter-image]][twitter-link]
-[![Blog on Medium][blog-image]][blog-link]
+[![Read on Medium][blog-image]][blog-link]
 [![Chat on Gitter][gitter-image]][gitter-link]
 [![Subscribe on MailChimp][mail-image]][mail-link]
 
