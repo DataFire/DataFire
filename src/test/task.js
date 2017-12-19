@@ -126,5 +126,30 @@ describe("Tasks", () => {
         expect(newItems[0]).to.equal('C');
         expect(task.seenItems.length).to.equal(3);
       });
+  });
+
+  it('should use errorHandler', () => {
+    let lastError = null;
+    let errorHandler = {
+      action: new datafire.Action({
+        handler: input => lastError = input.error,
+      })
+    }
+    let task = new datafire.Task({
+      errorHandler,
+      action: new datafire.Action({
+        handler: input => {
+          throw new Error("test");
+        },
+      }),
+      schedule: 'rate(1 day)',
+    })
+    return task.run()
+      .then(_ => {
+        throw new Error("shouldn't reach here")
+      }, e => {
+        expect(e.message).to.equal('test');
+        expect(lastError.message).to.equal('test');
+      })
   })
 })

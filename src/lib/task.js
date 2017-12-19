@@ -30,6 +30,10 @@ class Task {
     this.project = opts.project;
     this.input = opts.input;
     this.accounts = opts.accounts;
+    this.errorHandler = opts.errorHandler;
+    if (this.errorHandler === undefined && this.project) {
+      this.errorHandler = this.project.errorHandler;
+    }
     if (!this.schedule) {
       throw new Error("Task " + this.id + " has no schedule");
     }
@@ -98,6 +102,15 @@ class Task {
         event.end();
       }, error => {
         event.end(error);
+        throw error;
+      });
+    }
+    if (this.errorHandler) {
+      prom = prom.catch(error => {
+        let ctx = this.project && this.project.getContext({type: 'error'});
+        return this.errorHandler.action.run({error, errorContext: context}, ctx).then(_ => {
+          throw error;
+        })
       });
     }
     return prom;

@@ -197,6 +197,10 @@ class ProjectServer {
       .then(result => {
         respond(result, true);
       }, result => {
+        let errorHandler = op.errorHandler === undefined ? this.project.errorHandler : op.errorHandler;
+        if (errorHandler && !Response.isResponse(result)) {
+          errorHandler.action.run({error: result, errorContext: context}, this.project.getContext({type: 'error'})); // Don't wait for response
+        }
         if (!(result instanceof Error || Response.isResponse(result))) {
           result = new Error(result);
         }

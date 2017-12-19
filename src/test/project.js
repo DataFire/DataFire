@@ -6,13 +6,27 @@ const request = require('request');
 const swaggerParser = require('swagger-parser');
 const lib = require('../entry');
 
+let lastError = null;
+const storeError = new lib.Action({
+  handler: input => {
+    return lastError = input.error;
+  },
+});
+
 const ping = new lib.Action({
   handler: _ => Promise.resolve('pong'),
-})
+});
 
 const echoInputs = new lib.Action({
   handler: input => input,
-})
+});
+
+const throwError = new lib.Action({
+  inputs: [{title: 'message', type: 'string'}],
+  handler: input => {
+    throw new Error(input.message);
+  }
+});
 
 const hello = new lib.Action({
   inputs: [{
@@ -63,6 +77,12 @@ const paths = {
     '/ping': {
       get: {
         action: ping,
+      }
+    },
+
+    '/throw': {
+      get: {
+        action: throwError,
       }
     },
 
@@ -141,6 +161,9 @@ describe("Project", () => {
     project = new lib.Project({
       paths,
       openapi: {host: 'localhost:3333'},
+      errorHandler: {
+        action: storeError,
+      },
     });
     return project.serve(3333);
   });
@@ -265,6 +288,15 @@ describe("Project", () => {
     })
   })
 
+  it('should call error action', done => {
+    request.get(BASE_URL + '/throw?message=test', {json: true}, (err, resp, body) => {
+      expect(resp.statusCode).to.equal(500);
+      expect(lastError).to.not.equal(null);
+      expect(lastError.message).to.equal('test');
+      done();
+    })
+  })
+
   it('should produce OpenAPI JSON', (done) => {
     swaggerParser.validate(project.openapi, (err, api) => {
       if (process.env.WRITE_GOLDEN) {
@@ -276,6 +308,6 @@ describe("Project", () => {
       }
       done();
     })
-  })
+  });
 })
 

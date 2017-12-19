@@ -19,6 +19,9 @@ authorizers:
   user:
     action: ./actions/get-user-from-auth-header.js
 
+# This action will be called whenever one of your triggers fails unexpectedly.
+errorHandler:
+  action: ./actions/send-alert.js
 
 # paths are the URLs served by your project
 # E.g. the first path here will be served at GET http://localhost/hello
@@ -72,6 +75,7 @@ openapi:
 * `action` (required) - the action to call, either local (e.g. `./actions/do_something.js`) or from an integration (e.g. `xkcd/getLatestComic`)
 * `accounts` - Accounts to use for this trigger, overriding project-level accounts
 * `input` - Input to use for this trigger. If not set for a `path` trigger, the `path` will pass query parameters and JSON/form data as input.
+* `errorHandler` - An action to run whenever an unknown error occurs.
 
 `path` triggers also have these fields:
 

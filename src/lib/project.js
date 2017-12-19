@@ -24,6 +24,7 @@ let Project = module.exports = function(opts) {
   this.version = opts.version || '1.0.0';
   this.timezone = opts.timezone || 'America/Los_Angeles';
   this.description = opts.description || '';
+  this.errorHandler = opts.errorHandler;
   this.paths = opts.paths || {};
   this.tasks = opts.tasks || {};
   this.tests = opts.tests || {};
@@ -118,33 +119,37 @@ Project.prototype.aggregateActions = function() {
     return action;
   }
 
+  let resolveTriggerAction = (trigger, type, name) => {
+    if (!trigger) return;
+    if (!trigger.action) throw new Error(`No action specified for ${type} with ID ${name}`);
+    trigger.action = resolveAction(trigger.action);
+    if (trigger.monitor) {
+      resolveTriggerAction(trigger.monitor, type + ' monitor', name);
+    }
+    if (trigger.errorHandler) {
+      resolveTriggerAction(trigger.errorHandler, type + ' errorHandler', name);
+    }
+    if (trigger.authorizers) {
+      for (let authID in trigger.authorizers) {
+        resolveTriggerAction(trigger.authorizers[authID], type + ' authorizer', name + ' ' + authID);
+      }
+    }
+  }
+
   for (let authID in this.authorizers) {
-    let authorizer = this.authorizers[authID];
-    if (!authorizer.action) throw new Error(`No action specified for authorizer ${authID}`);
-    authorizer.action = resolveAction(authorizer.action);
+    resolveTriggerAction(this.authorizers[authID], 'authorizer', authID);
   }
   for (let taskID in this.tasks) {
-    let task = this.tasks[taskID];
-    if (!task.action) throw new Error(`No action specified for task ${taskID}`);
-    task.action = resolveAction(task.action);
-    if (task.monitor) {
-      if (!task.monitor.action) throw new Error(`monitor.action not specified for task ${taskID}`);
-      task.monitor.action = resolveAction(task.monitor.action);
-    }
+    resolveTriggerAction(this.tasks[taskID], 'task', taskID);
   }
   for (let path in this.paths) {
     for (let method in this.paths[path]) {
       let op = this.paths[path][method];
-      if (!op.action) throw new Error(`No action specified for ${method.toUpperCase()} ${path}`);
-      op.action = resolveAction(op.action);
-
-      for (let authID in op.authorizers) {
-        let authorizer = op.authorizers[authID];
-        if (!authorizer) continue;
-        if (!authorizer.action) throw new Error(`No action specified for authorizer ${authID} in operation ${method.toUpperCase()} ${path}`);
-        authorizer.action = resolveAction(authorizer.action);
-      }
+      resolveTriggerAction(op);
     }
+  }
+  if (this.errorHandler) {
+    resolveTriggerAction(this.errorHandler);
   }
 }
 
