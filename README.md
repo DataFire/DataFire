@@ -105,6 +105,13 @@ curl http://localhost:3000/hello
 kill $! # Stop the server
 ```
 
+## DataFire.yml Configuration
+> [Learn more about DataFire.yml](./docs/DataFire_yml.md)
+
+Your actions, triggers, credentials, and configuration options are set in DataFire.yml.
+[Here's a sample DataFire.yml](./docs/DataFire_yml.md)
+
+
 ## Integrations
 > [Learn more about integrations](./docs/Integrations.md)
 
