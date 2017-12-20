@@ -1,11 +1,11 @@
 # DataFire
 
 [![Travis][travis-image]][travis-link]
-[![Code Climate][climate-image]][climate-link]
 [![NPM version][npm-image]][npm-link]
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://www.npmjs.com/package/datafire)
 <!--[![Dependency status][deps-image]][deps-link]
 [![devDependency status][devdeps-image]][devdeps-link]-->
+<!--[![Code Climate][climate-image]][climate-link]-->
 
 [twitter-image]: https://img.shields.io/badge/Share-on%20Twitter-blue.svg
 [twitter-link]: https://twitter.com/intent/tweet?text=DataFire%20-%20open+source+integration+framework:&url=http%3A%2F%2Fgithub.com%2FDataFire%2FDataFire
