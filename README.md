@@ -21,7 +21,7 @@
 [deps-link]: https://david-dm.org/DataFire/DataFire
 [devdeps-image]: https://img.shields.io/david/dev/DataFire/DataFire.svg
 [devdeps-link]: https://david-dm.org/DataFire/DataFire#info=devDependencies
-[blog-image]: https://img.shields.io/badge/Blog-on%20Medium-blue.svg
+[blog-image]: https://img.shields.io/badge/Read-on%20Medium-blue.svg
 [blog-link]: https://medium.com/datafire-io
 [mail-image]: https://img.shields.io/badge/Subscribe-on%20MailChimp-blue.svg
 [mail-link]: http://eepurl.com/c3t10T
@@ -41,7 +41,7 @@ Want more? [DataFire.io](https://datafire.io) provides a simple interface for bu
 managing, and hosting DataFire projects.
 
 [![Share on Twitter][twitter-image]][twitter-link]
-[![Blog on Medium][blog-image]][blog-link]
+[![Read on Medium][blog-image]][blog-link]
 [![Chat on Gitter][gitter-image]][gitter-link]
 [![Subscribe on MailChimp][mail-image]][mail-link]
 
@@ -216,7 +216,7 @@ tasks:
 #### Monitors
 A monitor will poll a particular resource for new items,
 and only run your action if a new item is found. For instance, we can
-check for new items on Reddit's front page every 5 minutes:
+check for new items on Reddit every 5 minutes:
 
 ```yaml
 tasks:
@@ -226,9 +226,10 @@ tasks:
       action: reddit_rss/frontPage
       array: feed.entries
       trackBy: link
+      input:
+        subreddit: sports
     action: ./post-story-to-slack.js
 ```
-
 
 Start running tasks with:
 ```
@@ -255,13 +256,6 @@ Run a test with:
 ```
 datafire test <test_id>
 ```
-
-## Flows
-> [Learn more about flows](docs/Flows.md)
-
-Flows allow you to chain actions together to make a series of calls to different
-APIs and services. Flows keep track of results at each step so you can reference them
-at any step.
 
 ## Cookbook
 Check out the [cookbook](docs/Cookbook.md) for common patterns, including
