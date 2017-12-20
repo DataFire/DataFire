@@ -89,3 +89,5 @@ openapi:
 * `monitor.action` - The action being polled
 * `monitor.array` - The location of an array in the action's output to monitor, e.g. `feed.entries`
 * `monitor.trackBy` - A field in each item of the array to use as an identifier, e.g. `link` or `info.title`
+* `monitor.input` - input to `monitor.action`
+* `monitor.accounts` - accounts for `monitor.action`
