@@ -204,9 +204,23 @@ Integration.prototype.addOAuthActions = function() {
         headers: {'Accept': 'application/json'},
         form,
       }, (err, resp, body) => {
-        if (err) return reject(err);
-        if (resp.statusCode >= 300) return reject({statusCode: resp.statusCode, body: body});
-        resolve(JSON.parse(body));
+        if (err) {
+          return reject(err);
+        } else if (resp.statusCode >= 300) {
+          let message = `Token error ${resp.statusCode}`;
+          try {
+            body = JSON.parse(body);
+          } catch (e) {}
+          if (body && body.error) {
+            message += ' ' + body.error;
+            if (body.error_description) {
+              message += ': ' + body.error_description;
+            }
+          }
+          return reject(new Error(message));
+        } else {
+          resolve(JSON.parse(body));
+        }
       })
     })
   }
