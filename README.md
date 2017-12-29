@@ -47,10 +47,13 @@ managing, and hosting DataFire projects.
 
 
 ## Sample Projects
-* [Create an API backed by Google Sheets](https://github.com/DataFire-flows/sheets-api)
-* [E-mail yourself news headlines](https://github.com/DataFire-flows/headlines)
-* [Sync GitHub issues to a Trello board](https://github.com/DataFire-flows/github-issues-to-trello)
-* [Create a Spotify playlist from r/listentothis](https://github.com/DataFire-flows/listen-to-this)
+|  |  |  |
+|--|--|--|
+| Create an API backed by Google Sheets | [Repo](https://github.com/DataFire-repos/spreadsheet-base) | [Run on DataFire.io](https://app.datafire.io/projects?baseRepo=https:%2F%2Fgithub.com%2FDataFire-repos%2Fspreadsheet-base) |
+| E-mail yourself news headlines | [Repo](https://github.com/DataFire-flows/headlines) | [Run on DataFire.io](https://app.datafire.io/projects?baseRepo=https:%2F%2Fgithub.com%2FDataFire-flows%2Fheadlines)|
+| Backend for a "Contact Us" form | [Repo](https://github.com/DataFire-repos/contact-us-base) | [Run on DataFire.io](https://app.datafire.io/projects?baseRepo=https:%2F%2Fgithub.com%2FDataFire-repos%2Fcontact-us-base) |
+| Sync GitHub issues to a Trello board | [Repo](https://github.com/DataFire-flows/github-issues-to-trello) | [Run on DataFire.io](https://app.datafire.io/projects?baseRepo=https:%2F%2Fgithub.com%2FDataFire-flows%2Fgithub-issues-to-trello) |
+| Create a Spotify playlist from r/listentothis | [Repo](https://github.com/DataFire-flows/listen-to-this) | [Run on DataFire.io](https://app.datafire.io/projects?baseRepo=https:%2F%2Fgithub.com%2FDataFire-flows%2Flisten-to-this) |
 
 ## Installation
 > Be sure to install DataFire both globally and as a project dependency.
