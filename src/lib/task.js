@@ -32,7 +32,7 @@ class Task {
     this.accounts = opts.accounts;
     this.errorHandler = opts.errorHandler;
     if (this.errorHandler === undefined && this.project) {
-      this.errorHandler = this.project.errorHandler;
+      this.errorHandler = this.project.events.error;
     }
     if (!this.schedule) {
       throw new Error("Task " + this.id + " has no schedule");

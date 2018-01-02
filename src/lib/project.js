@@ -24,7 +24,9 @@ let Project = module.exports = function(opts) {
   this.version = opts.version || '1.0.0';
   this.timezone = opts.timezone || 'America/Los_Angeles';
   this.description = opts.description || '';
-  this.errorHandler = opts.errorHandler;
+
+  this.events = opts.events = opts.events || {};
+  this.events.error = opts.events.error || opts.errorHandler;
   this.paths = opts.paths || {};
   this.tasks = opts.tasks || {};
   this.tests = opts.tests || {};
@@ -40,6 +42,15 @@ let Project = module.exports = function(opts) {
   this.aggregateActions();
   this.initializeOpenAPI(opts.openapi || {});
   this.integration = Integration.fromOpenAPI(this.openapi, this.id);
+  if (this.events.oauth_refresh) {
+    Action.addOAuthRefreshCallback(account => {
+      for (let alias in this.accounts) {
+        if (this.accounts[alias] === account) {
+          this.events.oauth_refresh.action.run({alias, account})
+        }
+      }
+    });
+  }
 }
 
 /**
@@ -148,8 +159,8 @@ Project.prototype.aggregateActions = function() {
       resolveTriggerAction(op);
     }
   }
-  if (this.errorHandler) {
-    resolveTriggerAction(this.errorHandler);
+  for (let key in this.events) {
+    resolveTriggerAction(this.events[key]);
   }
 }
 

@@ -107,3 +107,13 @@ Action.prototype.run = function(input, ctx) {
   });
 }
 
+Action.oauthRefreshCallbacks = [];
+Action.addOAuthRefreshCallback = cb => {
+  Action.oauthRefreshCallbacks.push(cb);
+}
+
+Action.callOAuthRefreshCallbacks = acct => {
+  Action.oauthRefreshCallbacks.forEach(cb => {
+    cb(acct);
+  })
+}

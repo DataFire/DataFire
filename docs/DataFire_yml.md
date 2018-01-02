@@ -19,9 +19,13 @@ authorizers:
   user:
     action: ./actions/get-user-from-auth-header.js
 
-# This action will be called whenever one of your triggers fails unexpectedly.
-errorHandler:
-  action: ./actions/send-alert.js
+events:
+  # This action will be called whenever one of your path or task triggers fails unexpectedly.
+  error:
+    action: ./actions/send-alert.js
+  # This action will be called whenever one of your OAuth tokens is refreshed
+  oauth_refresh:
+    action: ./actions/update-refresh-token.js
 
 # paths are the URLs served by your project
 # E.g. the first path here will be served at GET http://localhost/hello

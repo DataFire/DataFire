@@ -122,6 +122,7 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
         };
         request.post({
           url: account.refresh_url || oauthDef.tokenUrl,
+          headers: account.refresh_headers || {},
           json: true,
           form,
         }, (err, resp, body) => {
@@ -129,6 +130,7 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
           if (resp.statusCode >= 300) return callback(new Error(resp.statusCode));
           account.access_token = body.access_token;
           account.refresh_token = body.refresh_token || account.refresh_token;
+          Action.callOAuthRefreshCallbacks(account);
           addParam('header', 'Authorization', "Bearer " + body.access_token);
           callback();
         })
