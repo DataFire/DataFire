@@ -1,3 +1,5 @@
+"use strict";
+
 const expect = require('chai').expect;
 const datafire = require('../entry');
 const requestCB = require('request');
