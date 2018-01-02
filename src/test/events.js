@@ -115,8 +115,8 @@ describe("Event Handlers", () => {
       method: 'get',
       url: 'http://localhost:3333/error',
     })
-    .then(({response, body}) => {
-      expect(response.statusCode).to.equal(500);
+    .then((result) => {
+      expect(result.response.statusCode).to.equal(500);
       expect(latestError).to.not.equal(null);
       expect(latestError.error.message).to.equal('testing');
     })
@@ -127,8 +127,8 @@ describe("Event Handlers", () => {
       method: 'get',
       url: 'http://localhost:3333/oauth_refresh',
     })
-    .then(({response, body}) => {
-      expect(response.statusCode).to.equal(200);
+    .then((result) => {
+      expect(result.response.statusCode).to.equal(200);
       expect(latestRefresh).to.not.equal(null);
       expect(latestRefresh.alias).to.equal('fluffy');
       expect(latestRefresh.account.access_token).to.equal(VALID_ACCESS_TOKEN);
