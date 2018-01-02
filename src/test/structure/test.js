@@ -12,6 +12,9 @@ describe('Project Structure', function() {
   before(function() {
     return project.startServer(PORT);
   })
+  after(function() {
+    project.server.close();
+  })
 
   it('should allow integration aliases', function() {
     request.get('http://localhost:' + PORT + '/hello', {json: true})
