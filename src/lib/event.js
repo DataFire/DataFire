@@ -35,7 +35,7 @@ class Event {
    */
   log() {
     logger.logInfo(this.type + ": " + (this.id || 'unknown'));
-    logger.log("duration: " + this.duration)
+    logger.log("duration: " + this.duration + 'ms')
     if (this.success) logger.logSuccess();
     else logger.logError((this.error && this.error.message) || undefined);
   }
