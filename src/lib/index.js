@@ -7,5 +7,6 @@ module.exports = {
   Task: require('./task'),
   Context: require('./context'),
   Monitor: require('./monitor'),
+  Event: require('./event'),
   flow: require('./flow'),
 }
