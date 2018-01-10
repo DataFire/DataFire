@@ -278,6 +278,7 @@ Integration.fromOpenAPI = function(openapi, id) {
   });
   for (let path in openapi.paths) {
     for (let method in openapi.paths[path]) {
+      if (util.openapi.METHODS.indexOf(method) === -1) continue;
       let op = openapi.paths[path][method];
       let opID = openapiUtil.getOperationId(method, path, op);
       integration.addAction(opID, Action.fromOpenAPI(method, path, openapi, integration));

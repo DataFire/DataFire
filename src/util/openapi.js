@@ -1,6 +1,8 @@
 "use strict";
 
 let openapi = module.exports = {};
+
+openapi.METHODS = ['get', 'put', 'post', 'patch', 'delete', 'options', 'head'];
 openapi.EXTENDED_PATH_PARAM_NAME = '_extendedPathPart';
 openapi.EXTENDED_PATH_PARAM_REGEX = new RegExp('^' + openapi.EXTENDED_PATH_PARAM_NAME + '(\\d+)$');
 openapi.EXTENDED_PATH_FINAL_PARAM_REGEX = new RegExp('\\{([^\\/]+)\\}/\\{' + openapi.EXTENDED_PATH_PARAM_NAME + '0\\}');
@@ -24,6 +26,7 @@ openapi.initialize = function(spec) {
     let pathParams = spec.paths[path].parameters || [];
     delete spec.paths[path].parameters;
     for (let method in spec.paths[path]) {
+      if (openapi.METHODS.indexOf(method) === -1) continue;
       let op = spec.paths[path][method];
       if (spec.security) {
         op.security = op.security || spec.security;
