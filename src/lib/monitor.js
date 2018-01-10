@@ -7,6 +7,7 @@ const Event = require('./event');
 class Monitor {
   constructor(opts={}) {
     this.maxEvents = opts.maxEvents || MAX_EVENTS;
+    this.project = opts.project;
     this.events = {
       http: [],
       task: [],
@@ -20,6 +21,7 @@ class Monitor {
    */
   startEvent(type, evt={}) {
     evt.type = type;
+    evt.project = this.project;
     let event = new Event(evt);
     event.start();
     let events = this.events[event.type];

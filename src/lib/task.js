@@ -3,6 +3,7 @@
 const CronJob = require('cron').CronJob;
 
 const Context = require('./context');
+const Event = require('./event');
 const util = require('../util');
 
 const DEFAULT_MAX_HISTORY = 10000;
@@ -31,9 +32,6 @@ class Task {
     this.input = opts.input;
     this.accounts = opts.accounts;
     this.errorHandler = opts.errorHandler;
-    if (this.errorHandler === undefined && this.project) {
-      this.errorHandler = this.project.events.error;
-    }
     if (!this.schedule) {
       throw new Error("Task " + this.id + " has no schedule");
     }
@@ -81,12 +79,18 @@ class Task {
   }
 
   run() {
-    let event = this.project ? this.project.monitor.startEvent('task', {id: this.id}) : null;
     let prom = Promise.resolve();
     let contextOpts = {accounts: this.accounts, type: 'task'};
     let context = this.project
           ? this.project.getContext(contextOpts)
           : new Context(contextOpts);
+    let event = {context, id: this.id, errorHandler: this.errorHandler};
+    if (this.project) {
+      event = this.project.monitor.startEvent('task', event);
+    } else {
+      event = new Event(event);
+      event.start();
+    }
     if (this.monitor) {
       prom = prom
           .then(_ => this.runMonitor())
@@ -96,23 +100,14 @@ class Task {
     } else {
       prom = prom.then(_ => this.action.run(this.input, context));
     }
-    if (event) {
-      prom = prom.then(output => {
-        event.output = output;
-        event.end();
-      }, error => {
-        event.end(error);
-        throw error;
-      });
-    }
-    if (this.errorHandler) {
-      prom = prom.catch(error => {
-        let ctx = this.project && this.project.getContext({type: 'error'});
-        return this.errorHandler.action.run({error, errorContext: context}, ctx).then(_ => {
-          throw error;
-        })
-      });
-    }
+    prom = prom.then(output => {
+      event.output = output;
+      event.end();
+      return output;
+    }, error => {
+      event.end(error);
+      throw error;
+    });
     return prom;
   }
 

@@ -127,16 +127,29 @@ class ProjectServer {
   requestHandler(method, path, op, swaggerOp, authorizers) {
     let parameters = swaggerOp.parameters || [];
     return (req, res) => {
+      const context = this.project.getContext({
+        type: 'http',
+        accounts: op.accounts,
+        request: {
+          query: req.query,
+          headers: req.headers,
+          body: req.body,
+          path: req.path,
+          method: req.method,
+        },
+      });
       let event = this.project.monitor.startEvent('http', {
-        path, method,
+        method,
+        path,
+        context,
         id: method.toUpperCase() + ' ' + path,
-      })
+        errorHandler: op.errorHandler,
+      });
       let respond = (result, success) => {
-        event.end();
-        if (!(Response.isResponse(result))) {
-          result = Response.default(result);
-        }
-        result.send(res);
+        let resp = Response.isResponse(result) ? result : Response.default(result);
+        event.statusCode = resp.statusCode;
+        event.end((success || Response.isResponse(result)) ? null : result);
+        resp.send(res);
       }
       let input = op.input;
       if (op.input === undefined) {
@@ -173,17 +186,6 @@ class ProjectServer {
           }
         }
       }
-      const context = this.project.getContext({
-        type: 'http',
-        accounts: op.accounts,
-        request: {
-          query: req.query,
-          headers: req.headers,
-          body: req.body,
-          path: req.path,
-          method: req.method,
-        },
-      });
       Promise.all(Object.keys(authorizers).map(key => {
         let authorizer = authorizers[key];
         if (authorizer === null || context.accounts[key]) return Promise.resolve();
@@ -197,10 +199,6 @@ class ProjectServer {
       .then(result => {
         respond(result, true);
       }, result => {
-        let errorHandler = op.errorHandler === undefined ? this.project.events.error : op.errorHandler;
-        if (errorHandler && !Response.isResponse(result)) {
-          errorHandler.action.run({error: result, errorContext: context}, this.project.getContext({type: 'error'})); // Don't wait for response
-        }
         if (!(result instanceof Error || Response.isResponse(result))) {
           result = new Error(result);
         }

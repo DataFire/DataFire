@@ -37,7 +37,7 @@ let Project = module.exports = function(opts) {
   this.variables = opts.variables || {};
   this.directory = opts.directory || process.cwd();
   this.options = opts.options || {};
-  this.monitor = new Monitor();
+  this.monitor = new Monitor({project: this});
 
   this.aggregateActions();
   this.initializeOpenAPI(opts.openapi || {});

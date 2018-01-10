@@ -1,5 +1,6 @@
 const logger = require('../util/logger');
 const verbose = require('yargs').argv.verbose;
+const Context = require('./context');
 
 /**
  * Holds details about an HTTP or Task event, including start and end time
@@ -7,6 +8,9 @@ const verbose = require('yargs').argv.verbose;
 class Event {
   constructor(opts={}) {
     Object.assign(this, opts);
+    if (this.project && this.errorHandler === undefined) {
+      this.errorHandler = this.project.events.error;
+    }
   }
 
   /**
@@ -27,6 +31,10 @@ class Event {
     this.success = !error;
     if (verbose) {
       this.log();
+    }
+    if (this.errorHandler) {
+      let ctx = this.project ? this.project.getContext({type: 'error'}) : new Context({type: 'error'});
+      this.errorHandler.action.run({error: this.error, errorContext: this.context}, ctx);
     }
   }
 
