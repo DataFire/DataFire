@@ -46,6 +46,46 @@
         }
       }
     },
+    "/statusCode": {
+      "get": {
+        "parameters": [
+          {
+            "in": "query",
+            "name": "statusCode",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unknown error",
+            "schema": {
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "x-datafire": {
+          "action": "anonymous"
+        }
+      }
+    },
     "/throw": {
       "get": {
         "parameters": [

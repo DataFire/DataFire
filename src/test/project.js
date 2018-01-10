@@ -13,6 +13,13 @@ const storeError = new lib.Action({
   },
 });
 
+let lastHttpEvent = null;
+const storeHttpEvent = new lib.Action({
+  handler: input => {
+    return lastHttpEvent = input;
+  }
+})
+
 const ping = new lib.Action({
   handler: _ => Promise.resolve('pong'),
 });
@@ -27,6 +34,13 @@ const throwError = new lib.Action({
     throw new Error(input.message);
   }
 });
+
+const respondWithStatus = new lib.Action({
+  inputs: [{title: 'statusCode', type: 'integer'}],
+  handler: input => {
+    return new lib.Response({statusCode: input.statusCode});
+  }
+})
 
 const hello = new lib.Action({
   inputs: [{
@@ -77,6 +91,12 @@ const paths = {
     '/ping': {
       get: {
         action: ping,
+      }
+    },
+
+    '/statusCode': {
+      get: {
+        action: respondWithStatus,
       }
     },
 
@@ -161,8 +181,13 @@ describe("Project", () => {
     project = new lib.Project({
       paths,
       openapi: {host: 'localhost:3333'},
-      errorHandler: {
-        action: storeError,
+      events: {
+        error: {
+          action: storeError,
+        },
+        http: {
+          action: storeHttpEvent,
+        },
       },
     });
     return project.serve(3333);
@@ -288,14 +313,22 @@ describe("Project", () => {
     })
   })
 
-  it('should call error action', done => {
+  it('should call error event handler', done => {
     request.get(BASE_URL + '/throw?message=test', {json: true}, (err, resp, body) => {
       expect(resp.statusCode).to.equal(500);
       expect(lastError).to.not.equal(null);
       expect(lastError.message).to.equal('test');
       done();
     })
-  })
+  });
+
+  it('should call http event handler', (done) => {
+    request.get(BASE_URL + '/statusCode?statusCode=418', {json: true}, (err, resp, body) => {
+      expect(resp.statusCode).to.equal(418);
+      expect(lastHttpEvent.statusCode).to.equal(418);
+      done();
+    })
+  });
 
   it('should produce OpenAPI JSON', (done) => {
     swaggerParser.validate(project.openapi, (err, api) => {

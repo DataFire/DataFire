@@ -36,6 +36,24 @@ class Event {
       let ctx = this.project ? this.project.getContext({type: 'error'}) : new Context({type: 'error'});
       this.errorHandler.action.run({error: this.error, errorContext: this.context}, ctx);
     }
+    if (this.project) {
+      if (this.type === 'http' && this.project.events.http) {
+        this.project.events.http.action.run({
+          id: this.id,
+          path: this.path,
+          method: this.method,
+          duration: this.duration,
+          statusCode: this.statusCode,
+          error: this.error,
+        })
+      } else if (this.type === 'task' && this.project.events.task) {
+        this.project.events.task.action.run({
+          id: this.id,
+          duration: this.duration,
+          error: this.error,
+        })
+      }
+    }
   }
 
   /**

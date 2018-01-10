@@ -20,9 +20,18 @@ authorizers:
     action: ./actions/get-user-from-auth-header.js
 
 events:
+  # This action will be called whenever one of your path triggers runs
+  http:
+    action: ./actions/log-http.js
+
+  # This action will be called whenever one of your task triggers runs
+  task:
+    action: ./actions/log-task.js
+
   # This action will be called whenever one of your path or task triggers fails unexpectedly.
   error:
     action: ./actions/send-alert.js
+
   # This action will be called whenever one of your OAuth tokens is refreshed
   oauth_refresh:
     action: ./actions/update-refresh-token.js
@@ -41,15 +50,6 @@ paths:
       action: github/users.username.get
       input:
         username: torvalds
-
-      # You can override project-level accounts here
-      accounts:
-        github:
-          access_token: ABCDEFG
-
-      # You can override authorizers as well
-      authorizers:
-        user: null
 
 # tasks will run on a regular schedule
 tasks:
