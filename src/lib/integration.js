@@ -226,6 +226,7 @@ Integration.prototype.addOAuthActions = function() {
   }
   let security = Object.assign({}, this.security);
   let outputSchema = {
+    type: 'object',
     properties: {
       access_token: {type: 'string'},
       refresh_token: {type: 'string'},
