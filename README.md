@@ -81,12 +81,8 @@ module.exports = new datafire.Action({
 ```
 
 ### Trigger
-Next we set up a trigger in DataFire.yml. There are three kinds of triggers:
-* `paths` - URLs like `GET /hello` or `POST /pets/{id}`
-* `tasks` - Jobs that run on a schedule, like "every hour", or "every tuesday at 3pm"
-* `tests` - Jobs that can be run manually using the `datafire` command line tool
+Next we set up a `path` trigger in DataFire.yml.
 
-Here we create a `path` trigger:
 ###### ./DataFire.yml
 ```yaml
 paths:
