@@ -32,6 +32,7 @@ let Integration = module.exports = function(opts) {
   this.security = opts.security || {};
   this.ajv = opts.ajv;
   this.logo = opts.logo;
+  this.definitions = opts.definitions;
 
   this.actions = {};
   this.allActions = [];
@@ -77,6 +78,7 @@ Integration.prototype.getDetails = function(withActions=false) {
     actionCount: this.allActions.length,
   };
   if (!withActions) return details;
+  if (this.definitions) details.definitions = this.definitions;
   details.actions = this.allActions.map(action => {
     details.definitions = details.definitions || action.inputSchema.definitions || action.outputSchema.definitions;
     let actionDetails = {
