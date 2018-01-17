@@ -74,11 +74,10 @@ We'll need two things: an **action**, and a **trigger**.
 First we create a new action - the logic that will be run when the URL is loaded:
 ###### ./hello.js
 ```js
-module.exports = {
-  handler: function(input) {
-    return "Hello, world!";
-  }
-};
+let datafire = requrie('datafire');
+module.exports = new datafire.Action({
+  handler: input => "Hello, world!",
+});
 ```
 
 ### Trigger
@@ -154,8 +153,12 @@ Or run them in JavaScript:
 var hackerNews = require('@datafire/hacker_news').create();
 
 // Using await (requires NodeJS >= v7.10):
-var user = await hackerNews.getUser({username: 'norvig'});
-console.log(user);
+(async function() {
+
+  var user = await hackerNews.getUser({username: 'norvig'});
+  console.log(user);
+
+})();
 
 // Or with Promises:
 hackerNews.getUser({
