@@ -26,7 +26,7 @@ amazonaws_a4b
 
 amazonaws_acm
   AWS Certificate Manager
-  AWS Certificate Manager
+  Welcome to the AWS Certificate Manager (ACM) API documentation. You can use ACM to manage SSL/TLS...
 
 amazonaws_api_pricing
   AWS Price List Service
@@ -34,11 +34,11 @@ amazonaws_api_pricing
 
 amazonaws_apigateway
   Amazon API Gateway
-  Amazon API Gateway
+  Amazon API Gateway helps developers deliver robust, secure, and scalable mobile and web applicati...
 
 amazonaws_appstream2
   Amazon AppStream
-  Amazon AppStream 2.0
+  You can use Amazon AppStream 2.0 to stream desktop applications to any device running a web brows...
 
 amazonaws_appsync
   AWS AppSync
@@ -50,7 +50,7 @@ amazonaws_athena
 
 amazonaws_autoscaling
   Auto Scaling
-  Auto Scaling
+  Auto Scaling is designed to automatically launch or terminate EC2 instances based on user-defined...
 
 amazonaws_batch
   AWS Batch
@@ -66,31 +66,31 @@ amazonaws_ce
 
 amazonaws_cloud9
   AWS Cloud9
-  AWS Cloud9
+  AWS Cloud9 is a collection of tools that you can use to code, build, run, test, debug, and releas...
 
 amazonaws_clouddirectory
   Amazon CloudDirectory
-  Amazon Cloud Directory
+  Amazon Cloud Directory is a component of the AWS Directory Service that simplifies the developmen...
 
 amazonaws_cloudformation
   AWS CloudFormation
-  AWS CloudFormation
+  AWS CloudFormation allows you to create and manage AWS infrastructure deployments predictably and...
 
 amazonaws_cloudfront
   Amazon CloudFront
-  Amazon CloudFront
+  This is the Amazon CloudFront API Reference. This guide is for developers who need detailed infor...
 
 amazonaws_cloudhsm
   Amazon CloudHSM
-  AWS CloudHSM Service
+  This is documentation for AWS CloudHSM Classic. For more information, see AWS CloudHSM Classic FA...
 
 amazonaws_cloudhsmv2
   AWS CloudHSM V2
-  For more information about AWS CloudHSM, see [AWS CloudHSM](http://aws.amazon.com/cloudhsm/) and ...
+  For more information about AWS CloudHSM, see AWS CloudHSM and the AWS CloudHSM User Guide.
 
 amazonaws_cloudsearch
   Amazon CloudSearch
-  Amazon CloudSearch Configuration Service
+  You use the Amazon CloudSearch configuration service to create, configure, and manage search doma...
 
 amazonaws_cloudsearchdomain
   Amazon CloudSearch Domain
@@ -98,31 +98,31 @@ amazonaws_cloudsearchdomain
 
 amazonaws_cloudtrail
   AWS CloudTrail
-  AWS CloudTrail
+  This is the CloudTrail API Reference. It provides descriptions of actions, data types, common par...
 
 amazonaws_codebuild
   AWS CodeBuild
-  AWS CodeBuild
+  AWS CodeBuild is a fully managed build service in the cloud. AWS CodeBuild compiles your source c...
 
 amazonaws_codecommit
   AWS CodeCommit
-  AWS CodeCommit
+  This is the AWS CodeCommit API Reference. This reference provides descriptions of the operations ...
 
 amazonaws_codedeploy
   AWS CodeDeploy
-  AWS CodeDeploy
+  AWS CodeDeploy is a deployment service that automates application deployments to Amazon EC2 insta...
 
 amazonaws_codepipeline
   AWS CodePipeline
-  AWS CodePipeline
+  Overview This is the AWS CodePipeline API Reference. This guide provides descriptions of the acti...
 
 amazonaws_codestar
   AWS CodeStar
-  AWS CodeStar
+  This is the API reference for AWS CodeStar. This reference provides descriptions of the operation...
 
 amazonaws_cognito_identity
   Amazon Cognito Identity
-  Amazon Cognito
+  Amazon Cognito is a web service that delivers scoped temporary credentials to mobile devices and ...
 
 amazonaws_cognito_idp
   Amazon Cognito Identity Provider
@@ -130,7 +130,7 @@ amazonaws_cognito_idp
 
 amazonaws_cognito_sync
   Amazon Cognito Sync
-  Amazon Cognito Sync
+  Amazon Cognito Sync provides an AWS service and client library that enable cross-device syncing o...
 
 amazonaws_comprehend
   Amazon Comprehend
@@ -138,7 +138,7 @@ amazonaws_comprehend
 
 amazonaws_config
   AWS Config
-  AWS Config
+  AWS Config provides a way to keep track of the configurations of all the AWS resources associated...
 
 amazonaws_cur
   AWS Cost and Usage Report Service
@@ -146,7 +146,7 @@ amazonaws_cur
 
 amazonaws_data_iot
   AWS IoT Data Plane
-  AWS IoT
+  AWS IoT-Data enables secure, bi-directional communication between Internet-connected things (such...
 
 amazonaws_data_jobs_iot
   AWS IoT Jobs Data Plane
@@ -174,23 +174,23 @@ amazonaws_directconnect
 
 amazonaws_discovery
   AWS Application Discovery Service
-  AWS Application Discovery Service
+  AWS Application Discovery Service helps you plan application migration projects by automatically ...
 
 amazonaws_dms
   AWS Database Migration Service
-  AWS Database Migration Service
+  AWS Database Migration Service (AWS DMS) can migrate your data to and from the most widely used c...
 
 amazonaws_ds
   AWS Directory Service
-  AWS Directory Service
+  AWS Directory Service is a web service that makes it easy for you to setup and run directories in...
 
 amazonaws_dynamodb
   Amazon DynamoDB
-  Amazon DynamoDB
+  Amazon DynamoDB is a fully managed NoSQL database service that provides fast and predictable perf...
 
 amazonaws_ec2
   Amazon Elastic Compute Cloud
-  Amazon Elastic Compute Cloud
+  Amazon Elastic Compute Cloud (Amazon EC2) provides resizable computing capacity in the Amazon Web...
 
 amazonaws_ecr
   Amazon EC2 Container Registry
@@ -202,19 +202,19 @@ amazonaws_ecs
 
 amazonaws_elasticache
   Amazon ElastiCache
-  Amazon ElastiCache
+  Amazon ElastiCache is a web service that makes it easier to set up, operate, and scale a distribu...
 
 amazonaws_elasticbeanstalk
   AWS Elastic Beanstalk
-  AWS Elastic Beanstalk
+  AWS Elastic Beanstalk makes it easy for you to create, deploy, and manage scalable, fault-toleran...
 
 amazonaws_elasticfilesystem
   Amazon Elastic File System
-  Amazon Elastic File System
+  Amazon Elastic File System (Amazon EFS) provides simple, scalable file storage for use with Amazo...
 
 amazonaws_elasticloadbalancing
   Elastic Load Balancing
-  Elastic Load Balancing
+  A load balancer distributes incoming traffic across targets, such as your EC2 instances. This ena...
 
 amazonaws_elasticmapreduce
   Amazon Elastic MapReduce
@@ -222,19 +222,19 @@ amazonaws_elasticmapreduce
 
 amazonaws_elastictranscoder
   Amazon Elastic Transcoder
-  AWS Elastic Transcoder Service
+  The AWS Elastic Transcoder Service.
 
 amazonaws_email
   Amazon Simple Email Service
-  Amazon Simple Email Service
+  This is the API Reference for Amazon Simple Email Service (Amazon SES). This documentation is int...
 
 amazonaws_entitlement_marketplace
   AWS Marketplace Entitlement Service
-  AWS Marketplace Entitlement Service
+  This reference provides descriptions of the AWS Marketplace Entitlement Service API. AWS Marketpl...
 
 amazonaws_es
   Amazon Elasticsearch Service
-  Amazon Elasticsearch Configuration Service
+  Use the Amazon Elasticsearch configuration API to create, configure, and manage Elasticsearch dom...
 
 amazonaws_events
   Amazon CloudWatch Events
@@ -242,19 +242,19 @@ amazonaws_events
 
 amazonaws_firehose
   Amazon Kinesis Firehose
-  Amazon Kinesis Firehose API Reference
+  Amazon Kinesis Firehose is a fully managed service that delivers real-time streaming data to dest...
 
 amazonaws_gamelift
   Amazon GameLift
-  Amazon GameLift Service
+  Amazon GameLift is a managed service for developers who need a scalable, dedicated server solutio...
 
 amazonaws_glacier
   Amazon Glacier
-  Amazon Glacier is a storage solution for "cold data."
+  Amazon Glacier is a storage solution for "cold data." Amazon Glacier is an extremely low-cost sto...
 
 amazonaws_glue
   AWS Glue
-  AWS Glue
+  Defines the public endpoint for the AWS Glue service.
 
 amazonaws_greengrass
   AWS Greengrass
@@ -266,27 +266,27 @@ amazonaws_guardduty
 
 amazonaws_health
   AWS Health APIs and Notifications
-  AWS Health
+  The AWS Health API provides programmatic access to the AWS Health information that is presented i...
 
 amazonaws_iam
   AWS Identity and Access Management
-  AWS Identity and Access Management
+  AWS Identity and Access Management (IAM) is a web service that you can use to manage users and us...
 
 amazonaws_importexport
   AWS Import/Export
-  AWS Import/Export Service AWS Import/Export accelerates transferring large amounts of data betwee...
+  AWS Import/Export accelerates transferring large amounts of data between the AWS cloud and portab...
 
 amazonaws_inspector
   Amazon Inspector
-  Amazon Inspector
+  Amazon Inspector enables you to analyze the behavior of your AWS resources and to identify potent...
 
 amazonaws_iot
   AWS IoT
-  AWS IoT
+  AWS IoT provides secure, bi-directional communication between Internet-connected things (such as ...
 
 amazonaws_kinesis
   Amazon Kinesis
-  Amazon Kinesis Streams Service API Reference
+  Amazon Kinesis Streams is a managed service that scales elastically for real time processing of s...
 
 amazonaws_kinesisanalytics
   Amazon Kinesis Analytics
@@ -296,11 +296,11 @@ amazonaws_kinesisvideo
 
 amazonaws_kms
   AWS Key Management Service
-  AWS Key Management Service
+  AWS Key Management Service (AWS KMS) is an encryption and key management web service. This guide ...
 
 amazonaws_lambda
   AWS Lambda
-  AWS Lambda
+  Overview This is the AWS Lambda API Reference. The AWS Lambda Developer Guide provides additional...
 
 amazonaws_lightsail
   Amazon Lightsail
@@ -336,7 +336,7 @@ amazonaws_mediastore
 
 amazonaws_metering_marketplace
   AWSMarketplace Metering
-  AWS Marketplace Metering Service
+  This reference provides descriptions of the low-level AWS Marketplace Metering Service API. AWS M...
 
 amazonaws_mgh
   AWS Migration Hub
@@ -351,7 +351,7 @@ amazonaws_mobileanalytics
 
 amazonaws_models_lex
   Amazon Lex Model Building Service
-  Amazon Lex Build-Time Actions
+  Amazon Lex is an AWS service for building conversational voice and text interfaces. Use these act...
 
 amazonaws_monitoring
   Amazon CloudWatch
@@ -363,34 +363,33 @@ amazonaws_mq
 
 amazonaws_mturk_requester
   Amazon Mechanical Turk
-  Amazon Mechanical Turk API Reference
 
 amazonaws_opsworks
   AWS OpsWorks
-  AWS OpsWorks
+  Welcome to the AWS OpsWorks Stacks API Reference. This guide provides descriptions, syntax, and u...
 
 amazonaws_opsworks_cm
   AWS OpsWorks for Chef Automate
-  AWS OpsWorks for Chef Automate
+  AWS OpsWorks for configuration management (CM) is a service that runs and manages configuration m...
 
 amazonaws_organizations
   AWS Organizations
-  AWS Organizations API Reference
+  AWS Organizations is a web service that enables you to consolidate your multiple AWS accounts int...
 
 amazonaws_pinpoint
   Amazon Pinpoint
 
 amazonaws_polly
   Amazon Polly
-  Amazon Polly is a web service that makes it easy to synthesize speech from text.
+  Amazon Polly is a web service that makes it easy to synthesize speech from text. The Amazon Polly...
 
 amazonaws_rds
   Amazon Relational Database Service
-  Amazon Relational Database Service
+  Amazon Relational Database Service (Amazon RDS) is a web service that makes it easier to set up, ...
 
 amazonaws_redshift
   Amazon Redshift
-  Amazon Redshift
+  Overview This is an interface reference for Amazon Redshift. It contains documentation for one of...
 
 amazonaws_rekognition
   Amazon Rekognition
@@ -398,7 +397,7 @@ amazonaws_rekognition
 
 amazonaws_resource_groups
   AWS Resource Groups
-  AWS Resource Groups
+  AWS Resource Groups lets you organize AWS resources such as Amazon EC2 instances, Amazon Relation...
 
 amazonaws_route53
   Amazon Route 53
@@ -432,11 +431,11 @@ amazonaws_serverlessrepo
 
 amazonaws_servicecatalog
   AWS Service Catalog
-  AWS Service Catalog
+  AWS Service Catalog enables organizations to create and manage catalogs of IT services that are a...
 
 amazonaws_shield
   AWS Shield
-  AWS Shield Advanced
+  This is the AWS Shield Advanced API Reference. This guide is for developers who need detailed inf...
 
 amazonaws_sms
   AWS Server Migration Service
@@ -448,43 +447,43 @@ amazonaws_snowball
 
 amazonaws_sns
   Amazon Simple Notification Service
-  Amazon Simple Notification Service
+  Amazon Simple Notification Service (Amazon SNS) is a web service that enables you to build distri...
 
 amazonaws_sqs
   Amazon Simple Queue Service
-  Welcome to the _Amazon Simple Queue Service API Reference_.
+  Welcome to the Amazon Simple Queue Service API Reference. Amazon Simple Queue Service (Amazon SQS...
 
 amazonaws_ssm
   Amazon Simple Systems Manager (SSM)
-  AWS Systems Manager
+  AWS Systems Manager is a collection of capabilities that helps you automate management tasks such...
 
 amazonaws_states
   AWS Step Functions
-  AWS Step Functions
+  AWS Step Functions is a service that lets you coordinate the components of distributed applicatio...
 
 amazonaws_storagegateway
   AWS Storage Gateway
-  AWS Storage Gateway Service
+  AWS Storage Gateway is the service that connects an on-premises software appliance with cloud-bas...
 
 amazonaws_streams_dynamodb
   Amazon DynamoDB Streams
-  Amazon DynamoDB
+  Amazon DynamoDB Streams provides API actions for accessing streams and processing stream records....
 
 amazonaws_sts
   AWS Security Token Service
-  AWS Security Token Service
+  The AWS Security Token Service (STS) is a web service that enables you to request temporary, limi...
 
 amazonaws_support
   AWS Support
-  AWS Support
+  The AWS Support API reference is intended for programmers who need detailed information about the...
 
 amazonaws_swf
   Amazon Simple Workflow Service
-  Amazon Simple Workflow Service
+  The Amazon Simple Workflow Service (Amazon SWF) makes it easy to build applications that use Amaz...
 
 amazonaws_tagging
   AWS Resource Groups Tagging API
-  Resource Groups Tagging API
+  This guide describes the API operations for the resource groups tagging. A tag is a label that yo...
 
 amazonaws_translate
   Amazon Translate
@@ -492,19 +491,19 @@ amazonaws_translate
 
 amazonaws_waf
   AWS WAF
-  This is the _AWS WAF API Reference_ for using AWS WAF with Amazon CloudFront. The AWS WAF actions...
+  This is the AWS WAF API Reference for using AWS WAF with Amazon CloudFront. The AWS WAF actions a...
 
 amazonaws_waf_regional
   AWS WAF Regional
-  This is the _AWS WAF Regional API Reference_ for using AWS WAF with Elastic Load Balancing (ELB) ...
+  This is the AWS WAF Regional API Reference for using AWS WAF with Elastic Load Balancing (ELB) Ap...
 
 amazonaws_workdocs
   Amazon WorkDocs
-  The WorkDocs API is designed for the following use cases:
+  The WorkDocs API is designed for the following use cases:   File Migration: File migration applic...
 
 amazonaws_workspaces
   Amazon WorkSpaces
-  Amazon WorkSpaces Service
+  Amazon WorkSpaces enables you to provision virtual, cloud-based Microsoft Windows desktops for yo...
 
 amazonaws_xray
   AWS X-Ray
@@ -592,7 +591,7 @@ apitore_sentencesimilarity
 
 apitore_sentimentapis
   Sentiment APIs
-  Japanese sentiment analyzer. (tokenized by SentencePiece)[Endpoint] https://api.apitore.com/api/39
+  Japanese sentiment analyzer.[Endpoint] https://api.apitore.com/api/52
 
 apitore_synonymapis
   Synonym APIs
@@ -700,7 +699,7 @@ art19
 
 ato_gov_au
   Business Registries
-  # Introduction The Business Registries API is built on HTTP. The API is RESTful. It has predictab...
+  The Business Registries API is built on HTTP. The API is RESTful. It has predictable resource URIs.
 
 aucklandmuseum
   Auckland Museum
@@ -712,7 +711,7 @@ authentiq
 
 avaza
   Avaza
-  For testing and experimenting with Avaza's API features.
+  For testing and experimenting with Avaza's API features. API SecurityAuthentication options inclu...
 
 aviationdata_systems
   AviationData.Systems Airports API V1
@@ -966,7 +965,7 @@ beanstream
 
 beezup
   BeezUP
-  # The REST API of BeezUP system
+  Overview
 
 betfair
   Betfair: Exchange Streaming
@@ -974,7 +973,6 @@ betfair
 
 bigoven
   BigOven
-  #Documentation
 
 bikewise
   BikeWise API v2
@@ -1062,7 +1060,7 @@ cisco
 
 citrix_gotoassistseeit
   GoToAssist Seeit
-  Allows you to integrate GoToAssist Seeit into your own solutions.
+  Allows you to integrate GoToAssist Seeit into your own solutions.General notes:GoToAssist Seeit s...
 
 citrix_gotomeeting
   GoToMeeting
@@ -1098,7 +1096,7 @@ clickmeter
 
 cloud_gov
   Discovery Market Research
-  This API drives the [Discovery Market Research Tool](https://discovery.gsa.gov). It contains info...
+  This API drives the Discovery Market Research Tool.
 
 cnab_online_herokuapp
   Cnab Online
@@ -1113,7 +1111,7 @@ consumerfinance_gov
 
 core_ac_uk
   CORE API v2
-  You can use the CORE API to access the resources harvested and enriched by CORE. If you encounter...
+  You can use the CORE API to access the
 
 cybertaxonomy_eu
   EU BON UTIS
@@ -1155,7 +1153,7 @@ deutschebahn_flinkster
   This REST-API enables you to query for private transport sharing offers provided by companies and...
 
 deutschebahn_reisezentren
-  Reisezentren
+  Reisezentren-API
   This REST-API enables you to query information about travel centers in Germany.
 
 deutschebahn_stada
@@ -1264,7 +1262,7 @@ fitbit
 
 flat
   Flat
-  The Flat API allows you to easily extend the abilities of the [Flat Platform](https://flat.io), w...
+  The Flat API allows you to easily extend the abilities of the Flat Platform, with a wide range of...
 
 formapi
   API V1
@@ -1310,7 +1308,7 @@ giphy
 
 gisgraphy
   Gisgraphy webservices
-  Since 2006, [Gisgraphy](http://www.gisgraphy.com) is a free, open source framework that offers th...
+  Since 2006, Gisgraphy is a free, open source framework that offers the possibility to do geolocal...
 
 github
   GitHub
@@ -1474,7 +1472,7 @@ google_consumersurveys
 
 google_container
   Google Container Engine
-  The Google Container Engine API is used for building and managing container based applications, p...
+  The Google Kubernetes Engine API is used for building and managing container based applications, ...
 
 google_content
   Content API for Shopping
@@ -1857,7 +1855,7 @@ gov_bc_ca_geomark
 
 gov_bc_ca_jobposting
   WorkBC Job Posting
-  This API allows you to receive a feed of jobs from WorkBC's Job Board. Please see our [data colle...
+  This API allows you to receive a feed of jobs from WorkBC's Job Board. Please see our <a href="ht...
 
 gov_bc_ca_open511
   DriveBC's Open511
@@ -1913,13 +1911,14 @@ hetras_certification_hotel
 
 hhs_gov
   HHS Media Services
+  Common Features / Behaviors
 
 hsbc
   HSBC UK
 
 icons8
   Icons8
-  Icons8 API allows us to search and obtain [our icons](https://icons8.com/web-app).
+  Icons8 API allows us to search and obtain our icons.
 
 idtbeyond
   Active Documentation for /v1
@@ -2037,7 +2036,7 @@ mashape_geodb
 
 mcw_edu
   Rat Genome Database
-  The RGD REST API provides programmatic access to information and annotation stored in Rat Genome ...
+  The RGD REST API provides programmatic access to information and annotation stored in the Rat Gen...
 
 medium
   Medium.com
@@ -2070,7 +2069,7 @@ naviplancentral_factfinder
   An API for accessing the Narrator Fact Finder.
 
 naviplancentral_plan
-  Narrator Connect powered by NaviPlan
+  Published Plan Service
   An API for accessing NaviPlan plan data for a client.
 
 nba
@@ -2079,15 +2078,15 @@ nba
 
 neowsapp
   NeoWs - (Near Earth Object Web Service)
-  A web service for near earth objects. All the data is from the [NASA JPL Asteroid team](http://ne...
+  A web service for near earth objects. All the data is from the  NASA JPL Asteroid team.
 
 netatmo
   Netatmo
-  ### Welcome to the Netatmo swagger on-line documentation !
+  Welcome to the Netatmo swagger on-line documentation !This site is a complement to the official N...
 
 netlicensing
   Labs64 NetLicensing RESTful API Test Center
-  The Labs64 [NetLicensing RESTful API](https://www.labs64.de/confluence/x/pwCo) gives you access t...
+  The Labs64 NetLicensing RESTful API gives you access to NetLicensing’s core features.Authenticati...
 
 neutrinoapi
   NeutrinoAPI
@@ -2204,7 +2203,7 @@ opendatasoft
 
 openfintech
   OpenFinTech.io
-  # Introduction [OpenFinTech.io](https://openfintech.io) is an open database that comprises of sta...
+  OpenFinTech.io is an open database that comprises of standardized primary data for FinTech industry.
 
 orghunter
   OrgHunter
@@ -2212,7 +2211,7 @@ orghunter
 
 osf
   OSF APIv2 Documentation
-  Welcome to the documentation for the Open Science Framework API. With this API you can access use...
+  https://api.osf.io/v2/
 
 osisoft
   PI Web API 2017 Swagger Spec
@@ -2242,11 +2241,11 @@ patientview
 
 paylocity
   Paylocity
-  For general questions and support of the API, contact: vendorrelations@paylocity.com # Overview P...
+  For general questions and support of the API, contact: vendorrelations@paylocity.com
 
 paypal
   PayPal Sandbox
-  Bring payments to apps, mobile and social with Adaptive Payments **(Sandbox API).**
+  Bring payments to apps, mobile and social with Adaptive Payments (Sandbox API).
 
 payrun
   PayRun.IO
@@ -2286,7 +2285,7 @@ postmarkapp_server
 
 posty
   posty_API
-  The posty_API is the core element of the posty softwarestack. It is developed to administrate a m...
+  The postyAPI is the core element of the posty softwarestack. It is developed to administrate a ma...
 
 producthunt
   Product Hunt
@@ -2305,11 +2304,11 @@ quandl
 
 rbaskets_in
   Request Baskets
-  RESTful API of [Request Baskets](https://rbaskets.in) service.
+  RESTful API of Request Baskets service.
 
 rebilly
   Rebilly
-  # Introduction
+  The Rebilly API is built on HTTP.  Our API is RESTful.  It has predictable
 
 reddit
   Reddit
@@ -2391,11 +2390,9 @@ semantria
 
 sendgrid
   SendGrid v3
-  # The SendGrid Web API V3 Documentation
 
 shipstation
   ShipStation Developer Portal
-  # Integrating with ShipStation
 
 shopping_com
   Shopping.com
@@ -2470,11 +2467,11 @@ swagger_generator
 
 swaggerhub
   SwaggerHub Registry
-  # Introduction
+  This is the registry API for SwaggerHub. It allows you to access, manage, and update your APIs an...
 
 synq_fm
   SYNQ Video
-  * [Sign up for a developer API key!](https://www.synq.fm/register)
+  Sign up for a developer API key!
 
 t213_vg
   Magento Enterprise
@@ -2518,10 +2515,11 @@ trello
 
 tumblr
   Tumblr
+  Share photos, mobile apps, and social network using Tumblr's API's.
 
 tvmaze
   TVmaze
-  Access to the user API is only possible for users with a [premium](http://www.tvmaze.com/premium)...
+  Access to the user API is only possible for users with a premium account. A user can only access ...
 
 twilio
   Twilio
@@ -2529,7 +2527,7 @@ twilio
 
 twinehealth
   Twine
-  # Overview
+  The Twine Health API is RESTful API. The requests and responses are formated according to the JSO...
 
 uebermaps
   uebermaps API endpoints
@@ -2564,7 +2562,7 @@ vocadb
 
 voodoomfg
   Voodoo Manufacturing
-  Welcome to the Voodoo Manufacturing API docs! Your Voodoo Manufacturing API key must be included ...
+  Welcome to the Voodoo Manufacturing API docs!
 
 waag
   CitySDK Linked Data
@@ -2579,11 +2577,11 @@ wavecell
 
 wealthport
   Wealthport
-  Wealthport provides a simple, lightweight and open Web API based on the Open API 2.0 standard ([h...
+  Wealthport provides a simple, lightweight and open Web API based on the Open API 2.0 standard (ht...
 
 weatherbit
   Weatherbit.io - Weather
-  This is the documentation for the Weatherbit API.  The base URL for the API is [http://api.weathe...
+  This is the documentation for the Weatherbit API.  The base URL for the API is http://api.weather...
 
 whapi_accounts
   Accounts
@@ -2651,7 +2649,6 @@ wordnik
 
 wowza
   Wowza Streaming Cloud REST API Reference Documentation
-  # About the REST API The Wowza Streaming CloudTM REST API (application programming interface) off...
 
 wso2apistore_transform
   Transform
@@ -2687,7 +2684,7 @@ zoomconnect
 
 zuora
   Zuora API Reference
-  # Introduction Welcome to the reference for the Zuora REST API! [REST](http://en.wikipedia.org/wi...
+  Welcome to the reference for the Zuora REST API!
 
 fileserver
   File Server
@@ -2696,6 +2693,9 @@ fileserver
 http
   HTTP
   Make HTTP calls
+
+imap
+  Interact with e-mail servers via the Internet Message Access Protocol
 
 lucybot_docs
   LucyBot API Documentation
