@@ -32,7 +32,7 @@ class Event {
     if (verbose) {
       this.log();
     }
-    if (this.errorHandler) {
+    if (this.error && this.errorHandler) {
       let ctx = this.project ? this.project.getContext({type: 'error'}) : new Context({type: 'error'});
       this.errorHandler.action.run({error: this.error, errorContext: this.context}, ctx);
     }
