@@ -69,8 +69,16 @@ class ProjectServer {
             message = paramPath[1] + ': ' + message;
           }
           res.set("Content-type", "application/json; charset=utf-8");
-          res.status(err.status || 500);
+          const statusCode = err.status || 500;
+          res.status(statusCode);
           res.send(JSON.stringify({error: message}, null, 2));
+          let event = this.project.monitor.startEvent('http', {
+            method: req.method,
+            path: req.path,
+            id: req.method.toUpperCase() + ' ' + req.path,
+            statusCode,
+          });
+          event.end();
         });
         this.setPaths(router);
         resolve(router);
@@ -135,6 +143,7 @@ class ProjectServer {
           headers: req.headers,
           body: req.body,
           path: req.path,
+          pathTemplate: path,
           method: req.method,
         },
       });
