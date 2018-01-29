@@ -53,7 +53,7 @@ module.exports = new datafire.Action({
     title: 'name',
     type: 'string',
     maxLength: 20,
-    pattern: '\w+'
+    pattern: '\\w+',
     default: "World",
   }],
 })
