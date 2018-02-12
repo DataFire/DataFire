@@ -1,7 +1,7 @@
 "use strict";
 
 const util = require('../util');
-var jsf = require('json-schema-faker');
+var jsf = require('json-schema-faker-bb');
 jsf.option({
   failOnInvalidFormat: false,
   failOnInvalidTypes: false,
