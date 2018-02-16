@@ -2686,6 +2686,10 @@ zuora
   Zuora API Reference
   Welcome to the reference for the Zuora REST API!
 
+caldav
+  CalDAV
+  Access and update calendar data using the CalDAV protocol
+
 fileserver
   File Server
   Serve static files, such as HTML, CSS, JavaScript, and images
@@ -2703,6 +2707,10 @@ lucybot_docs
 mongodb
   MongoDB
   Interact with MongoDB
+
+smtp
+  SMTP
+  Send e-mail using the SMTP protocol
 
 swaggerui
   Swagger UI
