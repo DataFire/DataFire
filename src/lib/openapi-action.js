@@ -181,7 +181,7 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
           }
         })
       }
-      if (modifyReq) modifyReq(reqOpts);
+      if (modifyReq) modifyReq(reqOpts, ctx);
       return new Promise(sendRequest);
     }
   });
