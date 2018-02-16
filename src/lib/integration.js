@@ -264,7 +264,7 @@ Integration.prototype.addOAuthActions = function() {
 /**
  * Builds an integration from an Open API specification.
  */
-Integration.fromOpenAPI = function(openapi, id) {
+Integration.fromOpenAPI = function(openapi, id, modifyReq) {
   openapiUtil.initialize(openapi);
   id = id || openapi.host;
   let security = {};
@@ -284,7 +284,7 @@ Integration.fromOpenAPI = function(openapi, id) {
       if (util.openapi.METHODS.indexOf(method) === -1) continue;
       let op = openapi.paths[path][method];
       let opID = openapiUtil.getOperationId(method, path, op);
-      integration.addAction(opID, Action.fromOpenAPI(method, path, openapi, integration));
+      integration.addAction(opID, Action.fromOpenAPI(method, path, openapi, integration, modifyReq));
     }
   }
   return integration;

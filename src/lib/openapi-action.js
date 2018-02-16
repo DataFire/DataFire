@@ -11,7 +11,7 @@ const ZLIB_OPTIONS = {
 
 const BODY_METHODS = ['put', 'patch', 'post'];
 
-const getActionFromOperation = module.exports = function(method, path, openapi, integration) {
+const getActionFromOperation = module.exports = function(method, path, openapi, integration, modifyReq) {
   let op = openapi.paths[path][method];
   let params = op.parameters || [];
   let hasRequiredParam = !!params.filter(p => p.required).length;
@@ -181,7 +181,7 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
           }
         })
       }
-
+      if (modifyReq) modifyReq(reqOpts);
       return new Promise(sendRequest);
     }
   });
