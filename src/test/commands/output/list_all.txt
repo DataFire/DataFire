@@ -2,12 +2,12 @@
   1Forge Finance APIs
   Stock and Forex Data and Realtime Quotes
 
-3blades_ai
-  3blades
-
 6_dot_authentiqio_appspot
   Authentiq
   Strong authentication, without the passwords.
+
+adafruit
+  Adafruit IO
 
 afterbanks
   Afterbanks
@@ -52,13 +52,17 @@ amazonaws_autoscaling
   Auto Scaling
   Auto Scaling is designed to automatically launch or terminate EC2 instances based on user-defined...
 
+amazonaws_autoscaling_plans
+  AWS Auto Scaling Plans
+  Use AWS Auto Scaling to quickly discover all the scalable AWS resources for your application and ...
+
 amazonaws_batch
   AWS Batch
   AWS Batch enables you to run batch computing workloads on the AWS Cloud. Batch computing is a com...
 
 amazonaws_budgets
   AWS Budgets
-  All public APIs for AWS Budgets
+  Budgets enable you to plan your service usage, service costs, and your RI utilization. You can al...
 
 amazonaws_ce
   AWS Cost Explorer Service
@@ -190,7 +194,7 @@ amazonaws_dynamodb
 
 amazonaws_ec2
   Amazon Elastic Compute Cloud
-  Amazon Elastic Compute Cloud (Amazon EC2) provides resizable computing capacity in the Amazon Web...
+  Amazon Elastic Compute Cloud (Amazon EC2) provides resizable computing capacity in the AWS Cloud....
 
 amazonaws_ecr
   Amazon EC2 Container Registry
@@ -286,7 +290,13 @@ amazonaws_iot
 
 amazonaws_kinesis
   Amazon Kinesis
-  Amazon Kinesis Streams is a managed service that scales elastically for real time processing of s...
+  Amazon Kinesis Data Streams is a managed service that scales elastically for real-time processing...
+
+amazonaws_kinesis_video_archived_media
+  Amazon Kinesis Video Streams Archived Media
+
+amazonaws_kinesis_video_media
+  Amazon Kinesis Video Streams Media
 
 amazonaws_kinesisanalytics
   Amazon Kinesis Analytics
@@ -399,6 +409,10 @@ amazonaws_resource_groups
   AWS Resource Groups
   AWS Resource Groups lets you organize AWS resources such as Amazon EC2 instances, Amazon Relation...
 
+amazonaws_resourcegroupstaggingapi
+  AWS Resource Groups Tagging API
+  This guide describes the API operations for the resource groups tagging. A tag is a label that yo...
+
 amazonaws_route53
   Amazon Route 53
 
@@ -432,6 +446,10 @@ amazonaws_serverlessrepo
 amazonaws_servicecatalog
   AWS Service Catalog
   AWS Service Catalog enables organizations to create and manage catalogs of IT services that are a...
+
+amazonaws_servicediscovery
+  Amazon Route 53 Auto Naming
+  Amazon Route 53 auto naming lets you configure public or private namespaces that your microservic...
 
 amazonaws_shield
   AWS Shield
@@ -481,9 +499,9 @@ amazonaws_swf
   Amazon Simple Workflow Service
   The Amazon Simple Workflow Service (Amazon SWF) makes it easy to build applications that use Amaz...
 
-amazonaws_tagging
-  AWS Resource Groups Tagging API
-  This guide describes the API operations for the resource groups tagging. A tag is a label that yo...
+amazonaws_transcribe
+  Amazon Transcribe Service
+  Operations and objects for transcribing speech to text.
 
 amazonaws_translate
   Amazon Translate
@@ -501,6 +519,10 @@ amazonaws_workdocs
   Amazon WorkDocs
   The WorkDocs API is designed for the following use cases:   File Migration: File migration applic...
 
+amazonaws_workmail
+  Amazon WorkMail
+  Amazon WorkMail is a secure, managed business email and calendaring service with support for exis...
+
 amazonaws_workspaces
   Amazon WorkSpaces
   Amazon WorkSpaces enables you to provision virtual, cloud-based Microsoft Windows desktops for yo...
@@ -513,6 +535,10 @@ apacta
   Apacta
   API for a tool to craftsmen used to register working hours, material usage and quality assurance.
 
+apigee_marketcheck_cars
+  Marketcheck Cars
+  Access the New, Used and Certified cars inventories for all Car Dealers in US. The data is source...
+
 apimatic
   APIMATIC API Transformer
   Transform API Descriptions from/to various formats
@@ -520,174 +546,6 @@ apimatic
 apis_guru
   APIs.guru
   Wikipedia for Web APIs. Repository of API specs in OpenAPI(fka Swagger) 2.0 format.
-
-apitore_2chmatomefeedsapis
-  2ch matome feeds APIs
-  Various 2ch matome feeds.[Endpoint] https://api.apitore.com/api/29
-
-apitore_certificatefeedsapis
-  Certificate feeds APIs
-  Various certificate feeds.[Endpoint] https://api.apitore.com/api/31
-
-apitore_cosinesimilarity
-  Cosine Similarity
-  Cosine Similarity.[Endpoint] https://api.apitore.com/api/49
-
-apitore_designfeedsapis
-  Design feeds APIs
-  Various design feeds.[Endpoint] https://api.apitore.com/api/32
-
-apitore_documentfrequencyapis
-  Document frequency APIs
-  Document frequency of Wikipedia.[Endpoint] https://api.apitore.com/api/16
-
-apitore_gamefeedsapis
-  Game feeds APIs
-  Various game feeds.[Endpoint] https://api.apitore.com/api/33
-
-apitore_japanesewordnetapis
-  Japanese WordNet APIs
-  Return all WordNet words.[Endpoint] https://api.apitore.com/api/40
-
-apitore_kmeansclusteringbyword2vec
-  Kmeans clustering by word2vec
-  Kmeans clustering by word2vec.[Endpoint] https://api.apitore.com/api/48
-
-apitore_kuromojiapis
-  Kuromoji APIs
-  Kuromoji: japanese morphological analyzer.[Endpoint] https://api.apitore.com/api/7
-
-apitore_languagedetectionapis
-  Language Detection APIs
-  Language detection.[Endpoint] https://api.apitore.com/api/22
-
-apitore_newsfeedsapis
-  News feeds APIs
-  Various news feeds.[Endpoint] https://api.apitore.com/api/34
-
-apitore_pioneerblogfeedsapis
-  Pioneer blog feeds APIs
-  Various blog feeds.[Endpoint] https://api.apitore.com/api/30
-
-apitore_rss2jsonapis
-  RSS2JSON APIs
-  Rss to Json.[Endpoint] https://api.apitore.com/api/28
-
-apitore_sentencepieceapis_tweet_
-  SentencePiece APIs (tweet)
-  SentencePiece tokenizer (tweet).[Endpoint] https://api.apitore.com/api/38
-
-apitore_sentencepieceapis_wikipedia_
-  SentencePiece APIs (wikipedia)
-  SentencePiece tokenizer (wikipedia).[Endpoint] https://api.apitore.com/api/37
-
-apitore_sentenceseparatorapis
-  Sentence separator APIs
-  Simple sentence separator.[Endpoint] https://api.apitore.com/api/17
-
-apitore_sentencesimilarity
-  Sentence Similarity
-  Sentence Similarity.[Endpoint] https://api.apitore.com/api/53
-
-apitore_sentimentapis
-  Sentiment APIs
-  Japanese sentiment analyzer.[Endpoint] https://api.apitore.com/api/52
-
-apitore_synonymapis
-  Synonym APIs
-  Return synonymous words. (equal to "word2vec distance")[Endpoint] https://api.apitore.com/api/9
-
-apitore_techfeedsapis
-  Tech feeds APIs
-  Various tech feeds.[Endpoint] https://api.apitore.com/api/35
-
-apitore_text2labelbytfidfapis
-  Text2Label by tfidf APIs
-  Text to label by tfidf of contents.[Endpoint] https://api.apitore.com/api/18
-
-apitore_text2labelbywordvectorapis
-  Text2Label by word vector APIs
-  Text to label by word2vec of contents.[Endpoint] https://api.apitore.com/api/19
-
-apitore_travelfeedsapis
-  Travel feeds APIs
-  Various travel feeds.[Endpoint] https://api.apitore.com/api/36
-
-apitore_tweetsummarizationapis
-  Tweet summarization APIs
-  Tweet summarization.[Endpoint] https://api.apitore.com/api/27
-
-apitore_twitterapis
-  Twitter APIs
-  Call Twitter APIs.[Endpoint] https://api.apitore.com/api/23
-
-apitore_twitterapiswithsentimentbyapitoresentimentapi
-  Twitter APIs with sentiment by Apitore sentiment
-  Call Twitter APIs with sentiment by Apitore sentiment API.[Endpoint] https://api.apitore.com/api/25
-
-apitore_twitterapiswithword2vecqueryexpansion
-  Twitter APIs with Word2Vec query expansion
-  Call Twitter APIs with word2vec query expansion.[Endpoint] https://api.apitore.com/api/24
-
-apitore_twitterapiswithword2vecqueryexpansion_andaddsentimentbyapitoresentimentapi
-  Twitter APIs with Word2Vec query expansion, and add sentiment by Apitore sentiment
-  Call Twitter APIs with word2vec query expansion and sentiment analysis.[Endpoint] https://api.api...
-
-apitore_url2hrefapis
-  Url2Href APIs
-  Url to Href links.[Endpoint] https://api.apitore.com/api/14
-
-apitore_url2htmlapis
-  Url2Html APIs
-  Url to Html.[Endpoint] https://api.apitore.com/api/12
-
-apitore_url2labelbytfidfapis
-  Url2Label by tfidf APIs
-  Url to label by tfidf of contents.[Endpoint] https://api.apitore.com/api/20
-
-apitore_url2labelbywordvectorapis
-  Url2Label by word vector APIs
-  Url to label by word2vec of contents.[Endpoint] https://api.apitore.com/api/21
-
-apitore_url2srcapis
-  Url2Src APIs
-  Url to Image src urls.[Endpoint] https://api.apitore.com/api/15
-
-apitore_url2textapis
-  Url2Text APIs
-  Url to Text.[Endpoint] https://api.apitore.com/api/13
-
-apitore_word2vecapis
-  Word2Vec APIs
-  Word2Vec.[Endpoint] https://api.apitore.com/api/8
-
-apitore_wordnetapis
-  WordNet APIs
-  You can access ALL WordNet DB.[Endpoint] https://api.apitore.com/api/46
-
-apitore_wordnethypernymapis
-  WordNet hypernym APIs
-  Return hypernym words.[Endpoint] https://api.apitore.com/api/42
-
-apitore_wordnethyponymapis
-  WordNet hyponym APIs
-  Return hyponym words.[Endpoint] https://api.apitore.com/api/43
-
-apitore_wordnetsimilarityapis
-  WordNet Similarity APIs
-  Calculate word similarity.[Endpoint] https://api.apitore.com/api/47
-
-apitore_wordnetsynonymapis
-  WordNet synonym APIs
-  Return synonym words.[Endpoint] https://api.apitore.com/api/41
-
-apitore_wordnettranslationapis
-  WordNet translation APIs
-  Return translation words.[Endpoint] https://api.apitore.com/api/45
-
-apitore_wordstovectorsapis
-  Words to Vectors APIs
-  Word to vectors.[Endpoint] https://api.apitore.com/api/10
 
 appveyor
   AppVeyor
@@ -716,237 +574,855 @@ avaza
 aviationdata_systems
   AviationData.Systems Airports API V1
 
-azure_arm_advisor
+azure_advisor
   AdvisorManagementClient
   REST APIs for Azure Advisor
 
-azure_arm_analysisservices
+azure_analysisservices
   AzureAnalysisServices
   The Azure Analysis Services Web API provides a RESTful set of web services that enables users to ...
 
-azure_arm_apimanagement
+azure_apimanagement
   ApiManagementClient
   Use these REST APIs for performing operations on entities like API, Product, and Subscription ass...
 
-azure_arm_appinsights
-  AppInsightsManagementClient
+azure_apimanagement_apimapis
+  ApiManagementClient
+  Use these REST APIs for performing operations on API entity and their Operations associated with ...
+
+azure_apimanagement_apimauthorizationservers
+  ApiManagementClient
+  Use these REST APIs for managing OAuth2 servers configuration in your Azure API Management deploy...
+
+azure_apimanagement_apimbackends
+  ApiManagementClient
+  Use these REST APIs for performing operations on Backend entity in Azure API Management deploymen...
+
+azure_apimanagement_apimcertificates
+  ApiManagementClient
+  Use these REST APIs for performing operations on Certificate entity in your Azure API Management ...
+
+azure_apimanagement_apimdeployment
+  ApiManagementClient
+  Use these REST APIs to manage Azure API Management deployment.
+
+azure_apimanagement_apimemailtemplate
+  ApiManagementClient
+  Use these REST APIs for performing operations on Email Templates associated with your Azure API M...
+
+azure_apimanagement_apimgroups
+  ApiManagementClient
+  Use these REST APIs for performing operations on Group entity in your Azure API Management deploy...
+
+azure_apimanagement_apimidentityprovider
+  ApiManagementClient
+  Use these REST APIs for performing operations on Identity Provider entity associated with your Az...
+
+azure_apimanagement_apimloggers
+  ApiManagementClient
+  Use these REST APIs for performing operations on logger entity Azure API Management deployment.Th...
+
+azure_apimanagement_apimnetworkstatus
+  ApiManagementClient
+  Use these REST APIs for getting the network connectivity status of your Azure API Management depl...
+
+azure_apimanagement_apimopenidconnectproviders
+  ApiManagementClient
+  Use these REST APIs for performing operations on OpenId Connect Provider entity associated with y...
+
+azure_apimanagement_apimproducts
+  ApiManagementClient
+  Use these REST APIs for performing operations on Product entity associated with your Azure API Ma...
+
+azure_apimanagement_apimproperties
+  ApiManagementClient
+  Use these REST APIs for performing operations on Property entity associated with your Azure API M...
+
+azure_apimanagement_apimquotas
+  ApiManagementClient
+  Use these REST APIs for performing operations on Quota entity associated with your Azure API Mana...
+
+azure_apimanagement_apimreports
+  ApiManagementClient
+  Use these REST APIs to get the analytics reports associated with your Azure API Management deploy...
+
+azure_apimanagement_apimsubscriptions
+  ApiManagementClient
+  Use these REST APIs for performing operations on Subscription entity associated with your Azure A...
+
+azure_apimanagement_apimtenant
+  ApiManagementClient
+  Use these REST APIs for performing operations on tenant entity associated with your Azure API Man...
+
+azure_apimanagement_apimusers
+  ApiManagementClient
+  Use these REST APIs for performing operations on User entity in Azure API Management deployment. ...
+
+azure_applicationinsights_aioperations_api
+  ApplicationInsightsManagementClient
   Azure Application Insights client for web test based alerting.
 
-azure_arm_authorization
+azure_applicationinsights_componentapikeys_api
+  ApplicationInsightsManagementClient
+  Azure Application Insights client for API keys of a component.
+
+azure_applicationinsights_componentcontinuousexport_api
+  ApplicationInsightsManagementClient
+  Azure Application Insights client for Continuous Export of a component.
+
+azure_applicationinsights_componentfeaturesandpricing_api
+  ApplicationInsightsManagementClient
+  Azure Application Insights client for selecting pricing plans and options.
+
+azure_applicationinsights_components_api
+  ApplicationInsightsManagementClient
+  Azure Application Insights client for Components.
+
+azure_applicationinsights_webtests_api
+  ApplicationInsightsManagementClient
+  Azure Application Insights client for web test based alerting.
+
+azure_authorization
   AuthorizationManagementClient
   Role based access control provides you a way to apply granular level policy administration down t...
 
-azure_arm_batch
+azure_authorization_authorization_racalls
+  AuthorizationManagementClient
+  Role based access control provides you a way to apply granular level policy administration down t...
+
+azure_automation_account
+  AutomationManagement
+
+azure_automation_certificate
+  AutomationManagement
+
+azure_automation_connection
+  AutomationManagement
+
+azure_automation_connectiontype
+  AutomationManagement
+
+azure_automation_credential
+  AutomationManagement
+
+azure_automation_dsccompilationjob
+  AutomationManagement
+
+azure_automation_dscconfiguration
+  AutomationManagement
+
+azure_automation_dscnode
+  AutomationManagement
+
+azure_automation_dscnodeconfiguration
+  AutomationManagement
+
+azure_automation_hybridrunbookworkergroup
+  AutomationManagement
+
+azure_automation_job
+  AutomationManagement
+
+azure_automation_jobschedule
+  AutomationManagement
+
+azure_automation_module
+  AutomationManagement
+
+azure_automation_runbook
+  AutomationManagement
+
+azure_automation_schedule
+  AutomationManagement
+
+azure_automation_softwareupdateconfiguration
+  Update Management
+  APIs for managing software update configurations.
+
+azure_automation_softwareupdateconfigurationmachinerun
+  Update Management
+  APIs for managing software update configurations.
+
+azure_automation_variable
+  AutomationManagement
+
+azure_automation_webhook
+  AutomationManagementClient
+
+azure_batch_batchmanagement
   BatchManagement
 
-azure_arm_billing
-  BillingClient
+azure_batchai_batchai
+  BatchAI
+  The Azure BatchAI Management API.
+
+azure_billing
+  BillingManagementClient
   Billing client provides access to billing resources for Azure Web-Direct subscriptions. Other sub...
 
-azure_arm_cdn
+azure_cdn
   CdnManagementClient
   Use these APIs to manage Azure CDN resources through the Azure Resource Manager. You must make su...
 
-azure_arm_cognitiveservices
+azure_cognitiveservices
   CognitiveServicesManagementClient
   Cognitive Services Management Client
 
-azure_arm_commerce
+azure_commerce
   UsageManagementClient
 
-azure_arm_compute
+azure_compute
   ComputeManagementClient
   The Compute Management Client.
 
-azure_arm_compute_containerservice
+azure_compute_containerservice
   ContainerServiceClient
   The Container Service Client.
 
-azure_arm_compute_disk
+azure_compute_disk
   DiskResourceProviderClient
   The Disk Resource Provider Client.
 
-azure_arm_compute_runcommands
+azure_compute_runcommands
   RunCommandsClient
   The Run Commands Client.
 
-azure_arm_consumption
-  ConsumptionManagementClient
-  Consumption management client provides access to consumption resources for Azure Web-Direct subsc...
+azure_compute_skus
+  ComputeManagementClient
+  The Compute Management Client.
 
-azure_arm_containerregistry
+azure_compute_swagger
+  ComputeManagementConvenienceClient
+
+azure_consumption
+  ConsumptionManagementClient
+  Consumption management client provides access to consumption resources for Azure Enterprise Subsc...
+
+azure_containerinstance_containerinstance
+  ContainerInstanceManagementClient
+
+azure_containerregistry
   ContainerRegistryManagementClient
 
-azure_arm_cosmos_db
+azure_containerservices_containerservice
+  ContainerServiceClient
+  The Container Service Client.
+
+azure_containerservices_location
+  ContainerServiceClient
+  The Container Service Client.
+
+azure_containerservices_managedclusters
+  ContainerServiceClient
+  The Container Service Client.
+
+azure_cosmos_db
   Cosmos DB
   Azure Cosmos DB Database Service Resource Provider REST API
 
-azure_arm_customer_insights
+azure_customer_insights
   CustomerInsightsManagementClient
   The Azure Customer Insights management API provides a RESTful set of web services that interact w...
 
-azure_arm_devtestlabs
+azure_datacatalog
+  Azure Data Catalog Resource Provider
+  The Azure Data Catalog Resource Provider Services API.
+
+azure_datafactory
+  DataFactoryManagementClient
+
+azure_datalake_analytics_account
+  DataLakeAnalyticsAccountManagementClient
+  Creates an Azure Data Lake Analytics account management client.
+
+azure_datalake_store_account
+  DataLakeStoreAccountManagementClient
+  Creates an Azure Data Lake Store account management client.
+
+azure_datamigration
+  Azure Data Migration Service Resource Provider
+  The Data Migration Service helps people migrate their data from on-premise database servers to Az...
+
+azure_devtestlabs_dtl
   DevTestLabsClient
   The DevTest Labs Client.
 
-azure_arm_dns
+azure_dns
   DnsManagementClient
   The DNS Management Client.
 
-azure_arm_documentdb
-  DocumentDB
-  Azure DocumentDB Database Service Resource Provider REST API
+azure_domainservices
+  Domain Services Resource Provider
+  The AAD Domain Services API.
 
-azure_arm_eventhub
+azure_eventgrid_eventgrid
+  EventGridManagementClient
+  Azure EventGrid Management Client
+
+azure_eventhub_eventhub
   EventHubManagementClient
   Azure Event Hubs client
 
-azure_arm_hdinsight
+azure_hdinsight_applications
   HDInsightManagementClient
   The HDInsight Management Client.
 
-azure_arm_insights
-  InsightsManagementClient
+azure_hdinsight_capabilities
+  HDInsightManagementClient
+  The HDInsight Management Client.
 
-azure_arm_intune
+azure_hdinsight_cluster
+  HDInsightManagementClient
+  The HDInsight Management Client.
+
+azure_hdinsight_configurations
+  HDInsightManagementClient
+  The HDInsight Management Client.
+
+azure_hdinsight_extensions
+  HDInsightManagementClient
+  The HDInsight Management Client.
+
+azure_hdinsight_operations
+  HDInsightManagementClient
+  The HDInsight Management Client.
+
+azure_hdinsight_scriptactions
+  HDInsightManagementClient
+  The HDInsight Management Client.
+
+azure_intune
   IntuneResourceManagementClient
   Microsoft.Intune Resource provider Api features in the swagger-2.0 specification
 
-azure_arm_iothub
+azure_iothub
   iotHubClient
   Use this API to manage the IoT hubs in your Azure subscription.
 
-azure_arm_keyvault
+azure_keyvault
   KeyVaultManagementClient
   The Azure management API provides a RESTful set of web services that interact with Azure Key Vault.
 
-azure_arm_logic
+azure_locationbasedservices
+  Azure Location Based Services Resource Provider
+  Resource Provider
+
+azure_logic
   LogicManagementClient
   REST API for Azure Logic Apps.
 
-azure_arm_machinelearning_commitmentplans
+azure_machinelearning_commitmentplans
   Azure ML Commitment Plans Management Client
   These APIs allow end users to operate on Azure Machine Learning Commitment Plans resources and th...
 
-azure_arm_machinelearning_webservices
+azure_machinelearning_webservices
   Azure ML Web Services Management Client
   These APIs allow end users to operate on Azure Machine Learning Web Services resources. They supp...
 
-azure_arm_mediaservices
+azure_machinelearning_workspaces
+  Machine Learning Workspaces Management Client
+  These APIs allow end users to operate on Azure Machine Learning Workspace resources. They support...
+
+azure_machinelearningcompute_machinelearningcompute
+  Machine Learning Compute Management Client
+  These APIs allow end users to operate on Azure Machine Learning Compute resources. They support t...
+
+azure_machinelearningexperimentation_machinelearningexperimentation
+  ML Team Account Management Client
+  These APIs allow end users to operate on Azure Machine Learning Team Account resources. They supp...
+
+azure_marketplaceordering_agreements
+  MarketplaceOrdering.Agreements
+  REST API for MarketplaceOrdering Agreements.
+
+azure_mediaservices_media
   MediaServicesManagementClient
   Media Services resource management APIs.
 
-azure_arm_mobileengagement
+azure_mobileengagement_mobile_engagement
   Engagement.ManagementClient
   Microsoft Azure Mobile Engagement REST APIs.
 
-azure_arm_monitor
+azure_monitor_actiongroups_api
+  Azure Action Groups
+
+azure_monitor_activitylogalerts_api
+  Azure Activity Log Alerts
+
+azure_monitor_activitylogs_api
   MonitorManagementClient
 
-azure_arm_mysql
+azure_monitor_alertrules_api
+  MonitorManagementClient
+
+azure_monitor_alertrulesincidents_api
+  MonitorManagementClient
+
+azure_monitor_autoscale_api
+  MonitorManagementClient
+
+azure_monitor_baseline_api
+  MonitorManagementClient
+
+azure_monitor_calculatebaseline_api
+  MonitorManagementClient
+
+azure_monitor_diagnosticssettings_api
+  MonitorManagementClient
+
+azure_monitor_diagnosticssettingscategories_api
+  MonitorManagementClient
+
+azure_monitor_eventcategories_api
+  MonitorManagementClient
+
+azure_monitor_logprofiles_api
+  MonitorManagementClient
+
+azure_monitor_metricdefinitions_api
+  MonitorManagementClient
+
+azure_monitor_metrics_api
+  MonitorManagementClient
+
+azure_monitor_operations_api
+  MonitorManagementClient
+
+azure_monitor_servicediagnosticssettings_api
+  MonitorManagementClient
+
+azure_monitor_tenantactivitylogs_api
+  MonitorManagementClient
+
+azure_msi_managedidentity
+  ManagedServiceIdentityClient
+  The Managed Service Identity Client.
+
+azure_mysql
   MySQLManagementClient
   The Microsoft Azure management API provides create, read, update, and delete functionality for Az...
 
-azure_arm_network
+azure_network_applicationsecuritygroup
   NetworkManagementClient
   The Microsoft Azure Network management API provides a RESTful set of web services that interact w...
 
-azure_arm_notificationhubs
+azure_network_checkdnsavailability
+  NetworkManagementClient
+  The Microsoft Azure Network management API provides a RESTful set of web services that interact w...
+
+azure_network_endpointservice
+  NetworkManagementClient
+  The Microsoft Azure Network management API provides a RESTful set of web services that interact w...
+
+azure_network_expressroutecircuit
+  NetworkManagementClient
+  The Microsoft Azure Network management API provides a RESTful set of web services that interact w...
+
+azure_network_networkwatcher
+  NetworkManagementClient
+  The Microsoft Azure Network management API provides a RESTful set of web services that interact w...
+
+azure_network_operation
+  NetworkManagementClient
+  The Microsoft Azure Network management API provides a RESTful set of web services that interact w...
+
+azure_network_servicecommunity
+  NetworkManagementClient
+  The Microsoft Azure Network management API provides a RESTful set of web services that interact w...
+
+azure_network_usage
+  NetworkManagementClient
+  The Microsoft Azure Network management API provides a RESTful set of web services that interact w...
+
+azure_network_virtualnetworkgateway
+  NetworkManagementClient
+  The Microsoft Azure Network management API provides a RESTful set of web services that interact w...
+
+azure_notificationhubs
   NotificationHubsManagementClient
   Azure NotificationHub client
 
-azure_arm_operationalinsights
-  Azure Log Analytics
-  Azure Log Analytics API reference for LinkTargets, StorageInsightConfigs and SavedSearches.
+azure_operationsmanagement_operationsmanagement
+  Azure Log Analytics - Operations Management
+  Azure Log Analytics API reference for Solution.
 
-azure_arm_postgresql
+azure_postgresql
   PostgreSQLManagementClient
   The Microsoft Azure management API provides create, read, update, and delete functionality for Az...
 
-azure_arm_powerbiembedded
+azure_powerbidedicated
+  PowerBIDedicated
+  PowerBI Dedicated Web API provides a RESTful set of web services that enables users to create, re...
+
+azure_powerbiembedded
   Power BI Embedded Management Client
   Client to manage your Power BI Embedded workspace collections and retrieve workspaces.
 
-azure_arm_recoveryservices
-  RecoveryServicesClient
+azure_provisioningservices_iotdps
+  iotDpsClient
+  API for using the Azure IoT Hub Device Provisioning Service features.
 
-azure_arm_recoveryservicesbackup
+azure_recoveryservices_backup
   RecoveryServicesBackupClient
 
-azure_arm_recoveryservicessiterecovery
+azure_recoveryservices_registeredidentities
+  RecoveryServicesClient
+
+azure_recoveryservices_replicationusages
+  RecoveryServicesClient
+
+azure_recoveryservices_vaults
+  RecoveryServicesClient
+
+azure_recoveryservices_vaultusages
+  RecoveryServicesClient
+
+azure_recoveryservicesbackup
+  RecoveryServicesBackupClient
+
+azure_recoveryservicesbackup_backupmanagement
+  RecoveryServicesBackupClient
+
+azure_recoveryservicesbackup_jobs
+  RecoveryServicesBackupClient
+
+azure_recoveryservicesbackup_operations
+  RecoveryServicesBackupClient
+
+azure_recoveryservicesbackup_registeredidentities
+  RecoveryServicesBackupClient
+
+azure_recoveryservicessiterecovery_service
   SiteRecoveryManagementClient
 
-azure_arm_redis
+azure_redis
   RedisManagementClient
   REST API for Azure Redis Cache Service.
 
-azure_arm_relay
+azure_relay
   Relay
-  Use these API to manage Azure Relay resources through Azure Resources Manager.
+  Use these API to manage Azure Relay resources through Azure Resource Manager.
 
-azure_arm_resourcehealth
+azure_reservations
+  Azure Reservation
+  This API describe Azure Reservation
+
+azure_resourcehealth
   Microsoft.ResourceHealth
   The Resource Health Client.
 
-azure_arm_scheduler
+azure_resources
+  ResourceManagementClient
+  Provides operations for working with resources and resource groups.
+
+azure_resources_features
+  FeatureClient
+  Azure Feature Exposure Control (AFEC) provides a mechanism for the resource providers to control ...
+
+azure_resources_links
+  ManagementLinkClient
+  Azure resources can be linked together to form logical relationships. You can establish links bet...
+
+azure_resources_locks
+  ManagementLockClient
+  Azure resources can be locked to prevent other users in your organization from deleting or modify...
+
+azure_resources_managedapplications
+  ApplicationClient
+  ARM applications
+
+azure_resources_management
+  Management Groups
+  The Azure Management Groups API enables consolidation of multiple
+
+azure_resources_policy
+  PolicyClient
+  To manage and control access to your resources, you can define customized policies and assign the...
+
+azure_resources_policyassignments
+  PolicyClient
+  To manage and control access to your resources, you can define customized policies and assign the...
+
+azure_resources_policydefinitions
+  PolicyClient
+  To manage and control access to your resources, you can define customized policies and assign the...
+
+azure_resources_policysetdefinitions
+  PolicyClient
+  To manage and control access to your resources, you can define customized policies and assign the...
+
+azure_resources_subscriptions
+  SubscriptionClient
+  All resource groups and resources exist within subscriptions. These operation enable you get info...
+
+azure_scheduler
   SchedulerManagementClient
 
-azure_arm_search
+azure_search
   SearchManagementClient
   Client that can be used to manage Azure Search services and API keys.
 
-azure_arm_servermanagement
+azure_servermanagement
   ServerManagement
   REST API for Azure Server Management Service.
 
-azure_arm_service_map
+azure_service_map_arm_service_map
   Service Map
   Service Map API Reference
 
-azure_arm_servicebus
+azure_servicebus
   ServiceBusManagementClient
   Azure Service Bus client
 
-azure_arm_servicefabric
+azure_servicefabric
   ServiceFabricManagementClient
+  Azure Service Fabric Resource Provider API Client
 
-azure_arm_sql
+azure_sql_advisors
   SqlManagementClient
   The Azure SQL Database management API provides a RESTful set of web APIs that interact with Azure...
 
-azure_arm_storage
+azure_sql_backuplongtermretentionpolicies
+  Azure SQL Database Backup Long Term Retention Policy
+  Provides read and update functionality for Azure SQL Database backup long term retention policy
+
+azure_sql_backuplongtermretentionvaults
+  Azure SQL Server Backup Long Term Retention Vault
+  Provides read and update functionality for Azure SQL Server backup long term retention vault
+
+azure_sql_backups
+  Azure SQL Database Backup
+  Provides read functionality for Azure SQL Database Backups
+
+azure_sql_blobauditingpolicies
+  SqlManagementClient
+  The Azure SQL Database management API provides a RESTful set of web APIs that interact with Azure...
+
+azure_sql_canceloperations
+  SqlManagementClient
+  The Azure SQL Database management API provides a RESTful set of web APIs that interact with Azure...
+
+azure_sql_capabilities
+  SqlManagementClient
+  The Azure SQL Database management API provides a RESTful set of web APIs that interact with Azure...
+
+azure_sql_connectionpolicies
+  Azure SQL Server API spec
+  The Azure SQL Server management API provides a RESTful set of web services that interact with Azu...
+
+azure_sql_databaseautomatictuning
+  SqlManagementClient
+  The Azure SQL Database management API provides a RESTful set of web APIs that interact with Azure...
+
+azure_sql_databases
+  SqlManagementClient
+  The Azure SQL Database management API provides a RESTful set of web APIs that interact with Azure...
+
+azure_sql_databasesecurityalertpolicies
+  Database Threat Detection Policy APIs
+  Provides create, read and update functionality for database Threat Detection policies.
+
+azure_sql_datamasking
+  Azure SQL Database Datamasking Policies and Rules
+  Provides create, read, update and delete functionality for Azure SQL Database datamasking policie...
+
+azure_sql_deprecated
+  Azure SQL Database
+  Provides create, read, update and delete functionality for Azure SQL Database resources including...
+
+azure_sql_encryptionprotectors
+  SqlManagementClient
+  The Azure SQL Database management API provides a RESTful set of web APIs that interact with Azure...
+
+azure_sql_failovergroups
+  SqlManagementClient
+  The Azure SQL Database management API provides a RESTful set of web APIs that interact with Azure...
+
+azure_sql_firewallrules
+  SqlManagementClient
+  The Azure SQL Database management API provides a RESTful set of web APIs that interact with Azure...
+
+azure_sql_geobackuppolicies
+  Azure SQL Database
+  Provides read and update functionality for Azure SQL Database geo backup policies.
+
+azure_sql_importexport
+  Azure SQL Database Import/Export spec
+  Provides create and read functionality for Import/Export operations on Azure SQL databases.
+
+azure_sql_manageddatabases
+  SqlManagementClient
+  The Azure SQL Database management API provides a RESTful set of web APIs that interact with Azure...
+
+azure_sql_metrics
+  Azure SQL Database
+  Provides create, read, update and delete functionality for Azure SQL Database resources including...
+
+azure_sql_operations
+  SqlManagementClient
+  The Azure SQL Database management API provides a RESTful set of web APIs that interact with Azure...
+
+azure_sql_queries
+  Azure SQL Database
+  Provides create, read, update and delete functionality for Azure SQL Database resources including...
+
+azure_sql_renamedatabase
+  SqlManagementClient
+  The Azure SQL Database management API provides a RESTful set of web APIs that interact with Azure...
+
+azure_sql_replicationlinks
+  Azure SQL Database replication links
+  Provides read, delete, and failover functionality for Azure SQL Database replication links.
+
+azure_sql_serverautomatictuning
+  SqlManagementClient
+  The Azure SQL Database management API provides a RESTful set of web APIs that interact with Azure...
+
+azure_sql_serverazureadadministrators
+  Azure SQL Database API spec
+  The Azure SQL Database management API provides a RESTful set of web services that interact with A...
+
+azure_sql_servercommunicationlinks
+  Azure SQL Database
+  Provides create, read, update and delete functionality Azure SQL server communication links.
+
+azure_sql_serverdnsaliases
+  SqlManagementClient
+  The Azure SQL Database management API provides a RESTful set of web APIs that interact with Azure...
+
+azure_sql_serverkeys
+  SqlManagementClient
+  The Azure SQL Database management API provides a RESTful set of web APIs that interact with Azure...
+
+azure_sql_servers
+  SqlManagementClient
+  The Azure SQL Database management API provides a RESTful set of web APIs that interact with Azure...
+
+azure_sql_serviceobjectives
+  Azure SQL Database
+  Provides create, read, update and delete functionality for Azure SQL Database resources including...
+
+azure_sql_sql_core
+  Azure SQL Database
+  Provides create, read, update and delete functionality for Azure SQL Database resources including...
+
+azure_sql_syncagents
+  SqlManagementClient
+  The Azure SQL Database management API provides a RESTful set of web APIs that interact with Azure...
+
+azure_sql_syncgroups
+  SqlManagementClient
+  The Azure SQL Database management API provides a RESTful set of web APIs that interact with Azure...
+
+azure_sql_syncmembers
+  SqlManagementClient
+  The Azure SQL Database management API provides a RESTful set of web APIs that interact with Azure...
+
+azure_sql_tableauditing
+  SqlManagementClient
+  The Azure SQL Database management API provides a RESTful set of web APIs that interact with Azure...
+
+azure_sql_usages
+  SqlManagementClient
+  The Azure SQL Database management API provides a RESTful set of web APIs that interact with Azure...
+
+azure_sql_virtualnetworkrules
+  SqlManagementClient
+  The Azure SQL Database management API provides a RESTful set of web APIs that interact with Azure...
+
+azure_storage
   StorageManagement
   The Azure Storage Management API.
 
-azure_arm_storageimportexport
+azure_storageimportexport
   StorageImportExport
-  The Microsoft Azure Storage Import/Export Resource Provider API.
+  The Storage Import/Export Resource Provider API.
 
-azure_arm_storsimple8000series
+azure_storsimple8000series_storsimple
   StorSimple8000SeriesManagementClient
 
-azure_arm_streamanalytics
+azure_streamanalytics_functions
   StreamAnalyticsManagementClient
 
-azure_arm_trafficmanager
+azure_streamanalytics_inputs
+  StreamAnalyticsManagementClient
+
+azure_streamanalytics_outputs
+  StreamAnalyticsManagementClient
+
+azure_streamanalytics_streamingjobs
+  StreamAnalyticsManagementClient
+
+azure_streamanalytics_subscriptions
+  StreamAnalyticsManagementClient
+
+azure_streamanalytics_transformations
+  StreamAnalyticsManagementClient
+
+azure_subscription_subscriptiondefinitions
+  SubscriptionDefinitionsClient
+  Subscription definitions client provides an interface to create, modify and retrieve azure subscr...
+
+azure_timeseriesinsights
+  TimeSeriesInsightsClient
+  Time Series Insights client
+
+azure_trafficmanager
   TrafficManagerManagementClient
 
-azure_arm_visualstudio
+azure_trafficmanager_trafficmanageranalytics
+  TrafficManagerManagementClient
+
+azure_visualstudio_csm
   Visual Studio Resource Provider Client
   Use these APIs to manage Visual Studio Team Services resources through the Azure Resource Manager...
 
-azure_arm_web
+azure_web_appservicecertificateorders
   AppServiceCertificateOrders API Client
 
-azure_insights
-  InsightsClient
+azure_web_appserviceplans
+  AppServicePlans API Client
 
-azure_monitor
-  MonitorClient
+azure_web_certificateregistrationprovider
+  CertificateRegistrationProvider API Client
+
+azure_web_certificates
+  Certificates API Client
+
+azure_web_deletedwebapps
+  DeletedWebApps API Client
+
+azure_web_diagnostics
+  Diagnostics API Client
+
+azure_web_domainregistrationprovider
+  DomainRegistrationProvider API Client
+
+azure_web_domains
+  Domains API Client
+
+azure_web_logicappsmanagementclient
+  LogicAppsManagementClient
+
+azure_web_provider
+  Provider API Client
+
+azure_web_recommendations
+  Recommendations API Client
+
+azure_web_resourceprovider
+   API Client
+
+azure_web_service
+  WebSite Management Client
+  Use these APIs to manage Azure Websites resources through the Azure Resource Manager. All task op...
+
+azure_web_topleveldomains
+  TopLevelDomains API Client
 
 bbc
-  Radio & Music Services
-  We encapsulate Radio & Music business logic for iPlayer Radio and BBC Music products on all platf...
+  BBC Nitro
+  BBC Nitro is the BBC's application programming interface (API) for BBC Programmes Metadata.
 
 bbc_rss
   BBC RSS
@@ -1058,21 +1534,9 @@ cisco
   Cisco PSIRT openVuln
   The Cisco Product Security Incident Response Team (PSIRT) openVuln API is a RESTful API that allo...
 
-citrix_gotoassistseeit
-  GoToAssist Seeit
-  Allows you to integrate GoToAssist Seeit into your own solutions.General notes:GoToAssist Seeit s...
-
 citrix_gotomeeting
   GoToMeeting
   The GoToMeeting API provides seamless integration of GoToMeeting provisioning and meeting managem...
-
-citrix_gototraining
-  GoToTraining
-  The GoToTraining API enables developers to use the stable and robust GoToTraining functionality a...
-
-citrix_gotowebinar
-  GoToWebinar
-  The GoToWebinar API provides seamless integration of webinar registrant and attendee data into yo...
 
 citrix_scim
   SCIM
@@ -1097,6 +1561,9 @@ clickmeter
 cloud_gov
   Discovery Market Research
   This API drives the Discovery Market Research Tool.
+
+cloudmersive_ocr
+  ocrapi
 
 cnab_online_herokuapp
   Cnab Online
@@ -1196,6 +1663,9 @@ ebay_sell_fulfillment
   Fulfillment
   Use the Fulfillment API to complete the process of packaging, addressing, handling, and shipping ...
 
+envoice_in
+  API v1.0.0
+
 epa_gov_air
   U.S. EPA Enforcement and Compliance History Online (ECHO) - Clean Air Act
   Enforcement and Compliance History Online (ECHO) is a tool developed and maintained by EPA's Offi...
@@ -1229,7 +1699,7 @@ epa_gov_sdw
   Enforcement and Compliance History Online (ECHO) is a tool developed and maintained by EPA's Offi...
 
 etmdb
-  REST API v1 Core Resources
+  EtMDB REST API v1
   The Ethiopian Movie Database
 
 etsy
@@ -1317,6 +1787,10 @@ github
 gitlab
   Gitlab
   The platform for modern developers
+
+google_abusiveexperiencereport
+  Google Abusive Experience Report
+  View Abusive Experience Report data, and get a list of sites that have a significant number of ab...
 
 google_acceleratedmobilepageurl
   Accelerated Mobile Pages (AMP) URL
@@ -1471,7 +1945,7 @@ google_consumersurveys
   Creates and conducts surveys, lists the surveys that an authenticated user owns, and retrieves su...
 
 google_container
-  Google Container Engine
+  Google Kubernetes Engine
   The Google Kubernetes Engine API is used for building and managing container based applications, ...
 
 google_content
@@ -1653,6 +2127,10 @@ google_plusdomains
   Google+ Domains
   Builds on top of the Google+ platform for Google Apps Domains.
 
+google_poly
+  Poly
+  The Poly API provides read-only access to assets hosted on poly.google.com.
+
 google_prediction
   Prediction
   Lets you access a cloud hosted machine learning service that makes it easy to build smart apps
@@ -1760,10 +2238,6 @@ google_storagetransfer
 google_streetviewpublish
   Street View Publish
   Publishes 360 photos to Google Maps, along with position, orientation, and connectivity metadata....
-
-google_supportcases
-  Google Support Cases Private
-  Support Cases API
 
 google_surveys
   Surveys
@@ -1927,6 +2401,9 @@ idtbeyond
 ijenko
   IoE² IoT API - to create end-user applications
 
+illumidesk
+  IllumiDesk
+
 import_data
   import.io
 
@@ -1964,6 +2441,7 @@ instawell
 
 iqualify
   iQualify
+  The iQualify API offers management and analytics responses for building
 
 isendpro
   API iSendPro
@@ -2042,8 +2520,33 @@ medium
   Medium.com
   Medium’s unofficial API documentation using OpenAPI specification.
 
-microsoft_security_updates
-  Microsoft Security Updates
+microsoft_cognitiveservices_customsearch
+  Custom Search
+  The Bing Custom Search API lets you send a search query to Bing and get back search results custo...
+
+microsoft_cognitiveservices_entitysearch
+  Entity Search
+  The Entity Search API lets you send a search query to Bing and get back search results that inclu...
+
+microsoft_cognitiveservices_imagesearch
+  Image Search
+  The Image Search API lets you send a search query to Bing and get back a list of relevant images....
+
+microsoft_cognitiveservices_newssearch
+  News Search
+  The News Search API lets you send a search query to Bing and get back a list of news that are rel...
+
+microsoft_cognitiveservices_spellcheck
+  Spell Check
+  The Spell Check API - V7 lets you check a text string for spelling and grammar errors.
+
+microsoft_cognitiveservices_videosearch
+  Video Search
+  The Video Search API lets you search on Bing for video that are relevant to the user's search que...
+
+microsoft_cognitiveservices_websearch
+  Web Search
+  The Web Search API lets you send a search query to Bing and get back search results that include ...
 
 moonmoonmoonmoon
   Moon by Ai Weiwei & Olafur Eliasson
@@ -2204,6 +2707,9 @@ opendatasoft
 openfintech
   OpenFinTech.io
   OpenFinTech.io is an open database that comprises of standardized primary data for FinTech industry.
+
+opentargets
+  Open Targets Platform
 
 orghunter
   OrgHunter
@@ -2473,10 +2979,6 @@ synq_fm
   SYNQ Video
   Sign up for a developer API key!
 
-t213_vg
-  Magento Enterprise
-  Magento Commerce is the leading provider of open omnichannel innovation.
-
 taggun
   taggun.io
   Expects only running software, real reactions, and beautifully crafted APIs to serve your every d...
@@ -2496,6 +2998,10 @@ tfl_gov_uk
 thenounproject
   The Noun Project
   Icons for Everything
+
+thesmsworks
+  The SMS Works
+  The SMS Works provides a low-cost, reliable SMS API for developers. Pay only for delivered texts,...
 
 thetvdb
   TheTVDB API v2
@@ -2561,7 +3067,7 @@ vocadb
   VocaDB
 
 voodoomfg
-  Voodoo Manufacturing
+  Voodoo Manufacturing 3D Print
   Welcome to the Voodoo Manufacturing API docs!
 
 waag
@@ -2576,8 +3082,8 @@ wavecell
   This API allows Wavecell customers to originate request to send SMS messages anywhere in the Worl...
 
 wealthport
-  Wealthport
-  Wealthport provides a simple, lightweight and open Web API based on the Open API 2.0 standard (ht...
+  Wealthport API
+  Onedot provides a simple, lightweight and open Web API based on the Open API 2.0 standard (https:...
 
 weatherbit
   Weatherbit.io - Weather
@@ -2611,13 +3117,13 @@ wikimedia
   Wikimedia
   This API provides cacheable and straightforward access to Wikimedia content and data, in machine-...
 
-windows_arm_graphrbac
-  GraphRbacManagementClient
-  The Graph RBAC Management Client
-
-windows_batch
+windows_batch_batchservice
   BatchService
   A client for issuing REST requests to the Azure Batch service.
+
+windows_graphrbac
+  GraphRbacManagementClient
+  The Graph RBAC Management Client
 
 winning_email
   Winning Email
@@ -2643,6 +3149,10 @@ wmata_rail_station
   Rail Station Information
   Rail line and station information, including locations, fares, times, and parking.
 
+wordassociations
+  Word Associations
+  The Word Associations Network API allows developers to embed the ability to find associations for...
+
 wordnik
   Wordnik
   Wordnik is the world's biggest online English dictionary, by number of words
@@ -2653,6 +3163,10 @@ wowza
 wso2apistore_transform
   Transform
   This API provides XML to JSON, JSON to XML transformations.
+
+xero
+  Accounting
+  The Xero Accounting API is a RESTful web service and uses the OAuth (v1.0a) protocol to authentic...
 
 xkcd
   XKCD
@@ -2677,6 +3191,10 @@ zalando
 zappiti
   Zappiti Player
   Move your app forward with the Zappiti Player API. Use http://your-player-ip:8990/ as base URL fo...
+
+zoom_us
+  Zoom
+  API Description
 
 zoomconnect
   Zoom Connect
