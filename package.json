@@ -24,6 +24,7 @@
     "inquirer": "^3.0.6",
     "json-schema-faker-bb": "0.5.0-rc12",
     "memory-cache": "^0.2.0",
+    "moment": "^2.21.0",
     "prettyjson": "^1.2.1",
     "request": "^2.81.0",
     "rss-parser": "^2.7.0",
