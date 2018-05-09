@@ -17,6 +17,21 @@ paths:
       action: ./hello.js
 ```
 
+## HTTP Requests
+You can use `context.request` to access the original request
+
+```js
+module.exports = new datafire.Action({
+  handler: (input, context) => {
+    if (context.type === 'http') {
+      console.log(context.request.method, context.request.path);
+      console.log(context.request.query.name);
+      console.log(context.request.headers.authorization);
+    }
+  }
+})
+```
+
 ## NodeJS Express
 DataFire uses [Express](https://github.com/expressjs/express) with
 [Swagger Middleware](https://github.com/BigstickCarpet/swagger-express-middleware)

@@ -3,11 +3,10 @@ This is a small sample project to demonstrate DataFire's features. It will creat
 a single Action, which takes in a name, and outputs a greeting. We'll also link
 that action to an HTTP endpoint and a scheduled task.
 
-## Action
-We'll create our action in `hello.js`.
+## The Basics
 
-> You can also return a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
-> from your action if you want to perform asynchronous operations.
+### Action
+We'll create our action in `hello.js`.
 
 #### hello.js
 ```js
@@ -17,12 +16,7 @@ module.exports = new datafire.Action({
 })
 ```
 
-Now let's run it:
-```bash
-datafire run ./hello.js
-```
-
-## HTTP Endpoints
+### Trigger
 Now let's create a `GET /hello` API endpoint in `DataFire.yml` that will trigger the Action:
 
 #### DataFire.yml
@@ -33,6 +27,8 @@ paths:
       action: ./hello.js
 ```
 
+### Running
+
 We can try it out with `datafire serve`
 ```bash
 datafire serve --port 3000 &
@@ -40,6 +36,8 @@ datafire serve --port 3000 &
 
 curl http://localhost:3000/hello
 # "Hello, world"
+
+kill $! # stop the server
 ```
 
 ## Adding Inputs
@@ -88,21 +86,6 @@ module.exports = new datafire.Action({
       });
     } else {
       return "Hello, " + input.name;
-    }
-  }
-})
-```
-
-## HTTP Requests
-You can use `context.request` to access the original request
-
-```js
-module.exports = new datafire.Action({
-  handler: (input, context) => {
-    if (context.type === 'http') {
-      console.log(context.request.method, context.request.path);
-      console.log(context.request.query.name);
-      console.log(context.request.headers.authorization);
     }
   }
 })

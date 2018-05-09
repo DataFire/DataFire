@@ -1,20 +1,29 @@
 # Integrations
-Integrations are in the `@datafire` npm namespace. You can view a list of available integrations on [DataFire.io](https://app.datafire.io/integrations)
+Over 800 integrations are available on npm, under the `@datafire` scope.
+You can view a list of available integrations on [DataFire.io](https://app.datafire.io/integrations)
+
+Each integration comes with a set of actions. For example, the `hacker_news` integration
+contains the `getStories`, `getItem`, and `getUser` actions.
 
 To add an integration to your project, run:
 ```
 npm install @datafire/$integration
 ```
+For example, to install the `hacker_news` integration:
+```bash
+npm install @datafire/hacker_news
+```
 
 ## Using Integrations
-Add an integration to your NodeJS project using `create()`:
+Add an integration to your NodeJS project using `create()`. You can then
+call its actions using Promises or async/await.
 
 ```js
 let hn = require('@datafire/hacker_news').create();
 ```
 
 ### Authentication
-> See [Authentication.md](./Authentication.md) for the full documentation
+> See [Authentication](/Authentication) for the full documentation
 
 You can pass an account to  `create()`:
 

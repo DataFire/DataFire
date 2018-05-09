@@ -1,0 +1,53 @@
+.main-container {
+  padding-top: 50px;
+}
+@media(min-width:768px) {
+  .side-menu {
+    position: fixed;
+    top: 50px;
+    left: 15px;
+    width: inherit;
+    max-height: 90%;
+    overflow-y: scroll;
+  }
+  .side-menu-col + .col-xs-12 {
+    padding-left: 30px;
+  }
+}
+
+.docs-contents {
+  font-size: 16px;
+  color: #555;
+}
+
+.docs-contents h1,
+.docs-contents h2,
+.docs-children h4 {
+  margin-top: 60px;
+}
+.docs-contents h2:first-of-type {
+  margin-top: 30px;
+}
+
+.docs-contents h1:first-of-type {
+  display: none;
+}
+
+side-menu .btn {
+  border-color: #ddd;
+}
+
+nav img {
+  height: 36px;
+  padding-top: 10px;
+  float: left;
+  margin-right: 10px;
+}
+
+thead {
+  display: none;
+}
+
+pre {
+  margin-bottom: 15px;
+}
