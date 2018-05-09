@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <base href="/">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta content="width=device-width, initial-scale=1, minimum-scale=1.0, user-scalable=no" name="viewport">
+
+    <script type="text/javascript">
+      window.lucybot = {};
+      function checkBooleanQueryParam(name) {
+        return !!window.location.href.substring(window.location.href.indexOf('?')).match(new RegExp('[?&]' + name + '=[^0f]'));
+      }
+      window.lucybot.openapi = {};
+      window.lucybot.prerender = checkBooleanQueryParam('prerender');
+      window.lucybot.embed = checkBooleanQueryParam('embed');
+      window.lucybot.showNavigation = checkBooleanQueryParam('showNavigation');
+    </script>
+
+  <link href="styles.bundle.css" rel="stylesheet"/></head>
+
+  <body>
+    <div id="Navbar"><nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <img src="https://app.datafire.io/assets/img/logo-no-text.png">
+      <a class="navbar-brand" routerlink="/" href="/">DataFire</a>
+    </div>
+    <div class="navbar-header pull-right">
+	  <ul class="nav navbar-nav">
+        <li><a class="nav-link" href="https://github.com/DataFire/DataFire">Open Source Framework</a></li>
+        <li><a class="nav-link" href="https://app.datafire.io">DataFire.io Platform</a></li>
+	  </ul>
+    </div>
+  </div>
+</nav>
+</div>
+
+    <app class="loading"></app>
+
+    <div id="Footer"></div>
+  <script type="text/javascript" src="inline.bundle.js"></script><script type="text/javascript" src="polyfills.bundle.js"></script><script type="text/javascript" src="scripts.bundle.js"></script><script type="text/javascript" src="vendor.bundle.js"></script><script type="text/javascript" src="main.bundle.js"></script></body>
+</html>
