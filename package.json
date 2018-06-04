@@ -9,7 +9,7 @@
   "scripts": {
     "test": "mocha ./src/test --recursive && ./src/test/commands/run.sh",
     "build": "./scripts/build.sh",
-    "build-docs": "lucybot build --directory ./web-docs --destination ./docs"
+    "build-docs": "rm -rf ./docs && mkdir ./docs && lucybot build --directory ./web-docs --destination ./docs"
   },
   "author": "",
   "license": "MIT",

@@ -7,6 +7,7 @@ webpackJsonp(["polyfills"],{
 
 
 module.exports = {
+  "favicon": "assets/logo-no-text.png",
   "routes": {
     "/": {
       "ui": "documentation",
