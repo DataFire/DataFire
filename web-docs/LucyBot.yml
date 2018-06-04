@@ -12,33 +12,33 @@ routes:
         noSubsections: true
         expand: true
         children:
-          - markdownFile: ../docs/Basic Concepts.md
+          - markdownFile: markdown/Basic Concepts.md
             title: Basic Concepts
-          - markdownFile: ../docs/Hello World.md
+          - markdownFile: markdown/Hello World.md
             title: Hello World
-      - markdownFile: ../docs/DataFire_yml.md
+      - markdownFile: markdown/DataFire_yml.md
         title: DataFire.yml Configuration
-      - markdownFile: ../docs/Integrations.md
-      - markdownFile: ../docs/Actions.md
-      - markdownFile: ../docs/Triggers.md
-      - markdownFile: ../docs/Authentication.md
-      - markdownFile: ../docs/CLI.md
+      - markdownFile: markdown/Integrations.md
+      - markdownFile: markdown/Actions.md
+      - markdownFile: markdown/Triggers.md
+      - markdownFile: markdown/Authentication.md
+      - markdownFile: markdown/CLI.md
         title: Command-line Interface
       - title: Cookbook
         autoselect: true
         children:
-          - markdownFile: ../docs/Cookbook.md
+          - markdownFile: markdown/Cookbook.md
             markdownSection: Server Options
-          - markdownFile: ../docs/Cookbook.md
+          - markdownFile: markdown/Cookbook.md
             markdownSection: HTTP Requests
-          - markdownFile: ../docs/Cookbook.md
+          - markdownFile: markdown/Cookbook.md
             markdownSection: NodeJS Express
-          - markdownFile: ../docs/Cookbook.md
+          - markdownFile: markdown/Cookbook.md
             markdownSection: Custom Routing and Other Frameworks
-          - markdownFile: ../docs/Cookbook.md
+          - markdownFile: markdown/Cookbook.md
             markdownSection: Open API
-          - markdownFile: ../docs/Cookbook.md
+          - markdownFile: markdown/Cookbook.md
             markdownSection: Pagination
-          - markdownFile: ../docs/Cookbook.md
+          - markdownFile: markdown/Cookbook.md
             markdownSection: Testing
 
