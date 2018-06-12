@@ -12,7 +12,7 @@ const openapiUtil = require('../util/openapi');
 const logger = require('../util/logger');
 const datafire = require('../index');
 
-const SPEC_FORMATS = ['raml', 'wadl', 'swagger_1', 'api_blueprint', 'io_docs', 'google'];
+const SPEC_FORMATS = ['raml', 'wadl', 'swagger_1', 'api_blueprint', 'io_docs', 'google', 'openapi_3'];
 
 const PACKAGE_PREFIX = process.env.DATAFIRE_REGISTRY_DIR ?
   process.env.DATAFIRE_REGISTRY_DIR + '/integrations' : '@datafire'
