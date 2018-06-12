@@ -1,3 +1,7 @@
+## 2.21.0
+
+Add support for openapi_3
+
 ### 2.20.2
 
 update momentjs
