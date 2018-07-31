@@ -6,6 +6,7 @@
   "bin": {
     "datafire": "bin/datafire"
   },
+  "engines" : { "node" : ">=6.0.0" },
   "scripts": {
     "test": "mocha ./src/test --recursive && ./src/test/commands/run.sh",
     "build": "./scripts/build.sh",
