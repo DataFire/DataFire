@@ -26,17 +26,17 @@
 [blog-image]: https://img.shields.io/badge/Read-on%20Medium-blue.svg
 [blog-link]: https://medium.com/datafire-io
 [mail-image]: https://img.shields.io/badge/Subscribe-on%20MailChimp-blue.svg
-[mail-link]: http://eepurl.com/c3t10T
+[mail-link]: https://eepurl.com/c3t10T
 
-DataFire is an open source framework for building and integrating APIs. It
-provides over [800 integrations](https://github.com/DataFire/Integrations), including:
+DataFire is an [open source](https://github.com/DataFire/DataFire/blob/master/LICENSE) framework for building and integrating APIs. It
+provides over [1000 integrations](https://github.com/DataFire/Integrations), including:
 
 AWS &bull; Azure &bull; MongoDB &bull; Slack &bull; GitHub &bull;
 Twilio &bull; Trello &bull; Square &bull;
 Google Sheets &bull; Gmail &bull; Heroku
 
-Each integration provides a set of composable actions. New actions can be built by
-combining existing actions, JavaScript, and external libraries. They are driven by JavaScript Promises,
+Each integration provides a set of [composable actions](https://docs.datafire.io/Actions). New actions [can be built](https://docs.datafire.io/Introduction/Hello_World) by
+combining existing actions, JavaScript, and external libraries. They are driven by [JavaScript Promises](https://developers.google.com/web/fundamentals/primers/promises),
 and can be triggered by a URL, on a schedule, or manually.
 
 Want more? [DataFire.io](https://datafire.io) provides a simple interface for building,
