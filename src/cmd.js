@@ -1,11 +1,18 @@
 let yargs = require('yargs').argv;
 let logger = require('./util/logger');
+let npath = require('path');
+
+let packageFile = npath.join(__dirname, '..');
+if (packageFile.endsWith('distribution')) {
+  packageFile = npath.join(packageFile, '..');
+}
+packageFile = npath.join(packageFile, 'package.json');
 
 const COMMANDS = [{
   name: 'version',
   description: "Shows the current version",
   runner: args => {
-    console.log("DataFire v" + require('../package').version);
+    console.log("DataFire v" + require(packageFile).version);
     return Promise.resolve();
   }
 }, {

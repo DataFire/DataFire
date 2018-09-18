@@ -30,7 +30,8 @@ describe('Flow', () => {
         })
     })
     .then(_ => {
-      if (process.version < 'v6') {
+      let version = require('../util/node-version');
+      if (version <= 4) {
         delete results[2]; // FIXME: last result not getting added in node v4.2
       }
       expect(context.results).to.deep.equal(results);
