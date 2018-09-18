@@ -1,12 +1,14 @@
 {
   "name": "datafire",
-  "version": "2.21.0",
+  "version": "2.21.1",
   "description": "",
   "main": "src/entry.js",
   "bin": {
     "datafire": "bin/datafire"
   },
-  "engines" : { "node" : ">=6.0.0" },
+  "engines": {
+    "node": ">=6.0.0"
+  },
   "scripts": {
     "test": "mocha ./src/test --recursive && ./src/test/commands/run.sh",
     "build": "./scripts/build.sh",
