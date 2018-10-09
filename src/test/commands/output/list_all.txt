@@ -3990,9 +3990,17 @@ http
   HTTP
   Make HTTP calls
 
+hubspot
+  hubspot
+  Integrate with Hubspot
+
 imap
   IMAP
   Interact with e-mail servers via the Internet Message Access Protocol
+
+ldap
+  LDAP - Lightweight Directory Access Protocol
+  The Lightweight Directory Access Protocol is an open, vendor-neutral, industry standard applicati...
 
 lucybot_docs
   LucyBot API Documentation
