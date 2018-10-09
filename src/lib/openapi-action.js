@@ -59,20 +59,34 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
         qs: {},
         qsStringifyOptions: {},
         headers: {},
-        form: {},
+        formData: {},
         body: null,
         encoding: null,
       }
       if (openapi.basePath && openapi.basePath !== '/') reqOpts.url += openapi.basePath;
       reqOpts.url += path;
-
-      let addParam = (loc, name, val) => {
+      let addParam = (loc, name, val, isFile) => {
         if (val === undefined) return;
-        if (loc === 'query') reqOpts.qs[name] = val;
-        else if (loc === 'header') reqOpts.headers[name] = val;
-        else if (loc === 'path') reqOpts.url = reqOpts.url.replace('{' + name + '}', val);
-        else if (loc === 'formData') reqOpts.form[name] = val;
-        else if (loc === 'body') reqOpts.body = JSON.stringify(val);
+        if (loc === 'query') {
+          reqOpts.qs[name] = val;
+        } else if (loc === 'header') {
+          reqOpts.headers[name] = val;
+        } else if (loc === 'path') {
+          reqOpts.url = reqOpts.url.replace('{' + name + '}', val);
+        } else if (loc === 'body') {
+          reqOpts.body = JSON.stringify(val);
+        } else if (loc === 'formData') {
+          if (isFile) {
+            reqOpts.formData[name] = {
+              value: val,
+              options: {
+                filename: name,
+              }
+            }
+          } else {
+            reqOpts.formData[name] = val;
+          }
+        }
       }
       let names = openapiUtil.getUniqueNames(params);
       params.forEach((param, idx) => {
@@ -84,7 +98,7 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
             reqOpts.qsStringifyOptions.sep = openapiUtil.getCollectionFormatSeparator(param.collectionFormat);
           }
         }
-        addParam(param.in, param.name, val);
+        addParam(param.in, param.name, val, param.type === 'file');
       });
 
       let hasRefreshToken = false;
@@ -111,7 +125,7 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
         }
       }
 
-      if (Object.keys(reqOpts.form).length === 0) delete reqOpts.form;
+      if (Object.keys(reqOpts.formData).length === 0) delete reqOpts.formData;
 
       let refreshOAuthToken = (callback) => {
         let form = {
@@ -190,7 +204,7 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
 const getSchemaFromParam = function(param) {
   if (param.in === 'body' && param.schema) return param.schema;
   let schema = {};
-  schema.type = param.type === 'file' ? 'string' : param.type; // FIXME: handle file inputs
+  schema.type = param.type === 'file' ? 'string' : param.type;
   openapiUtil.PARAM_SCHEMA_FIELDS.forEach(f => {
     if (param[f] !== undefined) schema[f] = param[f];
   })
