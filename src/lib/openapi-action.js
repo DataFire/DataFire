@@ -77,12 +77,25 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
           reqOpts.body = JSON.stringify(val);
         } else if (loc === 'formData') {
           if (isFile) {
-            reqOpts.formData[name] = {
-              value: val,
-              options: {
-                filename: name,
+            if (typeof val === 'object') {
+              let content = val.encoding ? new Buffer(val.content, val.encoding) : val.content;
+              val = {
+                value: content,
+                options: {
+                  filename: val.filename || name,
+                  contentType: val.contentType,
+                  knownLength: val.knownLength,
+                }
+              }
+            } else {
+              val = {
+                value: val,
+                options: {
+                  filename: name,
+                }
               }
             }
+            reqOpts.formData[name] = val;
           } else {
             reqOpts.formData[name] = val;
           }
@@ -204,7 +217,7 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
 const getSchemaFromParam = function(param) {
   if (param.in === 'body' && param.schema) return param.schema;
   let schema = {};
-  schema.type = param.type === 'file' ? 'string' : param.type;
+  schema.type = param.type === 'file' ? ['string', 'object'] : param.type;
   openapiUtil.PARAM_SCHEMA_FIELDS.forEach(f => {
     if (param[f] !== undefined) schema[f] = param[f];
   })
