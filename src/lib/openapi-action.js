@@ -216,7 +216,18 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
 
 const getSchemaFromParam = function(param) {
   if (param.in === 'body' && param.schema) return param.schema;
-  let schema = {};
+  let schema = {
+    type: param.type,
+  };
+  if (param.type === 'file') {
+    schema.type = ['string', 'object'];
+    schema.properties = {
+      content: {type: 'string'},
+      encoding: {type: 'string', enum: ['ascii', 'utf8', 'utf16le', 'base64', 'binary', 'hex']},
+      contentType: {type: 'string'},
+      filename: {type: 'string'},
+    }
+  }
   schema.type = param.type === 'file' ? ['string', 'object'] : param.type;
   openapiUtil.PARAM_SCHEMA_FIELDS.forEach(f => {
     if (param[f] !== undefined) schema[f] = param[f];
