@@ -148,7 +148,7 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
           grant_type: 'refresh_token'
         };
         request.post({
-          url: account.refresh_url || oauthDef.tokenUrl,
+          url: account.refresh_url || oauthDef.refreshUrl || oauthDef.tokenUrl,
           headers: account.refresh_headers || {},
           json: true,
           form,
