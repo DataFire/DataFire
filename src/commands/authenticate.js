@@ -111,7 +111,8 @@ let getOAuthURL = (integration, secDef, clientAccount, scopes) => {
   var flow = secDef.flow;
   var url = secDef.authorizationUrl;
   var state = Math.random();
-  url += '?response_type=' + (flow === 'implicit' ? 'token' : 'code');
+  url += url.indexOf('?') === -1 ? '?' : '&';
+  url += 'response_type=' + (flow === 'implicit' ? 'token' : 'code');
   url += '&redirect_uri=' + encodeURIComponent(clientAccount.redirect_uri || DEFAULT_REDIRECT_URI);
   url += '&client_id=' + encodeURIComponent(clientAccount.client_id);
 
@@ -194,22 +195,25 @@ let startOAuthServer = (project, integration, secDef, accountToEdit, clientAccou
       }
     }).listen(OAUTH_PORT, (err) => {
       if (err) throw err;
+      function finish(scopes) {
+        let url = getOAuthURL(integration, secDef, clientAccount, scopes);
+        logger.log("Visit the URL below to generate access and refresh tokens")
+        logger.logInfo("Be sure to set redirect_uri to http://localhost:3333 in your OAuth client's settings page");
+        logger.logURL(url);
+      }
+      let scopes = Object.keys(secDef.scopes || {});
+      if (!scopes.length) return finish(scopes);
       let scopeQuestions = [{
         type: 'checkbox',
         name: 'scopes',
         message: "Choose which scopes to enable for this account",
-        choices: Object.keys(secDef.scopes).map(s => {
+        choices: scopes.map(s => {
           let name = s;
           if (secDef.scopes[s]) name += ' (' + secDef.scopes[s] + ')';
           return {name, value: s};
         }),
       }]
-      inquirer.prompt(scopeQuestions).then(answers => {
-        let url = getOAuthURL(integration, secDef, clientAccount, answers.scopes);
-        logger.log("Visit the URL below to generate access and refresh tokens")
-        logger.logInfo("Be sure to set redirect_uri to http://localhost:3333 in your OAuth client's settings page");
-        logger.logURL(url);
-      })
+      inquirer.prompt(scopeQuestions).then(answers => finish(answers.scopes));
     });
   });
 }
