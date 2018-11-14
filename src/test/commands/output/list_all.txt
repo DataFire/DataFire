@@ -93,6 +93,10 @@ amazonaws_ce
   AWS Cost Explorer Service
   The Cost Explorer API allows you to programmatically query your cost and usage data. You can quer...
 
+amazonaws_chime
+  Amazon Chime
+  Amazon Chime is a communications service that transforms online meetings with a secure, easy-to-u...
+
 amazonaws_cloud9
   AWS Cloud9
   AWS Cloud9 is a collection of tools that you can use to code, build, run, test, debug, and releas...
@@ -208,6 +212,10 @@ amazonaws_directconnect
 amazonaws_discovery
   AWS Application Discovery Service
   AWS Application Discovery Service helps you plan application migration projects by automatically ...
+
+amazonaws_dlm
+  Amazon Data Lifecycle Manager
+  With Amazon Data Lifecycle Manager, you can manage the lifecycle of your AWS resources. You creat...
 
 amazonaws_dms
   AWS Database Migration Service
@@ -373,6 +381,10 @@ amazonaws_machinelearning
   Amazon Machine Learning
   Definition of the public APIs exposed by Amazon Machine Learning
 
+amazonaws_macie
+  Amazon Macie
+  Amazon Macie is a security service that uses machine learning to automatically discover, classify...
+
 amazonaws_marketplacecommerceanalytics
   AWS Marketplace Commerce Analytics
   Provides AWS Marketplace business intelligence data on-demand.
@@ -520,6 +532,10 @@ amazonaws_servicediscovery
 amazonaws_shield
   AWS Shield
   This is the AWS Shield Advanced API Reference. This guide is for developers who need detailed inf...
+
+amazonaws_signer
+  AWS Signer
+  You can use Code Signing for Amazon FreeRTOS (AWS Signer) to sign code that you created for any o...
 
 amazonaws_sms
   AWS Server Migration Service
@@ -2325,6 +2341,10 @@ gisgraphy
   Gisgraphy
   Since 2006, Gisgraphy is a free, open source framework that offers the possibility to do geolocal...
 
+gitea
+  Gitea API.
+  This documentation describes the Gitea API.
+
 github
   GitHub
   Powerful collaboration, code review, and code management for open source and private projects.
@@ -3181,6 +3201,10 @@ microsoft_cognitiveservices_websearch
   Microsoft Web Search
   The Web Search API lets you send a search query to Bing and get back search results that include ...
 
+moderatecontent
+  Image Moderation
+  Our FREE API blocks images with nudity. Build from the ground up, accurate models, best in class ...
+
 moonmoonmoonmoon
   Moon by Ai Weiwei & Olafur Eliasson
   Turn nothing into something – make a drawing, make a mark.
@@ -3329,6 +3353,10 @@ o2_cz_sociodemo
   O2 Socio-demo
   Socio-demo API can be used to obtain time-aggregated data representing groups of people on the gi...
 
+obono_at
+  obono RKSV
+  Provides a RESTful API for interacting with virtual cash registers and creating receipts that are...
+
 oceandrivers
   ODWeather
   This is the api to access the ODWeather API information
@@ -3344,6 +3372,10 @@ onenote
 openapi_converter_herokuapp
   Swagger2OpenAPI Converter
   Converter and validator for Swagger 2.0 to OpenAPI 3.0.x definitions
+
+openapi_space
+  OpenAPI space
+  This is the API for OpenAPI space.
 
 openbanking_org_uk
   openbanking.org Open Data
@@ -3517,6 +3549,10 @@ reddit
 reddit_rss
   Reddit RSS
 
+redirection
+  redirection.io
+  API documentation for redirection.io
+
 redmine
   Redmine
   Redmine exposes some of its data through a REST API. This API provides
@@ -3524,6 +3560,10 @@ redmine
 refugerestrooms
   Refuge Restrooms
   REFUGE is a web application that seeks to provide safe restroom access for transgender, intersex,...
+
+reloadly
+  Reloadly REST APIs
+  The Reloadly APIs are HTTP-based RESTful APIs that use OAuth 2.0 for authorization. API request a...
 
 reverb
   Reverb
@@ -3738,6 +3778,10 @@ transavia
 transitfeeds
   TransitFeeds
   API to view feed information and download feeds from TransitFeeds.com
+
+trashnothing
+  trash nothing!
+  This is the REST API for trashnothing.com.
 
 trello
   Trello
