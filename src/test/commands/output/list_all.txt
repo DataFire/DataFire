@@ -4053,6 +4053,10 @@ mongodb
   MongoDB
   Interact with MongoDB
 
+onedb
+  OneDB
+  An open source backend-as-a-service
+
 smtp
   SMTP
   Send e-mail using the SMTP protocol
