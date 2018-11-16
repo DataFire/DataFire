@@ -67,9 +67,10 @@ class Logger {
     Logger.log(prettyjson.render(json, {keysColor: 'white', stringColor: 'green', dashColor: 'white'}));
   }
 
-  static logSchema(schema, indent, name, hideType) {
+  static logSchema(schema, indent, name, hideType, logged=[]) {
     indent = indent || '';
-    if (indent.length > 12) return Logger.log('...\n')
+    if (indent.length > 12 || logged.indexOf(schema) !== -1) return Logger.log(indent + '...')
+    logged.push(schema);
     let toLog = indent;
     if (name) toLog += chalk.white(Logger.padString(name + ': ', 14));
     toLog += Logger.chalkType(schema.type);
@@ -88,12 +89,12 @@ class Logger {
         if (schema.required && schema.required.indexOf(propName) !== -1) {
           propName += '*'
         }
-        Logger.logSchema(prop, indent + '  ', propName);
+        Logger.logSchema(prop, indent + '  ', propName, false, logged);
       }
     } else if (schema.items) {
       if (schema.items.properties || schema.items.items) {
         if (toLog) Logger.log(toLog);
-        Logger.logSchema(schema.items, indent, '', true)
+        Logger.logSchema(schema.items, indent, '', true, logged)
       } else {
         toLog = toLog || indent + Logger.chalkType('array');
         Logger.log(toLog);
@@ -102,7 +103,7 @@ class Logger {
       if (toLog) Logger.log(toLog);
     }
     if (schema.allOf) {
-      schema.allOf.forEach(subschema => Logger.logSchema(subschema, indent, '', true));
+      schema.allOf.forEach(subschema => Logger.logSchema(subschema, indent, '', true, logged));
     }
     // TODO: anyOf, oneOf
   }
