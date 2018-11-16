@@ -128,14 +128,7 @@ const getNameFromHost = (host) => {
 }
 
 const integrateOpenAPI = (dir, name, url, patch, callback) => {
-  request.get(url, (err, resp, body) => {
-    if (err) return callback(err);
-    resp.headers['content-type'] = resp.headers['content-type'] || '';
-    if (resp.headers['content-type'].indexOf('yaml') !== -1) {
-      body = YAML.parse(body);
-    } else {
-      body = JSON.parse(body);
-    }
+  function finish(body) {
     if (!body.host) return callback(new Error("Invalid swagger:" + JSON.stringify(body, null, 2)))
     if (patch) patch(body);
     for (let path in body.paths) {
@@ -145,7 +138,28 @@ const integrateOpenAPI = (dir, name, url, patch, callback) => {
       }
     }
     addIntegration(dir, name, 'openapi', body, callback);
-  })
+  }
+
+  if (fs.existsSync(url)) {
+    let content = fs.readFileSync(url);
+    if (url.endsWith('.json')) {
+      content = JSON.parse(content);
+    } else {
+      content = YAML.parse(content);
+    }
+    finish(content);
+  } else {
+    request.get(url, (err, resp, body) => {
+      if (err) return callback(err);
+      resp.headers['content-type'] = resp.headers['content-type'] || '';
+      if (resp.headers['content-type'].indexOf('yaml') !== -1) {
+        body = YAML.parse(body);
+      } else {
+        body = JSON.parse(body);
+      }
+      finish(body);
+    })
+  }
 }
 
 const integrateRSS = (dir, name, urls, callback) => {
