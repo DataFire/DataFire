@@ -154,6 +154,7 @@ let startOAuthServer = (project, integration, secDef, accountToEdit, clientAccou
           json: true,
         }, (err, resp, body) => {
           if (err) return reject(err);
+          if (resp.statusCode >= 300) return reject(resp.statusCode);
           let newURL = '/?saved=true#access_token=' + encodeURIComponent(body.access_token);
           newURL += '&refresh_token=' + encodeURIComponent(body.refresh_token);
           newURL += '&saved=true';
