@@ -132,8 +132,10 @@ Integration.prototype.mockAll = function() {
 Integration.prototype.action = function(id) {
   let parts = id.split('.');
   let obj = this.actions;
-  parts.forEach(part => obj = obj[part]);
-  if (!obj) throw new Error("Action " + this.id + "/" + id + " not found.");
+  parts.forEach(part => {
+    obj = obj[part]
+    if (!obj) throw new Error("Action " + this.id + "/" + id + " not found.");
+  });
   if (!(obj.action instanceof Action)) throw new Error(this.id + "/" + id + " is not an action");
   return obj.action;
 }
