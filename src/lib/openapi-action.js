@@ -162,7 +162,7 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
           callback();
         })
       }
-      if (BODY_METHODS.indexOf(method) !== -1) {
+      if (BODY_METHODS.indexOf(method) !== -1 && reqOpts.body !== null) {
         let consumes = op.consumes || ['application/json'];
         let cType = consumes.indexOf('application/json') === -1 ? consumes[0] : 'application/json';
         addParam('header', 'Content-Type', cType);
