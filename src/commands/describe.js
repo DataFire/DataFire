@@ -35,11 +35,11 @@ module.exports = (args) => {
     let input = openapiUtil.dereferenceSchema(JSON.parse(JSON.stringify(action.inputSchema)));
     let output = openapiUtil.dereferenceSchema(JSON.parse(JSON.stringify(action.outputSchema)));
     logger.logAction(args.action, action);
-    if (input && input.type) {
+    if (input) {
       logger.logHeading('\nInput');
       logger.logSchema(input);
     }
-    if (output && output.type) {
+    if (output) {
       logger.logHeading('\nOutput');
       logger.logSchema(output);
     }
