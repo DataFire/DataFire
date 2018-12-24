@@ -110,6 +110,10 @@ const COMMANDS = [{
   }, {
     name: 'client',
     description: "With generate_token, the account alias to use as the OAuth client",
+  }, {
+    name: 'port',
+    alias: 'p',
+    description: "With generate_token, the port to listen on for the OAuth callback",
   }]
 }, {
   name: 'run <action>',

@@ -7,8 +7,7 @@ const querystring = require('querystring');
 const request = require('request');
 const YAML = require('yamljs');
 
-const OAUTH_PORT = 3333;
-const DEFAULT_REDIRECT_URI = 'http://localhost:' + OAUTH_PORT;
+const DEFAULT_OAUTH_PORT = 3333;
 const CALLBACK_HTML_FILE = path.join(__dirname, '..', 'www', 'oauth_callback.html');
 
 const datafire = require('../index');
@@ -33,7 +32,7 @@ module.exports = (args) => {
   if (args.alias) {
     aliasQuestion = [];
   }
-
+  console.log(args.port);
   return inquirer.prompt(aliasQuestion)
     .then(answers => {
       let alias = args.alias || answers.alias;
@@ -51,7 +50,7 @@ module.exports = (args) => {
         }])
         .then(results => {
           if (results.generate_token) {
-            return generateToken(project, integration, security.oauth, accountToEdit, accountToEdit);
+            return generateToken(project, integration, security.oauth, accountToEdit, accountToEdit, args.port);
           } else {
             return promptAllFields(project, integration, security, accountToEdit);
           }
@@ -79,7 +78,7 @@ let promptAllFields = (project, integration, security, account) => {
   })
 }
 
-let generateToken = (project, integration, secOption, accountToEdit, clientAccount) => {
+let generateToken = (project, integration, secOption, accountToEdit, clientAccount, port) => {
   let questions = [];
   if (!clientAccount.client_id || !clientAccount.client_secret) {
     questions.push({
@@ -98,7 +97,7 @@ let generateToken = (project, integration, secOption, accountToEdit, clientAccou
   return inquirer.prompt(questions).then(answers => {
     if (answers.client_id) clientAccount.client_id = answers.client_id;
     if (answers.client_secret) clientAccount.client_secret = answers.client_secret;
-    return startOAuthServer(project, integration, secOption, accountToEdit, clientAccount)
+    return startOAuthServer(project, integration, secOption, accountToEdit, clientAccount, port)
   })
 }
 let saveAccounts = (project) => {
@@ -107,13 +106,13 @@ let saveAccounts = (project) => {
   fs.writeFileSync(file, YAML.stringify({accounts: project.accounts}, 10));
 }
 
-let getOAuthURL = (integration, secDef, clientAccount, scopes) => {
+let getOAuthURL = (integration, secDef, clientAccount, scopes, redirectURI) => {
   var flow = secDef.flow;
   var url = secDef.authorizationUrl;
   var state = Math.random();
   url += url.indexOf('?') === -1 ? '?' : '&';
   url += 'response_type=' + (flow === 'implicit' ? 'token' : 'code');
-  url += '&redirect_uri=' + encodeURIComponent(clientAccount.redirect_uri || DEFAULT_REDIRECT_URI);
+  url += '&redirect_uri=' + encodeURIComponent(redirectURI);
   url += '&client_id=' + encodeURIComponent(clientAccount.client_id);
 
   // FIXME: google hack - no refresh token unless these parameters are included
@@ -129,7 +128,9 @@ let getOAuthURL = (integration, secDef, clientAccount, scopes) => {
   return url;
 }
 
-let startOAuthServer = (project, integration, secDef, accountToEdit, clientAccount) => {
+let startOAuthServer = (project, integration, secDef, accountToEdit, clientAccount, port) => {
+  port = port || DEFAULT_OAUTH_PORT;
+  let redirectURI = clientAccount.redirect_uri || 'http://localhost:' + port;
   return new Promise((resolve, reject) => {
     let server = http.createServer((req, res) => {
       let urlObj = urlParser.parse(req.url);
@@ -148,7 +149,7 @@ let startOAuthServer = (project, integration, secDef, accountToEdit, clientAccou
             code: search.code,
             client_id: clientAccount.client_id,
             client_secret: clientAccount.client_secret,
-            redirect_uri: clientAccount.redirect_uri || DEFAULT_REDIRECT_URI,
+            redirect_uri: redirectURI,
             grant_type: 'authorization_code',
           },
           json: true,
@@ -194,12 +195,12 @@ let startOAuthServer = (project, integration, secDef, accountToEdit, clientAccou
           }
         })
       }
-    }).listen(OAUTH_PORT, (err) => {
+    }).listen(port, (err) => {
       if (err) throw err;
       function finish(scopes) {
-        let url = getOAuthURL(integration, secDef, clientAccount, scopes);
+        let url = getOAuthURL(integration, secDef, clientAccount, scopes, redirectURI);
         logger.log("Visit the URL below to generate access and refresh tokens")
-        logger.logInfo("Be sure to set redirect_uri to http://localhost:3333 in your OAuth client's settings page");
+        logger.logInfo("Be sure to set redirect_uri to " + redirectURI + " in your OAuth client's settings page");
         logger.logURL(url);
       }
       let scopes = Object.keys(secDef.scopes || {});
