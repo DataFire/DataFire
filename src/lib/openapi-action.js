@@ -195,7 +195,7 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
             return reject(new Response({statusCode: resp.statusCode, body}));
           }
           let ctype = resp.headers['content-type'] || '';
-          if (ctype.indexOf('application/json') !== -1) {
+          if (body && ctype.indexOf('application/json') !== -1) {
             body = JSON.parse(body);
             resolve(body);
           } else if (openapi.info['x-datafire'] && openapi.info['x-datafire'].type === 'rss') {
