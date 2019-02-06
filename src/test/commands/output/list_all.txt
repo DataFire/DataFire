@@ -657,6 +657,10 @@ art19
   ART19 Content
   The ART19 Content API conforms to the JSON-API specification. Details and examples can be found a...
 
+asana
+  Asana
+  ASANA Developers API
+
 ato_gov_au
   Australian Business Registries
   The Business Registries API is built on HTTP. The API is RESTful. It has predictable resource URIs.
@@ -1819,6 +1823,10 @@ bandsintown
   Bandsintown
   The Bandsintown API is designed for enterprise partners and artists with websites, media players,...
 
+basecamp
+  Basecamp
+  The Basecamp 3 API
+
 bbc
   BBC Nitro
   BBC Nitro is the BBC's application programming interface (API) for BBC Programmes Metadata.
@@ -1992,6 +2000,10 @@ code_scan
   CodeScan
   Manage your Hosted CodeScan Service
 
+confluence
+  Confluence Server
+  The Confluence Cloud REST API
+
 consumerfinance_gov
   Consumer Financial Protection Bureau
   Learn more about home mortgage data, download the data yourself, or build new tools using our API.
@@ -2070,6 +2082,14 @@ domainsdb_info
 dracoon_team
   DRACOON
   REST Web Services for DRACOON. Version. 4.5.0  - built at: 1517571015562
+
+dropbox_content
+  Dropbox Content
+  Dropbox API
+
+dropbox_data
+  Dropbox Data
+  Dropbox API
 
 dropx
   DropX
@@ -3060,6 +3080,10 @@ iva_api
 
 je_apis
   Just Eat Tenant
+
+jira
+  Jira
+  The Jira Cloud Platform REST API
 
 jumpseller
   Jumpseller API
