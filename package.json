@@ -1,6 +1,6 @@
 {
   "name": "datafire",
-  "version": "2.25.3",
+  "version": "2.26.0",
   "description": "",
   "main": "src/entry.js",
   "bin": {
