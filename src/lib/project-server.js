@@ -57,7 +57,13 @@ class ProjectServer {
         if (this.project.options.cors) {
           router.use(middleware.CORS());
         }
-        router.use(middleware.parseRequest(router, {json: {strict: false}}), middleware.validateRequest());
+        let parserOpts = {
+          json: {strict: false, limit: this.project.options.bodyLimit},
+        };
+        router.use(
+            middleware.parseRequest(router, parserOpts),
+            middleware.validateRequest()
+        );
         router.use((err, req, res, next) => {
           let message = err.message || "Unknown Error";
           let errorPath = message.match(/Data path: "\/([^"]*)"/);

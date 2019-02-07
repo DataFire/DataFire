@@ -130,6 +130,7 @@ describe("Project Server", () => {
       paths,
       options: {
         cache: DEFAULT_CACHE_TIME,
+        bodyLimit: 1000,
       },
       openapi: {host: 'localhost:3333'},
     });
@@ -190,6 +191,17 @@ describe("Project Server", () => {
         expect(time).to.not.equal(firstTime);
       })
   });
+
+  it('should respect bodyLimit', () => {
+    let name = "a";
+    for (let i = 0; i < 10; ++i) name += name;
+    return req('/person', {body: {name}, method: 'post'})
+      .then(_ => {throw new Error("Shouldn't reach here")})
+      .catch(e => {
+        expect(e.statusCode).to.equal(413)
+        expect(e.body.error).to.equal('request entity too large');
+      })
+  })
 
   it('should return pretty errors for bad query param', () => {
     function checkError(qs, expected) {
