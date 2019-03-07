@@ -53,13 +53,14 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
         throw new Error("The 'host' field must be specified in the " + integration.id + " account");
       }
       let url = (account && account.host) || (scheme + '://' + openapi.host);
+      const formKey = (op.consumes || ['application/json']).indexOf('application/x-www-form-urlencoded') !== -1 ? 'form' : 'formData';
       let reqOpts = {
         method,
         url,
         qs: {},
         qsStringifyOptions: {},
         headers: {},
-        formData: {},
+        [formKey]: {},
         body: null,
         encoding: null,
       }
@@ -95,9 +96,9 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
                 }
               }
             }
-            reqOpts.formData[name] = val;
+            reqOpts[formKey][name] = val;
           } else {
-            reqOpts.formData[name] = val;
+            reqOpts[formKey][name] = val;
           }
         }
       }
@@ -138,7 +139,7 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
         }
       }
 
-      if (Object.keys(reqOpts.formData).length === 0) delete reqOpts.formData;
+      if (Object.keys(reqOpts[formKey]).length === 0) delete reqOpts[formKey];
 
       let refreshOAuthToken = (callback) => {
         let form = {
