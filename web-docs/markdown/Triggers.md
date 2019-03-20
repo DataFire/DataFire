@@ -43,6 +43,11 @@ tasks:
       mongodb: mongo_read_only
 ```
 
+Start running tasks with:
+```
+datafire serve --tasks
+```
+
 #### Monitors
 A monitor will poll a particular resource for new items,
 and only run your action if a new item is found. For instance, we can
@@ -61,8 +66,23 @@ tasks:
     action: ./post-story-to-slack.js
 ```
 
-Start running tasks with:
+In the above example, the action `reddit_rss/frontPage` returns a response like this:
+```json
+{
+  "feed": {
+    "entries": [{
+      "link": "https://reddit.com/foo/bar",
+      "title": "FooBar"
+    }, {
+      "link": "https://reddit.com/baz/quux",
+      "title": "BazQuxx"
+    }]
+  }
+}
 ```
-datafire serve --tasks
-```
+
+In order to track the items in the `entries` array, we have to set two fields:
+* `monitor.array` is set to `feed.entries` - the path we need to take from the top of the JSON response to get at the array.
+* `monitor.trackBy` is set to `link` - this is the field we will use as a unique identifier for each entry.
+Only entries with a link we haven't seen before will trigger the `post-story-to-slack.js` action.
 

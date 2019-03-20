@@ -12,7 +12,7 @@
   "scripts": {
     "test": "mocha ./src/test --recursive && ./src/test/commands/run.sh",
     "build": "./scripts/build.sh",
-    "build-docs": "rm -rf ./docs && mkdir ./docs && lucybot build --directory ./web-docs --destination ./docs"
+    "build-docs": "rm -rf ./docs && mkdir ./docs && lucybot build --directory ./web-docs --destination ./docs && git checkout -- docs/CNAME"
   },
   "author": "",
   "license": "MIT",

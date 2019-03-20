@@ -116,9 +116,13 @@ var AppComponent = /** @class */ (function () {
         this.platformService = platformService;
         this.subscriptions = [];
         window.app = this;
+        var isFirst = true;
         this.subscriptions.push(this.router.events.subscribe(function (event) {
             if (_this.platformService.isBrowser && event instanceof __WEBPACK_IMPORTED_MODULE_1__angular_router__["NavigationEnd"] && window.innerWidth > MAX_XS_WIDTH) {
-                window.scrollTo(0, 0);
+                if (!isFirst) {
+                    window.scrollTo(0, 0);
+                }
+                isFirst = false;
             }
         }));
     }
@@ -303,7 +307,7 @@ var AppModuleNgFactory = i0.ɵcmf(i1.AppModule, [i2.AppComponent], function (_l)
     return [i16.ɵb()];
   }, []), i0.ɵmpd(256, i0.APP_ID, "lucybot-doc-app", []), i0.ɵmpd(2048, i9.ɵTRANSITION_ID, null, [i0.APP_ID]), i0.ɵmpd(512, i16.ɵg, i16.ɵg, [i0.Injector]), i0.ɵmpd(1024, i0.APP_INITIALIZER, function (p0_0, p1_0, p1_1, p1_2, p2_0) {
     return [i9.ɵh(p0_0), i9.ɵf(p1_0, p1_1, p1_2), i16.ɵh(p2_0)];
-  }, [[2, i0.NgProbeToken], i9.ɵTRANSITION_ID, i8.DOCUMENT, i0.Injector, i16.ɵg]), i0.ɵmpd(512, i0.ApplicationInitStatus, i0.ApplicationInitStatus, [[2, i0.APP_INITIALIZER]]), i0.ɵmpd(131584, i0.ApplicationRef, i0.ApplicationRef, [i0.NgZone, i0.ɵConsole, i0.Injector, i0.ErrorHandler, i0.ComponentFactoryResolver, i0.ApplicationInitStatus]), i0.ɵmpd(512, i0.ApplicationModule, i0.ApplicationModule, [i0.ApplicationRef]), i0.ɵmpd(512, i9.BrowserModule, i9.BrowserModule, [[3, i9.BrowserModule]]), i0.ɵmpd(512, i9.BrowserTransferStateModule, i9.BrowserTransferStateModule, []), i0.ɵmpd(512, i10.TransferHttpCacheModule, i10.TransferHttpCacheModule, []), i0.ɵmpd(512, i13.BrowserAnimationsModule, i13.BrowserAnimationsModule, []), i0.ɵmpd(1024, i16.ɵa, i16.ɵd, [[3, i16.Router]]), i0.ɵmpd(512, i16.UrlSerializer, i16.DefaultUrlSerializer, []), i0.ɵmpd(512, i16.ChildrenOutletContexts, i16.ChildrenOutletContexts, []), i0.ɵmpd(256, i16.ROUTER_CONFIGURATION, { useHash: false }, []), i0.ɵmpd(1024, i8.LocationStrategy, i16.ɵc, [i8.PlatformLocation, [2, i8.APP_BASE_HREF], i16.ROUTER_CONFIGURATION]), i0.ɵmpd(512, i8.Location, i8.Location, [i8.LocationStrategy]), i0.ɵmpd(512, i0.Compiler, i0.Compiler, []), i0.ɵmpd(512, i0.NgModuleFactoryLoader, i0.SystemJsNgModuleLoader, [i0.Compiler, [2, i0.SystemJsNgModuleLoaderConfig]]), i0.ɵmpd(1024, i16.ROUTES, function () {
+  }, [[2, i0.NgProbeToken], i9.ɵTRANSITION_ID, i8.DOCUMENT, i0.Injector, i16.ɵg]), i0.ɵmpd(512, i0.ApplicationInitStatus, i0.ApplicationInitStatus, [[2, i0.APP_INITIALIZER]]), i0.ɵmpd(131584, i0.ApplicationRef, i0.ApplicationRef, [i0.NgZone, i0.ɵConsole, i0.Injector, i0.ErrorHandler, i0.ComponentFactoryResolver, i0.ApplicationInitStatus]), i0.ɵmpd(512, i0.ApplicationModule, i0.ApplicationModule, [i0.ApplicationRef]), i0.ɵmpd(512, i9.BrowserModule, i9.BrowserModule, [[3, i9.BrowserModule]]), i0.ɵmpd(512, i9.BrowserTransferStateModule, i9.BrowserTransferStateModule, []), i0.ɵmpd(512, i10.TransferHttpCacheModule, i10.TransferHttpCacheModule, []), i0.ɵmpd(512, i13.BrowserAnimationsModule, i13.BrowserAnimationsModule, []), i0.ɵmpd(1024, i16.ɵa, i16.ɵd, [[3, i16.Router]]), i0.ɵmpd(512, i16.UrlSerializer, i16.DefaultUrlSerializer, []), i0.ɵmpd(512, i16.ChildrenOutletContexts, i16.ChildrenOutletContexts, []), i0.ɵmpd(256, i8.APP_BASE_HREF, i1.ɵ0, []), i0.ɵmpd(256, i16.ROUTER_CONFIGURATION, { useHash: false }, []), i0.ɵmpd(1024, i8.LocationStrategy, i16.ɵc, [i8.PlatformLocation, [2, i8.APP_BASE_HREF], i16.ROUTER_CONFIGURATION]), i0.ɵmpd(512, i8.Location, i8.Location, [i8.LocationStrategy]), i0.ɵmpd(512, i0.Compiler, i0.Compiler, []), i0.ɵmpd(512, i0.NgModuleFactoryLoader, i0.SystemJsNgModuleLoader, [i0.Compiler, [2, i0.SystemJsNgModuleLoaderConfig]]), i0.ɵmpd(1024, i16.ROUTES, function () {
     return [[{ path: "", component: i27.DocumentationComponent }, { path: ":item0", component: i27.DocumentationComponent }, { path: ":item0/:item1", component: i27.DocumentationComponent }, { path: ":item0/:item1/:item2", component: i27.DocumentationComponent }, { path: ":item0/:item1/:item2/:item3", component: i27.DocumentationComponent }, { path: ":item0/:item1/:item2/:item3/:item4", component: i27.DocumentationComponent }, { path: "**", redirectTo: "", pathMatch: "full" }]];
   }, []), i0.ɵmpd(1024, i16.Router, i16.ɵe, [i0.ApplicationRef, i16.UrlSerializer, i16.ChildrenOutletContexts, i8.Location, i0.Injector, i0.NgModuleFactoryLoader, i0.Compiler, i16.ROUTES, i16.ROUTER_CONFIGURATION, [2, i16.UrlHandlingStrategy], [2, i16.RouteReuseStrategy]]), i0.ɵmpd(512, i16.RouterModule, i16.RouterModule, [[2, i16.ɵa], [2, i16.Router]]), i0.ɵmpd(512, i28.TooltipModule, i28.TooltipModule, []), i0.ɵmpd(512, i29.Ng2DatetimePickerModule, i29.Ng2DatetimePickerModule, []), i0.ɵmpd(512, i1.AppModule, i1.AppModule, []), i0.ɵmpd(256, i7.ɵf, "XSRF-TOKEN", []), i0.ɵmpd(256, i7.ɵg, "X-XSRF-TOKEN", []), i0.ɵmpd(256, "ORIGIN_URL", "", [])]);
 });
@@ -317,6 +321,7 @@ exports.AppModuleNgFactory = AppModuleNgFactory;
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppModule", function() { return AppModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵ0", function() { return ɵ0; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__angular_core__);
 __webpack_require__("./src/app/views/oauth_callback.html");
@@ -326,11 +331,14 @@ window.originalURL = {
     path: window.location.pathname,
     hash: window.location.hash,
 };
+window.config = window.config || {};
+var ɵ0 = window.config.basePath || '/';
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
     return AppModule;
 }());
+
 
 
 
@@ -1322,7 +1330,7 @@ function View_DocumentationComponent_Host_0(_l) {
 var DocumentationComponentNgFactory = i0.ɵccf("documentation", i9.DocumentationComponent, View_DocumentationComponent_Host_0, {}, {}, []);
 exports.DocumentationComponentNgFactory = DocumentationComponentNgFactory;
 
-var styles_OperationDocumentationComponent = [".try-it-button[_ngcontent-%COMP%] {\n      margin-bottom: 30px;\n    }\n    .nav-tabs[_ngcontent-%COMP%] {\n      margin-bottom: 15px;\n    }\n    .status-code-tabs[_ngcontent-%COMP%] {\n      font-weight: bold;\n    }\n    .parameter[_ngcontent-%COMP%] {\n      margin-bottom: 20px;\n    }\n    .parameter-details[_ngcontent-%COMP%] {\n      padding-left: 15px;\n    }"];
+var styles_OperationDocumentationComponent = [".try-it-button[_ngcontent-%COMP%] {\n      margin-bottom: 30px;\n    }\n    .nav-tabs[_ngcontent-%COMP%] {\n      margin-bottom: 15px;\n    }\n    .status-code-tabs[_ngcontent-%COMP%] {\n      font-weight: bold;\n    }\n    .parameter[_ngcontent-%COMP%] {\n      margin-bottom: 20px;\n    }\n    .parameter-details[_ngcontent-%COMP%] {\n      padding-left: 15px;\n    }\n    .input-output-box[_ngcontent-%COMP%] {\n      border: 1px solid #333;\n      border-radius: 4px;\n      padding: 15px;\n      margin-top: 15px;\n    }\n    .input-output-box[_ngcontent-%COMP%]   h4[_ngcontent-%COMP%] {\n      margin-bottom: 20px;\n    }"];
 var RenderType_OperationDocumentationComponent = i0.ɵcrt({ encapsulation: 0, styles: styles_OperationDocumentationComponent, data: {} });
 exports.RenderType_OperationDocumentationComponent = RenderType_OperationDocumentationComponent;
 
@@ -1424,10 +1432,10 @@ function View_OperationDocumentationComponent_12(_l) {
     }, null);
 }
 function View_OperationDocumentationComponent_0(_l) {
-    return i0.ɵvid(0, [i0.ɵpid(0, i24.ParameterFilterPipe, []), i0.ɵqud(671088640, 1, { apiCallComponent: 0 }), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OperationDocumentationComponent_1)), i0.ɵdid(3, 16384, null, 0, i11.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OperationDocumentationComponent_2)), i0.ɵdid(5, 16384, null, 0, i11.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(6, 0, null, null, 0, "div", [["class", "route-description"]], [[8, "hidden", 0], [8, "innerHTML", 1]], null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OperationDocumentationComponent_3)), i0.ɵdid(8, 16384, null, 0, i11.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OperationDocumentationComponent_4)), i0.ɵdid(10, 16384, null, 0, i11.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OperationDocumentationComponent_5)), i0.ɵdid(12, 16384, null, 0, i11.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(13, 0, null, null, 10, "h5", [], null, null, null, null, null)), (_l()(), i0.ɵeld(14, 0, null, null, 1, "span", [["class", "text-uppercase"]], [[1, "data-method", 0]], null, null, null, null)), (_l()(), i0.ɵted(15, null, ["", ""])), (_l()(), i0.ɵeld(16, 0, null, null, 1, "span", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["\xA0"])), (_l()(), i0.ɵeld(18, 0, null, null, 1, "span", [], null, null, null, null, null)), (_l()(), i0.ɵted(19, null, ["", "://", ""])), (_l()(), i0.ɵeld(20, 0, null, null, 1, "span", [], null, null, null, null, null)), (_l()(), i0.ɵted(21, null, ["", ""])), (_l()(), i0.ɵeld(22, 0, null, null, 1, "span", [], null, null, null, null, null)), (_l()(), i0.ɵted(23, null, ["", ""])), (_l()(), i0.ɵeld(24, 0, null, null, 21, "div", [["class", "row"]], null, null, null, null, null)), (_l()(), i0.ɵeld(25, 0, null, null, 11, "div", [["class", "col-xs-12 col-md-6"]], null, null, null, null, null)), (_l()(), i0.ɵeld(26, 0, null, null, 1, "h4", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["Parameters"])), (_l()(), i0.ɵeld(28, 0, null, null, 2, "ul", [["class", "nav nav-tabs location-tabs"]], [[8, "hidden", 0]], null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OperationDocumentationComponent_9)), i0.ɵdid(30, 802816, null, 0, i11.NgForOf, [i0.ViewContainerRef, i0.TemplateRef, i0.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OperationDocumentationComponent_10)), i0.ɵdid(32, 16384, null, 0, i11.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(33, 0, null, null, 3, "parameter-set", [], null, null, null, i25.View_ParameterSetComponent_0, i25.RenderType_ParameterSetComponent)), i0.ɵdid(34, 573440, null, 0, i24.ParameterSetComponent, [i7.OpenAPIService, i10.UtilsService], { parameterSet: [0, "parameterSet"], groups: [1, "groups"], view: [2, "view"] }, null), i0.ɵpad(35, 2), i0.ɵppd(36, 2), (_l()(), i0.ɵeld(37, 0, null, null, 8, "div", [["class", "col-xs-12 col-md-6"]], null, null, null, null, null)), (_l()(), i0.ɵeld(38, 0, null, null, 1, "h4", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["Responses"])), (_l()(), i0.ɵeld(40, 0, null, null, 2, "ul", [["class", "nav nav-tabs status-code-tabs"]], null, null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OperationDocumentationComponent_11)), i0.ɵdid(42, 802816, null, 0, i11.NgForOf, [i0.ViewContainerRef, i0.TemplateRef, i0.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null), (_l()(), i0.ɵeld(43, 0, null, null, 0, "div", [], [[8, "hidden", 0], [8, "innerHTML", 1]], null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OperationDocumentationComponent_12)), i0.ɵdid(45, 16384, null, 0, i11.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) {
-        var _co = _v.component;var currVal_0 = _co.apiCall.operation["x-beta"];_ck(_v, 3, 0, currVal_0);var currVal_1 = _co.apiCall.operation.deprecated;_ck(_v, 5, 0, currVal_1);var currVal_4 = _co.utils.config.uiOptions.embedConsoleInDocumentation;_ck(_v, 8, 0, currVal_4);var currVal_5 = !_co.utils.config.uiOptions.embedConsoleInDocumentation;_ck(_v, 10, 0, currVal_5);var currVal_6 = _co.tryIt;_ck(_v, 12, 0, currVal_6);var currVal_14 = _co.locations;_ck(_v, 30, 0, currVal_14);var currVal_15 = _co.apiCall.operation.consumes && (_co.activeLocation === "body" || _co.activeLocation === "formData");_ck(_v, 32, 0, currVal_15);var currVal_16 = i0.ɵunv(_v, 34, 0, _ck(_v, 36, 0, i0.ɵnov(_v, 0), _co.apiCall.operation.parameters, _ck(_v, 35, 0, "in", _co.activeLocation)));var currVal_17 = _co.apiCall.operation.parameterGroups;var currVal_18 = "documentation";_ck(_v, 34, 0, currVal_16, currVal_17, currVal_18);var currVal_19 = _co.responses;_ck(_v, 42, 0, currVal_19);var currVal_22 = _co.activeResponse.details.schema;_ck(_v, 45, 0, currVal_22);
+    return i0.ɵvid(0, [i0.ɵpid(0, i24.ParameterFilterPipe, []), i0.ɵqud(671088640, 1, { apiCallComponent: 0 }), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OperationDocumentationComponent_1)), i0.ɵdid(3, 16384, null, 0, i11.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OperationDocumentationComponent_2)), i0.ɵdid(5, 16384, null, 0, i11.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(6, 0, null, null, 0, "div", [["class", "route-description"]], [[8, "hidden", 0], [8, "innerHTML", 1]], null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OperationDocumentationComponent_3)), i0.ɵdid(8, 16384, null, 0, i11.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OperationDocumentationComponent_4)), i0.ɵdid(10, 16384, null, 0, i11.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OperationDocumentationComponent_5)), i0.ɵdid(12, 16384, null, 0, i11.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(13, 0, null, null, 10, "h5", [], null, null, null, null, null)), (_l()(), i0.ɵeld(14, 0, null, null, 1, "span", [["class", "text-uppercase"]], [[1, "data-method", 0]], null, null, null, null)), (_l()(), i0.ɵted(15, null, ["", ""])), (_l()(), i0.ɵeld(16, 0, null, null, 1, "span", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["\xA0"])), (_l()(), i0.ɵeld(18, 0, null, null, 1, "span", [], null, null, null, null, null)), (_l()(), i0.ɵted(19, null, ["", "://", ""])), (_l()(), i0.ɵeld(20, 0, null, null, 1, "span", [], null, null, null, null, null)), (_l()(), i0.ɵted(21, null, ["", ""])), (_l()(), i0.ɵeld(22, 0, null, null, 1, "span", [], null, null, null, null, null)), (_l()(), i0.ɵted(23, null, ["", ""])), (_l()(), i0.ɵeld(24, 0, null, null, 23, "div", [["class", "row"]], null, null, null, null, null)), (_l()(), i0.ɵeld(25, 0, null, null, 12, "div", [["class", "col-xs-12 col-md-6"]], null, null, null, null, null)), (_l()(), i0.ɵeld(26, 0, null, null, 11, "div", [["class", "input-output-box"]], null, null, null, null, null)), (_l()(), i0.ɵeld(27, 0, null, null, 1, "h4", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["Request Parameters"])), (_l()(), i0.ɵeld(29, 0, null, null, 2, "ul", [["class", "nav nav-tabs location-tabs"]], [[8, "hidden", 0]], null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OperationDocumentationComponent_9)), i0.ɵdid(31, 802816, null, 0, i11.NgForOf, [i0.ViewContainerRef, i0.TemplateRef, i0.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OperationDocumentationComponent_10)), i0.ɵdid(33, 16384, null, 0, i11.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵeld(34, 0, null, null, 3, "parameter-set", [], null, null, null, i25.View_ParameterSetComponent_0, i25.RenderType_ParameterSetComponent)), i0.ɵdid(35, 573440, null, 0, i24.ParameterSetComponent, [i7.OpenAPIService, i10.UtilsService], { parameterSet: [0, "parameterSet"], groups: [1, "groups"], view: [2, "view"] }, null), i0.ɵpad(36, 2), i0.ɵppd(37, 2), (_l()(), i0.ɵeld(38, 0, null, null, 9, "div", [["class", "col-xs-12 col-md-6"]], null, null, null, null, null)), (_l()(), i0.ɵeld(39, 0, null, null, 8, "div", [["class", "input-output-box"]], null, null, null, null, null)), (_l()(), i0.ɵeld(40, 0, null, null, 1, "h4", [], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["Response"])), (_l()(), i0.ɵeld(42, 0, null, null, 2, "ul", [["class", "nav nav-tabs status-code-tabs"]], null, null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OperationDocumentationComponent_11)), i0.ɵdid(44, 802816, null, 0, i11.NgForOf, [i0.ViewContainerRef, i0.TemplateRef, i0.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null), (_l()(), i0.ɵeld(45, 0, null, null, 0, "div", [], [[8, "hidden", 0], [8, "innerHTML", 1]], null, null, null, null)), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_OperationDocumentationComponent_12)), i0.ɵdid(47, 16384, null, 0, i11.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null)], function (_ck, _v) {
+        var _co = _v.component;var currVal_0 = _co.apiCall.operation["x-beta"];_ck(_v, 3, 0, currVal_0);var currVal_1 = _co.apiCall.operation.deprecated;_ck(_v, 5, 0, currVal_1);var currVal_4 = _co.utils.config.uiOptions.embedConsoleInDocumentation;_ck(_v, 8, 0, currVal_4);var currVal_5 = !_co.utils.config.uiOptions.embedConsoleInDocumentation;_ck(_v, 10, 0, currVal_5);var currVal_6 = _co.tryIt;_ck(_v, 12, 0, currVal_6);var currVal_14 = _co.locations;_ck(_v, 31, 0, currVal_14);var currVal_15 = _co.apiCall.operation.consumes && (_co.activeLocation === "body" || _co.activeLocation === "formData");_ck(_v, 33, 0, currVal_15);var currVal_16 = i0.ɵunv(_v, 35, 0, _ck(_v, 37, 0, i0.ɵnov(_v, 0), _co.apiCall.operation.parameters, _ck(_v, 36, 0, "in", _co.activeLocation)));var currVal_17 = _co.apiCall.operation.parameterGroups;var currVal_18 = "documentation";_ck(_v, 35, 0, currVal_16, currVal_17, currVal_18);var currVal_19 = _co.responses;_ck(_v, 44, 0, currVal_19);var currVal_22 = _co.activeResponse.details.schema;_ck(_v, 47, 0, currVal_22);
     }, function (_ck, _v) {
-        var _co = _v.component;var currVal_2 = !_co.apiCall.operation.description;var currVal_3 = _co.marked(_co.apiCall.operation.description);_ck(_v, 6, 0, currVal_2, currVal_3);var currVal_7 = _co.apiCall.method;_ck(_v, 14, 0, currVal_7);var currVal_8 = _co.apiCall.method;_ck(_v, 15, 0, currVal_8);var currVal_9 = _co.openapi.parsed.schemes[0];var currVal_10 = _co.openapi.parsed.host;_ck(_v, 19, 0, currVal_9, currVal_10);var currVal_11 = _co.openapi.parsed.basePath === "/" ? "" : _co.openapi.parsed.basePath;_ck(_v, 21, 0, currVal_11);var currVal_12 = _co.apiCall.path;_ck(_v, 23, 0, currVal_12);var currVal_13 = !_co.apiCall.operation.parameters.length;_ck(_v, 28, 0, currVal_13);var currVal_20 = !_co.activeResponse.details.description;var currVal_21 = _co.marked(_co.activeResponse.details.description);_ck(_v, 43, 0, currVal_20, currVal_21);
+        var _co = _v.component;var currVal_2 = !_co.apiCall.operation.description;var currVal_3 = _co.marked(_co.apiCall.operation.description);_ck(_v, 6, 0, currVal_2, currVal_3);var currVal_7 = _co.apiCall.method;_ck(_v, 14, 0, currVal_7);var currVal_8 = _co.apiCall.method;_ck(_v, 15, 0, currVal_8);var currVal_9 = _co.openapi.parsed.schemes[0];var currVal_10 = _co.openapi.parsed.host;_ck(_v, 19, 0, currVal_9, currVal_10);var currVal_11 = _co.openapi.parsed.basePath === "/" ? "" : _co.openapi.parsed.basePath;_ck(_v, 21, 0, currVal_11);var currVal_12 = _co.apiCall.path;_ck(_v, 23, 0, currVal_12);var currVal_13 = !_co.apiCall.operation.parameters.length;_ck(_v, 29, 0, currVal_13);var currVal_20 = !_co.activeResponse.details.description;var currVal_21 = _co.marked(_co.activeResponse.details.description);_ck(_v, 45, 0, currVal_20, currVal_21);
     });
 }
 function View_OperationDocumentationComponent_Host_0(_l) {
@@ -1519,19 +1527,18 @@ var DocumentationComponent = /** @class */ (function () {
         this.error = null;
         this.showResults = false;
         this.activeItem = item;
+        var stateKey = Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["makeStateKey"])(item.markdownURL || '');
         if (item.contents) {
             this.setActiveItemHTML(item.contents, !item.isHTML);
         }
         else if (item.markdownURL) {
-            var stateKey_1 = Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["makeStateKey"])(item.markdownURL);
             item.isHTML = !!item.markdownURL.match(/\.html$/);
-            item.contents = this.state.get(stateKey_1, null);
+            item.contents = this.state.get(stateKey, null);
             if (!item.contents) {
                 this.http.get(this.originUrl + item.markdownURL, { responseType: 'text' })
                     .toPromise()
                     .then(function (md) {
                     item.contents = md;
-                    _this.state.set(stateKey_1, item.contents);
                     _this.setActiveItemHTML(item.contents, !item.isHTML);
                 })
                     .catch(function (e) {
@@ -1541,6 +1548,9 @@ var DocumentationComponent = /** @class */ (function () {
             else {
                 this.setActiveItemHTML(item.contents, !item.isHTML);
             }
+        }
+        if (this.platformService.isServer) {
+            this.state.set(stateKey, item.contents);
         }
         if (this.platformService.isBrowser) {
             setTimeout(function () {
@@ -1751,8 +1761,8 @@ function View_ParameterSetComponent_5(_l) {
             var pd_0 = _co.valueChange.emit($event) !== false;
             ad = pd_0 && ad;
         }return ad;
-    }, View_ParameterGroupComponent_0, RenderType_ParameterGroupComponent)), i0.ɵdid(1, 573440, null, 0, i1.ParameterGroupComponent, [], { group: [0, "group"], parameterSet: [1, "parameterSet"], model: [2, "model"], view: [3, "view"] }, { valueChange: "valueChange" })], function (_ck, _v) {
-        var _co = _v.component;var currVal_0 = _v.context.$implicit;var currVal_1 = _co.parameterSet;var currVal_2 = _co.answers;var currVal_3 = _co.view;_ck(_v, 1, 0, currVal_0, currVal_1, currVal_2, currVal_3);
+    }, View_ParameterGroupComponent_0, RenderType_ParameterGroupComponent)), i0.ɵdid(1, 573440, null, 0, i1.ParameterGroupComponent, [], { group: [0, "group"], parameterSet: [1, "parameterSet"], model: [2, "model"], view: [3, "view"], visible: [4, "visible"] }, { valueChange: "valueChange" })], function (_ck, _v) {
+        var _co = _v.component;var currVal_0 = _v.context.$implicit;var currVal_1 = _co.parameterSet;var currVal_2 = _co.answers;var currVal_3 = _co.view;var currVal_4 = true;_ck(_v, 1, 0, currVal_0, currVal_1, currVal_2, currVal_3, currVal_4);
     }, null);
 }
 function View_ParameterSetComponent_6(_l) {
@@ -2548,7 +2558,7 @@ function View_ParameterGroupComponent_0(_l) {
 function View_ParameterGroupComponent_Host_0(_l) {
     return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 1, "parameter-group", [], null, null, null, View_ParameterGroupComponent_0, RenderType_ParameterGroupComponent)), i0.ɵdid(1, 573440, null, 0, i1.ParameterGroupComponent, [], null, null)], null, null);
 }
-var ParameterGroupComponentNgFactory = i0.ɵccf("parameter-group", i1.ParameterGroupComponent, View_ParameterGroupComponent_Host_0, { group: "group", parameterSet: "parameterSet", model: "model", view: "view" }, { valueChange: "valueChange" }, []);
+var ParameterGroupComponentNgFactory = i0.ɵccf("parameter-group", i1.ParameterGroupComponent, View_ParameterGroupComponent_Host_0, { group: "group", parameterSet: "parameterSet", model: "model", view: "view", visible: "visible" }, { valueChange: "valueChange" }, []);
 exports.ParameterGroupComponentNgFactory = ParameterGroupComponentNgFactory;
 
 /***/ }),
@@ -2646,17 +2656,17 @@ var ParameterComponent = /** @class */ (function () {
         }
         if (this.fillFromSecrets) {
             this.subscriptions.push(this.secrets.onChange.subscribe(function (newSecrets) {
-                if (newSecrets[_this.parameter.name]) {
+                if (newSecrets[_this.parameter.name] !== undefined) {
                     _this.model[_this.parameter.name] = newSecrets[_this.parameter.name];
                     _this.onChange();
                 }
             }));
         }
-        if (this.parameter.in === 'body' && this.parameter.consumes.indexOf('application/json') !== -1) {
+        if (this.parameter.in === 'body' && (this.parameter.consumes || []).indexOf('application/json') !== -1) {
             var startval = this.model[this.parameter.name];
             this.setContentType('application/json');
         }
-        else if (this.parameter.in === 'body') {
+        else if (this.parameter.in === 'body' && this.parameter.consumes) {
             this.setContentType(this.parameter.consumes[0]);
         }
     };
@@ -3361,19 +3371,21 @@ var SchemaComponent = /** @class */ (function () {
         this.showing = 'schema';
     }
     SchemaComponent.prototype.ngOnChanges = function () {
-        var example = null;
-        if (this.examples && Object.keys(this.examples).length) {
-            var keys = Object.keys(this.examples);
-            // FIXME: have a dropdown for different content types.
-            if (keys.indexOf('application/json') !== -1) {
-                example = this.examples['application/json'];
+        var example = this.schema.example;
+        if (!example) {
+            if (this.examples && Object.keys(this.examples).length) {
+                var keys = Object.keys(this.examples);
+                // FIXME: have a dropdown for different content types.
+                if (keys.indexOf('application/json') !== -1) {
+                    example = this.examples['application/json'];
+                }
+                else {
+                    example = this.examples[keys[0]];
+                }
             }
             else {
-                example = this.examples[keys[0]];
+                example = this.getExample(this.schema);
             }
-        }
-        else {
-            example = this.getExample(this.schema);
         }
         var exampleStr = JSON.stringify(example, null, 2) || '';
         if (window.Prism !== null) {
@@ -3889,7 +3901,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-var STYLE = __webpack_require__("./src/app/styles/side-menu.css");
 var matchOrChildMatch = function (cond, item) {
     if (Array.isArray(item))
         return !!item.filter(function (i) { return matchOrChildMatch(cond, i); }).length;
@@ -4100,7 +4111,7 @@ function View_JSONSchemaFormComponent_8(_l) {
 }
 function View_JSONSchemaFormComponent_6(_l) {
     return i0.ɵvid(0, [(_l()(), i0.ɵeld(0, 0, null, null, 7, "div", [["class", "nested-editor"]], null, null, null, null, null)), (_l()(), i0.ɵted(-1, null, ["\n        "])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_JSONSchemaFormComponent_7)), i0.ɵdid(3, 802816, null, 0, i6.NgForOf, [i0.ViewContainerRef, i0.TemplateRef, i0.IterableDiffers], { ngForOf: [0, "ngForOf"] }, null), (_l()(), i0.ɵted(-1, null, ["\n        "])), (_l()(), i0.ɵand(16777216, null, null, 1, null, View_JSONSchemaFormComponent_8)), i0.ɵdid(6, 16384, null, 0, i6.NgIf, [i0.ViewContainerRef, i0.TemplateRef], { ngIf: [0, "ngIf"] }, null), (_l()(), i0.ɵted(-1, null, ["\n      "]))], function (_ck, _v) {
-        var _co = _v.component;var currVal_0 = _co.allProperties;_ck(_v, 3, 0, currVal_0);var currVal_1 = _co.schema.additionalProperties || _co.allProperties.length === _co.removableProperties.length;_ck(_v, 6, 0, currVal_1);
+        var _co = _v.component;var currVal_0 = _co.allProperties;_ck(_v, 3, 0, currVal_0);var currVal_1 = _co.schema.additionalProperties || _co.allProperties.length === _co.removableProperties.length && !_co.schema["x-abstract"];_ck(_v, 6, 0, currVal_1);
     }, null);
 }
 function View_JSONSchemaFormComponent_11(_l) {
@@ -4193,6 +4204,7 @@ var JSONSchemaFormComponent = /** @class */ (function () {
     }
     JSONSchemaFormComponent.prototype.ngOnChanges = function () {
         this.setSchema(this.inputSchema);
+        this.readOnly = this.readOnly || this.schema.readOnly;
         if (this.value !== this.inputValue) {
             this.value = this.parameterModel[this.parameter.name] = this.inputValue;
             if (Array.isArray(this.value)) {
@@ -4222,12 +4234,17 @@ var JSONSchemaFormComponent = /** @class */ (function () {
         }
         this.subschema = schema;
         this.setProperties();
-        if (this.schema.discriminator) {
+        if (schema && this.schema.discriminator) {
             this.value[this.schema.discriminator] = schema.title;
         }
         this.valueChange.emit(this.value);
     };
     JSONSchemaFormComponent.prototype.setProperties = function () {
+        if (this.schema['x-abstract'] && !this.subschema) {
+            this.allProperties = [];
+            this.removableProperties = [];
+            return;
+        }
         this.allProperties = Object(__WEBPACK_IMPORTED_MODULE_1__util__["e" /* getSchemaProperties */])(this.schema || {}, this.refBase, this.value, this.subschema);
         var nonRemovable = Object(__WEBPACK_IMPORTED_MODULE_1__util__["e" /* getSchemaProperties */])(this.schema || {}, this.refBase, undefined, this.subschema);
         this.removableProperties = this.allProperties.filter(function (p) { return nonRemovable.indexOf(p) === -1; });
@@ -4488,8 +4505,9 @@ var SchemaLabelComponent = /** @class */ (function () {
         else {
             this.type = type;
         }
-        if (this.schema.oneOf) {
-            this.subtypeChoices = this.schema.oneOf.map(function (s) {
+        if (this.schema.oneOf || this.schema.anyOf) {
+            var choices = (this.schema.oneOf || []).concat(this.schema.anyOf || []);
+            this.subtypeChoices = choices.map(function (s) {
                 return s.$ref ? Object(__WEBPACK_IMPORTED_MODULE_1__util__["h" /* resolveReference */])(s.$ref, _this.refBase) : s;
             });
         }
@@ -4499,6 +4517,10 @@ var SchemaLabelComponent = /** @class */ (function () {
     SchemaLabelComponent.prototype.toggleExpand = function () {
         this.expand = !this.expand;
         this.maybeResolveRef();
+        if (!this.expand) {
+            this.subtype = null;
+            this.subtypeChange.emit(null);
+        }
         this.expandChange.emit(this.expand);
     };
     SchemaLabelComponent.prototype.maybeResolveRef = function () {
@@ -4782,6 +4804,7 @@ var LOCAL_STORAGE_KEY = 'github_token';
 var BASE_URL = 'https://api.github.com';
 var REDIRECT_URI = window.config.github.redirect_uri;
 var GITHUB_CLIENT_ID = window.config.github.client_id;
+var WORKFLOW_DIRECTORY = window.config.workflowDirectory || 'workflows';
 var GitHubService = /** @class */ (function () {
     function GitHubService(http, zone, tracker, platformService, secrets) {
         this.http = http;
@@ -4800,25 +4823,26 @@ var GitHubService = /** @class */ (function () {
         this.setPullRequests();
         this.checkAuth();
     }
-    GitHubService.prototype.get = function (url, params) {
+    GitHubService.prototype.buildSearch = function (params) {
         if (params === void 0) { params = {}; }
         var search = new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["HttpParams"]();
         for (var k in params)
-            search.set(k, params[k]);
-        if (this.access_token)
-            search.set('access_token', this.access_token);
-        return this.setUpRequest(this.http.get(BASE_URL + url, { params: search }));
+            search = search.set(k, params[k]);
+        if (this.access_token) {
+            search = search.set('access_token', this.access_token);
+        }
+        return search;
+    };
+    GitHubService.prototype.get = function (url, params) {
+        if (params === void 0) { params = {}; }
+        return this.setUpRequest(this.http.get(BASE_URL + url, { params: this.buildSearch(params) }));
     };
     GitHubService.prototype.putOrPost = function (method, url, body, query) {
         if (body === void 0) { body = {}; }
         if (query === void 0) { query = {}; }
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["HttpHeaders"]({ 'Content-Type': 'application/json' });
-        var search = new __WEBPACK_IMPORTED_MODULE_1__angular_common_http__["HttpParams"]();
-        for (var k in query)
-            search.set(k, query[k]);
-        if (this.access_token)
-            search.set('access_token', this.access_token);
-        return this.setUpRequest(this.http[method](BASE_URL + url, JSON.stringify(body), { headers: headers, params: search }));
+        var params = this.buildSearch(query);
+        return this.setUpRequest(this.http[method](BASE_URL + url, JSON.stringify(body), { headers: headers, params: params }));
     };
     GitHubService.prototype.post = function (url, body, query) {
         if (body === void 0) { body = {}; }
@@ -4894,7 +4918,7 @@ var GitHubService = /** @class */ (function () {
         var _this = this;
         this.get('/repos/' + forkName)
             .then(function (repo) {
-            return _this.get('/repos/' + forkName + '/contents/workflows');
+            return _this.get('/repos/' + forkName + '/contents/' + WORKFLOW_DIRECTORY);
         })
             .then(function (contents) {
             _this.forkWorkflows = contents.map(function (c) { return c.name; });
@@ -4906,7 +4930,7 @@ var GitHubService = /** @class */ (function () {
             .then(function (pulls) { return _this.pullRequests = pulls.filter(function (p) { return p.head.repo; }); });
     };
     GitHubService.prototype.getWorkflowPreviewURL = function (forkName, workflowName) {
-        return "https://raw.githubusercontent.com/" + forkName + "/master/workflows/" + workflowName + "/readme.md";
+        return "https://raw.githubusercontent.com/" + forkName + "/master/" + WORKFLOW_DIRECTORY + "/" + workflowName + "/readme.md";
     };
     GitHubService.prototype.handleError = function (error) {
         var errMsg = (error.message) ? error.message :
@@ -5041,6 +5065,7 @@ var MenuService = /** @class */ (function () {
         if (needsInit) {
             this.clearNavigation();
             this.items = initializeNavigation(nav, window.config, this.openapi.parsed) || [];
+            this.routes.setCurrentNavigation(this.items);
             this.search.setItems(this.items);
             this.setTags();
         }
@@ -5339,6 +5364,12 @@ var OpenAPIService = /** @class */ (function () {
                 title: spec.info.title,
             });
         }));
+        this.subscriptions.push(this.secrets.onChange.subscribe(function (newSecrets) {
+            for (var key in newSecrets)
+                _this.globalParameters[key] = newSecrets[key];
+        }));
+        for (var key in this.secrets.secrets)
+            this.globalParameters[key] = this.secrets.secrets[key];
         this.subscriptions.push(this.routes.currentRoute.subscribe(function (route) {
             if (route)
                 _this.retrieveSpec(route.openapi);
@@ -5492,11 +5523,15 @@ var OpenAPIService = /** @class */ (function () {
             }
             else if (parameter.in === 'body') {
                 contentType = parameter.contentType || consumes[0];
-                req.body = answer;
-                if (contentType === 'application/json')
-                    req.body = JSON.parse(answer);
-                else
-                    req.body = answer;
+                if (req.body) {
+                    if (typeof answer === 'string' && typeof req.body === 'object') {
+                        answer = JSON.parse(answer);
+                    }
+                    req.body = Object.assign({}, req.body, answer);
+                }
+                else {
+                    req.body = contentType === 'application/json' ? JSON.parse(answer) : answer;
+                }
             }
         };
         var extendBody = {};
@@ -5628,7 +5663,7 @@ var OpenAPIService = /** @class */ (function () {
         if (cache === void 0) { cache = {}; }
         if (base === void 0) { base = null; }
         if (seen === void 0) { seen = []; }
-        if (typeof obj !== 'object')
+        if (typeof obj !== 'object' || obj === null)
             return obj;
         base = base || obj;
         if (seen.indexOf(obj) === -1) {
@@ -5752,11 +5787,13 @@ var OpenAPIService = /** @class */ (function () {
                 if (__WEBPACK_IMPORTED_MODULE_5__utils__["METHODS"].indexOf(method_1.toUpperCase()) === -1)
                     continue;
                 var operation = this.parsed.paths[path_1][method_1];
+                var id = operation.operationId || method_1.toUpperCase() + ' ' + path_1;
                 var apiCall = {
+                    id: id,
                     path: path_1,
                     method: method_1,
                     operation: operation,
-                    title: operation.operationId || method_1.toUpperCase() + ' ' + path_1,
+                    title: id,
                 };
                 this.apiCalls.push(apiCall);
             }
@@ -5765,20 +5802,76 @@ var OpenAPIService = /** @class */ (function () {
     OpenAPIService.prototype.startOAuth = function (securityDefinition, scopes) {
         return this.secrets.startOAuth(this.parsed.host, (this.currentVersion || {}).client_id, securityDefinition, scopes);
     };
-    OpenAPIService.prototype.fillSchema = function (smaller, schema) {
+    OpenAPIService.prototype.fillSchema = function (smaller, schema, checked, recursive) {
         var _this = this;
+        if (checked === void 0) { checked = []; }
+        if (recursive === void 0) { recursive = true; }
         if (schema.$ref)
             schema = this.resolveReference(schema.$ref);
         if (!smaller.properties)
             return;
-        (schema.allOf || []).forEach(function (subschema) {
-            _this.fillSchema(smaller, subschema);
-        });
+        if (checked.indexOf(schema) !== -1)
+            return;
+        checked.push(schema);
+        if (recursive) {
+            var subs_1 = [];
+            [schema.anyOf, schema.oneOf].filter(function (s) { return s; })
+                .map(function (s) { return s.$ref ? _this.resolveReference(s.$ref) : s; })
+                .filter(function (s) { return checked.indexOf(s) === -1; })
+                .forEach(function (s) { return subs_1 = subs_1.concat(s); });
+            for (var _i = 0, subs_2 = subs_1; _i < subs_2.length; _i++) {
+                var sub = subs_2[_i];
+                this.fillSchema(smaller, sub, checked, true);
+                checked.push(sub);
+            }
+        }
+        var subs = [];
+        [schema.allOf].filter(function (s) { return s; })
+            .map(function (s) { return s.$ref ? _this.resolveReference(s.$ref) : s; })
+            .filter(function (s) { return checked.indexOf(s) === -1; })
+            .forEach(function (s) { return subs = subs.concat(s); });
+        for (var _a = 0, subs_3 = subs; _a < subs_3.length; _a++) {
+            var sub = subs_3[_a];
+            this.fillSchema(smaller, sub, checked, false);
+            checked.push(sub);
+        }
         for (var key in smaller.properties) {
-            if (!schema.properties[key])
+            var subschema = schema.properties[key];
+            if (!subschema)
                 continue;
-            smaller.properties[key] = Object.assign({}, schema.properties[key], smaller.properties[key], { $ref: undefined });
-            this.fillSchema(smaller.properties[key], schema.properties[key]);
+            if (subschema.$ref)
+                subschema = this.resolveReference(subschema.$ref);
+            smaller.properties[key] = Object.assign({}, subschema, smaller.properties[key], {
+                $ref: undefined,
+                allOf: undefined,
+                anyOf: undefined,
+                oneOf: undefined,
+                'x-abstract': undefined,
+            });
+            this.fillSchema(smaller.properties[key], subschema);
+        }
+    };
+    OpenAPIService.prototype.findProperty = function (schema, key, checked) {
+        var _this = this;
+        if (checked === void 0) { checked = []; }
+        if (schema.$ref)
+            schema = this.resolveReference(schema.$ref);
+        if (schema.properties && schema.properties[key])
+            return schema.properties[key];
+        if (checked.indexOf(schema) !== -1)
+            return;
+        checked.push(schema);
+        var subs = [];
+        [schema.allOf, schema.anyOf, schema.oneOf].filter(function (s) { return s; })
+            .map(function (s) { return s.$ref ? _this.resolveReference(s.$ref) : s; })
+            .filter(function (s) { return checked.indexOf(s) === -1; })
+            .forEach(function (s) { return subs = subs.concat(s); });
+        checked = checked.concat(subs);
+        for (var _i = 0, subs_4 = subs; _i < subs_4.length; _i++) {
+            var sub = subs_4[_i];
+            var prop = this.findProperty(sub, key, checked);
+            if (prop)
+                return prop;
         }
     };
     return OpenAPIService;
@@ -5958,6 +6051,9 @@ var RoutesService = /** @class */ (function () {
             nav = window.config[nav];
         return nav;
     };
+    RoutesService.prototype.setCurrentNavigation = function (nav) {
+        this.getCurrentRoute().navigation = nav;
+    };
     RoutesService.prototype.getPathParts = function (path) {
         if (path === void 0) { path = ''; }
         if (path.charAt(0) === '/')
@@ -5982,7 +6078,8 @@ var RoutesService = /** @class */ (function () {
     };
     RoutesService.prototype.getAPICallLink = function (apiCall, docsOrConsole) {
         var link = this.getLink(docsOrConsole);
-        var route = window.config.routes[link[0]];
+        var base = this.getBasePath(link);
+        var route = window.config.routes[base];
         if (typeof route.navigation === 'string') {
             route.navigation = window.config[route.navigation];
         }
@@ -5991,7 +6088,7 @@ var RoutesService = /** @class */ (function () {
                 return;
             for (var i = 0; i < items.length; ++i) {
                 var item = items[i];
-                if (item.operation === apiCall.operation.operationId)
+                if (item.operation === apiCall.id)
                     return item;
                 var child = getLink(item.children);
                 if (child)
@@ -6000,7 +6097,7 @@ var RoutesService = /** @class */ (function () {
         }
         var sublink = getLink(route.navigation);
         if (!sublink)
-            throw new Error("nav not found for " + apiCall);
+            throw new Error("nav not found for " + apiCall.method + ' ' + apiCall.path);
         return link.concat(sublink.path.substring(1).split('/'));
     };
     RoutesService.prototype.getNavigationLink = function (path) {
@@ -6450,13 +6547,6 @@ var UtilsService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/styles/side-menu.css":
-/***/ (function(module, exports) {
-
-module.exports = ".side-menu-col {\n  z-index: 1;\n}\n\nside-menu-item {\n  display: block;\n}\n\n.show-menu-button {\n  height: 50px;\n  width: 50px;\n  border-radius: 25px;\n  padding: 16px;\n  padding-top: 13px;\n  font-size: 15px;\n}\n\n.menu-heading {\n  margin-top: 0px;\n  font-weight: bold;\n}\n\n.close-menu-button a {\n  color: #999;\n}\n\n.show-menu-mobile-button {\n  margin-top: 15px;\n  width: 100%;\n  border-radius: 0px;\n}\n\n.side-menu {\n  padding: 15px;\n  border: 1px solid #ccc;\n}\n\n@media (min-width: 768px) {\n  .side-menu, .show-menu-button {\n    margin-top: 21px;\n    -webkit-box-shadow: 2px 2px 5px #888888;\n            box-shadow: 2px 2px 5px #888888;\n  }\n}\n"
-
-/***/ }),
-
 /***/ "./src/app/views/oauth_callback.html":
 /***/ (function(module, exports) {
 
@@ -6560,8 +6650,6 @@ var initializeNavigation = module.exports = function (nav, config, openapi) {
         })
       });
     }
-  } else {
-    nav = JSON.parse(JSON.stringify(nav));
   }
   nav.forEach(function (navItem) {
     return initializeNavigationItem(navItem, config, openapi);
@@ -6920,7 +7008,12 @@ var apiCallTemplate = function apiCallTemplate(apiCall) {
 };
 
 var LANG_HIGHLIGHT_NAMES = {
-  'node': 'javascript'
+  'node': 'javascript',
+  'php53': 'php',
+  'angular': 'typescript',
+  'python': 'py',
+  'ajax': 'javascript',
+  'curl': 'bash'
 };
 
 var codeSnippetTemplate = function codeSnippetTemplate(snippets) {

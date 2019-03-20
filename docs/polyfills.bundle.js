@@ -27,11 +27,11 @@ module.exports = {
           "title": "Hello World",
           "contents": "# DataFire \"Hello World\" Project\nThis is a small sample project to demonstrate DataFire's features. It will create\na single Action, which takes in a name, and outputs a greeting. We'll also link\nthat action to an HTTP endpoint and a scheduled task.\n\n## The Basics\n\n### Action\nWe'll create our action in `hello.js`.\n\n#### hello.js\n```js\nvar datafire = require('datafire');\nmodule.exports = new datafire.Action({\n  handler: input => \"Hello, world\",\n})\n```\n\n### Trigger\nNow let's create a `GET /hello` API endpoint in `DataFire.yml` that will trigger the Action:\n\n#### DataFire.yml\n```yaml\npaths:\n  /hello:\n    get:\n      action: ./hello.js\n```\n\n### Running\n\nWe can try it out with `datafire serve`\n```bash\ndatafire serve --port 3000 &\n# DataFire listening on port 3000\n\ncurl http://localhost:3000/hello\n# \"Hello, world\"\n\nkill $! # stop the server\n```\n\n## Adding Inputs\nYou can add inputs with [JSON Schema](http://json-schema.org/).\n\n```js\nvar datafire = require('datafire');\nmodule.exports = new datafire.Action({\n  handler: input => 'Hello, ' + input.name,\n  inputs: [{\n    title: 'name',\n    type: 'string',\n    maxLength: 20,\n    pattern: '\\\\w+',\n  }],\n})\n```\n\nThen we can run:\n```bash\ndatafire serve --port 3000 &\n# DataFire listening on port 3000\n\ncurl http://localhost:3000/hello?name=world\n# \"Hello, world\"\n\ncurl http://localhost:3000/hello\n# {\"error\": \"Missing required query parameter 'name'\"}\n```\n\n## HTTP Responses\nBy default, DataFire will return your handler's output as JSON with a 200 status\ncode (as well as 404/400/500 errors when appropriate). However, you can specify\ncustom response codes, content types, and bodies in your Action.\n\n```js\nmodule.exports = new datafire.Action({\n  inputs: [{title: 'name'}],\n  handler: input => {\n    if (input.name === 'Voldemort') {\n      return new datafire.Response({\n        statusCode: 401,\n        headers: {'Content-Type': 'text/html'},\n        body: \"<h1>Nope.</h1>\",\n      });\n    } else {\n      return \"Hello, \" + input.name;\n    }\n  }\n})\n```\n\n"
         }],
-        "contents": "# DataFire\n\n[![Travis][travis-image]][travis-link]\n[![Downloads][downloads-image]][npm-link]\n[![NPM version][npm-image]][npm-link]\n[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://www.npmjs.com/package/datafire)\n<!--[![Dependency status][deps-image]][deps-link]\n[![devDependency status][devdeps-image]][devdeps-link]-->\n<!--[![Code Climate][climate-image]][climate-link]-->\n\n[downloads-image]: https://img.shields.io/npm/dm/datafire.svg\n[twitter-image]: https://img.shields.io/badge/Share-on%20Twitter-blue.svg\n[twitter-link]: https://twitter.com/intent/tweet?text=DataFire%20-%20open+source+integration+framework:&url=http%3A%2F%2Fgithub.com%2FDataFire%2FDataFire\n[gitter-image]: https://img.shields.io/badge/Chat-on%20Gitter-blue.svg\n[gitter-link]: https://gitter.im/DataFire/Lobby\n[npm-image]: https://img.shields.io/npm/v/datafire.svg\n[npm-link]: https://npmjs.org/package/datafire\n[travis-image]: https://travis-ci.org/DataFire/DataFire.svg?branch=master\n[travis-link]: https://travis-ci.org/DataFire/DataFire\n[climate-image]: https://codeclimate.com/github/DataFire/DataFire.png\n[climate-link]: https://codeclimate.com/github/DataFire/DataFire\n[deps-image]: https://img.shields.io/david/DataFire/DataFire.svg\n[deps-link]: https://david-dm.org/DataFire/DataFire\n[devdeps-image]: https://img.shields.io/david/dev/DataFire/DataFire.svg\n[devdeps-link]: https://david-dm.org/DataFire/DataFire#info=devDependencies\n[blog-image]: https://img.shields.io/badge/Read-on%20Medium-blue.svg\n[blog-link]: https://medium.com/datafire-io\n[mail-image]: https://img.shields.io/badge/Subscribe-on%20MailChimp-blue.svg\n[mail-link]: http://eepurl.com/c3t10T\n\nDataFire is an open source framework for building and integrating APIs. It\nprovides over [800 integrations](https://github.com/DataFire/Integrations), including:\n\nAWS &bull; Azure &bull; MongoDB &bull; Slack &bull; GitHub &bull;\nTwilio &bull; Trello &bull; Square &bull;\nGoogle Sheets &bull; Gmail &bull; Heroku\n\nEach integration provides a set of composable actions. New actions can be built by\ncombining existing actions, JavaScript, and external libraries. They are driven by JavaScript Promises,\nand can be triggered by a URL, on a schedule, or manually.\n\nWant more? [DataFire.io](https://datafire.io) provides a simple interface for building,\nmanaging, and hosting DataFire projects.\n\n[![Share on Twitter][twitter-image]][twitter-link]\n[![Read on Medium][blog-image]][blog-link]\n[![Chat on Gitter][gitter-image]][gitter-link]\n[![Subscribe on MailChimp][mail-image]][mail-link]\n\n\n\n## Installation\n> Be sure to install DataFire both globally and as a project dependency.\n\n```\nnpm install -g datafire\nnpm install --save datafire\n```\n\n\n\n## Sample Projects\n|  |  |  |\n|--|--|--|\n| Create an API backed by Google Sheets | [Repo](https://github.com/DataFire-repos/spreadsheet-base) | [Run on DataFire.io](https://app.datafire.io/projects?baseRepo=https:%2F%2Fgithub.com%2FDataFire-repos%2Fspreadsheet-base) |\n| E-mail yourself news headlines | [Repo](https://github.com/DataFire-flows/headlines) | [Run on DataFire.io](https://app.datafire.io/projects?baseRepo=https:%2F%2Fgithub.com%2FDataFire-flows%2Fheadlines)|\n| Backend for a \"Contact Us\" form | [Repo](https://github.com/DataFire-repos/contact-us-base) | [Run on DataFire.io](https://app.datafire.io/projects?baseRepo=https:%2F%2Fgithub.com%2FDataFire-repos%2Fcontact-us-base) |\n| Sync GitHub issues to a Trello board | [Repo](https://github.com/DataFire-flows/github-issues-to-trello) | [Run on DataFire.io](https://app.datafire.io/projects?baseRepo=https:%2F%2Fgithub.com%2FDataFire-flows%2Fgithub-issues-to-trello) |\n| Create a Spotify playlist from r/listentothis | [Repo](https://github.com/DataFire-flows/listen-to-this) | [Run on DataFire.io](https://app.datafire.io/projects?baseRepo=https:%2F%2Fgithub.com%2FDataFire-flows%2Flisten-to-this) |\n\n"
+        "contents": "# DataFire\n\n[![Travis][travis-image]][travis-link]\n[![Downloads][downloads-image]][npm-link]\n[![NPM version][npm-image]][npm-link]\n[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://www.npmjs.com/package/datafire)\n<!--[![Dependency status][deps-image]][deps-link]\n[![devDependency status][devdeps-image]][devdeps-link]-->\n<!--[![Code Climate][climate-image]][climate-link]-->\n\n[downloads-image]: https://img.shields.io/npm/dm/datafire.svg\n[twitter-image]: https://img.shields.io/badge/Share-on%20Twitter-blue.svg\n[twitter-link]: https://twitter.com/intent/tweet?text=DataFire%20-%20open+source+integration+framework:&url=http%3A%2F%2Fgithub.com%2FDataFire%2FDataFire\n[gitter-image]: https://img.shields.io/badge/Chat-on%20Gitter-blue.svg\n[gitter-link]: https://gitter.im/DataFire/Lobby\n[npm-image]: https://img.shields.io/npm/v/datafire.svg\n[npm-link]: https://npmjs.org/package/datafire\n[travis-image]: https://travis-ci.org/DataFire/DataFire.svg?branch=master\n[travis-link]: https://travis-ci.org/DataFire/DataFire\n[climate-image]: https://codeclimate.com/github/DataFire/DataFire.png\n[climate-link]: https://codeclimate.com/github/DataFire/DataFire\n[deps-image]: https://img.shields.io/david/DataFire/DataFire.svg\n[deps-link]: https://david-dm.org/DataFire/DataFire\n[devdeps-image]: https://img.shields.io/david/dev/DataFire/DataFire.svg\n[devdeps-link]: https://david-dm.org/DataFire/DataFire#info=devDependencies\n[blog-image]: https://img.shields.io/badge/Read-on%20Medium-blue.svg\n[blog-link]: https://medium.com/datafire-io\n[mail-image]: https://img.shields.io/badge/Subscribe-on%20MailChimp-blue.svg\n[mail-link]: https://eepurl.com/c3t10T\n\nDataFire is an [open source](https://github.com/DataFire/DataFire/blob/master/LICENSE) framework for building and integrating APIs. It\nprovides over [1000 integrations](https://github.com/DataFire/Integrations), including:\n\nAWS &bull; Azure &bull; MongoDB &bull; Slack &bull; GitHub &bull;\nTwilio &bull; Trello &bull; Square &bull;\nGoogle Sheets &bull; Gmail &bull; Heroku\n\nEach integration provides a set of [composable actions](https://docs.datafire.io/Actions). New actions [can be built](https://docs.datafire.io/Introduction/Hello_World) by\ncombining existing actions, JavaScript, and external libraries. They are driven by [JavaScript Promises](https://developers.google.com/web/fundamentals/primers/promises),\nand can be triggered by a URL, on a schedule, or manually.\n\nWant more? [DataFire.io](https://datafire.io) provides a simple interface for building,\nmanaging, and hosting DataFire projects.\n\n[![Share on Twitter][twitter-image]][twitter-link]\n[![Read on Medium][blog-image]][blog-link]\n[![Chat on Gitter][gitter-image]][gitter-link]\n[![Subscribe on MailChimp][mail-image]][mail-link]\n\n\n\n## Installation\n> Be sure to install DataFire both globally and as a project dependency.\n\n```\nnpm install -g datafire\nnpm install --save datafire\n```\n\n\n\n## Sample Projects\n|  |  |  |\n|--|--|--|\n| Create an API backed by Google Sheets | [Repo](https://github.com/DataFire-repos/spreadsheet-base) | [Run on DataFire.io](https://app.datafire.io/projects?baseRepo=https:%2F%2Fgithub.com%2FDataFire-repos%2Fspreadsheet-base) |\n| E-mail yourself news headlines | [Repo](https://github.com/DataFire-flows/headlines) | [Run on DataFire.io](https://app.datafire.io/projects?baseRepo=https:%2F%2Fgithub.com%2FDataFire-flows%2Fheadlines)|\n| Backend for a \"Contact Us\" form | [Repo](https://github.com/DataFire-repos/contact-us-base) | [Run on DataFire.io](https://app.datafire.io/projects?baseRepo=https:%2F%2Fgithub.com%2FDataFire-repos%2Fcontact-us-base) |\n| Sync GitHub issues to a Trello board | [Repo](https://github.com/DataFire-flows/github-issues-to-trello) | [Run on DataFire.io](https://app.datafire.io/projects?baseRepo=https:%2F%2Fgithub.com%2FDataFire-flows%2Fgithub-issues-to-trello) |\n| Create a Spotify playlist from r/listentothis | [Repo](https://github.com/DataFire-flows/listen-to-this) | [Run on DataFire.io](https://app.datafire.io/projects?baseRepo=https:%2F%2Fgithub.com%2FDataFire-flows%2Flisten-to-this) |\n\n"
       }, {
         "markdownFile": "markdown/DataFire_yml.md",
         "title": "DataFire.yml Configuration",
-        "contents": "# DataFire.yml\n\nHere's a sample DataFire.yml that shows all the available fields.\n\n```yaml\noptions:\n  cors: true # enable cross-origin requests\n  cache: 100 # number of millseconds to cache requests (can be overridden for each path)\n\n# Store credentials for different APIs and services.\n# You can also put this (and other fields) in DataFire-accounts.yml, which can be added to your .gitignore\naccounts:\n  mongodb_readonly:\n    url: https://readonly@database.example.com\n\n# Authorizers will before each of your path triggers (unless disabled),\n# and will populate context.accounts.AUTHORIZER_ID\nauthorizers:\n  user:\n    action: ./actions/get-user-from-auth-header.js\n\nevents:\n  # This action will be called whenever one of your path triggers runs\n  http:\n    action: ./actions/log-http.js\n\n  # This action will be called whenever one of your task triggers runs\n  task:\n    action: ./actions/log-task.js\n\n  # This action will be called whenever one of your path or task triggers fails unexpectedly.\n  error:\n    action: ./actions/send-alert.js\n\n  # This action will be called whenever one of your OAuth tokens is refreshed\n  oauth_refresh:\n    action: ./actions/update-refresh-token.js\n\n# paths are the URLs served by your project\n# E.g. the first path here will be served at GET http://localhost/hello\npaths:\n  # The minimum needed for a path trigger is an action\n  /hello:\n    get:\n      action: ./actions/hello.js\n\n  # You can also use actions from an installed integration\n  /profile:\n    get:\n      action: github/users.username.get\n      input:\n        username: torvalds\n\n# tasks will run on a regular schedule\ntasks:\n  send_database_report:\n    action: ./actions/send_db_report.js\n    schedule: rate(1 day)  # You can use 'rate' or 'cron'\n\n# tests can be run manually on the command line\ntests:\n  generate_database_report:\n    action: ./actions/send_db_report.js\n\n# Use openapi to control fields in the openapi.json generated for your project\nopenapi:\n  host: www.example.com\n  schemes:\n    - https\n  info:\n    description: An API built with DataFire\n    version: 2.0.0-beta\n\n```\n\n## Triggers\n`paths`, `tests`, and `tasks` all represent triggers for your actions. Triggers can have the following fields:\n\n* `action` (required) - the action to call, either local (e.g. `./actions/do_something.js`) or from an integration (e.g. `xkcd/getLatestComic`)\n* `accounts` - Accounts to use for this trigger, overriding project-level accounts\n* `input` - Input to use for this trigger. If not set for a `path` trigger, the `path` will pass query parameters and JSON/form data as input.\n* `errorHandler` - An action to run whenever an unknown error occurs.\n\n`path` triggers also have these fields:\n\n* `cache` - how long to cache the result of this action (server-side), overriding project-level cache\n* `authorizers` - actions to run before this path is called, overriding project-level authorizers\n\n`task` triggers also have these fields:\n\n* `schedule` (required) - When to run the task, using `rate` or `cron`. Rate may be in minutes, hours, days, or months. Cron syntax [can be found here](https://en.wikipedia.org/wiki/Cron)\n* `monitor` - Poll a resource for new data. Your action will only be run when new data appears.\n* `monitor.action` - The action being polled\n* `monitor.array` - The location of an array in the action's output to monitor, e.g. `feed.entries`\n* `monitor.trackBy` - A field in each item of the array to use as an identifier, e.g. `link` or `info.title`\n* `monitor.input` - input to `monitor.action`\n* `monitor.accounts` - accounts for `monitor.action`\n"
+        "contents": "# DataFire.yml\n\nHere's a sample DataFire.yml that shows all the available fields.\n\n```yaml\noptions:\n  cors: true        # enable cross-origin requests\n  cache: 100        # number of millseconds to cache requests\n  bodyLimit: 100kb  # maximum size of JSON body for HTTP requests\n\n# Store credentials for different APIs and services.\n# You can also put this (and other fields) in DataFire-accounts.yml, which can be added to your .gitignore\naccounts:\n  mongodb_readonly:\n    url: https://readonly@database.example.com\n\n# Authorizers will before each of your path triggers (unless disabled),\n# and will populate context.accounts.AUTHORIZER_ID\nauthorizers:\n  user:\n    action: ./actions/get-user-from-auth-header.js\n\nevents:\n  # This action will be called whenever one of your path triggers runs\n  http:\n    action: ./actions/log-http.js\n\n  # This action will be called whenever one of your task triggers runs\n  task:\n    action: ./actions/log-task.js\n\n  # This action will be called whenever one of your path or task triggers fails unexpectedly.\n  error:\n    action: ./actions/send-alert.js\n\n  # This action will be called whenever one of your OAuth tokens is refreshed\n  oauth_refresh:\n    action: ./actions/update-refresh-token.js\n\n# paths are the URLs served by your project\n# E.g. the first path here will be served at GET http://localhost/hello\npaths:\n  # The minimum needed for a path trigger is an action\n  /hello:\n    get:\n      action: ./actions/hello.js\n\n  # You can also use actions from an installed integration\n  /profile:\n    get:\n      action: github/users.username.get\n      input:\n        username: torvalds\n\n# tasks will run on a regular schedule\ntasks:\n  send_database_report:\n    action: ./actions/send_db_report.js\n    schedule: rate(1 day)  # You can use 'rate' or 'cron'\n\n# tests can be run manually on the command line\ntests:\n  generate_database_report:\n    action: ./actions/send_db_report.js\n\n# Use openapi to control fields in the openapi.json generated for your project\nopenapi:\n  host: www.example.com\n  schemes:\n    - https\n  info:\n    description: An API built with DataFire\n    version: 2.0.0-beta\n\n```\n\n## Triggers\n`paths`, `tests`, and `tasks` all represent triggers for your actions. Triggers can have the following fields:\n\n* `action` (required) - the action to call, either local (e.g. `./actions/do_something.js`) or from an integration (e.g. `xkcd/getLatestComic`)\n* `accounts` - Accounts to use for this trigger, overriding project-level accounts\n* `input` - Input to use for this trigger. If not set for a `path` trigger, the `path` will pass query parameters and JSON/form data as input.\n* `errorHandler` - An action to run whenever an unknown error occurs.\n\n`path` triggers also have these fields:\n\n* `cache` - how long to cache the result of this action (server-side), overriding project-level cache\n* `authorizers` - actions to run before this path is called, overriding project-level authorizers\n\n`task` triggers also have these fields:\n\n* `schedule` (required) - When to run the task, using `rate` or `cron`. Rate may be in minutes, hours, days, or months. Cron syntax [can be found here](https://en.wikipedia.org/wiki/Cron)\n* `monitor` - Poll a resource for new data. Your action will only be run when new data appears.\n* `monitor.action` - The action being polled\n* `monitor.array` - The location of an array in the action's output to monitor, e.g. `feed.entries`\n* `monitor.trackBy` - A field in each item of the array to use as an identifier, e.g. `link` or `info.title`\n* `monitor.input` - input to `monitor.action`\n* `monitor.accounts` - accounts for `monitor.action`\n"
       }, {
         "markdownFile": "markdown/Integrations.md",
         "contents": "# Integrations\nOver 800 integrations are available on npm, under the `@datafire` scope.\nYou can view a list of available integrations on [DataFire.io](https://app.datafire.io/integrations)\n\nEach integration comes with a set of actions. For example, the `hacker_news` integration\ncontains the `getStories`, `getItem`, and `getUser` actions.\n\nTo add an integration to your project, run:\n```\nnpm install @datafire/$integration\n```\nFor example, to install the `hacker_news` integration:\n```bash\nnpm install @datafire/hacker_news\n```\n\n## Using Integrations\nAdd an integration to your NodeJS project using `create()`. You can then\ncall its actions using Promises or async/await.\n\n```js\nlet hn = require('@datafire/hacker_news').create();\n```\n\n### Authentication\n> See [Authentication](/Authentication) for the full documentation\n\nYou can pass an account to  `create()`:\n\n```js\nlet datafire = require('datafire');\nlet project = datafire.Project.main();\n\nlet github = require('@datafire/github').create(project.accounts.github_alice);\n// or\ngithub = require('@datafire/github').create({\n  access_token: \"abcde\",\n});\n\n(async () => {\n\n  let user = await github.user.get();\n  console.log('Logged in user is ' + user.login);\n\n})();\n```\n\n\n\n### Actions\nEach integration offers a set of actions - each action returns a Promise.\n\n#### With async/await\nWe recommend using NodeJS 7.10 or above, which includes support for `await`.\n\n```js\nlet hn = require('@datafire/hacker_news').create();\n\n(async () => {\n\n  let storyIDs = await hn.getStories({storyType: 'top'});\n  for (let itemID of storyIDs) {\n    let story = await hn.getItem({itemID});\n    console.log(story.title, story.url);\n  }\n\n})();\n```\n\n#### With Promises\nIf you're using an older version of Node, you can use Promises:\n```js\nlet hn = require('@datafire/hacker_news').create();\n\nhn.getStories({storyType: 'top'})\n  .then(storyIDs => {\n    return Promise.all(storyIDs.map(itemID => {\n      return hn.getItem({itemID});\n    }))\n  })\n  .then(stories => {\n    stories.forEach(story => {\n      console.log(story.title, story.url);\n    })\n  })\n\n```\n\n## Versioning\nDataFire integrations use [semver](http://semver.org/) after version 0.1.0. Specifically:\n* PATCH changes will occur for backward-compatible fixes, or documentation changes\n* MINOR changes will occur when new functionality is added\n* MAJOR changes will occur if breaking changes are made\n\n\n## Custom Integrations\n\n> If you'd like to add your API to the DataFire registry, submit a\n> [pull request](https://github.com/DataFire/Integrations).\n\n### Add Integrations by URL\nNew integrations can be added by the URL of an Open API (Swagger) specification or an RSS feed:\n```\ndatafire integrate --rss https://www.reddit.com/.rss\ndatafire integrate --openapi https://api.acme.com/openapi.json --name acme\n```\n\nThis will create the directory `./integrations/$name` with the required information. You can\nreference this integration in NodeJS with:\n\n```js\nvar acme = require('./integrations/acme');\n```\n\n#### API Specification Formats\nYou can also specify `--raml`, `--io_docs`, `--wadl`, or `--api_blueprint`, though you'll need to install\napi-spec-converter:\n```\nnpm install -g api-spec-converter\ndatafire integrate --raml https://raw.githubusercontent.com/raml-apis/Bufferapp/master/api.raml\n```\n\n### Write Integrations in JavaScript\nYou can greate custom integrations using the `datafire.Integration` class.\nHere's an example that creates a filesystem integration:\n\n```js\nvar datafire = require('datafire');\nvar fs = require('fs');\nvar filesystem = module.exports = new Integration({\n  id: \"filesystem\",\n  title: \"Filesystem\",\n  description: \"Gives read access to the filesystem\",\n});\n\nfilesystem.addAction('readFile', new datafire.Action({\n  inputs: [{\n    name: \"filename\",\n    type: \"string\",\n    maxLength: 100,\n  }],\n  handler: input => {\n    return new Promise((resolve, reject) => {\n      fs.readFile(input.filename, (err, contents) => {\n        if (err) reject(err);\n        else resolve(contents)\n      });\n    });\n  }\n}));\n```\n\n",
@@ -42,7 +42,7 @@ module.exports = {
         "title": "Actions"
       }, {
         "markdownFile": "markdown/Triggers.md",
-        "contents": "## Triggers\n\nTriggers tell DataFire how and when to run your actions. There are three different types of triggers:\n\n* `paths` - URLs like `GET /hello` or `POST /pets/{id}`\n* `tasks` - Jobs that run on a schedule, like \"every hour\", or \"every tuesday at 3pm\"\n* `tests` - Jobs that can be run manually using the `datafire` command line tool\n\nEach trigger must have an `action`, and can also specify the `input` and `accounts` to pass\nto that action.\n\n### Paths\nPaths create URLs that trigger your actions. For example, you can create a URL that returns\nyour GitHub profile:\n```yaml\npaths:\n  /github_profile:\n    get:\n      action: github/users.username.get\n      input:\n        username: 'torvalds'\n```\n\nIf you don't specify the `input` field, DataFire will automatically pass either query parameters\n(for GET/DELETE/HEAD/OPTIONS) or the JSON body (for POST/PATCH/PUT) from the request to the\naction.\n\nStart serving your paths with:\n```bash\ndatafire serve --port 3000\n```\n\n### Tasks\nYou can schedule tasks in DataFire.yml by specifying a\n[rate or cron expression](http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#RateExpressions).\n```yaml\ntasks:\n  send_database_report:\n    action: ./send-db-report.js\n    schedule: rate(1 day) // or cron(0 0 * * * *)\n    accounts:\n      google_gmail: lucy\n      mongodb: mongo_read_only\n```\n\n#### Monitors\nA monitor will poll a particular resource for new items,\nand only run your action if a new item is found. For instance, we can\ncheck for new items on Reddit every 5 minutes:\n\n```yaml\ntasks:\n  watch_reddit:\n    schedule: rate(5 minutes)\n    monitor:\n      action: reddit_rss/frontPage\n      array: feed.entries\n      trackBy: link\n      input:\n        subreddit: sports\n    action: ./post-story-to-slack.js\n```\n\nStart running tasks with:\n```\ndatafire serve --tasks\n```\n\n",
+        "contents": "## Triggers\n\nTriggers tell DataFire how and when to run your actions. There are three different types of triggers:\n\n* `paths` - URLs like `GET /hello` or `POST /pets/{id}`\n* `tasks` - Jobs that run on a schedule, like \"every hour\", or \"every tuesday at 3pm\"\n* `tests` - Jobs that can be run manually using the `datafire` command line tool\n\nEach trigger must have an `action`, and can also specify the `input` and `accounts` to pass\nto that action.\n\n### Paths\nPaths create URLs that trigger your actions. For example, you can create a URL that returns\nyour GitHub profile:\n```yaml\npaths:\n  /github_profile:\n    get:\n      action: github/users.username.get\n      input:\n        username: 'torvalds'\n```\n\nIf you don't specify the `input` field, DataFire will automatically pass either query parameters\n(for GET/DELETE/HEAD/OPTIONS) or the JSON body (for POST/PATCH/PUT) from the request to the\naction.\n\nStart serving your paths with:\n```bash\ndatafire serve --port 3000\n```\n\n### Tasks\nYou can schedule tasks in DataFire.yml by specifying a\n[rate or cron expression](http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ScheduledEvents.html#RateExpressions).\n```yaml\ntasks:\n  send_database_report:\n    action: ./send-db-report.js\n    schedule: rate(1 day) // or cron(0 0 * * * *)\n    accounts:\n      google_gmail: lucy\n      mongodb: mongo_read_only\n```\n\nStart running tasks with:\n```\ndatafire serve --tasks\n```\n\n#### Monitors\nA monitor will poll a particular resource for new items,\nand only run your action if a new item is found. For instance, we can\ncheck for new items on Reddit every 5 minutes:\n\n```yaml\ntasks:\n  watch_reddit:\n    schedule: rate(5 minutes)\n    monitor:\n      action: reddit_rss/frontPage\n      array: feed.entries\n      trackBy: link\n      input:\n        subreddit: sports\n    action: ./post-story-to-slack.js\n```\n\nIn the above example, the action `reddit_rss/frontPage` returns a response like this:\n```json\n{\n  \"feed\": {\n    \"entries\": [{\n      \"link\": \"https://reddit.com/foo/bar\",\n      \"title\": \"FooBar\"\n    }, {\n      \"link\": \"https://reddit.com/baz/quux\",\n      \"title\": \"BazQuxx\"\n    }]\n  }\n}\n```\n\nIn order to track the items in the `entries` array, we have to set two fields:\n* `monitor.array` is set to `feed.entries` - the path we need to take from the top of the JSON response to get at the array.\n* `monitor.trackBy` is set to `link` - this is the field we will use as a unique identifier for each entry.\nOnly entries with a link we haven't seen before will trigger the `post-story-to-slack.js` action.\n\n",
         "title": "Triggers"
       }, {
         "markdownFile": "markdown/Authentication.md",
@@ -135,6 +135,7 @@ module.exports = {
   "templates": {
     "navbar": "<nav class=\"navbar navbar-default navbar-fixed-top\">\n  <div class=\"container-fluid\">\n    <div class=\"navbar-header\">\n      <img src=\"https://app.datafire.io/assets/img/logo-no-text.png\">\n      <a class=\"navbar-brand\" routerlink=\"/\" href=\"/\">DataFire</a>\n    </div>\n    <div class=\"navbar-header pull-right\">\n\t  <ul class=\"nav navbar-nav\">\n        <li><a class=\"nav-link\" href=\"https://github.com/DataFire/DataFire\">Open Source Framework</a></li>\n        <li><a class=\"nav-link\" href=\"https://app.datafire.io\">DataFire.io Platform</a></li>\n\t  </ul>\n    </div>\n  </div>\n</nav>\n",
     "loading": "<style>\n  .loading-screen {\n    min-height: 500px;\n    text-align: center;\n    padding-top: 100px;\n  }\n</style>\n<div id=\"LoadingScreen\" class=\"loading-screen\">\n  <h1><i class=\"fa fa-spin fa-refresh\"></i><h1>\n</div>\n\n",
+    "head": "",
     "footer": ""
   },
   "env": {},
@@ -11352,8 +11353,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 /**
  * marked - a markdown parser
- * Copyright (c) 2011-2014, Christopher Jeffrey. (MIT Licensed)
- * https://github.com/chjj/marked
+ * Copyright (c) 2011-2018, Christopher Jeffrey. (MIT Licensed)
+ * https://github.com/markedjs/marked
  */
 
 ;(function (root) {
@@ -11368,20 +11369,29 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     code: /^( {4}[^\n]+\n*)+/,
     fences: noop,
     hr: /^ {0,3}((?:- *){3,}|(?:_ *){3,}|(?:\* *){3,})(?:\n+|$)/,
-    heading: /^ *(#{1,6}) *([^\n]+?) *#* *(?:\n+|$)/,
+    heading: /^ *(#{1,6}) *([^\n]+?) *(?:#+ *)?(?:\n+|$)/,
     nptable: noop,
     blockquote: /^( {0,3}> ?(paragraph|[^\n]*)(?:\n|$))+/,
     list: /^( *)(bull) [\s\S]+?(?:hr|def|\n{2,}(?! )(?!\1bull )\n*|\s*$)/,
-    html: /^ *(?:comment *(?:\n|\s*$)|closed *(?:\n{2,}|\s*$)|closing *(?:\n{2,}|\s*$))/,
+    html: '^ {0,3}(?:' // optional indentation
+    + '<(script|pre|style)[\\s>][\\s\\S]*?(?:</\\1>[^\\n]*\\n+|$)' // (1)
+    + '|comment[^\\n]*(\\n+|$)' // (2)
+    + '|<\\?[\\s\\S]*?\\?>\\n*' // (3)
+    + '|<![A-Z][\\s\\S]*?>\\n*' // (4)
+    + '|<!\\[CDATA\\[[\\s\\S]*?\\]\\]>\\n*' // (5)
+    + '|</?(tag)(?: +|\\n|/?>)[\\s\\S]*?(?:\\n{2,}|$)' // (6)
+    + '|<(?!script|pre|style)([a-z][\\w-]*)(?:attribute)*? */?>(?=\\h*\\n)[\\s\\S]*?(?:\\n{2,}|$)' // (7) open tag
+    + '|</(?!script|pre|style)[a-z][\\w-]*\\s*>(?=\\h*\\n)[\\s\\S]*?(?:\\n{2,}|$)' // (7) closing tag
+    + ')',
     def: /^ {0,3}\[(label)\]: *\n? *<?([^\s>]+)>?(?:(?: +\n? *| *\n *)(title))? *(?:\n+|$)/,
     table: noop,
     lheading: /^([^\n]+)\n *(=|-){2,} *(?:\n+|$)/,
-    paragraph: /^([^\n]+(?:\n?(?!hr|heading|lheading| {0,3}>|tag)[^\n]+)+)/,
+    paragraph: /^([^\n]+(?:\n(?!hr|heading|lheading| {0,3}>|<\/?(?:tag)(?: +|\n|\/?>)|<(?:script|pre|style|!--))[^\n]+)*)/,
     text: /^[^\n]+/
   };
 
-  block._label = /(?:\\[\[\]]|[^\[\]])+/;
-  block._title = /(?:"(?:\\"|[^"]|"[^"\n]*")*"|'\n?(?:[^'\n]+\n?)*'|\([^()]*\))/;
+  block._label = /(?!\s*\])(?:\\[\[\]]|[^\[\]])+/;
+  block._title = /(?:"(?:\\"?|[^"\\])*"|'[^'\n]*(?:\n[^'\n]+)*\n?'|\([^()]*\))/;
   block.def = edit(block.def).replace('label', block._label).replace('title', block._title).getRegex();
 
   block.bullet = /(?:[*+-]|\d+\.)/;
@@ -11390,11 +11400,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   block.list = edit(block.list).replace(/bull/g, block.bullet).replace('hr', '\\n+(?=\\1?(?:(?:- *){3,}|(?:_ *){3,}|(?:\\* *){3,})(?:\\n+|$))').replace('def', '\\n+(?=' + block.def.source + ')').getRegex();
 
-  block._tag = '(?!(?:' + 'a|em|strong|small|s|cite|q|dfn|abbr|data|time|code' + '|var|samp|kbd|sub|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo' + '|span|br|wbr|ins|del|img)\\b)\\w+(?!:|[^\\w\\s@]*@)\\b';
+  block._tag = 'address|article|aside|base|basefont|blockquote|body|caption' + '|center|col|colgroup|dd|details|dialog|dir|div|dl|dt|fieldset|figcaption' + '|figure|footer|form|frame|frameset|h[1-6]|head|header|hr|html|iframe' + '|legend|li|link|main|menu|menuitem|meta|nav|noframes|ol|optgroup|option' + '|p|param|section|source|summary|table|tbody|td|tfoot|th|thead|title|tr' + '|track|ul';
+  block._comment = /<!--(?!-?>)[\s\S]*?-->/;
+  block.html = edit(block.html, 'i').replace('comment', block._comment).replace('tag', block._tag).replace('attribute', / +[a-zA-Z:_][\w.:-]*(?: *= *"[^"\n]*"| *= *'[^'\n]*'| *= *[^\s"'=<>`]+)?/).getRegex();
 
-  block.html = edit(block.html).replace('comment', /<!--[\s\S]*?-->/).replace('closed', /<(tag)[\s\S]+?<\/\1>/).replace('closing', /<tag(?:"[^"]*"|'[^']*'|\s[^'"\/>\s]*)*?\/?>/).replace(/tag/g, block._tag).getRegex();
-
-  block.paragraph = edit(block.paragraph).replace('hr', block.hr).replace('heading', block.heading).replace('lheading', block.lheading).replace('tag', '<' + block._tag).getRegex();
+  block.paragraph = edit(block.paragraph).replace('hr', block.hr).replace('heading', block.heading).replace('lheading', block.lheading).replace('tag', block._tag) // pars can be interrupted by type (6) html blocks
+  .getRegex();
 
   block.blockquote = edit(block.blockquote).replace('paragraph', block.paragraph).getRegex();
 
@@ -11421,8 +11432,18 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
    */
 
   block.tables = merge({}, block.gfm, {
-    nptable: /^ *(\S.*\|.*)\n *([-:]+ *\|[-| :]*)\n((?:.*\|.*(?:\n|$))*)\n*/,
-    table: /^ *\|(.+)\n *\|( *[-:]+[-| :]*)\n((?: *\|.*(?:\n|$))*)\n*/
+    nptable: /^ *([^|\n ].*\|.*)\n *([-:]+ *\|[-| :]*)(?:\n((?:.*[^>\n ].*(?:\n|$))*)\n*|$)/,
+    table: /^ *\|(.+)\n *\|?( *[-:]+[-| :]*)(?:\n((?: *[^>\n ].*(?:\n|$))*)\n*|$)/
+  });
+
+  /**
+   * Pedantic grammar
+   */
+
+  block.pedantic = merge({}, block.normal, {
+    html: edit('^ *(?:comment *(?:\\n|\\s*$)' + '|<(tag)[\\s\\S]+?</\\1> *(?:\\n{2,}|\\s*$)' // closed tag
+    + '|<tag(?:"[^"]*"|\'[^\']*\'|\\s[^\'"/>\\s]*)*?/?> *(?:\\n{2,}|\\s*$))').replace('comment', block._comment).replace(/tag/g, '(?!(?:' + 'a|em|strong|small|s|cite|q|dfn|abbr|data|time|code|var|samp|kbd|sub' + '|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo|span|br|wbr|ins|del|img)' + '\\b)\\w+(?!:|[^\\w\\s@]*@)\\b').getRegex(),
+    def: /^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +(["(][^\n]+[")]))? *(?:\n+|$)/
   });
 
   /**
@@ -11431,11 +11452,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   function Lexer(options) {
     this.tokens = [];
-    this.tokens.links = {};
+    this.tokens.links = Object.create(null);
     this.options = options || marked.defaults;
     this.rules = block.normal;
 
-    if (this.options.gfm) {
+    if (this.options.pedantic) {
+      this.rules = block.pedantic;
+    } else if (this.options.gfm) {
       if (this.options.tables) {
         this.rules = block.tables;
       } else {
@@ -11475,7 +11498,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   Lexer.prototype.token = function (src, top) {
     src = src.replace(/^ +$/gm, '');
-    var next, loose, cap, bull, b, item, space, i, tag, l;
+    var next, loose, cap, bull, b, item, listStart, listItems, t, space, i, tag, l, isordered, istask, ischecked;
 
     while (src) {
       // newline
@@ -11494,7 +11517,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         cap = cap[0].replace(/^ {4}/gm, '');
         this.tokens.push({
           type: 'code',
-          text: !this.options.pedantic ? cap.replace(/\n+$/, '') : cap
+          text: !this.options.pedantic ? rtrim(cap, '\n') : cap
         });
         continue;
       }
@@ -11523,34 +11546,36 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       // table no leading pipe (gfm)
       if (top && (cap = this.rules.nptable.exec(src))) {
-        src = src.substring(cap[0].length);
-
         item = {
           type: 'table',
-          header: cap[1].replace(/^ *| *\| *$/g, '').split(/ *\| */),
+          header: splitCells(cap[1].replace(/^ *| *\| *$/g, '')),
           align: cap[2].replace(/^ *|\| *$/g, '').split(/ *\| */),
-          cells: cap[3].replace(/\n$/, '').split('\n')
+          cells: cap[3] ? cap[3].replace(/\n$/, '').split('\n') : []
         };
 
-        for (i = 0; i < item.align.length; i++) {
-          if (/^ *-+: *$/.test(item.align[i])) {
-            item.align[i] = 'right';
-          } else if (/^ *:-+: *$/.test(item.align[i])) {
-            item.align[i] = 'center';
-          } else if (/^ *:-+ *$/.test(item.align[i])) {
-            item.align[i] = 'left';
-          } else {
-            item.align[i] = null;
+        if (item.header.length === item.align.length) {
+          src = src.substring(cap[0].length);
+
+          for (i = 0; i < item.align.length; i++) {
+            if (/^ *-+: *$/.test(item.align[i])) {
+              item.align[i] = 'right';
+            } else if (/^ *:-+: *$/.test(item.align[i])) {
+              item.align[i] = 'center';
+            } else if (/^ *:-+ *$/.test(item.align[i])) {
+              item.align[i] = 'left';
+            } else {
+              item.align[i] = null;
+            }
           }
+
+          for (i = 0; i < item.cells.length; i++) {
+            item.cells[i] = splitCells(item.cells[i], item.header.length);
+          }
+
+          this.tokens.push(item);
+
+          continue;
         }
-
-        for (i = 0; i < item.cells.length; i++) {
-          item.cells[i] = item.cells[i].split(/ *\| */);
-        }
-
-        this.tokens.push(item);
-
-        continue;
       }
 
       // hr
@@ -11588,15 +11613,21 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       if (cap = this.rules.list.exec(src)) {
         src = src.substring(cap[0].length);
         bull = cap[2];
+        isordered = bull.length > 1;
 
-        this.tokens.push({
+        listStart = {
           type: 'list_start',
-          ordered: bull.length > 1
-        });
+          ordered: isordered,
+          start: isordered ? +bull : '',
+          loose: false
+        };
+
+        this.tokens.push(listStart);
 
         // Get each top-level item.
         cap = cap[0].match(this.rules.item);
 
+        listItems = [];
         next = false;
         l = cap.length;
         i = 0;
@@ -11635,9 +11666,27 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             if (!loose) loose = next;
           }
 
-          this.tokens.push({
-            type: loose ? 'loose_item_start' : 'list_item_start'
-          });
+          if (loose) {
+            listStart.loose = true;
+          }
+
+          // Check for task list items
+          istask = /^\[[ xX]\] /.test(item);
+          ischecked = undefined;
+          if (istask) {
+            ischecked = item[1] !== ' ';
+            item = item.replace(/^\[[ xX]\] +/, '');
+          }
+
+          t = {
+            type: 'list_item_start',
+            task: istask,
+            checked: ischecked,
+            loose: loose
+          };
+
+          listItems.push(t);
+          this.tokens.push(t);
 
           // Recurse.
           this.token(item, false);
@@ -11645,6 +11694,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
           this.tokens.push({
             type: 'list_item_end'
           });
+        }
+
+        if (listStart.loose) {
+          l = listItems.length;
+          i = 0;
+          for (; i < l; i++) {
+            listItems[i].loose = true;
+          }
         }
 
         this.tokens.push({
@@ -11669,7 +11726,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       if (top && (cap = this.rules.def.exec(src))) {
         src = src.substring(cap[0].length);
         if (cap[3]) cap[3] = cap[3].substring(1, cap[3].length - 1);
-        tag = cap[1].toLowerCase();
+        tag = cap[1].toLowerCase().replace(/\s+/g, ' ');
         if (!this.tokens.links[tag]) {
           this.tokens.links[tag] = {
             href: cap[2],
@@ -11681,34 +11738,36 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       // table (gfm)
       if (top && (cap = this.rules.table.exec(src))) {
-        src = src.substring(cap[0].length);
-
         item = {
           type: 'table',
-          header: cap[1].replace(/^ *| *\| *$/g, '').split(/ *\| */),
+          header: splitCells(cap[1].replace(/^ *| *\| *$/g, '')),
           align: cap[2].replace(/^ *|\| *$/g, '').split(/ *\| */),
-          cells: cap[3].replace(/(?: *\| *)?\n$/, '').split('\n')
+          cells: cap[3] ? cap[3].replace(/(?: *\| *)?\n$/, '').split('\n') : []
         };
 
-        for (i = 0; i < item.align.length; i++) {
-          if (/^ *-+: *$/.test(item.align[i])) {
-            item.align[i] = 'right';
-          } else if (/^ *:-+: *$/.test(item.align[i])) {
-            item.align[i] = 'center';
-          } else if (/^ *:-+ *$/.test(item.align[i])) {
-            item.align[i] = 'left';
-          } else {
-            item.align[i] = null;
+        if (item.header.length === item.align.length) {
+          src = src.substring(cap[0].length);
+
+          for (i = 0; i < item.align.length; i++) {
+            if (/^ *-+: *$/.test(item.align[i])) {
+              item.align[i] = 'right';
+            } else if (/^ *:-+: *$/.test(item.align[i])) {
+              item.align[i] = 'center';
+            } else if (/^ *:-+ *$/.test(item.align[i])) {
+              item.align[i] = 'left';
+            } else {
+              item.align[i] = null;
+            }
           }
+
+          for (i = 0; i < item.cells.length; i++) {
+            item.cells[i] = splitCells(item.cells[i].replace(/^ *\| *| *\| *$/g, ''), item.header.length);
+          }
+
+          this.tokens.push(item);
+
+          continue;
         }
-
-        for (i = 0; i < item.cells.length; i++) {
-          item.cells[i] = item.cells[i].replace(/^ *\| *| *\| *$/g, '').split(/ *\| */);
-        }
-
-        this.tokens.push(item);
-
-        continue;
       }
 
       // lheading
@@ -11756,32 +11815,42 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
    */
 
   var inline = {
-    escape: /^\\([\\`*{}\[\]()#+\-.!_>])/,
+    escape: /^\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/,
     autolink: /^<(scheme:[^\s\x00-\x1f<>]*|email)>/,
     url: noop,
-    tag: /^<!--[\s\S]*?-->|^<\/?[a-zA-Z0-9\-]+(?:"[^"]*"|'[^']*'|\s[^<'">\/\s]*)*?\/?>/,
-    link: /^!?\[(inside)\]\(href\)/,
-    reflink: /^!?\[(inside)\]\s*\[([^\]]*)\]/,
-    nolink: /^!?\[((?:\[[^\[\]]*\]|\\[\[\]]|[^\[\]])*)\]/,
-    strong: /^__([\s\S]+?)__(?!_)|^\*\*([\s\S]+?)\*\*(?!\*)/,
-    em: /^_([^\s_](?:[^_]|__)+?[^\s_])_\b|^\*((?:\*\*|[^*])+?)\*(?!\*)/,
-    code: /^(`+)\s*([\s\S]*?[^`]?)\s*\1(?!`)/,
-    br: /^ {2,}\n(?!\s*$)/,
+    tag: '^comment' + '|^</[a-zA-Z][\\w:-]*\\s*>' // self-closing tag
+    + '|^<[a-zA-Z][\\w-]*(?:attribute)*?\\s*/?>' // open tag
+    + '|^<\\?[\\s\\S]*?\\?>' // processing instruction, e.g. <?php ?>
+    + '|^<![a-zA-Z]+\\s[\\s\\S]*?>' // declaration, e.g. <!DOCTYPE html>
+    + '|^<!\\[CDATA\\[[\\s\\S]*?\\]\\]>', // CDATA section
+    link: /^!?\[(label)\]\(href(?:\s+(title))?\s*\)/,
+    reflink: /^!?\[(label)\]\[(?!\s*\])((?:\\[\[\]]?|[^\[\]\\])+)\]/,
+    nolink: /^!?\[(?!\s*\])((?:\[[^\[\]]*\]|\\[\[\]]|[^\[\]])*)\](?:\[\])?/,
+    strong: /^__([^\s])__(?!_)|^\*\*([^\s])\*\*(?!\*)|^__([^\s][\s\S]*?[^\s])__(?!_)|^\*\*([^\s][\s\S]*?[^\s])\*\*(?!\*)/,
+    em: /^_([^\s_])_(?!_)|^\*([^\s*"<\[])\*(?!\*)|^_([^\s][\s\S]*?[^\s_])_(?!_|[^\s.])|^_([^\s_][\s\S]*?[^\s])_(?!_|[^\s.])|^\*([^\s"<\[][\s\S]*?[^\s*])\*(?!\*)|^\*([^\s*"<\[][\s\S]*?[^\s])\*(?!\*)/,
+    code: /^(`+)([^`]|[^`][\s\S]*?[^`])\1(?!`)/,
+    br: /^( {2,}|\\)\n(?!\s*$)/,
     del: noop,
-    text: /^[\s\S]+?(?=[\\<!\[`*]|\b_| {2,}\n|$)/
+    text: /^(`+|[^`])[\s\S]*?(?=[\\<!\[`*]|\b_| {2,}\n|$)/
   };
+
+  inline._escapes = /\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/g;
 
   inline._scheme = /[a-zA-Z][a-zA-Z0-9+.-]{1,31}/;
   inline._email = /[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+(@)[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+(?![-_])/;
-
   inline.autolink = edit(inline.autolink).replace('scheme', inline._scheme).replace('email', inline._email).getRegex();
 
-  inline._inside = /(?:\[[^\[\]]*\]|\\[\[\]]|[^\[\]]|\](?=[^\[]*\]))*/;
-  inline._href = /\s*<?([\s\S]*?)>?(?:\s+['"]([\s\S]*?)['"])?\s*/;
+  inline._attribute = /\s+[a-zA-Z:_][\w.:-]*(?:\s*=\s*"[^"]*"|\s*=\s*'[^']*'|\s*=\s*[^\s"'=<>`]+)?/;
 
-  inline.link = edit(inline.link).replace('inside', inline._inside).replace('href', inline._href).getRegex();
+  inline.tag = edit(inline.tag).replace('comment', block._comment).replace('attribute', inline._attribute).getRegex();
 
-  inline.reflink = edit(inline.reflink).replace('inside', inline._inside).getRegex();
+  inline._label = /(?:\[[^\[\]]*\]|\\[\[\]]?|`[^`]*`|[^\[\]\\])*?/;
+  inline._href = /\s*(<(?:\\[<>]?|[^\s<>\\])*>|(?:\\[()]?|\([^\s\x00-\x1f\\]*\)|[^\s\x00-\x1f()\\])*?)/;
+  inline._title = /"(?:\\"?|[^"\\])*"|'(?:\\'?|[^'\\])*'|\((?:\\\)?|[^)\\])*\)/;
+
+  inline.link = edit(inline.link).replace('label', inline._label).replace('href', inline._href).replace('title', inline._title).getRegex();
+
+  inline.reflink = edit(inline.reflink).replace('label', inline._label).getRegex();
 
   /**
    * Normal Inline Grammar
@@ -11795,7 +11864,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   inline.pedantic = merge({}, inline.normal, {
     strong: /^__(?=\S)([\s\S]*?\S)__(?!_)|^\*\*(?=\S)([\s\S]*?\S)\*\*(?!\*)/,
-    em: /^_(?=\S)([\s\S]*?\S)_(?!_)|^\*(?=\S)([\s\S]*?\S)\*(?!\*)/
+    em: /^_(?=\S)([\s\S]*?\S)_(?!_)|^\*(?=\S)([\s\S]*?\S)\*(?!\*)/,
+    link: edit(/^!?\[(label)\]\((.*?)\)/).replace('label', inline._label).getRegex(),
+    reflink: edit(/^!?\[(label)\]\s*\[([^\]]*)\]/).replace('label', inline._label).getRegex()
   });
 
   /**
@@ -11804,12 +11875,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   inline.gfm = merge({}, inline.normal, {
     escape: edit(inline.escape).replace('])', '~|])').getRegex(),
-    url: edit(/^((?:ftp|https?):\/\/|www\.)(?:[a-zA-Z0-9\-]+\.?)+[^\s<]*|^email/).replace('email', inline._email).getRegex(),
+    _extended_email: /[A-Za-z0-9._+-]+(@)[a-zA-Z0-9-_]+(?:\.[a-zA-Z0-9-_]*[a-zA-Z0-9])+(?![-_])/,
+    url: /^((?:ftp|https?):\/\/|www\.)(?:[a-zA-Z0-9\-]+\.?)+[^\s<]*|^email/,
     _backpedal: /(?:[^?!.,:;*_~()&]+|\([^)]*\)|&(?![a-zA-Z0-9]+;$)|[?!.,:;*_~)]+(?!$))+/,
-    del: /^~~(?=\S)([\s\S]*?\S)~~/,
-    text: edit(inline.text).replace(']|', '~]|').replace('|', '|https?://|ftp://|www\\.|[a-zA-Z0-9.!#$%&\'*+/=?^_`{\\|}~-]+@|').getRegex()
+    del: /^~+(?=\S)([\s\S]*?\S)~+/,
+    text: edit(inline.text).replace(']|', '~]|').replace('|$', '|https?://|ftp://|www\\.|[a-zA-Z0-9.!#$%&\'*+/=?^_`{\\|}~-]+@|$').getRegex()
   });
 
+  inline.gfm.url = edit(inline.gfm.url).replace('email', inline.gfm._extended_email).getRegex();
   /**
    * GFM + Line Breaks Inline Grammar
    */
@@ -11834,14 +11907,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       throw new Error('Tokens array requires a `links` property.');
     }
 
-    if (this.options.gfm) {
+    if (this.options.pedantic) {
+      this.rules = inline.pedantic;
+    } else if (this.options.gfm) {
       if (this.options.breaks) {
         this.rules = inline.breaks;
       } else {
         this.rules = inline.gfm;
       }
-    } else if (this.options.pedantic) {
-      this.rules = inline.pedantic;
     }
   }
 
@@ -11869,7 +11942,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         link,
         text,
         href,
-        cap;
+        title,
+        cap,
+        prevCapZero;
 
     while (src) {
       // escape
@@ -11895,12 +11970,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
       // url (gfm)
       if (!this.inLink && (cap = this.rules.url.exec(src))) {
-        cap[0] = this.rules._backpedal.exec(cap[0])[0];
-        src = src.substring(cap[0].length);
         if (cap[2] === '@') {
           text = escape(cap[0]);
           href = 'mailto:' + text;
         } else {
+          // do extended autolink path validation
+          do {
+            prevCapZero = cap[0];
+            cap[0] = this.rules._backpedal.exec(cap[0])[0];
+          } while (prevCapZero !== cap[0]);
           text = escape(cap[0]);
           if (cap[1] === 'www.') {
             href = 'http://' + text;
@@ -11908,6 +11986,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             href = text;
           }
         }
+        src = src.substring(cap[0].length);
         out += this.renderer.link(href, null, text);
         continue;
       }
@@ -11919,6 +11998,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         } else if (this.inLink && /^<\/a>/i.test(cap[0])) {
           this.inLink = false;
         }
+        if (!this.inRawBlock && /^<(pre|code|kbd|script)(\s|>)/i.test(cap[0])) {
+          this.inRawBlock = true;
+        } else if (this.inRawBlock && /^<\/(pre|code|kbd|script)(\s|>)/i.test(cap[0])) {
+          this.inRawBlock = false;
+        }
+
         src = src.substring(cap[0].length);
         out += this.options.sanitize ? this.options.sanitizer ? this.options.sanitizer(cap[0]) : escape(cap[0]) : cap[0];
         continue;
@@ -11928,9 +12013,23 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       if (cap = this.rules.link.exec(src)) {
         src = src.substring(cap[0].length);
         this.inLink = true;
+        href = cap[2];
+        if (this.options.pedantic) {
+          link = /^([^'"]*[^\s])\s+(['"])(.*)\2/.exec(href);
+
+          if (link) {
+            href = link[1];
+            title = link[3];
+          } else {
+            title = '';
+          }
+        } else {
+          title = cap[3] ? cap[3].slice(1, -1) : '';
+        }
+        href = href.trim().replace(/^<([\s\S]*)>$/, '$1');
         out += this.outputLink(cap, {
-          href: cap[2],
-          title: cap[3]
+          href: InlineLexer.escapes(href),
+          title: InlineLexer.escapes(title)
         });
         this.inLink = false;
         continue;
@@ -11955,14 +12054,14 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       // strong
       if (cap = this.rules.strong.exec(src)) {
         src = src.substring(cap[0].length);
-        out += this.renderer.strong(this.output(cap[2] || cap[1]));
+        out += this.renderer.strong(this.output(cap[4] || cap[3] || cap[2] || cap[1]));
         continue;
       }
 
       // em
       if (cap = this.rules.em.exec(src)) {
         src = src.substring(cap[0].length);
-        out += this.renderer.em(this.output(cap[2] || cap[1]));
+        out += this.renderer.em(this.output(cap[6] || cap[5] || cap[4] || cap[3] || cap[2] || cap[1]));
         continue;
       }
 
@@ -11990,7 +12089,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       // text
       if (cap = this.rules.text.exec(src)) {
         src = src.substring(cap[0].length);
-        out += this.renderer.text(escape(this.smartypants(cap[0])));
+        if (this.inRawBlock) {
+          out += this.renderer.text(cap[0]);
+        } else {
+          out += this.renderer.text(escape(this.smartypants(cap[0])));
+        }
         continue;
       }
 
@@ -12002,12 +12105,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return out;
   };
 
+  InlineLexer.escapes = function (text) {
+    return text ? text.replace(InlineLexer.rules._escapes, '$1') : text;
+  };
+
   /**
    * Compile Link
    */
 
   InlineLexer.prototype.outputLink = function (cap, link) {
-    var href = escape(link.href),
+    var href = link.href,
         title = link.title ? escape(link.title) : null;
 
     return cap[0].charAt(0) !== '!' ? this.renderer.link(href, title, this.output(cap[1])) : this.renderer.image(href, title, escape(cap[1]));
@@ -12063,7 +12170,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
    */
 
   function Renderer(options) {
-    this.options = options || {};
+    this.options = options || marked.defaults;
   }
 
   Renderer.prototype.code = function (code, lang, escaped) {
@@ -12076,10 +12183,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     if (!lang) {
-      return '<pre><code>' + (escaped ? code : escape(code, true)) + '\n</code></pre>';
+      return '<pre><code>' + (escaped ? code : escape(code, true)) + '</code></pre>';
     }
 
-    return '<pre><code class="' + this.options.langPrefix + escape(lang, true) + '">' + (escaped ? code : escape(code, true)) + '\n</code></pre>\n';
+    return '<pre><code class="' + this.options.langPrefix + escape(lang, true) + '">' + (escaped ? code : escape(code, true)) + '</code></pre>\n';
   };
 
   Renderer.prototype.blockquote = function (quote) {
@@ -12091,20 +12198,29 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   };
 
   Renderer.prototype.heading = function (text, level, raw) {
-    return '<h' + level + ' id="' + this.options.headerPrefix + raw.toLowerCase().replace(/[^\w]+/g, '-') + '">' + text + '</h' + level + '>\n';
+    if (this.options.headerIds) {
+      return '<h' + level + ' id="' + this.options.headerPrefix + raw.toLowerCase().replace(/[^\w]+/g, '-') + '">' + text + '</h' + level + '>\n';
+    }
+    // ignore IDs
+    return '<h' + level + '>' + text + '</h' + level + '>\n';
   };
 
   Renderer.prototype.hr = function () {
     return this.options.xhtml ? '<hr/>\n' : '<hr>\n';
   };
 
-  Renderer.prototype.list = function (body, ordered) {
-    var type = ordered ? 'ol' : 'ul';
-    return '<' + type + '>\n' + body + '</' + type + '>\n';
+  Renderer.prototype.list = function (body, ordered, start) {
+    var type = ordered ? 'ol' : 'ul',
+        startatt = ordered && start !== 1 ? ' start="' + start + '"' : '';
+    return '<' + type + startatt + '>\n' + body + '</' + type + '>\n';
   };
 
   Renderer.prototype.listitem = function (text) {
     return '<li>' + text + '</li>\n';
+  };
+
+  Renderer.prototype.checkbox = function (checked) {
+    return '<input ' + (checked ? 'checked="" ' : '') + 'disabled="" type="checkbox"' + (this.options.xhtml ? ' /' : '') + '> ';
   };
 
   Renderer.prototype.paragraph = function (text) {
@@ -12112,7 +12228,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   };
 
   Renderer.prototype.table = function (header, body) {
-    return '<table>\n' + '<thead>\n' + header + '</thead>\n' + '<tbody>\n' + body + '</tbody>\n' + '</table>\n';
+    if (body) body = '<tbody>' + body + '</tbody>';
+
+    return '<table>\n' + '<thead>\n' + header + '</thead>\n' + body + '</table>\n';
   };
 
   Renderer.prototype.tablerow = function (content) {
@@ -12121,7 +12239,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
   Renderer.prototype.tablecell = function (content, flags) {
     var type = flags.header ? 'th' : 'td';
-    var tag = flags.align ? '<' + type + ' style="text-align:' + flags.align + '">' : '<' + type + '>';
+    var tag = flags.align ? '<' + type + ' align="' + flags.align + '">' : '<' + type + '>';
     return tag + content + '</' + type + '>\n';
   };
 
@@ -12147,20 +12265,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   };
 
   Renderer.prototype.link = function (href, title, text) {
-    if (this.options.sanitize) {
-      try {
-        var prot = decodeURIComponent(unescape(href)).replace(/[^\w:]/g, '').toLowerCase();
-      } catch (e) {
-        return text;
-      }
-      if (prot.indexOf('javascript:') === 0 || prot.indexOf('vbscript:') === 0 || prot.indexOf('data:') === 0) {
-        return text;
-      }
+    href = cleanUrl(this.options.sanitize, this.options.baseUrl, href);
+    if (href === null) {
+      return text;
     }
-    if (this.options.baseUrl && !originIndependentUrl.test(href)) {
-      href = resolveUrl(this.options.baseUrl, href);
-    }
-    var out = '<a href="' + href + '"';
+    var out = '<a href="' + escape(href) + '"';
     if (title) {
       out += ' title="' + title + '"';
     }
@@ -12169,9 +12278,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   };
 
   Renderer.prototype.image = function (href, title, text) {
-    if (this.options.baseUrl && !originIndependentUrl.test(href)) {
-      href = resolveUrl(this.options.baseUrl, href);
+    href = cleanUrl(this.options.sanitize, this.options.baseUrl, href);
+    if (href === null) {
+      return text;
     }
+
     var out = '<img src="' + href + '" alt="' + text + '"';
     if (title) {
       out += ' title="' + title + '"';
@@ -12338,38 +12449,34 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       case 'list_start':
         {
           body = '';
-          var ordered = this.token.ordered;
+          var ordered = this.token.ordered,
+              start = this.token.start;
 
           while (this.next().type !== 'list_end') {
             body += this.tok();
           }
 
-          return this.renderer.list(body, ordered);
+          return this.renderer.list(body, ordered, start);
         }
       case 'list_item_start':
         {
           body = '';
+          var loose = this.token.loose;
 
-          while (this.next().type !== 'list_item_end') {
-            body += this.token.type === 'text' ? this.parseText() : this.tok();
+          if (this.token.task) {
+            body += this.renderer.checkbox(this.token.checked);
           }
 
-          return this.renderer.listitem(body);
-        }
-      case 'loose_item_start':
-        {
-          body = '';
-
           while (this.next().type !== 'list_item_end') {
-            body += this.tok();
+            body += !loose && this.token.type === 'text' ? this.parseText() : this.tok();
           }
 
           return this.renderer.listitem(body);
         }
       case 'html':
         {
-          var html = !this.token.pre && !this.options.pedantic ? this.inline.output(this.token.text) : this.token.text;
-          return this.renderer.html(html);
+          // TODO parse inline content if parameter markdown=1
+          return this.renderer.html(this.token.text);
         }
       case 'paragraph':
         {
@@ -12387,8 +12494,35 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
    */
 
   function escape(html, encode) {
-    return html.replace(!encode ? /&(?!#?\w+;)/g : /&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    if (encode) {
+      if (escape.escapeTest.test(html)) {
+        return html.replace(escape.escapeReplace, function (ch) {
+          return escape.replacements[ch];
+        });
+      }
+    } else {
+      if (escape.escapeTestNoEncode.test(html)) {
+        return html.replace(escape.escapeReplaceNoEncode, function (ch) {
+          return escape.replacements[ch];
+        });
+      }
+    }
+
+    return html;
   }
+
+  escape.escapeTest = /[&<>"']/;
+  escape.escapeReplace = /[&<>"']/g;
+  escape.replacements = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  };
+
+  escape.escapeTestNoEncode = /[<>"']|&(?!#?\w+;)/;
+  escape.escapeReplaceNoEncode = /[<>"']|&(?!#?\w+;)/g;
 
   function unescape(html) {
     // explicitly match decimal, hex, and named HTML entities
@@ -12403,7 +12537,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   }
 
   function edit(regex, opt) {
-    regex = regex.source;
+    regex = regex.source || regex;
     opt = opt || '';
     return {
       replace: function replace(name, val) {
@@ -12418,6 +12552,28 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
   }
 
+  function cleanUrl(sanitize, base, href) {
+    if (sanitize) {
+      try {
+        var prot = decodeURIComponent(unescape(href)).replace(/[^\w:]/g, '').toLowerCase();
+      } catch (e) {
+        return null;
+      }
+      if (prot.indexOf('javascript:') === 0 || prot.indexOf('vbscript:') === 0 || prot.indexOf('data:') === 0) {
+        return null;
+      }
+    }
+    if (base && !originIndependentUrl.test(href)) {
+      href = resolveUrl(base, href);
+    }
+    try {
+      href = encodeURI(href).replace(/%25/g, '%');
+    } catch (e) {
+      return null;
+    }
+    return href;
+  }
+
   function resolveUrl(base, href) {
     if (!baseUrls[' ' + base]) {
       // we can ignore everything in base after the last slash of its path component,
@@ -12426,7 +12582,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       if (/^[^:]+:\/*[^/]*$/.test(base)) {
         baseUrls[' ' + base] = base + '/';
       } else {
-        baseUrls[' ' + base] = base.replace(/[^/]*$/, '');
+        baseUrls[' ' + base] = rtrim(base, '/', true);
       }
     }
     base = baseUrls[' ' + base];
@@ -12460,6 +12616,67 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     }
 
     return obj;
+  }
+
+  function splitCells(tableRow, count) {
+    // ensure that every cell-delimiting pipe has a space
+    // before it to distinguish it from an escaped pipe
+    var row = tableRow.replace(/\|/g, function (match, offset, str) {
+      var escaped = false,
+          curr = offset;
+      while (--curr >= 0 && str[curr] === '\\') {
+        escaped = !escaped;
+      }if (escaped) {
+        // odd number of slashes means | is escaped
+        // so we leave it alone
+        return '|';
+      } else {
+        // add space before unescaped |
+        return ' |';
+      }
+    }),
+        cells = row.split(/ \|/),
+        i = 0;
+
+    if (cells.length > count) {
+      cells.splice(count);
+    } else {
+      while (cells.length < count) {
+        cells.push('');
+      }
+    }
+
+    for (; i < cells.length; i++) {
+      // leading or trailing whitespace is ignored per the gfm spec
+      cells[i] = cells[i].trim().replace(/\\\|/g, '|');
+    }
+    return cells;
+  }
+
+  // Remove trailing 'c's. Equivalent to str.replace(/c*$/, '').
+  // /c*$/ is vulnerable to REDOS.
+  // invert: Remove suffix of non-c chars instead. Default falsey.
+  function rtrim(str, c, invert) {
+    if (str.length === 0) {
+      return '';
+    }
+
+    // Length of suffix matching the invert condition.
+    var suffLen = 0;
+
+    // Step left until we fail to match the invert condition.
+    while (suffLen < str.length) {
+      var currChar = str.charAt(str.length - suffLen - 1);
+      if (currChar === c && !invert) {
+        suffLen++;
+      } else if (currChar !== c && invert) {
+        suffLen++;
+      } else {
+        break;
+      }
+    }
+
+    return str.substr(0, str.length - suffLen);
   }
 
   /**
@@ -12546,7 +12763,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
       if (opt) opt = merge({}, marked.defaults, opt);
       return Parser.parse(Lexer.lex(src, opt), opt);
     } catch (e) {
-      e.message += '\nPlease report this to https://github.com/chjj/marked.';
+      e.message += '\nPlease report this to https://github.com/markedjs/marked.';
       if ((opt || marked.defaults).silent) {
         return '<p>An error occurred:</p><pre>' + escape(e.message + '', true) + '</pre>';
       }
@@ -12563,24 +12780,29 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     return marked;
   };
 
-  marked.defaults = {
-    gfm: true,
-    tables: true,
-    breaks: false,
-    pedantic: false,
-    sanitize: false,
-    sanitizer: null,
-    mangle: true,
-    smartLists: false,
-    silent: false,
-    highlight: null,
-    langPrefix: 'lang-',
-    smartypants: false,
-    headerPrefix: '',
-    renderer: new Renderer(),
-    xhtml: false,
-    baseUrl: null
+  marked.getDefaults = function () {
+    return {
+      baseUrl: null,
+      breaks: false,
+      gfm: true,
+      headerIds: true,
+      headerPrefix: '',
+      highlight: null,
+      langPrefix: 'language-',
+      mangle: true,
+      pedantic: false,
+      renderer: new Renderer(),
+      sanitize: false,
+      sanitizer: null,
+      silent: false,
+      smartLists: false,
+      smartypants: false,
+      tables: true,
+      xhtml: false
+    };
   };
+
+  marked.defaults = marked.getDefaults();
 
   /**
    * Expose
