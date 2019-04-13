@@ -232,7 +232,7 @@ Many integrations, such as GitHub and Gmail, offer OAuth 2.0
 authentication. OAuth tokens are more secure than using
 API keys or passwords, but are a bit more complicated.
 
-### Genrating OAuth tokens
+### Generating OAuth tokens
 
 The easiest way to generate an OAuth token is on [datafire.io](https://datafire.io).
 However, you can also register your own OAuth client with the API provider
