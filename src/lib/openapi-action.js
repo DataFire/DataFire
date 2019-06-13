@@ -59,6 +59,7 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
         qs: {},
         qsStringifyOptions: {},
         headers: {},
+        form: {},
         formData: {},
         body: null,
         encoding: null,
@@ -97,7 +98,7 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
             }
             reqOpts.formData[name] = val;
           } else {
-            reqOpts.formData[name] = val;
+            reqOpts.form[name] = val;
           }
         }
       }
@@ -138,7 +139,12 @@ const getActionFromOperation = module.exports = function(method, path, openapi, 
         }
       }
 
-      if (Object.keys(reqOpts.formData).length === 0) delete reqOpts.formData;
+      if (Object.keys(reqOpts.formData).length === 0) {
+        delete reqOpts.formData;
+      }
+      if (Object.keys(reqOpts.form).length === 0) {
+        delete reqOpts.form;
+      }
 
       let refreshOAuthToken = (callback) => {
         let form = {

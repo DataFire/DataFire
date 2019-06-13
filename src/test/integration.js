@@ -56,6 +56,11 @@ let project = new datafire.Project({
       get: {
         action: encode,
       }
+    },
+    '/form': {
+      post: {
+        action: echo,
+      }
     }
   }
 })
@@ -146,6 +151,21 @@ let integration = datafire.Integration.fromOpenAPI({
           }
         }
       }
+    },
+    '/form': {
+      post: {
+        parameters: [{
+          name: 'foo',
+          in: 'formData',
+          type: 'boolean',
+          required: true,
+        }],
+        responses: {
+          200: {
+            description: "OK"
+          }
+        },
+      }
     }
   }
 }, 'test_integration')
@@ -162,7 +182,7 @@ describe('Integration', () => {
 
   it("should build from OpenAPI", () => {
     expect(integration instanceof datafire.Integration).to.equal(true);
-    expect(Object.keys(integration.actions).length).to.equal(4);
+    expect(Object.keys(integration.actions).length).to.equal(5);
     let action = integration.actions.hello.get.action;
     expect(action instanceof datafire.Action).to.equal(true);
   });
@@ -215,6 +235,15 @@ describe('Integration', () => {
       expect(data.path).to.equal('/dupeParam/a');
       expect(data.query).to.deep.equal({foo: 'b'});
       expect(data.headers.foo).to.equal('c');
+    })
+  })
+
+  it('should parse boolean form parameters', () => {
+    let action = integration.actions.form.post.action;
+    return action.run({
+      foo: true,
+    }).then(data => {
+      expect(data.body).to.deep.equal({foo: 'true'});
     })
   })
 
