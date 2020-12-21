@@ -114,15 +114,14 @@ Project.prototype.aggregateActions = function() {
 
   for (let actionID in this.actions) {
     this.actions[actionID] = Action.fromName(this.actions[actionID], this.directory, this.integrations);
+    this.actions[actionID].id = actionID;
   }
 
   let resolveAction = (action) => {
     if (typeof action === 'string') {
-      if (this.actions[action]) {
-        action = this.actions[action];
-      } else {
-        action = this.actions[action] = Action.fromName(action, this.directory, this.integrations);
-      }
+      action = this.actions[action] = Action.fromName(action, this.directory, this.integrations, this.actions);
+    } else if (Array.isArray(action)) {
+      action = Action.fromList(action, this.directory, this.integrations, this.actions);
     }
     if (!(action instanceof Action)) {
       action = new Action(action);

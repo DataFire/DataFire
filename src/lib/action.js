@@ -44,7 +44,10 @@ const Action = module.exports = function(opts) {
  * @param {string} directory - the directory relative to which local actions are referenced
  * @param {Object} integrations - a list of Integration objects, keyed by ID
  */
-Action.fromName = function(name, directory, integrations={}) {
+Action.fromName = function(name, directory, integrations={}, actions={}) {
+  if (actions[name]) {
+    return actions[name];
+  }
   let isFile = /^\.?\//.test(name);
   if (isFile) {
     let action = require(nodepath.join(directory, name));
@@ -58,6 +61,34 @@ Action.fromName = function(name, directory, integrations={}) {
   let integration = integrations[integrationName] || Integration.fromName(name.substring(0, slash));
   let action = integration.action(name.substring(slash + 1, name.length));
   return action;
+}
+
+Action.fromList = function(names, directory, integrations, actions) {
+  const namedActions = names.map(n => Action.fromName(n, directory, integrations, actions));
+  const outputSchema = {type: 'object', properties: {}};
+  namedActions.forEach(action => outputSchema.properties[action.id] = {
+    type: 'object',
+    properties: {
+      error: {},
+      output: action.outputSchema || {},
+    },
+  });
+  const compositeAction = new Action({
+    inputSchema: (namedActions[0] || {}).inputSchema,
+    outputSchema,
+    handler: function(input, context) {
+      const outputs = {};
+      namedActions.forEach(action => {
+        action.run(input, context)
+          .then(
+            result => outputs[action.id] = {output: result},
+            err => outputs[action.id] = {error: (err && err.message) || err || "Unknown error"},
+          )
+      })
+      return outputs;
+    }
+  })
+  return compositeAction;
 }
 
 /**
