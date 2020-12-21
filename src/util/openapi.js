@@ -64,7 +64,7 @@ function resolveReference(ref, base, cache) {
   var keys = ref.split('/');
   keys.shift();
   var cur = base;
-  keys.forEach(k => cur = cur[k]);
+  keys.forEach(k => cur = cur[k] || {});
   return cache[ref] = cur;
 }
 

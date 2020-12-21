@@ -129,7 +129,6 @@ const getNameFromHost = (host) => {
 
 const integrateOpenAPI = (dir, name, url, patch, callback) => {
   function finish(body) {
-    if (!body.host) return callback(new Error("Invalid swagger:" + JSON.stringify(body, null, 2)))
     if (patch) patch(body);
     for (let path in body.paths) {
       for (let method in body.paths[path]) {
@@ -227,7 +226,9 @@ const integrateRSS = (dir, name, urls, callback) => {
 
 const integrateSpec = (dir, name, format, url, callback) => {
   let cmd = 'api-spec-converter "' + url + '" --from ' + format + ' --to swagger_2';
-  proc.exec(cmd, (err, stdout) => {
+  proc.exec(cmd, {
+    maxBuffer: 1024 * 1024 * 1024, // 1GB
+  }, (err, stdout) => {
     if (err) {
       logger.logError('Please install api-spec-converter');
       logger.log('npm install -g api-spec-converter');
