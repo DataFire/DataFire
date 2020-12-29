@@ -3,7 +3,7 @@ module.exports = {};
 module.exports.getSchemaFromArray = function(arr) {
   let hasRequired = !!arr.filter(i => i.default === undefined).length;
   let schema = {
-    type: hasRequired ? 'object' : ['object', 'null'],
+    type: 'object',
     properties: {}
   };
   schema.required = arr
