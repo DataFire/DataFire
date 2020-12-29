@@ -78,14 +78,14 @@ Action.fromList = function(names, directory, integrations, actions) {
     outputSchema,
     handler: function(input, context) {
       const outputs = {};
-      namedActions.forEach(action => {
-        action.run(input, context)
+      let ps = namedActions.map(action => {
+        return action.run(input, context)
           .then(
             result => outputs[action.id] = {output: result},
             err => outputs[action.id] = {error: (err && err.message) || err || "Unknown error"},
           )
-      })
-      return outputs;
+      });
+      return Promise.all(ps).then(_ => outputs);
     }
   })
   return compositeAction;
